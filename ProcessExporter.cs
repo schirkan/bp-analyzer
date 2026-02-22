@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 public class ProcessExporter
 {
@@ -148,18 +149,41 @@ public class ProcessExporter
     Console.WriteLine($"Ausführen: {_automateCPath} {safeArguments}");
     Console.WriteLine();
 
-    // Working Directory auf das Ausgabeverzeichnis setzen
-    string? workingDirectory = Path.GetDirectoryName(outputPath);
-    if (string.IsNullOrEmpty(workingDirectory))
+    // Temp-Verzeichnis als Working Directory verwenden
+    string tempDirectory = Path.GetTempPath();
+
+    // Vor dem Export: Mögliche existierende Dateien löschen
+    // Blue Prism exportiert entweder als "BPA Object - <name>.xml" oder "BPA Process - <name>.xml"
+    string[] possibleFileNames = new[]
     {
-      workingDirectory = Directory.GetCurrentDirectory();
+      $"BPA Object - {processName}.xml",
+      $"BPA Process - {processName}.xml"
+    };
+
+    Console.WriteLine("Lösche existierende Dateien im Temp-Verzeichnis...");
+    foreach (string fileName in possibleFileNames)
+    {
+      string filePath = Path.Combine(tempDirectory, fileName);
+      if (File.Exists(filePath))
+      {
+        try
+        {
+          File.Delete(filePath);
+          Console.WriteLine($"  Gelöscht: {fileName}");
+        }
+        catch (Exception ex)
+        {
+          Console.WriteLine($"  Warnung: Konnte {fileName} nicht löschen: {ex.Message}");
+        }
+      }
     }
+    Console.WriteLine();
 
     ProcessStartInfo psi = new ProcessStartInfo
     {
       FileName = _automateCPath,
       Arguments = arguments,
-      WorkingDirectory = workingDirectory,
+      WorkingDirectory = tempDirectory,
       UseShellExecute = false,
       RedirectStandardOutput = true,
       RedirectStandardError = true,
@@ -198,6 +222,56 @@ public class ProcessExporter
       if (success)
       {
         Console.WriteLine($"Exit-Code: {process.ExitCode} (Erfolg)");
+
+        // Datei von Temp in das endgültige Zielverzeichnis verschieben
+        try
+        {
+          // Zielverzeichnis sicherstellen
+          string? targetDir = Path.GetDirectoryName(outputPath);
+          if (!string.IsNullOrEmpty(targetDir) && !Directory.Exists(targetDir))
+          {
+            Directory.CreateDirectory(targetDir);
+          }
+
+          // Finde die exportierte Datei im Temp-Verzeichnis
+          string? exportedFilePath = null;
+          foreach (string fileName in possibleFileNames)
+          {
+            string filePath = Path.Combine(tempDirectory, fileName);
+            if (File.Exists(filePath))
+            {
+              exportedFilePath = filePath;
+              Console.WriteLine($"Gefundene exportierte Datei: {fileName}");
+              break;
+            }
+          }
+
+          if (exportedFilePath != null)
+          {
+            // Vorhandene Zieldatei löschen
+            if (File.Exists(outputPath))
+            {
+              File.Delete(outputPath);
+            }
+            File.Move(exportedFilePath, outputPath);
+            Console.WriteLine($"Datei verschoben nach: {outputPath}");
+          }
+          else
+          {
+            Console.WriteLine($"Fehler: Keine exportierte Datei im Temp-Verzeichnis gefunden.");
+            Console.WriteLine("Mögliche Dateinamen:");
+            foreach (string fileName in possibleFileNames)
+            {
+              Console.WriteLine($"  - {fileName}");
+            }
+            success = false;
+          }
+        }
+        catch (Exception ex)
+        {
+          Console.WriteLine($"Fehler beim Verschieben der Datei: {ex.Message}");
+          success = false;
+        }
       }
       else
       {
