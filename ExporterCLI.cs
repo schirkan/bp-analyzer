@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 public class ExporterCLI
 {
@@ -72,6 +74,11 @@ public class ExporterCLI
       }
     }
 
+    // Overwrite-Option abfragen
+    Console.Write("Vorhandene Dateien überschreiben? (yes/no, leer für no): ");
+    string? overwriteInput = Console.ReadLine();
+    bool overwrite = !string.IsNullOrWhiteSpace(overwriteInput) && overwriteInput.Trim().Equals("yes", StringComparison.OrdinalIgnoreCase);
+
     // Authentifizierung abfragen
     Console.WriteLine();
     Console.WriteLine("Authentifizierung:");
@@ -85,38 +92,40 @@ public class ExporterCLI
       password = ReadPassword();
     }
 
-    // Export durchführen
+    // Export durchführen (mit rekursiven Abhängigkeiten)
     Console.WriteLine();
-    Console.WriteLine("Exportiere Prozess...");
+    Console.WriteLine("Exportiere Prozess und Abhängigkeiten...");
 
-    var result = _exporter.Export(processName, targetPath, username ?? "", password ?? "");
+    // Für einzelne Datei-Export verwenden wir das Ausgabeverzeichnis
+    string outputDirectory = Path.GetDirectoryName(targetPath) ?? Directory.GetCurrentDirectory();
+    var results = _exporter.ExportWithDependencies(processName, outputDirectory, username ?? "", password ?? "", overwrite);
 
-    // Ausgabe des Ergebnisses
-    if (!string.IsNullOrWhiteSpace(result.StandardOutput))
-    {
-      Console.WriteLine("Ausgabe:");
-      Console.WriteLine(result.StandardOutput);
-    }
+    // Zusammenfassung ausgeben
+    int successCount = results.Count(r => r.Success);
+    int failCount = results.Count(r => !r.Success);
 
-    if (!string.IsNullOrWhiteSpace(result.StandardError))
-    {
-      Console.WriteLine("Fehler:");
-      Console.WriteLine(result.StandardError);
-    }
+    Console.WriteLine();
+    Console.WriteLine("=== Export-Ergebnis ===");
+    Console.WriteLine($"Erfolgreich: {successCount}");
+    Console.WriteLine($"Fehlgeschlagen: {failCount}");
 
-    if (result.Success)
+    if (successCount > 0)
     {
       Console.WriteLine();
-      Console.WriteLine($"Erfolg! Prozess '{processName}' wurde exportiert nach:");
-      Console.WriteLine(targetPath);
-    }
-    else
-    {
-      Console.WriteLine();
-      Console.WriteLine($"Fehler beim Exportieren. Exit-Code: {result.ExitCode}");
-      if (!string.IsNullOrEmpty(result.ErrorMessage))
+      Console.WriteLine("Exportierte Dateien:");
+      foreach (var result in results.Where(r => r.Success))
       {
-        Console.WriteLine(result.ErrorMessage);
+        Console.WriteLine($"  - {result.OutputPath}");
+      }
+    }
+
+    if (failCount > 0)
+    {
+      Console.WriteLine();
+      Console.WriteLine("Fehlgeschlagene Exporte:");
+      foreach (var result in results.Where(r => !r.Success))
+      {
+        Console.WriteLine($"  - {result.OutputPath}: {result.ErrorMessage}");
       }
     }
 
@@ -128,10 +137,19 @@ public class ExporterCLI
   /// <summary>
   /// Führt einen Export mit direkten Parametern aus (für Automatisierung)
   /// </summary>
-  public bool Export(string processName, string outputPath, string username, string password)
+  public bool Export(string processName, string outputPath, string username, string password, bool overwrite = false)
   {
-    var result = _exporter.Export(processName, outputPath, username, password);
-    return result.Success;
+    string outputDirectory = Path.GetDirectoryName(outputPath) ?? Directory.GetCurrentDirectory();
+    var results = _exporter.ExportWithDependencies(processName, outputDirectory, username, password, overwrite);
+    return results.All(r => r.Success);
+  }
+
+  /// <summary>
+  /// Führt einen rekursiven Export mit allen Abhängigkeiten durch
+  /// </summary>
+  public List<BluePrismExporter.ExportResult> ExportWithDependencies(string processName, string outputDirectory, string username, string password, bool overwrite = false)
+  {
+    return _exporter.ExportWithDependencies(processName, outputDirectory, username, password, overwrite);
   }
 
   /// <summary>

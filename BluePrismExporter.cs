@@ -1,20 +1,33 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 public class BluePrismExporter
 {
   private string _automateCPath;
+  private HashSet<string> _exportedObjects;
 
   public BluePrismExporter()
   {
     _automateCPath = "C:\\Program Files\\Blue Prism Limited\\Blue Prism Automate\\AutomateC.exe";
+    _exportedObjects = new HashSet<string>();
   }
 
   public string AutomateCPath
   {
     get => _automateCPath;
     set => _automateCPath = value;
+  }
+
+  /// <summary>
+  /// Setzt den Zustand der exportierten Objekte zurück (für neuen Exportlauf)
+  /// </summary>
+  public void ResetExportedObjects()
+  {
+    _exportedObjects.Clear();
   }
 
   /// <summary>
@@ -37,8 +50,9 @@ public class BluePrismExporter
   /// <param name="outputPath">Target file path</param>
   /// <param name="username">Blue Prism username</param>
   /// <param name="password">Blue Prism password</param>
+  /// <param name="overwrite">If true, existing files will be overwritten</param>
   /// <returns>ExportResult with success status and details</returns>
-  public ExportResult Export(string processName, string outputPath, string username, string password)
+  public ExportResult Export(string processName, string outputPath, string username, string password, bool overwrite = false)
   {
     var result = new ExportResult { OutputPath = outputPath };
 
@@ -53,6 +67,14 @@ public class BluePrismExporter
     {
       result.Success = false;
       result.ErrorMessage = "Output path cannot be empty";
+      return result;
+    }
+
+    // Check if file already exists and overwrite is not enabled
+    if (!overwrite && File.Exists(outputPath))
+    {
+      result.Success = true;
+      result.ErrorMessage = "File already exists, skipping export";
       return result;
     }
 
@@ -173,5 +195,136 @@ public class BluePrismExporter
     }
 
     return result;
+  }
+
+  /// <summary>
+  /// Exportiert einen Prozess und alle abhängigen Objekte rekursiv
+  /// </summary>
+  /// <param name="processName">Name des zu exportierenden Prozesses/Objekts</param>
+  /// <param name="outputDirectory">Zielverzeichnis für die exportierten Dateien</param>
+  /// <param name="username">Blue Prism Benutzername</param>
+  /// <param name="password">Blue Prism Passwort</param>
+  /// <param name="overwrite">Wenn true, werden existierende Dateien überschrieben</param>
+  /// <returns>Liste der ExportErgebnisse</returns>
+  public List<ExportResult> ExportWithDependencies(string processName, string outputDirectory, string username, string password, bool overwrite = false)
+  {
+    var results = new List<ExportResult>();
+
+    // Reset the exported objects set for a new export run
+    _exportedObjects.Clear();
+
+    // Ensure output directory exists
+    if (!Directory.Exists(outputDirectory))
+    {
+      Directory.CreateDirectory(outputDirectory);
+    }
+
+    // Export the main process and its dependencies recursively
+    ExportRecursive(processName, outputDirectory, username, password, overwrite, results);
+
+    return results;
+  }
+
+  /// <summary>
+  /// Rekursive Hilfsmethode zum Exportieren eines Prozesses und seiner Abhängigkeiten
+  /// </summary>
+  private void ExportRecursive(string objectName, string outputDirectory, string username, string password, bool overwrite, List<ExportResult> results)
+  {
+    // Check if this object has already been exported
+    if (_exportedObjects.Contains(objectName))
+    {
+      Console.WriteLine($"  -> '{objectName}' wurde bereits exportiert, überspringen...");
+      return;
+    }
+
+    // Determine output path
+    string outputPath = Path.Combine(outputDirectory, objectName + ".xml");
+
+    // Export the current object
+    Console.WriteLine($"Exportiere: {objectName}");
+    var result = Export(objectName, outputPath, username, password, overwrite);
+    results.Add(result);
+
+    if (result.Success)
+    {
+      // Mark as exported
+      _exportedObjects.Add(objectName);
+
+      // Find and export dependencies from the exported XML file
+      var dependencies = GetDependenciesFromXml(outputPath);
+      foreach (var dependency in dependencies)
+      {
+        ExportRecursive(dependency, outputDirectory, username, password, overwrite, results);
+      }
+    }
+    else
+    {
+      Console.WriteLine($"  FEHLER beim Exportieren von '{objectName}': {result.ErrorMessage}");
+    }
+  }
+
+  /// <summary>
+  /// Liest eine exportierte XML-Datei und extrahiert alle referenzierten Objekte (resource object="xxx")
+  /// </summary>
+  /// <param name="xmlFilePath">Pfad zur XML-Datei</param>
+  /// <returns>Liste der Objektnamen, von denen dieses Objekt abhängt</returns>
+  public List<string> GetDependenciesFromXml(string xmlFilePath)
+  {
+    var dependencies = new List<string>();
+
+    try
+    {
+      if (!File.Exists(xmlFilePath))
+      {
+        return dependencies;
+      }
+
+      // Read the XML file content
+      string xmlContent = File.ReadAllText(xmlFilePath);
+
+      // Use regex to find all "resource object="xxx"" patterns
+      // This pattern matches: resource object="ObjectName" or resource object='ObjectName'
+      var regex = new Regex(@"resource\s+object\s*=\s*[""']([^""']+)[""']", RegexOptions.IgnoreCase);
+      var matches = regex.Matches(xmlContent);
+
+      foreach (Match match in matches)
+      {
+        string objectName = match.Groups[1].Value;
+        if (!string.IsNullOrWhiteSpace(objectName) && !dependencies.Contains(objectName))
+        {
+          dependencies.Add(objectName);
+        }
+      }
+
+      // Also try XML parsing for more reliable extraction
+      try
+      {
+        XDocument doc = XDocument.Load(xmlFilePath);
+
+        // Find all elements with "object" attribute that are part of resource references
+        var resourceElements = doc.Descendants()
+          .Where(e => e.Attribute("object") != null &&
+                     e.Name.LocalName.Equals("resource", StringComparison.OrdinalIgnoreCase));
+
+        foreach (var element in resourceElements)
+        {
+          string? objectName = element.Attribute("object")?.Value;
+          if (!string.IsNullOrWhiteSpace(objectName) && !dependencies.Contains(objectName))
+          {
+            dependencies.Add(objectName);
+          }
+        }
+      }
+      catch
+      {
+        // If XML parsing fails, we still have the regex results
+      }
+    }
+    catch (Exception ex)
+    {
+      Console.WriteLine($"Fehler beim Parsen der XML-Datei {xmlFilePath}: {ex.Message}");
+    }
+
+    return dependencies;
   }
 }

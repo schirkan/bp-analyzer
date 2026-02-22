@@ -1,0 +1,1630 @@
+﻿<process name="Utility - Environment" version="6.9.0.26970" bpversion="7.5.0.17125" cpeversion="10.0.110.0" narrative="Utilities for interacting with the environment - read screen resolution, determine OS type, etc." byrefcollection="true" processrunningmessage="" disableversioning="false" type="object" runmode="Background" preferredid="1755dccf-ee8a-456b-86d6-6d83220f12de">
+  <appdef>
+    <element name="Application Root">
+      <id>257afd68-bed2-460b-94e5-17b2b6263b15</id>
+      <type>Application</type>
+      <basetype>Application</basetype>
+      <datatype>unknown</datatype>
+      <diagnose>False</diagnose>
+    </element>
+  </appdef>
+  <view>
+    <camerax>58</camerax>
+    <cameray>-46</cameray>
+    <zoom version="2">1.25</zoom>
+  </view>
+  <preconditions />
+  <endpoint narrative="" />
+  <subsheet subsheetid="50ea2955-c157-4803-b16c-fea2255ce9e2" type="Normal" published="True">
+    <name>Clear Clipboard</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="72ac1b78-ac00-4ede-b5fa-13beef468814" type="Normal" published="True">
+    <name>Font Smoothing Enabled</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="cf31a66d-5534-4af0-9a07-433066d1a4b9" type="Normal" published="True">
+    <name>Get Clipboard</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="c556a801-8bd8-4e0e-bf8e-2dd6b5642063" type="Normal" published="True">
+    <name>Get Machine Name</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="4987fdec-ac7a-4166-a60b-adef47ecdcc7" type="Normal" published="True">
+    <name>Get Screen Resolution</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="b6e051bf-8afe-4ea3-9ae0-52eee58eec76" type="Normal" published="True">
+    <name>Get User Name</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="e5864a25-e7a2-430a-9045-78a116e64701" type="Normal" published="True">
+    <name>Kill Process</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="3d4412bd-579a-4d1e-937e-12fbb756630c" type="Normal" published="True">
+    <name>Read Memory Stats</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="7b5cc7aa-ca53-495f-a51e-4ed559efe88b" type="Normal" published="True">
+    <name>Read Process Working Set</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="29015311-1659-438e-b7b6-b8ff65e4a840" type="Normal" published="True">
+    <name>Run Process Until Ended</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>63</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="cf9f6573-f06c-4ab6-9672-34d2e644415e" type="Normal" published="True">
+    <name>Set Clipboard</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7" type="Normal" published="True">
+    <name>Start Process</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="80ee143b-0379-4ba5-b13f-5d42dde3160d" type="Normal" published="True">
+    <name>Start Process Read Stderr and Stdout</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>42</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="a1f1d9b6-bb36-4449-a41f-abe80db43c70" type="Normal" published="True">
+    <name>Set Screen Resolution</name>
+    <view>
+      <camerax>57</camerax>
+      <cameray>1</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="13c8f06e-8a7c-4da8-b813-d5738ce5369a" type="Normal" published="True">
+    <name>Wait for Process</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="1e22dc28-2f71-421b-9687-c367358919e3" type="Normal" published="True">
+    <name>Wait for Process Window</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="fd494d31-daad-4e53-a0be-892311ddfc9b" type="CleanUp" published="True">
+    <name>Clean Up</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <stage stageid="5f046b4e-e1db-4786-ae90-3d5d6c6d9302" name="Start" type="Start">
+    <loginhibit />
+    <display x="15" y="-105" />
+    <onsuccess>9e4646d0-d8c7-44d6-a5d9-9509e3ba8883</onsuccess>
+  </stage>
+  <stage stageid="9e4646d0-d8c7-44d6-a5d9-9509e3ba8883" name="End" type="End">
+    <loginhibit />
+    <display x="15" y="90" />
+  </stage>
+  <stage stageid="d9e9a8ad-308f-49f4-9dd0-9dafbc1f625a" name="Stage1" type="ProcessInfo">
+    <display x="-180" y="-120" w="180" h="120" />
+    <references>
+      <reference>System.Data.dll</reference>
+      <reference>System.Xml.dll</reference>
+      <reference>System.Drawing.dll</reference>
+      <reference>system.windows.forms.dll</reference>
+      <reference>Microsoft.VisualBasic.dll</reference>
+      <reference>System.Management.dll</reference>
+      <reference>mscorlib.dll</reference>
+    </references>
+    <imports>
+      <import>System</import>
+      <import>System.Drawing</import>
+      <import>System.Windows.Forms</import>
+      <import>System.Diagnostics</import>
+      <import>System.Data</import>
+      <import>Microsoft.VisualBasic</import>
+      <import>System.Threading</import>
+      <import>System.Management</import>
+      <import>System.Runtime.InteropServices</import>
+      <import>System.Threading.Tasks</import>
+    </imports>
+    <language>visualbasic</language>
+    <pythondllpath>
+    </pythondllpath>
+    <pythonenvpath>
+    </pythonenvpath>
+    <globalcode><![CDATA[
+
+]]></globalcode>
+    <code><![CDATA[<DllImport("kernel32.dll", SetLastError:=True)> _
+Private Shared Function CreateToolhelp32Snapshot(ByVal dwFlags As UInteger, ByVal th32ProcessID As UInteger) As IntPtr
+End Function
+
+<DllImport("kernel32.dll")> _
+Private Shared Function Process32First(ByVal hSnapshot As IntPtr, ByRef lppe As PROCESSENTRY32) As Boolean
+End Function
+
+<DllImport("kernel32.dll")> _
+Private Shared Function Process32Next(ByVal hSnapshot As IntPtr, ByRef lppe As PROCESSENTRY32) As Boolean
+End Function
+
+<StructLayout(LayoutKind.Sequential)>
+Public Structure PROCESSENTRY32
+	Public dwSize As UInteger
+	Public cntUsage As UInteger
+	Public th32ProcessID As UInteger
+	Public th32DefaultHeapID As IntPtr
+	Public th32ModuleID As UInteger
+	Public cntThreads As UInteger
+	Public th32ParentProcessID As UInteger
+	Public pcPriClassBase As Integer
+	Public dwFlags As UInteger
+	<MarshalAs(UnmanagedType.ByValTStr, SizeConst:=260)>
+	Public szExeFile As String
+End Structure
+
+Shared TH32CS_SNAPPROCESS As UInteger = 2
+
+<StructLayout(LayoutKind.Sequential)> _
+Public Structure DEVMODE1
+	<MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)> _
+	Public dmDeviceName As String
+	Public dmSpecVersion As Short
+	Public dmDriverVersion As Short
+	Public dmSize As Short
+	Public dmDriverExtra As Short
+	Public dmFields As Integer
+	Public dmOrientation As Short
+	Public dmPaperSize As Short
+	Public dmPaperLength As Short
+	Public dmPaperWidth As Short
+	Public dmScale As Short
+	Public dmCopies As Short
+	Public dmDefaultSource As Short
+	Public dmPrintQuality As Short
+	Public dmColor As Short
+	Public dmDuplex As Short
+	Public dmYResolution As Short
+	Public dmTTOption As Short
+	Public dmCollate As Short
+	<MarshalAs(UnmanagedType.ByValTStr,  SizeConst:=32)> _
+	Public dmFormName As String
+	Public dmLogPixels As Short
+	Public dmBitsPerPel As Short
+	Public dmPelsWidth As Integer
+	Public dmPelsHeight As Integer
+	Public dmDisplayFlags As Integer
+	Public dmDisplayFrequency As Integer
+	Public dmICMMethod As Integer
+	Public dmICMIntent As Integer
+	Public dmMediaType As Integer
+	Public dmDitherType As Integer
+	Public dmReserved1 As Integer
+	Public dmReserved2 As Integer
+	Public dmPanningWidth As Integer
+	Public dmPanningHeight As Integer
+End Structure
+
+Class User_32
+	<DllImport("user32.dll")> _
+	Public Shared Function EnumDisplaySettings(ByVal deviceName As String, ByVal modeNum As Integer, ByRef devMode As DEVMODE1) As Integer
+	End Function
+
+	<DllImport("user32.dll")> _
+	Public Shared Function ChangeDisplaySettings(ByRef devMode As DEVMODE1, ByVal flags As Integer) As Integer
+	End Function
+
+	Public Const ENUM_CURRENT_SETTINGS As Integer = -1
+	Public Const CDS_UPDATEREGISTRY As Integer = 1
+	Public Const CDS_TEST As Integer = 2
+	Public Const DISP_CHANGE_SUCCESSFUL As Integer = 0
+	Public Const DISP_CHANGE_RESTART As Integer = 1
+	Public Const DISP_CHANGE_FAILED As Integer = -1
+End Class
+
+Private Shared Function GetParentProcess(iCurrentPid As Integer ) As Process
+	Dim iParentPid As Integer = 0
+	Dim oHnd As IntPtr = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0)
+	If oHnd = IntPtr.Zero Then Return Nothing
+	Dim oProcInfo As PROCESSENTRY32 = New PROCESSENTRY32()
+	oProcInfo.dwSize = CUInt(System.Runtime.InteropServices.Marshal.SizeOf(GetType(PROCESSENTRY32)))
+	If Process32First(oHnd, oProcInfo) = False Then Return Nothing
+
+	Do
+		If iCurrentPid = oProcInfo.th32ProcessID Then iParentPid = CInt(oProcInfo.th32ParentProcessID)
+	Loop While iParentPid = 0 AndAlso Process32Next(oHnd, oProcInfo)
+
+	If iParentPid > 0 Then
+		Return Process.GetProcessById(iParentPid)
+	Else
+		Return Nothing
+	End If
+End Function
+
+' Internal subroutine to kill a specific process and any child processes it owns.
+Private Shared Sub KillProcessAndChildren(ByVal pid As Integer)
+    Dim processSearcher As ManagementObjectSearcher = New ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" & pid)
+    Dim processCollection As ManagementObjectCollection = processSearcher.[Get]()
+
+    Try
+        Dim proc As Process = Process.GetProcessById(pid)
+        If Not proc.HasExited Then proc.Kill()
+    Catch __unusedArgumentException1__ As ArgumentException
+    End Try
+
+    If processCollection IsNot Nothing Then
+
+        For Each mo As ManagementObject In processCollection
+            KillProcessAndChildren(Convert.ToInt32(mo("ProcessID")))
+        Next
+    End If
+End Sub
+]]></code>
+  </stage>
+  <stage stageid="f50788a0-79a5-446b-b3cc-fc8d66091330" name="Get Screen Resolution" type="SubSheetInfo">
+    <subsheetid>4987fdec-ac7a-4166-a60b-adef47ecdcc7</subsheetid>
+    <narrative>Gets the resolution of the screen in pixels for the current environment.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="d9e8deba-018e-4402-bb33-773a299ae864" name="Start" type="Start">
+    <subsheetid>4987fdec-ac7a-4166-a60b-adef47ecdcc7</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <onsuccess>bd2d0918-9c73-4138-90b8-538eaa06f135</onsuccess>
+  </stage>
+  <stage stageid="3348aa7d-5b76-4d3f-a590-e571a9a83494" name="End" type="End">
+    <subsheetid>4987fdec-ac7a-4166-a60b-adef47ecdcc7</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+    <outputs>
+      <output type="number" name="Horizontal Resolution" narrative="The number of pixels in the horizontal screen axis" stage="Horizontal Resolution" />
+      <output type="number" name="Vertical Resolution" narrative="The number of pixels in the vertical screen axis" stage="Vertical Resolution" />
+    </outputs>
+  </stage>
+  <stage stageid="faf2adc8-9198-4483-b6dc-e67e978cbf7b" name="new" type="Note">
+    <narrative>Initialise Page
+
+This is an optional page where you might choose to perform some initialisation tasks after your business object is loaded.
+
+The initialise action will be called automatically immediately after loading your business object.
+
+You will not be able to call this action from a business process, nor will it be called at any other time than after the creation of the object.</narrative>
+    <display x="-180" y="60" w="180" h="230" />
+  </stage>
+  <stage stageid="bd2d0918-9c73-4138-90b8-538eaa06f135" name="GetResolution" type="Code">
+    <subsheetid>4987fdec-ac7a-4166-a60b-adef47ecdcc7</subsheetid>
+    <loginhibit />
+    <display x="15" y="-15" w="90" h="30" />
+    <outputs>
+      <output type="number" name="Horizontal Resolution" stage="Horizontal Resolution" />
+      <output type="number" name="Vertical Resolution" stage="Vertical Resolution" />
+    </outputs>
+    <onsuccess>3348aa7d-5b76-4d3f-a590-e571a9a83494</onsuccess>
+    <code><![CDATA[dim S As Size = Screen.PrimaryScreen.Bounds.Size
+Horizontal_Resolution = S.Width
+Vertical_Resolution = S.Height]]></code>
+  </stage>
+  <stage stageid="37500b62-bdb6-42ed-91a3-02fbcffc75ee" name="Horizontal Resolution" type="Data">
+    <subsheetid>4987fdec-ac7a-4166-a60b-adef47ecdcc7</subsheetid>
+    <display x="105" y="90" />
+    <datatype>number</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="8edafede-371d-454f-a5ca-0b28eda542e5" name="Vertical Resolution" type="Data">
+    <subsheetid>4987fdec-ac7a-4166-a60b-adef47ecdcc7</subsheetid>
+    <display x="165" y="90" />
+    <datatype>number</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="e8bff191-0772-44c3-bea4-1d4ff701d49f" name="Kill Process" type="SubSheetInfo">
+    <subsheetid>e5864a25-e7a2-430a-9045-78a116e64701</subsheetid>
+    <narrative>If you provide just the Process Name, all processes with the given name will be terminated. If you provide the Process Name and  the Process ID (or just the Process ID), the Process ID takes precendence and only that specific process will be terminated.</narrative>
+    <display x="-195" y="-105" w="210" h="90" />
+  </stage>
+  <stage stageid="e3791a92-d20e-4afe-81bf-5aab170c3aba" name="Start" type="Start">
+    <subsheetid>e5864a25-e7a2-430a-9045-78a116e64701</subsheetid>
+    <loginhibit />
+    <preconditions>
+      <condition narrative="None." />
+    </preconditions>
+    <postconditions>
+      <condition narrative="All processes with the given name will be terminated." />
+    </postconditions>
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="text" name="Process Name" narrative="The name of the process to kill" stage="Process Name" />
+      <input type="number" name="Process ID" narrative="The unique numeric identifier of a specific process on the system." stage="Process ID" />
+    </inputs>
+    <onsuccess>697bc06f-0d64-430d-a5ea-b3fd02b746c8</onsuccess>
+  </stage>
+  <stage stageid="e9c6833a-30a3-4233-840b-35d605e44199" name="End" type="End">
+    <subsheetid>e5864a25-e7a2-430a-9045-78a116e64701</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+  </stage>
+  <stage stageid="06a89dc2-9ed1-497c-b7f0-14664bdb76c5" name="Process Name" type="Data">
+    <subsheetid>e5864a25-e7a2-430a-9045-78a116e64701</subsheetid>
+    <display x="-195" y="-15" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="697bc06f-0d64-430d-a5ea-b3fd02b746c8" name="Kill Process1" type="Code">
+    <subsheetid>e5864a25-e7a2-430a-9045-78a116e64701</subsheetid>
+    <loginhibit />
+    <display x="15" y="-15" />
+    <inputs>
+      <input type="text" name="Process Name" expr="[Process Name]" />
+      <input type="number" name="Process ID" expr="[Process ID]" />
+    </inputs>
+    <onsuccess>e9c6833a-30a3-4233-840b-35d605e44199</onsuccess>
+    <code><![CDATA[Try
+	If (Len(Trim(Process_Name)) > 0) And (Process_ID = 0) Then
+		For Each p As System.Diagnostics.Process in System.Diagnostics.Process.GetProcessesByName(Process_Name)
+			p.Kill
+		Next
+	ElseIf (Process_ID > 0) Then
+		KillProcessAndChildren(Convert.ToInt32(Process_ID))
+	End If
+Catch ex As Exception
+End Try]]></code>
+  </stage>
+  <stage stageid="374fc1ad-8b82-4d95-b3d4-9710692a2725" name="Read Memory Stats" type="SubSheetInfo">
+    <subsheetid>3d4412bd-579a-4d1e-937e-12fbb756630c</subsheetid>
+    <narrative>Get memory statistics for a given set of processes including the working set and the virtual memory size.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="237994c5-9c89-409f-9459-a9f1ce60d7ad" name="Start" type="Start">
+    <subsheetid>3d4412bd-579a-4d1e-937e-12fbb756630c</subsheetid>
+    <loginhibit />
+    <preconditions>
+      <condition narrative="None." />
+    </preconditions>
+    <postconditions>
+      <condition narrative="" />
+    </postconditions>
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="collection" name="Process Names" narrative="The names of the processes to get memory statistics for" stage="Processes" />
+    </inputs>
+    <onsuccess>c64eaa40-85d5-42b9-bcfe-0e314328bccb</onsuccess>
+  </stage>
+  <stage stageid="83912618-be8e-4f5a-860a-03cc449519c4" name="End" type="End">
+    <subsheetid>3d4412bd-579a-4d1e-937e-12fbb756630c</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+    <outputs>
+      <output type="collection" name="Process Statistics" narrative="A collection of process statistics including the working set and the virtual memory size" stage="Process Statistics" />
+    </outputs>
+  </stage>
+  <stage stageid="c64eaa40-85d5-42b9-bcfe-0e314328bccb" name="Get Stats" type="Code">
+    <subsheetid>3d4412bd-579a-4d1e-937e-12fbb756630c</subsheetid>
+    <loginhibit />
+    <display x="15" y="-15" />
+    <inputs>
+      <input type="collection" name="Processes" expr="[Processes]" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="Process Statistics" stage="Process Statistics" />
+    </outputs>
+    <onsuccess>83912618-be8e-4f5a-860a-03cc449519c4</onsuccess>
+    <code><![CDATA[GC.Collect()
+Process_Statistics = New DataTable
+process_statistics.Columns.Add("Process Name", GetType(String))
+process_statistics.Columns.Add("PID", GetType(Decimal))
+process_statistics.Columns.Add("Working Set", GetType(Decimal))
+process_statistics.Columns.Add("Virtual Memory", GetType(Decimal))
+
+For Each R As DataRow in Processes.Rows
+	dim ProcName As String = CStr(R("Process Name"))
+	Dim PID As Integer = CInt(R("PID"))
+	For Each P As Process in Process.GetProcesses()
+		If P.ProcessName = ProcName OrElse P.ID = PID Then
+			Process_Statistics.Rows.Add(New Object() {P.ProcessName, P.ID, P.WorkingSet64, P.VirtualMemorySize64})
+		End If
+	Next
+Next]]></code>
+  </stage>
+  <stage stageid="2d4e55c2-5e4d-45d5-8fd3-27d58de71615" name="Processes" type="Collection">
+    <subsheetid>3d4412bd-579a-4d1e-937e-12fbb756630c</subsheetid>
+    <display x="120" y="-105" w="120" h="60" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Process Name" type="text" />
+      <field name="PID" type="number" />
+    </collectioninfo>
+    <initialvalue>
+      <row>
+        <field name="Process Name" type="text" value="Automate" />
+        <field name="PID" type="number" value="-1" />
+      </row>
+      <row>
+        <field name="Process Name" type="text" value="javaw" />
+        <field name="PID" type="number" value="-1" />
+      </row>
+    </initialvalue>
+  </stage>
+  <stage stageid="99b25e8c-cd81-4e2f-99c3-d4c8afb738fc" name="Process Statistics" type="Collection">
+    <subsheetid>3d4412bd-579a-4d1e-937e-12fbb756630c</subsheetid>
+    <display x="120" y="90" w="120" h="60" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Process Name" type="text" />
+      <field name="PID" type="number" />
+      <field name="Working Set" type="number" />
+      <field name="Virtual Memory" type="number" />
+    </collectioninfo>
+  </stage>
+  <stage stageid="f781848e-f409-4be9-aea7-4672e21e840e" name="Read Process Working Set" type="SubSheetInfo">
+    <subsheetid>7b5cc7aa-ca53-495f-a51e-4ed559efe88b</subsheetid>
+    <narrative>Gets the size of the working set for the given process.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="41b78729-d533-460b-98af-6180066d831b" name="Start" type="Start">
+    <subsheetid>7b5cc7aa-ca53-495f-a51e-4ed559efe88b</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="text" name="Process Name" narrative="The name of the process you want stats for" stage="Process Name" />
+    </inputs>
+    <onsuccess>92e54184-9c46-425a-a681-ca15d5f38671</onsuccess>
+  </stage>
+  <stage stageid="d9a48cd9-620d-4b45-87bb-cb1a223d729e" name="End" type="End">
+    <subsheetid>7b5cc7aa-ca53-495f-a51e-4ed559efe88b</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+    <outputs>
+      <output type="number" name="Working Set" narrative="The working set number holding memory stats for your process" stage="Working Set" />
+    </outputs>
+  </stage>
+  <stage stageid="92e54184-9c46-425a-a681-ca15d5f38671" name="Get Memory Set" type="Code">
+    <subsheetid>7b5cc7aa-ca53-495f-a51e-4ed559efe88b</subsheetid>
+    <loginhibit />
+    <narrative>Used += to return the total memory used by the application we are interested - just in case it is running multiple times.</narrative>
+    <display x="15" y="-15" />
+    <inputs>
+      <input type="text" name="Proc" expr="[Process Name]" />
+    </inputs>
+    <outputs>
+      <output type="number" name="Working Set" stage="Working Set" />
+    </outputs>
+    <onsuccess>d9a48cd9-620d-4b45-87bb-cb1a223d729e</onsuccess>
+    <code><![CDATA[
+For Each P As Process in Process.GetProcesses()
+	If P.ProcessName = Proc Then
+		Working_Set += P.WorkingSet64
+	End If
+Next]]></code>
+  </stage>
+  <stage stageid="2db08314-74db-4968-8a01-2fffb03cc350" name="Process Name" type="Data">
+    <subsheetid>7b5cc7aa-ca53-495f-a51e-4ed559efe88b</subsheetid>
+    <loginhibit />
+    <display x="135" y="-105" w="150" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="192be4f9-084a-4c4d-99a1-67383bb9cf30" name="Working Set" type="Data">
+    <subsheetid>7b5cc7aa-ca53-495f-a51e-4ed559efe88b</subsheetid>
+    <display x="135" y="90" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">0</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="fb42bad5-7a16-4ac1-8cc7-148cb8ad1d0f" name="Font Smoothing Enabled" type="SubSheetInfo">
+    <subsheetid>72ac1b78-ac00-4ede-b5fa-13beef468814</subsheetid>
+    <narrative>Gets the font smoothing setting for the current environment.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="ad641c65-2bb5-4746-a61c-38a70a4e0b89" name="Start" type="Start">
+    <subsheetid>72ac1b78-ac00-4ede-b5fa-13beef468814</subsheetid>
+    <loginhibit />
+    <preconditions>
+      <condition narrative="" />
+    </preconditions>
+    <display x="15" y="-105" />
+    <onsuccess>96f9fe29-f641-44ab-ab0e-a4091edaec4c</onsuccess>
+  </stage>
+  <stage stageid="9150eaee-22ec-4228-803e-123c888b87e5" name="End" type="End">
+    <subsheetid>72ac1b78-ac00-4ede-b5fa-13beef468814</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+    <outputs>
+      <output type="flag" name="Enabled" narrative="True if font smoothing is enabled" stage="Enabled?" />
+    </outputs>
+  </stage>
+  <stage stageid="96f9fe29-f641-44ab-ab0e-a4091edaec4c" name="Get Font Smoothing Enabled" type="Code">
+    <subsheetid>72ac1b78-ac00-4ede-b5fa-13beef468814</subsheetid>
+    <loginhibit />
+    <display x="15" y="-15" w="90" h="60" />
+    <outputs>
+      <output type="flag" name="Enabled" stage="Enabled?" />
+    </outputs>
+    <onsuccess>9150eaee-22ec-4228-803e-123c888b87e5</onsuccess>
+    <code><![CDATA[Enabled=System.Windows.Forms.Systeminformation.IsFontSmoothingEnabled]]></code>
+  </stage>
+  <stage stageid="d7db2bff-a394-483d-a249-bae03f688e95" name="Enabled?" type="Data">
+    <subsheetid>72ac1b78-ac00-4ede-b5fa-13beef468814</subsheetid>
+    <display x="120" y="-15" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="80a2dcaa-31dd-419b-9fd4-a61249245b1b" name="Start Process" type="SubSheetInfo">
+    <subsheetid>12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7</subsheetid>
+    <narrative>Starts a process directly with the given arguments.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="6d5177aa-21f6-4dac-b731-60fd85c76097" name="Start" type="Start">
+    <subsheetid>12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="text" name="Application" narrative="The application or short cut to start" stage="Application" />
+      <input type="text" name="Arguments" narrative="Any arguments needed for the app" stage="Arguments" />
+      <input type="flag" name="Use Shell" narrative="Optional. Boolean value that determines whether the Windows shell should be used to launch the process. Default value is True. If you experience issue launching a process, try changing this value to False." stage="Use Shell" />
+    </inputs>
+    <onsuccess>8fd5d005-95ec-43c3-acae-de13b914eb3e</onsuccess>
+  </stage>
+  <stage stageid="9c57d68b-5d25-4c88-8bb1-8f7c6aa327d3" name="End" type="End">
+    <subsheetid>12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+    <outputs>
+      <output type="number" name="Process ID" narrative="The unique identifier of the new process." stage="Process ID" />
+      <output type="text" name="Process Name" narrative="The the name of the process." stage="Process Name" />
+    </outputs>
+  </stage>
+  <stage stageid="b3401dc5-5639-4e5d-b55a-b633330db327" name="Run Process Until Ended" type="SubSheetInfo">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <narrative>Run a process and wait until completion or timeout.</narrative>
+    <display x="-195" y="-120" w="150" h="90" />
+  </stage>
+  <stage stageid="f6878e25-301c-4540-a15d-7a83dfc57a75" name="End" type="End">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <display x="-45" y="-15" />
+  </stage>
+  <stage stageid="ca8b3a6e-c15d-4b6b-bf9f-96c0675d8e04" name="Application" type="Data">
+    <subsheetid>12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7</subsheetid>
+    <loginhibit />
+    <display x="-195" y="-15" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="9d495c29-e0f2-4bdd-ac85-b7875f7b1117" name="Arguments" type="Data">
+    <subsheetid>12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7</subsheetid>
+    <loginhibit />
+    <display x="-195" y="15" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="8fd5d005-95ec-43c3-acae-de13b914eb3e" name="Start Process" type="Code">
+    <subsheetid>12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7</subsheetid>
+    <loginhibit />
+    <display x="15" y="-15" />
+    <inputs>
+      <input type="text" name="Application" expr="[Application]" />
+      <input type="text" name="Arguments" expr="[Arguments]" />
+      <input type="flag" name="Use Shell" expr="[Use Shell]" />
+    </inputs>
+    <outputs>
+      <output type="number" name="id" stage="Process ID" />
+      <output type="text" name="name" stage="Process Name" />
+    </outputs>
+    <onsuccess>9c57d68b-5d25-4c88-8bb1-8f7c6aa327d3</onsuccess>
+    <code><![CDATA[Dim processName As String = Application
+
+Dim process As New Process() With {
+	.StartInfo = New ProcessStartInfo() With {
+		.FileName = processName,
+		.Arguments = Arguments,
+		.UseShellExecute = Use_Shell
+	}
+}
+
+process.Start()
+
+id = Convert.ToInt32(process.Id)
+name = process.ProcessName
+]]></code>
+  </stage>
+  <stage stageid="085fdcca-3a7c-4a20-8b83-69add0889a54" name="Application" type="Data">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <display x="-195" y="-15" w="90" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="e53a27fe-26fe-4503-ab86-8a5208e43d80" name="Arguments" type="Data">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <display x="-195" y="15" w="90" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="0b84d4bb-deea-40c5-96eb-6adcf59fe7cf" name="Run Process" type="Code">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <display x="-45" y="-105" w="90" h="30" />
+    <inputs>
+      <input type="text" name="appn" expr="[Application]" />
+      <input type="text" name="args" expr="[Arguments]" />
+      <input type="text" name="dir" expr="[Working Folder]" />
+      <input type="timespan" name="timeout" expr="[Timeout]" />
+      <input type="flag" name="ignoreTimeout" expr="[Ignore Timeout]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="timedOut" stage="Fail Datetime Reached?" />
+    </outputs>
+    <onsuccess>7fa022c9-fce8-496a-a40b-9119406000db</onsuccess>
+    <code><![CDATA[Dim timeoutInMillisec as Integer
+Dim startTime as Date = Date.Now
+Dim info as New ProcessStartInfo(appn)
+
+timedOut = False
+
+If args <> "" Then info.Arguments = args
+If dir <> "" Then info.WorkingDirectory = dir
+
+' 20211006
+' Adjusted the logic to account for situations where the use wants the Digital Worker to
+' wait indefinitely until the specified process completes.
+If (ignoreTimeout) Then
+	timeoutInMillisec = -1 ' Infinite wait
+Else
+	timeoutInMillisec = CInt(timeout.TotalMilliseconds)
+End If
+
+Using proc As Process = Process.Start(info)
+	timedOut = Not proc.WaitForExit(timeoutInMillisec)
+End Using
+]]></code>
+  </stage>
+  <stage stageid="f0792b52-0999-4f35-a46c-513fdcc3c381" name="Timeout" type="Data">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <display x="-195" y="75" w="90" h="30" />
+    <datatype>timespan</datatype>
+    <initialvalue>0.00:00:10</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="2adaf80c-c627-4556-8b6d-64929056128b" name="Start" type="Start">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <display x="-45" y="-150" />
+    <inputs>
+      <input type="text" name="Application" narrative="The application or shortcut to start" stage="Application" />
+      <input type="text" name="Arguments" narrative="Optional - any arguments needed to run the application" stage="Arguments" />
+      <input type="text" name="Working Folder" narrative="Optional - the application working folder" stage="Working Folder" />
+      <input type="timespan" name="Timeout" narrative="How long to wait for the application to finish. Default is 10 seconds" stage="Timeout" />
+      <input type="flag" name="Ignore Timeout" narrative="Flag that indicates the Digital Worker should wait for the process to complete indefinitely. Default is False." stage="Ignore Timeout" />
+    </inputs>
+    <onsuccess>0b84d4bb-deea-40c5-96eb-6adcf59fe7cf</onsuccess>
+  </stage>
+  <stage stageid="c91ac000-31f2-44b8-a481-a878929285ae" name="Fail Datetime Reached?" type="Data">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <display x="-195" y="180" w="120" h="30" />
+    <datatype>flag</datatype>
+    <initialvalue>False</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="7fa022c9-fce8-496a-a40b-9119406000db" name="Timed Out?" type="Decision">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <display x="-45" y="-60" />
+    <decision expression="[Fail Datetime Reached?]" />
+    <ontrue>433c4289-a312-4554-bc27-6ee3c7ace153</ontrue>
+    <onfalse>f6878e25-301c-4540-a15d-7a83dfc57a75</onfalse>
+  </stage>
+  <stage stageid="433c4289-a312-4554-bc27-6ee3c7ace153" name="System Exception" type="Exception">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <display x="45" y="-60" />
+    <exception type="System Exception" detail="&quot;Application &quot; &amp; [Application] &amp; &quot; was still running after the maximum time period&quot;" />
+  </stage>
+  <stage stageid="bcdc67ee-3c90-443c-9c4f-ec02fc8ee8d2" name="Wait for Process" type="SubSheetInfo">
+    <subsheetid>13c8f06e-8a7c-4da8-b813-d5738ce5369a</subsheetid>
+    <narrative>Attach to a process and wait for it to complete.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="0dcbb991-85d4-45bb-aaa9-a8bf5da36d15" name="Start" type="Start">
+    <subsheetid>13c8f06e-8a7c-4da8-b813-d5738ce5369a</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="number" name="Maximum wait time (seconds)" narrative="The maximum time to wait for the process to complete" stage="Maximum wait time (seconds)" />
+      <input type="text" name="Process Name" narrative="The name of the process to attach to" stage="Process Name" />
+    </inputs>
+    <onsuccess>dfe0f2dc-5806-4cf9-82f3-269f9b06b03f</onsuccess>
+  </stage>
+  <stage stageid="55ae0a29-1ee0-4fd1-b077-eeb2e6f1e9dd" name="End" type="End">
+    <subsheetid>13c8f06e-8a7c-4da8-b813-d5738ce5369a</subsheetid>
+    <loginhibit />
+    <display x="15" y="60" />
+    <outputs>
+      <output type="flag" name="Found?" narrative="True=process found, false=process not found" stage="Found?" />
+    </outputs>
+  </stage>
+  <stage stageid="e1eea34b-f6e4-49b3-bcae-930f70caec29" name="Maximum wait time (seconds)" type="Data">
+    <subsheetid>13c8f06e-8a7c-4da8-b813-d5738ce5369a</subsheetid>
+    <display x="-195" y="15" w="120" h="30" />
+    <datatype>number</datatype>
+    <initialvalue>0</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="dfe0f2dc-5806-4cf9-82f3-269f9b06b03f" name="Wait for process" type="Code">
+    <subsheetid>13c8f06e-8a7c-4da8-b813-d5738ce5369a</subsheetid>
+    <loginhibit />
+    <display x="15" y="-30" />
+    <inputs>
+      <input type="text" name="Process Name" expr="[Process Name]" />
+      <input type="number" name="Max Wait" expr="[Maximum wait time (seconds)]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Found?" stage="Found?" />
+    </outputs>
+    <onsuccess>55ae0a29-1ee0-4fd1-b077-eeb2e6f1e9dd</onsuccess>
+    <code><![CDATA[Try
+	Found_ = False
+	Dim bProcFound as Boolean = False
+	Dim iLoop as Integer = 0
+	Dim myProcesses() As System.Diagnostics.Process
+	Dim instance As System.Diagnostics.Process
+	Do While bProcFound = False AND iLoop < Max_Wait
+		myProcesses = System.Diagnostics.Process.GetProcessesByName(Process_Name)
+		For Each instance In myProcesses
+			bProcFound = True
+			Found_ = True
+		Next
+		Threading.Thread.Sleep(1000)
+		iloop += 1
+	Loop
+Catch ex As Exception
+End Try]]></code>
+  </stage>
+  <stage stageid="9344b166-5d5d-4b99-bc53-0c0331b8c776" name="Found?" type="Data">
+    <subsheetid>13c8f06e-8a7c-4da8-b813-d5738ce5369a</subsheetid>
+    <display x="-195" y="90" w="120" h="30" />
+    <datatype>flag</datatype>
+    <initialvalue>False</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="8a02d7fb-31ed-4c83-92c9-9a9a7831920e" name="Process Name" type="Data">
+    <subsheetid>13c8f06e-8a7c-4da8-b813-d5738ce5369a</subsheetid>
+    <display x="-195" y="-15" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="952ca62f-afb2-4f25-adea-21d86339081c" name="Wait for Process Window" type="SubSheetInfo">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <narrative>Waits for a process with a given name has displayed a window with the given title.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="19ea35dc-66b8-406e-9eca-4c6ef4d4e0ab" name="Start" type="Start">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="text" name="Process Name" narrative="The name of the process to attach to" stage="Process Name" />
+      <input type="text" name="Window Title" narrative="The title of the window within the process" stage="Window Title" />
+      <input type="number" name="Wait" narrative="The maximum amount of time to wait for" stage="Wait" />
+    </inputs>
+    <onsuccess>d3b1986a-fa70-41e9-a8af-cd2ffc78342e</onsuccess>
+  </stage>
+  <stage stageid="b6fdc874-6a8d-405b-946e-10b6b47a6ae1" name="End" type="End">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <loginhibit />
+    <display x="15" y="75" />
+    <outputs>
+      <output type="flag" name="Found" stage="Found" />
+    </outputs>
+  </stage>
+  <stage stageid="d3b1986a-fa70-41e9-a8af-cd2ffc78342e" name="Find Process" type="Code">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <loginhibit />
+    <display x="15" y="-45" />
+    <inputs>
+      <input type="text" name="Process Name" expr="[Process Name]" />
+      <input type="text" name="Window Title" expr="[Window Title]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Found" stage="Found" />
+    </outputs>
+    <onsuccess>d0d526bd-c3dd-4eb6-bbe7-2d46cca6e06f</onsuccess>
+    <code><![CDATA[try
+
+for each p as system.diagnostics.process in system.diagnostics.process.getprocessesbyname(process_name)
+
+	if p.mainwindowtitle.trim.tolower like window_title.trim.tolower then
+		found = true
+		exit sub
+	end if
+
+next
+
+catch e as exception
+end try]]></code>
+  </stage>
+  <stage stageid="6088ca18-1f7c-4db7-84af-ccecfe1ced0f" name="Time Out2" type="WaitEnd">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <loginhibit />
+    <display x="105" y="-45" w="30" h="30" />
+    <onsuccess>d3b1986a-fa70-41e9-a8af-cd2ffc78342e</onsuccess>
+    <groupid>d8f20257-87c3-4cf6-a20e-b44dbd21ce6a</groupid>
+  </stage>
+  <stage stageid="4498756a-e9e1-4bef-86e6-3b7ed91a7439" name="Wait" type="WaitStart">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <loginhibit />
+    <display x="195" y="-45" w="30" h="30" />
+    <groupid>d8f20257-87c3-4cf6-a20e-b44dbd21ce6a</groupid>
+    <choices />
+    <timeout>0.5</timeout>
+  </stage>
+  <stage stageid="ba11e756-90e9-4cd7-a787-a41c2818e4b6" name="Count Down" type="Calculation">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <loginhibit />
+    <display x="195" y="15" />
+    <onsuccess>4498756a-e9e1-4bef-86e6-3b7ed91a7439</onsuccess>
+    <calculation expression="[Wait]-0.5" stage="Wait" />
+  </stage>
+  <stage stageid="a5225d0b-41b3-4ed2-9f7c-31461a1f262a" name="Wait?" type="Decision">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <loginhibit />
+    <display x="105" y="15" />
+    <decision expression="[Wait]&gt;0" />
+    <ontrue>ba11e756-90e9-4cd7-a787-a41c2818e4b6</ontrue>
+    <onfalse>ec831f1a-5b48-4bc2-8ceb-a362fa4e15d9</onfalse>
+  </stage>
+  <stage stageid="d0d526bd-c3dd-4eb6-bbe7-2d46cca6e06f" name="Found?" type="Decision">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <loginhibit />
+    <display x="15" y="15" />
+    <decision expression="[Found]" />
+    <ontrue>b6fdc874-6a8d-405b-946e-10b6b47a6ae1</ontrue>
+    <onfalse>a5225d0b-41b3-4ed2-9f7c-31461a1f262a</onfalse>
+  </stage>
+  <stage stageid="ec831f1a-5b48-4bc2-8ceb-a362fa4e15d9" name="anchor1" type="Anchor">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <loginhibit />
+    <display x="105" y="75" w="10" h="10" />
+    <onsuccess>b6fdc874-6a8d-405b-946e-10b6b47a6ae1</onsuccess>
+  </stage>
+  <stage stageid="00581602-0606-4a0b-8f92-3dab2b97c72d" name="Process Name" type="Data">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <display x="-195" y="-30" w="150" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="d6f981e4-e1f7-40a1-bf9e-461e118c4bf3" name="Window Title" type="Data">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <display x="-195" y="0" w="150" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="5eaecb90-3ed2-45ac-9948-5fb96f2b416a" name="Found" type="Data">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <display x="-195" y="60" w="150" h="30" />
+    <datatype>flag</datatype>
+    <initialvalue>False</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="80076f3c-7351-4c27-97b5-c8578ae2761c" name="Wait" type="Data">
+    <subsheetid>1e22dc28-2f71-421b-9687-c367358919e3</subsheetid>
+    <display x="-195" y="30" w="150" h="30" />
+    <datatype>number</datatype>
+    <initialvalue>0</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="7fc8557d-14e7-4b64-b495-23b8a7c76ef7" name="Get Clipboard" type="SubSheetInfo">
+    <subsheetid>cf31a66d-5534-4af0-9a07-433066d1a4b9</subsheetid>
+    <narrative>Gets the contents of the clipboard.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="d1de3e23-13cc-4058-95cb-5d1b72e68cac" name="Start" type="Start">
+    <subsheetid>cf31a66d-5534-4af0-9a07-433066d1a4b9</subsheetid>
+    <loginhibit />
+    <display x="15" y="-60" />
+    <onsuccess>106d82b6-72c5-41b6-af2c-3ab3709a9c4e</onsuccess>
+  </stage>
+  <stage stageid="211e889c-ac33-46c2-8c6a-3d01c6f1ae4a" name="End" type="End">
+    <subsheetid>cf31a66d-5534-4af0-9a07-433066d1a4b9</subsheetid>
+    <loginhibit />
+    <display x="15" y="30" />
+    <outputs>
+      <output type="text" name="Clipboard" narrative="The value from the clipboard." stage="Clipboard" />
+    </outputs>
+  </stage>
+  <stage stageid="106d82b6-72c5-41b6-af2c-3ab3709a9c4e" name="Get" type="Calculation">
+    <subsheetid>cf31a66d-5534-4af0-9a07-433066d1a4b9</subsheetid>
+    <loginhibit />
+    <display x="15" y="-15" />
+    <onsuccess>211e889c-ac33-46c2-8c6a-3d01c6f1ae4a</onsuccess>
+    <calculation expression="GetClipboard()" stage="Clipboard" />
+  </stage>
+  <stage stageid="0634315f-c572-4cf9-8727-98308e50c2c2" name="Clipboard" type="Data">
+    <subsheetid>cf31a66d-5534-4af0-9a07-433066d1a4b9</subsheetid>
+    <display x="90" y="-15" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="62bf25c7-7263-4fb3-bef2-20c9d9c2113d" name="Set Clipboard" type="SubSheetInfo">
+    <subsheetid>cf9f6573-f06c-4ab6-9672-34d2e644415e</subsheetid>
+    <narrative>Sets the contents of the clipboard.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="57eca987-ec5e-485a-a03b-40c653f72a34" name="Start" type="Start">
+    <subsheetid>cf9f6573-f06c-4ab6-9672-34d2e644415e</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="text" name="Clipboard" narrative="The value to set the clipboard to." stage="Clipboard" />
+    </inputs>
+    <onsuccess>1e934dc5-5507-4854-bf49-df3d1e55998f</onsuccess>
+  </stage>
+  <stage stageid="d2b91dd7-f7a4-45e5-8b5c-8f867e6be05c" name="End" type="End">
+    <subsheetid>cf9f6573-f06c-4ab6-9672-34d2e644415e</subsheetid>
+    <loginhibit />
+    <display x="15" y="75" />
+  </stage>
+  <stage stageid="54826c34-2991-4964-b0a3-0e0a2f951f29" name="Set" type="Code">
+    <subsheetid>cf9f6573-f06c-4ab6-9672-34d2e644415e</subsheetid>
+    <loginhibit />
+    <display x="15" y="30" />
+    <inputs>
+      <input type="text" name="Clipboard" expr="[Clipboard]" />
+    </inputs>
+    <onsuccess>d2b91dd7-f7a4-45e5-8b5c-8f867e6be05c</onsuccess>
+    <code><![CDATA['System.Windows.Forms.Clipboard.SetDataObject(Clipboard)
+
+Dim thread As New Thread(
+	Sub(ByVal data As Object)
+		System.Windows.Forms.Clipboard.SetText(data)
+	End Sub
+)
+thread.SetApartmentState(ApartmentState.STA)
+thread.Start(Clipboard)
+thread.join()]]></code>
+  </stage>
+  <stage stageid="121f76bc-6b69-43a4-9484-16729e37267b" name="Clipboard" type="Data">
+    <subsheetid>cf9f6573-f06c-4ab6-9672-34d2e644415e</subsheetid>
+    <display x="-195" y="-15" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="b8fa4afe-4c2c-409d-9691-e213b773c434" name="Clear Clipboard" type="SubSheetInfo">
+    <subsheetid>50ea2955-c157-4803-b16c-fea2255ce9e2</subsheetid>
+    <narrative>Clears the clipboard contents.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="706b08af-a9e1-4484-8c41-b06b8e76af1e" name="Start" type="Start">
+    <subsheetid>50ea2955-c157-4803-b16c-fea2255ce9e2</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <onsuccess>d1113981-40f5-450a-8b7e-e059eed37e76</onsuccess>
+  </stage>
+  <stage stageid="e13b6d4e-e05c-491e-ace6-54389e4a99fb" name="End" type="End">
+    <subsheetid>50ea2955-c157-4803-b16c-fea2255ce9e2</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+  </stage>
+  <stage stageid="d1113981-40f5-450a-8b7e-e059eed37e76" name="Set Clipboard" type="SubSheet">
+    <subsheetid>50ea2955-c157-4803-b16c-fea2255ce9e2</subsheetid>
+    <loginhibit />
+    <display x="15" y="-15" />
+    <inputs>
+      <input type="text" name="Clipboard" narrative="The value to set the clipboard to." expr="Chr(0)" />
+    </inputs>
+    <onsuccess>e13b6d4e-e05c-491e-ace6-54389e4a99fb</onsuccess>
+    <processid>cf9f6573-f06c-4ab6-9672-34d2e644415e</processid>
+  </stage>
+  <stage stageid="15c6de75-886d-492c-8c12-5f0de483e1f7" name="Get User Name" type="SubSheetInfo">
+    <subsheetid>b6e051bf-8afe-4ea3-9ae0-52eee58eec76</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="a6bce0ea-b898-4abc-9a4f-bcfce32b3bb9" name="Start" type="Start">
+    <subsheetid>b6e051bf-8afe-4ea3-9ae0-52eee58eec76</subsheetid>
+    <loginhibit />
+    <display x="-60" y="-135" />
+    <onsuccess>c731c906-58b6-4969-bd70-b7ecd7fa47ae</onsuccess>
+  </stage>
+  <stage stageid="ddc4be1a-94ee-4487-b6dc-0f12e4fc40ae" name="End" type="End">
+    <subsheetid>b6e051bf-8afe-4ea3-9ae0-52eee58eec76</subsheetid>
+    <loginhibit />
+    <display x="-60" y="-45" />
+    <outputs>
+      <output type="text" name="User Name" narrative="The name of the logged in user in the current system" stage="Username" />
+    </outputs>
+  </stage>
+  <stage stageid="c731c906-58b6-4969-bd70-b7ecd7fa47ae" name="GetUserName" type="Code">
+    <subsheetid>b6e051bf-8afe-4ea3-9ae0-52eee58eec76</subsheetid>
+    <loginhibit />
+    <display x="-60" y="-90" w="90" h="30" />
+    <outputs>
+      <output type="text" name="username" stage="Username" />
+    </outputs>
+    <onsuccess>ddc4be1a-94ee-4487-b6dc-0f12e4fc40ae</onsuccess>
+    <code><![CDATA[
+username = Environment.UserName]]></code>
+  </stage>
+  <stage stageid="b3608be8-eeaa-4984-891b-4d8c705ac7f4" name="Username" type="Data">
+    <subsheetid>b6e051bf-8afe-4ea3-9ae0-52eee58eec76</subsheetid>
+    <display x="-195" y="-30" w="90" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="b47157dd-5fca-4b0b-989b-b23a03641f3f" name="Get Machine Name" type="SubSheetInfo">
+    <subsheetid>c556a801-8bd8-4e0e-bf8e-2dd6b5642063</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="b4f26fd0-6cfa-4de8-b62a-fd9c09f47be4" name="Start" type="Start">
+    <subsheetid>c556a801-8bd8-4e0e-bf8e-2dd6b5642063</subsheetid>
+    <loginhibit />
+    <display x="-45" y="-135" />
+    <onsuccess>61db579f-944a-4ba8-aedc-bdf80bc31cb7</onsuccess>
+  </stage>
+  <stage stageid="a69b53e7-8e67-4383-9b6f-28c57c9a82eb" name="End" type="End">
+    <subsheetid>c556a801-8bd8-4e0e-bf8e-2dd6b5642063</subsheetid>
+    <loginhibit />
+    <display x="-45" y="-45" />
+    <outputs>
+      <output type="text" name="Machine Name" narrative="The hostname of the machine running this action" stage="Machine Name" />
+    </outputs>
+  </stage>
+  <stage stageid="61db579f-944a-4ba8-aedc-bdf80bc31cb7" name="GetMachineName" type="Code">
+    <subsheetid>c556a801-8bd8-4e0e-bf8e-2dd6b5642063</subsheetid>
+    <loginhibit />
+    <display x="-45" y="-90" w="120" h="30" />
+    <outputs>
+      <output type="text" name="machineName" stage="Machine Name" />
+    </outputs>
+    <onsuccess>a69b53e7-8e67-4383-9b6f-28c57c9a82eb</onsuccess>
+    <code><![CDATA[
+machineName = Environment.MachineName]]></code>
+  </stage>
+  <stage stageid="e3b5bdc7-5646-4f63-b78b-c9824a496d2f" name="Machine Name" type="Data">
+    <subsheetid>c556a801-8bd8-4e0e-bf8e-2dd6b5642063</subsheetid>
+    <display x="-195" y="-30" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="94b4d694-3e3a-4bb2-bcb6-15a401f31b76" name="Working Folder" type="Data">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <loginhibit />
+    <display x="-195" y="45" w="90" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="dc49d63c-0e29-422f-b99c-4689f5b5afd1" name="Input Args" type="Block">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <loginhibit />
+    <display x="-270" y="-45" w="150" h="180" />
+    <font family="Tahoma" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="91242c6b-8086-4fd1-99ea-efb0549f2517" name="Variables" type="Block">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <loginhibit />
+    <display x="-270" y="150" w="150" h="60" />
+    <font family="Tahoma" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="fe09088f-160d-4f5e-af9d-a2cf44a91d21" name="Start Process Read Stderr and Stdout" type="SubSheetInfo">
+    <subsheetid>80ee143b-0379-4ba5-b13f-5d42dde3160d</subsheetid>
+    <narrative>Starts a process with the given arguments, reads from the standard output and standard error until the process exits, and outputs them in seperate data items.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="56b0bbbe-2836-41b5-8ccf-30fa098e975f" name="Start" type="Start">
+    <subsheetid>80ee143b-0379-4ba5-b13f-5d42dde3160d</subsheetid>
+    <loginhibit />
+    <display x="-15" y="-90" />
+    <inputs>
+      <input type="text" name="Process Name" narrative="The name of the process to start." stage="Process Name" />
+      <input type="text" name="Arguments" narrative="The arguments that coincide with the process." stage="Arguments" />
+      <input type="number" name="Timeout" narrative="Optional: The number of milliseconds to wait for the process to exit. Default value is -1 which waits indefinitely." stage="Timeout" />
+    </inputs>
+    <onsuccess>d8552129-84eb-4d65-8bee-d06820fb6e5f</onsuccess>
+  </stage>
+  <stage stageid="e9699401-5328-4e3b-ad11-bd29880236e4" name="End" type="End">
+    <subsheetid>80ee143b-0379-4ba5-b13f-5d42dde3160d</subsheetid>
+    <loginhibit />
+    <display x="-15" y="30" />
+    <outputs>
+      <output type="text" name="Standard Output" stage="Standard Output" />
+      <output type="text" name="Standard Error" stage="Standard Error" />
+    </outputs>
+  </stage>
+  <stage stageid="1a31c8d4-725e-4b41-8b64-72ff5feccd2f" name="Arguments" type="Data">
+    <subsheetid>80ee143b-0379-4ba5-b13f-5d42dde3160d</subsheetid>
+    <display x="-195" y="-15" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="d8552129-84eb-4d65-8bee-d06820fb6e5f" name="Run Process read Output" type="Code">
+    <subsheetid>80ee143b-0379-4ba5-b13f-5d42dde3160d</subsheetid>
+    <loginhibit />
+    <display x="-15" y="-30" />
+    <inputs>
+      <input type="text" name="Argument" expr="[Arguments]" />
+      <input type="text" name="Process Name" expr="[Process Name]" />
+      <input type="number" name="Timeout" expr="[Timeout]" />
+    </inputs>
+    <outputs>
+      <output type="text" name="Standard Output" stage="Standard Output" />
+      <output type="text" name="Standard Error" stage="Standard Error" />
+    </outputs>
+    <onsuccess>e9699401-5328-4e3b-ad11-bd29880236e4</onsuccess>
+    <code><![CDATA[' create a Process object
+Dim startInfo As New ProcessStartInfo()
+startInfo.FileName = Process_Name
+startInfo.Arguments = Argument
+startInfo.RedirectStandardOutput = True
+startInfo.RedirectStandardError = True
+startInfo.UseShellExecute = False
+startInfo.CreateNoWindow = False
+
+Dim process As New Process()
+process.StartInfo = startInfo
+
+' add handlers to read stdout and stderr content
+Dim stdOutput As String = ""
+Dim stdError As String = ""
+AddHandler process.OutputDataReceived, Sub(sender, args)
+											If args.Data IsNot Nothing Then
+												stdOutput += args.Data
+											End If
+										End Sub
+AddHandler process.ErrorDataReceived, Sub(sender, args)
+											If args.Data IsNot Nothing Then
+												stdError += args.Data
+											End If
+										End Sub
+
+' run process until exit or timeout
+Try
+	process.Start()
+	process.BeginOutputReadLine()
+	process.BeginErrorReadLine()
+
+	Dim timeoutTask As Task = Task.Delay(timeout)
+	Dim processExitTask As Task = Task.Run(Sub() process.WaitForExit())
+
+	If Task.WhenAny(timeoutTask, processExitTask).Result Is timeoutTask Then
+		Dim timeoutMessage As String = Environment.NewLine & "Timeout reached: " & timeout & "ms"
+		Standard_Output = stdOutput & timeoutMessage
+		Standard_Error += stdError & timeoutMessage
+		process.Kill()
+	Else
+		process.WaitForExit()
+		Standard_Output = stdOutput
+		Standard_Error = stdError
+	End If
+	
+
+Catch ex As Exception
+	Standard_Output = stdOutput
+	Standard_Error = stdError & Environment.NewLine & "Code stage error: " & ex.Message
+
+Finally
+	If process IsNot Nothing Then
+		process.Dispose()
+	End If
+End Try]]></code>
+  </stage>
+  <stage stageid="458272d5-fe32-4588-9ef3-7af2fbacdf25" name="Standard Output" type="Data">
+    <subsheetid>80ee143b-0379-4ba5-b13f-5d42dde3160d</subsheetid>
+    <display x="-195" y="150" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="a63c7a4b-9add-4e2e-8f28-e8886b11dee1" name="Standard Error" type="Data">
+    <subsheetid>80ee143b-0379-4ba5-b13f-5d42dde3160d</subsheetid>
+    <display x="-195" y="120" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="1fe26b2b-6b1d-4e63-9679-97779a9da64f" name="Inputs" type="Block">
+    <subsheetid>80ee143b-0379-4ba5-b13f-5d42dde3160d</subsheetid>
+    <loginhibit />
+    <display x="-270" y="-45" w="150" h="120" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="679cebbb-478d-4647-9cf9-6459799440aa" name="Outputs" type="Block">
+    <subsheetid>80ee143b-0379-4ba5-b13f-5d42dde3160d</subsheetid>
+    <loginhibit />
+    <display x="-270" y="90" w="150" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="CCFFCC" />
+  </stage>
+  <stage stageid="8f6e9278-4ab8-4754-935f-66082c13a038" name="Process Name" type="Data">
+    <subsheetid>80ee143b-0379-4ba5-b13f-5d42dde3160d</subsheetid>
+    <display x="-195" y="15" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="39258065-1e18-4bab-a733-c1dca96896e6" name="Note2" type="Note">
+    <narrative>© 2024 Blue Prism Limited
+Licensed under the Blue Prism Asset Terms for Modifiable Assets
+https://portal.blueprism.com/agreements</narrative>
+    <display x="255" y="-45" w="300" h="90" />
+    <font family="Segoe UI" size="12" style="Regular" color="0000FF" />
+  </stage>
+  <stage stageid="e5477667-caa7-4629-93e7-0f375600a7fb" name="Ignore Timeout" type="Data">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <display x="-195" y="105" w="90" h="30" />
+    <datatype>flag</datatype>
+    <initialvalue>False</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="0eb2c15b-34c0-40ed-b0df-53cf297023e3" name="Version Info" type="Note">
+    <loginhibit />
+    <narrative>Version: 10.1.8</narrative>
+    <display x="15" y="-195" w="120" h="30" />
+    <font family="Segoe UI" size="14" style="Bold" color="FF0000" />
+  </stage>
+  <stage stageid="b9cc5d73-bc01-42f2-9e63-b22a31808b03" name="Note3" type="Note">
+    <subsheetid>29015311-1659-438e-b7b6-b8ff65e4a840</subsheetid>
+    <loginhibit />
+    <narrative>20201006
+The Ignore Timeout flag was added to addres an issue with using a TimeSpan to specify the timeout value. If the user wants the process to wait indefinitely for the process to complete the timeout value needs to be -1. However, you cannot create a TimeSpan with a millisecond value of -1 using the Blue Prism MakeTimeSpan() function. To address this, we added a flag that controls how to code stage handled the timeout value. By doing this we don't break existing deployments that actually make use of the TimeSpan data type for inputting the timeout.</narrative>
+    <display x="135" y="105" w="240" h="180" />
+    <font family="Segoe UI" size="10" style="Regular" color="0000FF" />
+  </stage>
+  <stage stageid="4b28b3ae-fdee-4d06-90fb-6881322015b1" name="Process ID" type="Data">
+    <subsheetid>12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7</subsheetid>
+    <display x="-195" y="120" w="120" h="30" />
+    <datatype>number</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="9d967be0-455d-446f-8d7d-7f18f61f2a08" name="Input" type="Block">
+    <subsheetid>12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7</subsheetid>
+    <loginhibit />
+    <display x="-270" y="-45" w="150" h="120" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="d58ed3fd-2939-4a66-bde7-6b06b5f710d5" name="Output" type="Block">
+    <subsheetid>12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7</subsheetid>
+    <loginhibit />
+    <display x="-270" y="90" w="150" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="CCFFCC" />
+  </stage>
+  <stage stageid="0076035f-2a9f-4ef2-b4cf-9395c86a3cb0" name="Process Name" type="Data">
+    <subsheetid>12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7</subsheetid>
+    <display x="-195" y="150" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="028c8f92-1eee-46ba-bcde-d1df49193821" name="Process ID" type="Data">
+    <subsheetid>e5864a25-e7a2-430a-9045-78a116e64701</subsheetid>
+    <display x="-195" y="15" w="120" h="30" />
+    <datatype>number</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="45fc84ee-d467-4eb1-bf86-5e843f8298cb" name="Input" type="Block">
+    <subsheetid>e5864a25-e7a2-430a-9045-78a116e64701</subsheetid>
+    <loginhibit />
+    <display x="-270" y="-45" w="150" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="b4b400cb-3262-4692-9566-cb02ffc65918" name="Timeout" type="Data">
+    <subsheetid>80ee143b-0379-4ba5-b13f-5d42dde3160d</subsheetid>
+    <display x="-195" y="45" w="120" h="30" />
+    <datatype>number</datatype>
+    <initialvalue>-1</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="a8e06466-b698-4e3a-8cbb-400cd5ef2ec1" name="Input" type="Block">
+    <subsheetid>13c8f06e-8a7c-4da8-b813-d5738ce5369a</subsheetid>
+    <loginhibit />
+    <display x="-270" y="-45" w="150" h="90" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="0f92247e-231b-4e64-9766-9c660ec5d9fb" name="Output" type="Block">
+    <subsheetid>13c8f06e-8a7c-4da8-b813-d5738ce5369a</subsheetid>
+    <loginhibit />
+    <display x="-270" y="60" w="150" h="60" />
+    <font family="Segoe UI" size="10" style="Regular" color="CCFFCC" />
+  </stage>
+  <stage stageid="aba4896e-b6ee-4369-a4ed-fe544be66f4c" name="Set Screen Resolution" type="SubSheetInfo">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <narrative>Sets the resolution of the screen in pixels for the current environment.</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="668bec5c-c280-4584-aa65-ce658e46ee1d" name="Start" type="Start">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <loginhibit />
+    <preconditions>
+      <condition narrative="The specified resolution must be supported by the system." />
+    </preconditions>
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="number" name="Vertical Resolution" stage="Vertical Resolution" />
+      <input type="number" name="Horizontal Resolution" stage="Horizontal Resolution" />
+    </inputs>
+    <onsuccess>e060664b-b423-4175-b38c-3ea531203b49</onsuccess>
+  </stage>
+  <stage stageid="c6bd6956-f378-418e-8880-30d84f5acad6" name="End" type="End">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <loginhibit />
+    <display x="15" y="75" />
+    <outputs>
+      <output type="number" name="Horizontal Resolution" narrative="The number of pixels in the horizontal screen axis" stage="Horizontal Resolution" />
+      <output type="number" name="Vertical Resolution" narrative="The number of pixels in the vertical screen axis" stage="Vertical Resolution" />
+      <output type="flag" name="Success" narrative="A Flag indicating success or failure of the action." stage="Success" />
+      <output type="number" name="Return Code" narrative="The numeric return code returned by the operating system." stage="Return Code" />
+    </outputs>
+  </stage>
+  <stage stageid="a627499e-61aa-4abe-acc1-f16ae3866118" name="Horizontal Resolution" type="Data">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <display x="-240" y="-15" />
+    <datatype>number</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="2203c5fe-9233-44d9-b5aa-0fa81bb4d016" name="Vertical Resolution" type="Data">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <display x="-180" y="-15" />
+    <datatype>number</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="5e7d661e-1347-404d-9773-b20b66982d72" name="Timeout" type="Data">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <loginhibit />
+    <display x="-120" y="-15" />
+    <datatype>timespan</datatype>
+    <initialvalue>0.00:00:30</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="d4a94b84-c140-4d74-9ece-7b75b2548a30" name="Note1" type="Note">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <loginhibit />
+    <narrative>Note: Make sure you only pass in the screen resolution that is supported</narrative>
+    <display x="210" y="-150" w="240" h="60" />
+    <font family="Segoe UI" size="16" style="Bold" color="FF0000" />
+  </stage>
+  <stage stageid="e060664b-b423-4175-b38c-3ea531203b49" name="Set Screen Resolution" type="Code">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <loginhibit />
+    <display x="15" y="-45" />
+    <inputs>
+      <input type="number" name="Horizontal" expr="[Horizontal Resolution]" />
+      <input type="number" name="Vertical" expr="[Vertical Resolution]" />
+    </inputs>
+    <outputs>
+      <output type="flag" name="Success" stage="Success" />
+      <output type="number" name="Return Code" stage="Return Code" />
+    </outputs>
+    <onsuccess>a06cb66a-a25f-4170-9364-4fa4104a9393</onsuccess>
+    <code><![CDATA[' Set the default return value.
+Success = False
+Return_Code = -2
+
+Dim screen As Screen = screen.PrimaryScreen
+Dim iWidth As Integer = Horizontal
+Dim iHeight As Integer = Vertical
+Dim dm As DEVMODE1 = New DEVMODE1
+
+dm.dmDeviceName = New String(New Char(32) {})
+dm.dmFormName = New String(New Char(32) {})
+dm.dmSize = CType(Marshal.SizeOf(dm), Short)
+
+Dim modeIndex as Integer = 0
+Do While (User_32.EnumDisplaySettings(Nothing, modeIndex, dm) > 0)
+	If ((dm.dmPelsWidth = iWidth) And (dm.dmPelsHeight = iHeight)) Then
+		Dim iRet As Integer = User_32.ChangeDisplaySettings(dm, User_32.CDS_TEST)
+		If iRet = User_32.DISP_CHANGE_FAILED Then
+			Success = False
+		Else
+			iRet = User_32.ChangeDisplaySettings(dm, User_32.CDS_UPDATEREGISTRY)
+		
+			Select Case iRet
+				Case User_32.DISP_CHANGE_SUCCESSFUL
+					' Success!!
+					Success = True
+				Case Else
+					Success = False
+			End Select
+		End If	
+		Return_Code = iRet
+		Exit Do
+	End If
+	modeIndex = modeIndex + 1
+Loop]]></code>
+  </stage>
+  <stage stageid="7a2691fe-9374-4184-ac69-a0c99d14f257" name="Success" type="Data">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <display x="105" y="-45" />
+    <datatype>flag</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="a06cb66a-a25f-4170-9364-4fa4104a9393" name="Success?" type="Decision">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <loginhibit />
+    <display x="15" y="15" />
+    <decision expression="[Success] = True" />
+    <ontrue>c6bd6956-f378-418e-8880-30d84f5acad6</ontrue>
+    <onfalse>d317d7bf-2ed3-4b48-8e0c-62e5598f7a11</onfalse>
+  </stage>
+  <stage stageid="d317d7bf-2ed3-4b48-8e0c-62e5598f7a11" name="Clear Dimensions" type="MultipleCalculation">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <loginhibit />
+    <display x="105" y="15" />
+    <onsuccess>c6bd6956-f378-418e-8880-30d84f5acad6</onsuccess>
+    <steps>
+      <calculation expression="0" stage="Horizontal Resolution" />
+      <calculation expression="0" stage="Vertical Resolution" />
+    </steps>
+  </stage>
+  <stage stageid="53a8d868-af7c-43cd-826e-000b927101dd" name="Return Code" type="Data">
+    <subsheetid>a1f1d9b6-bb36-4449-a41f-abe80db43c70</subsheetid>
+    <display x="-180" y="30" />
+    <datatype>number</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="9d1c2600-75fb-4131-9fc3-e8ea80597586" name="Use Shell" type="Data">
+    <subsheetid>12ea7001-8ac4-4a2f-a00d-9b6e3a9583f7</subsheetid>
+    <display x="-195" y="45" w="120" h="30" />
+    <datatype>flag</datatype>
+    <initialvalue>True</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="8e694b92-fe89-43a0-bf62-33370a1e844e" name="Clean Up" type="SubSheetInfo">
+    <subsheetid>fd494d31-daad-4e53-a0be-892311ddfc9b</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="a6e4c30c-535d-4c09-bbd8-5d384bbb8a35" name="Start" type="Start">
+    <subsheetid>fd494d31-daad-4e53-a0be-892311ddfc9b</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <onsuccess>8b25238a-79e9-40d3-80f6-810d9937f1da</onsuccess>
+  </stage>
+  <stage stageid="8b25238a-79e9-40d3-80f6-810d9937f1da" name="End" type="End">
+    <subsheetid>fd494d31-daad-4e53-a0be-892311ddfc9b</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+  </stage>
+  <stage stageid="1e934dc5-5507-4854-bf49-df3d1e55998f" name="Is Empty?" type="Decision">
+    <subsheetid>cf9f6573-f06c-4ab6-9672-34d2e644415e</subsheetid>
+    <loginhibit />
+    <display x="15" y="-60" />
+    <decision expression="Len(Trim([Clipboard])) = 0" />
+    <ontrue>bcb5c983-a5fb-4b30-b14f-7a1509fff980</ontrue>
+    <onfalse>8f17525a-5aad-4508-8219-fc409bcb0681</onfalse>
+  </stage>
+  <stage stageid="bcb5c983-a5fb-4b30-b14f-7a1509fff980" name="Set Value" type="Calculation">
+    <subsheetid>cf9f6573-f06c-4ab6-9672-34d2e644415e</subsheetid>
+    <loginhibit />
+    <display x="15" y="-15" />
+    <onsuccess>54826c34-2991-4964-b0a3-0e0a2f951f29</onsuccess>
+    <calculation expression="Chr(0)" stage="Clipboard" />
+  </stage>
+  <stage stageid="8f17525a-5aad-4508-8219-fc409bcb0681" name="Anchor1" type="Anchor">
+    <subsheetid>cf9f6573-f06c-4ab6-9672-34d2e644415e</subsheetid>
+    <loginhibit />
+    <display x="75" y="-60" w="10" h="10" />
+    <onsuccess>9f34b3eb-71cb-467a-9c05-7cf9c2c267b8</onsuccess>
+  </stage>
+  <stage stageid="9f34b3eb-71cb-467a-9c05-7cf9c2c267b8" name="Anchor2" type="Anchor">
+    <subsheetid>cf9f6573-f06c-4ab6-9672-34d2e644415e</subsheetid>
+    <loginhibit />
+    <display x="75" y="30" w="10" h="10" />
+    <onsuccess>54826c34-2991-4964-b0a3-0e0a2f951f29</onsuccess>
+  </stage>
+  <stage stageid="ca8701cd-9470-4aaf-9bab-6b0b35610381" name="Input" type="Block">
+    <subsheetid>cf9f6573-f06c-4ab6-9672-34d2e644415e</subsheetid>
+    <loginhibit />
+    <display x="-270" y="-45" w="150" h="60" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+</process>
