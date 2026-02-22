@@ -5,7 +5,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        ProcessExporter exporter = new ProcessExporter();
+        ExporterCLI exporter = new ExporterCLI();
         exporter.ExportProcess();
     }
 }
