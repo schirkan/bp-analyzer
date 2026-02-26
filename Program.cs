@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using BPAnalyzer;
 
 class Program
 {
@@ -14,12 +15,82 @@ class Program
         // Wenn Argumente übergeben wurden, verwende den CLI-Modus
         if (args.Length > 0)
         {
+            // Prüfen auf Code-Generierungs-Modus
+            if (args[0].Equals("--codegen", StringComparison.OrdinalIgnoreCase))
+            {
+                HandleCodeGen(args);
+                return;
+            }
+
             HandleCommandLineArgs(args, exporter);
         }
         else
         {
             // Interaktiver Modus
             exporter.ExportProcess();
+        }
+    }
+
+    /// <summary>
+    /// Behandelt die Code-Generierung aus BluePrism XML-Dateien
+    /// </summary>
+    static void HandleCodeGen(string[] args)
+    {
+        string? xmlDirectory = null;
+        string? outputDirectory = null;
+
+        for (int i = 1; i < args.Length; i++)
+        {
+            string arg = args[i];
+
+            if (arg.StartsWith("--xml=", StringComparison.OrdinalIgnoreCase))
+            {
+                xmlDirectory = arg.Substring("--xml=".Length);
+            }
+            else if (arg.StartsWith("--output=", StringComparison.OrdinalIgnoreCase))
+            {
+                outputDirectory = arg.Substring("--output=".Length);
+            }
+            else if (!arg.StartsWith("-"))
+            {
+                if (xmlDirectory == null) xmlDirectory = arg;
+                else if (outputDirectory == null) outputDirectory = arg;
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(xmlDirectory))
+        {
+            xmlDirectory = "xml";
+        }
+
+        if (string.IsNullOrWhiteSpace(outputDirectory))
+        {
+            outputDirectory = "output";
+        }
+
+        if (!System.IO.Directory.Exists(xmlDirectory))
+        {
+            Console.WriteLine($"Fehler: XML-Verzeichnis nicht gefunden: {xmlDirectory}");
+            return;
+        }
+
+        Console.WriteLine("=== BluePrism VB.NET Code-Generierung ===");
+        Console.WriteLine($"XML-Verzeichnis: {xmlDirectory}");
+        Console.WriteLine($"Ausgabeverzeichnis: {outputDirectory}");
+        Console.WriteLine();
+
+        try
+        {
+            var codeGen = new BluePrismCodeGen(outputDirectory);
+            codeGen.GenerateAll(xmlDirectory);
+
+            Console.WriteLine();
+            Console.WriteLine("Code-Generierung abgeschlossen!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fehler: {ex.Message}");
+            Environment.ExitCode = 1;
         }
     }
 
