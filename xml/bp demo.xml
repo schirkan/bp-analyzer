@@ -1,0 +1,221 @@
+﻿<process name="bp demo" version="1.0" bpversion="7.5.0.17125" cpeversion="10.0.110.0" narrative="This page is like the class constructor" byrefcollection="true" processrunningmessage="" disableversioning="false" type="object" runmode="Exclusive" preferredid="4afb82b2-256d-4ac4-8322-48f4316aabe8">
+  <appdef>
+    <element name="Application Root">
+      <id>fa5c9b05-0903-45fe-a149-756bbc9a9736</id>
+      <type>Application</type>
+      <basetype>Application</basetype>
+      <datatype>unknown</datatype>
+      <diagnose>False</diagnose>
+    </element>
+  </appdef>
+  <view>
+    <camerax>0</camerax>
+    <cameray>0</cameray>
+    <zoom version="2">1.25</zoom>
+  </view>
+  <preconditions />
+  <endpoint narrative="" />
+  <subsheet subsheetid="bb1f0c8f-580f-4228-96d3-ef47dd966a37" type="CleanUp" published="True">
+    <name>Clean Up</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="88732eb0-daa0-4bbe-9a36-39f2f23b00f9" type="Normal" published="True">
+    <name>MyPublicAction</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="d448f24d-bfbf-42c9-9ee8-35bcdb734774" type="Normal" published="False">
+    <name>InteralAction</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <stage stageid="3e217882-7a58-4d0a-9ee5-ff99cab424cb" name="Start" type="Start">
+    <loginhibit />
+    <display x="-30" y="-135" />
+    <onsuccess>5b1a9c0b-03f0-4ed1-8597-8334052f27eb</onsuccess>
+  </stage>
+  <stage stageid="5b1a9c0b-03f0-4ed1-8597-8334052f27eb" name="End" type="End">
+    <loginhibit />
+    <display x="-30" y="-75" />
+  </stage>
+  <stage stageid="b03723b0-76b1-4d1e-8166-6387cdbe35dd" name="Stage1" type="ProcessInfo">
+    <display x="-195" y="-105" w="150" h="90" />
+    <references>
+      <reference>System.dll</reference>
+      <reference>System.Data.dll</reference>
+      <reference>System.Xml.dll</reference>
+      <reference>System.Drawing.dll</reference>
+    </references>
+    <imports>
+      <import>System</import>
+      <import>System.Drawing</import>
+      <import>System.Data</import>
+    </imports>
+    <language>visualbasic</language>
+    <pythondllpath>
+    </pythondllpath>
+    <pythonenvpath>
+    </pythonenvpath>
+    <globalcode><![CDATA[]]></globalcode>
+    <code><![CDATA[]]></code>
+  </stage>
+  <stage stageid="40537a55-8fb0-41dd-89d0-97baee1197fd" name="Clean Up" type="SubSheetInfo">
+    <subsheetid>bb1f0c8f-580f-4228-96d3-ef47dd966a37</subsheetid>
+    <narrative>This page is like the class destructor</narrative>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="c154ae30-e42b-46ad-8cd3-725738b66cba" name="Start" type="Start">
+    <subsheetid>bb1f0c8f-580f-4228-96d3-ef47dd966a37</subsheetid>
+    <loginhibit />
+    <display x="-30" y="-135" />
+    <onsuccess>29330249-fa1d-4eb4-bffa-92c11f327cf0</onsuccess>
+  </stage>
+  <stage stageid="29330249-fa1d-4eb4-bffa-92c11f327cf0" name="End" type="End">
+    <subsheetid>bb1f0c8f-580f-4228-96d3-ef47dd966a37</subsheetid>
+    <loginhibit />
+    <display x="-30" y="-75" />
+  </stage>
+  <stage stageid="322b5384-901a-489e-8f42-5059acf253be" name="MyPublicAction" type="SubSheetInfo">
+    <subsheetid>88732eb0-daa0-4bbe-9a36-39f2f23b00f9</subsheetid>
+    <narrative>return the first two chars of a VNR</narrative>
+    <display x="-150" y="-75" w="150" h="90" />
+  </stage>
+  <stage stageid="f19d3568-74ff-42f6-9cb8-722982b0a04c" name="Start" type="Start">
+    <subsheetid>88732eb0-daa0-4bbe-9a36-39f2f23b00f9</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="text" name="VNR" narrative="Vertragsnummer (LF123456789)" stage="VNR" />
+    </inputs>
+    <onsuccess>402fa590-a68f-412f-9662-7d9affd096bf</onsuccess>
+  </stage>
+  <stage stageid="874d3dd7-cc13-4d3f-a2ba-cef7c8de0ee7" name="End" type="End">
+    <subsheetid>88732eb0-daa0-4bbe-9a36-39f2f23b00f9</subsheetid>
+    <loginhibit />
+    <display x="15" y="15" />
+    <outputs>
+      <output type="text" name="VerwSysSl" narrative="Verwaltungssystem Schlüssel" stage="VerwSysSl" />
+    </outputs>
+  </stage>
+  <stage stageid="f1b5bd74-e158-44cf-bd2a-b94f5fbac7a0" name="VNR" type="Data">
+    <subsheetid>88732eb0-daa0-4bbe-9a36-39f2f23b00f9</subsheetid>
+    <display x="-150" y="15" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="398c55a6-351b-4658-b565-ba78834d3101" name="VerwSysSl" type="Data">
+    <subsheetid>88732eb0-daa0-4bbe-9a36-39f2f23b00f9</subsheetid>
+    <display x="-150" y="105" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="c877d646-25e3-4180-9c5e-1c9c63d26da7" name="Try Catch" type="Block">
+    <subsheetid>88732eb0-daa0-4bbe-9a36-39f2f23b00f9</subsheetid>
+    <loginhibit />
+    <display x="-30" y="-75" w="180" h="60" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
+  </stage>
+  <stage stageid="402fa590-a68f-412f-9662-7d9affd096bf" name="Set VerwSysSl" type="Calculation">
+    <subsheetid>88732eb0-daa0-4bbe-9a36-39f2f23b00f9</subsheetid>
+    <loginhibit />
+    <display x="15" y="-45" />
+    <onsuccess>874d3dd7-cc13-4d3f-a2ba-cef7c8de0ee7</onsuccess>
+    <calculation expression="Left([VNR], 2)" stage="VerwSysSl" />
+  </stage>
+  <stage stageid="8247b8bb-c2bb-4895-9e43-99be2b466b50" name="Recover" type="Recover">
+    <subsheetid>88732eb0-daa0-4bbe-9a36-39f2f23b00f9</subsheetid>
+    <loginhibit />
+    <display x="105" y="-45" />
+    <onsuccess>4dbccd73-b4b2-4f8b-a16b-66912e5cf37e</onsuccess>
+  </stage>
+  <stage stageid="4dbccd73-b4b2-4f8b-a16b-66912e5cf37e" name="Resume" type="Resume">
+    <subsheetid>88732eb0-daa0-4bbe-9a36-39f2f23b00f9</subsheetid>
+    <loginhibit />
+    <display x="105" y="15" />
+    <onsuccess>874d3dd7-cc13-4d3f-a2ba-cef7c8de0ee7</onsuccess>
+  </stage>
+  <stage stageid="ff61a038-8116-4d93-b47e-9b9d5a93305b" name="InteralAction" type="SubSheetInfo">
+    <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
+    <narrative>concatenates value with global value</narrative>
+    <display x="-150" y="-75" w="150" h="90" />
+  </stage>
+  <stage stageid="2c3034d4-30f1-4cb7-a001-5e261621764b" name="Start" type="Start">
+    <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <inputs>
+      <input type="text" name="Value" narrative="Text" stage="Value" />
+    </inputs>
+    <onsuccess>7315b947-a7a8-4eaa-884e-5af170b6f804</onsuccess>
+  </stage>
+  <stage stageid="ab996bd9-e5f6-4c28-a59e-cc84ab29e58c" name="End" type="End">
+    <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
+    <loginhibit />
+    <display x="15" y="75" />
+  </stage>
+  <stage stageid="0bfd843e-eacd-4148-af54-ce9fa307ed71" name="Environment" type="Collection">
+    <loginhibit />
+    <display x="-195" y="-15" w="120" h="30" />
+    <datatype>collection</datatype>
+    <alwaysinit />
+    <collectioninfo>
+      <singlerow />
+      <field name="Const Value1" type="text" />
+    </collectioninfo>
+    <initialvalue>
+      <singlerow />
+      <row>
+        <field name="Const Value1" type="text" value="ABC" />
+      </row>
+    </initialvalue>
+  </stage>
+  <stage stageid="c08ed84b-7afc-446e-bb9d-2c86fac130f5" name="Value" type="Data">
+    <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
+    <display x="-150" y="15" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="cbfee36a-a7d4-4121-bfbd-711414022b6a" name="Set Value" type="Calculation">
+    <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
+    <loginhibit />
+    <display x="15" y="-15" />
+    <onsuccess>99058154-0d65-43d7-9e58-48bc288b3c5e</onsuccess>
+    <calculation expression="[Value] + [Environment.Const Value1]" stage="Value" />
+  </stage>
+  <stage stageid="99058154-0d65-43d7-9e58-48bc288b3c5e" name="Note1" type="Note">
+    <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
+    <loginhibit />
+    <narrative>This is a note in BP</narrative>
+    <display x="15" y="30" />
+    <onsuccess>ab996bd9-e5f6-4c28-a59e-cc84ab29e58c</onsuccess>
+  </stage>
+  <stage stageid="7315b947-a7a8-4eaa-884e-5af170b6f804" name="value empty?" type="Decision">
+    <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
+    <loginhibit />
+    <display x="15" y="-60" />
+    <decision expression="[Value] = &quot;&quot;" />
+    <ontrue>02b6ad56-a2b5-4d81-8ec8-61d5ee417ac2</ontrue>
+    <onfalse>cbfee36a-a7d4-4121-bfbd-711414022b6a</onfalse>
+  </stage>
+  <stage stageid="02b6ad56-a2b5-4d81-8ec8-61d5ee417ac2" name="SE" type="Exception">
+    <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
+    <display x="105" y="-60" />
+    <exception localized="yes" type="System Exception" detail="&quot;Value is empty&quot;" />
+  </stage>
+</process>

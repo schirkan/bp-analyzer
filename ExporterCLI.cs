@@ -45,7 +45,7 @@ public class ExporterCLI
     string targetPath;
     if (string.IsNullOrWhiteSpace(outputPath))
     {
-      targetPath = Path.Combine(Directory.GetCurrentDirectory(), processName + ".xml");
+      targetPath = Path.Combine(Directory.GetCurrentDirectory(), "xml", processName + ".xml");
     }
     else
     {
@@ -68,7 +68,7 @@ public class ExporterCLI
         }
         else
         {
-          targetPath = Path.Combine(Directory.GetCurrentDirectory(), processName + ".xml");
+          targetPath = Path.Combine(Directory.GetCurrentDirectory(), "xml", processName + ".xml");
           Console.WriteLine($"Warnung: Angegebener Pfad nicht gefunden. Standardpfad wird verwendet: {targetPath}");
         }
       }
