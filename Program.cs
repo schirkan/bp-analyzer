@@ -1,4 +1,4 @@
-﻿// Blue Prism Prozess-Export Tool
+// Blue Prism Prozess-Export Tool
 // Exportiert Blue Prism Prozesse mit AutomateC.exe CLI
 // Unterstützt rekursiven Export von abhängigen Objekten
 

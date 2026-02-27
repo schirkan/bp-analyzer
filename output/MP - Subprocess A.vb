@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - Subprocess A
 ' Version: 1.0
-' Generated: 2026-02-26 23:12:56
+' Generated: 2026-02-27 20:40:11
 ' 
 ' This is a test subprocess
 
@@ -14,6 +14,22 @@ Imports System.Data
 ''' BluePrism process: MP - Subprocess A
 ''' </summary>
 Public Class MP___Subprocess_A
+    Inherits BP_Base
+
+    #Region "Singleton Instance"
+
+    ''' <summary>
+    ''' Shared singleton instance
+    ''' </summary>
+    Private Shared ReadOnly _lazyInstance As New Lazy(Of MP___Subprocess_A)(Function() New MP___Subprocess_A())
+
+    Public Shared ReadOnly Property Instance As MP___Subprocess_A
+        Get
+            Return _lazyInstance.Value
+        End Get
+    End Property
+
+    #End Region
 
     #Region "Global Data Items"
 
@@ -24,27 +40,21 @@ Public Class MP___Subprocess_A
     #Region "Methods"
 
     ''' <summary>
-    ''' Main process entry point
+    ''' Main process method (stages without subsheet)
     ''' </summary>
-    Public Sub Main(ByVal Name As String, <Out> ByRef Char_Count As Decimal)
+    Public Sub Main(ByVal Name As String, ByRef Char_Count As Decimal)
 
-            GoTo Calc_Char_Count_94e477c2_f432_419e_bffc_e912c152acfd_Label
-Calc_Char_Count_94e477c2_f432_419e_bffc_e912c152acfd_Label:
-        ' Calc Char Count (Calculation)
-            Char_Count = Len(Name)
-            GoTo End_7f8f449f_a21d_4a5f_89de_1ceb5b5b58d5_Label
+        ' Initialize input parameters with alwaysinit
 
-Input_b98e988f_253d_4985_8ec5_3a4496dde0ed_Label:
-        ' Input (Block)
-            ' Block: Input
+        GoTo Calculation_94e477c2_f432_419e_bffc_e912c152acfd_Label
+        Calculation_94e477c2_f432_419e_bffc_e912c152acfd_Label: ' Calc Char Count
+        Char_Count = Len(Name)
+        GoTo End_7f8f449f_a21d_4a5f_89de_1ceb5b5b58d5_Label
 
-Output_1c6d589e_bba8_424b_9662_a6319af88527_Label:
-        ' Output (Block)
-            ' Block: Output
-
-End_7f8f449f_a21d_4a5f_89de_1ceb5b5b58d5_Label:
+        End_7f8f449f_a21d_4a5f_89de_1ceb5b5b58d5_Label:
 
     End Sub
+
 
     #End Region
 

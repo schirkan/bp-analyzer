@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>BluePrismGenerated</RootNamespace>
+    <OutputType>Library</OutputType>
+    <OptionStrict>On</OptionStrict>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <NoWarn>42016,41999,41024,42124,42020</NoWarn>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="_BP_Base.vb" />
+    <Compile Include="bp demo.vb" />
+    <Compile Include="Microsoft Store.vb" />
+    <Compile Include="MP - Subprocess A.vb" />
+    <Compile Include="MP - System Update.vb" />
+    <Compile Include="Utility - Environment.vb" />
+    <Compile Include="Windows Settings.vb" />
+  </ItemGroup>
+
+</Project>

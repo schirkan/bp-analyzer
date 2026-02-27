@@ -196,7 +196,7 @@
     <loginhibit />
     <display x="15" y="-15" />
     <onsuccess>99058154-0d65-43d7-9e58-48bc288b3c5e</onsuccess>
-    <calculation expression="[Value] + [Environment.Const Value1]" stage="Value" />
+    <calculation expression="[Value] &amp; [Environment.Const Value1]" stage="Value" />
   </stage>
   <stage stageid="99058154-0d65-43d7-9e58-48bc288b3c5e" name="Note1" type="Note">
     <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
@@ -217,5 +217,22 @@
     <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
     <display x="105" y="-60" />
     <exception localized="yes" type="System Exception" detail="&quot;Value is empty&quot;" />
+  </stage>
+  <stage stageid="e58b2971-f6b9-4152-9eac-d76e7cd54a1b" name="Global Recover" type="Recover">
+    <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
+    <loginhibit />
+    <display x="-150" y="90" />
+    <onsuccess>6ad99ace-a4e2-4919-9a22-e7baa3af2bde</onsuccess>
+  </stage>
+  <stage stageid="a987ff7d-de3a-4d2c-bcca-696cda7cdcb2" name="Re-Throw" type="Exception">
+    <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
+    <display x="-150" y="180" />
+    <exception localized="yes" type="" detail="" usecurrent="yes" />
+  </stage>
+  <stage stageid="6ad99ace-a4e2-4919-9a22-e7baa3af2bde" name="Log Exception" type="Calculation">
+    <subsheetid>d448f24d-bfbf-42c9-9ee8-35bcdb734774</subsheetid>
+    <display x="-150" y="135" />
+    <onsuccess>a987ff7d-de3a-4d2c-bcca-696cda7cdcb2</onsuccess>
+    <calculation expression="&quot;Type: &quot; &amp; ExceptionType() &amp; NewLine() &amp;&#xA;&quot;Details: &quot; &amp; ExceptionDetail()" stage="Value" />
   </stage>
 </process>
