@@ -486,7 +486,8 @@ public class BluePrismCodeGen
         var inputName = input.Attribute("name")?.Value ?? "";
         var inputType = input.Attribute("type")?.Value ?? "text";
         var vbType = MapDataType(inputType);
-        paramList.Add($"ByVal {SanitizeVariableName(inputName)} As {vbType}");
+        var defaultValue = GetOptionalDefaultValue(inputType);
+        paramList.Add($"Optional ByVal {SanitizeVariableName(inputName)} As {vbType} = {defaultValue}");
       }
 
       // Add output parameters (skip if already added as input - they become ByRef)
@@ -496,6 +497,7 @@ public class BluePrismCodeGen
         var outputType = output.Attribute("type")?.Value ?? "text";
         var vbType = MapDataType(outputType);
         var sanitizedName = SanitizeVariableName(outputName);
+        var defaultValue = GetOptionalDefaultValue(outputType);
 
         // Skip if already added as input (they become ByRef, but we only need to declare once)
         if (inputParamNames.Contains(outputName?.ToLower()))
@@ -503,7 +505,7 @@ public class BluePrismCodeGen
           continue; // Already added as ByVal input, now acts as ByRef
         }
 
-        paramList.Add($"ByRef {sanitizedName} As {vbType}");
+        paramList.Add($"Optional ByRef {sanitizedName} As {vbType} = {defaultValue}");
       }
     }
 
@@ -576,7 +578,7 @@ public class BluePrismCodeGen
         if (!string.IsNullOrEmpty(initialValue))
         {
           var formattedValue = FormatInitialValue(dataType, initialValue, dataStage);
-          sb.AppendLine($"        If {SanitizeVariableName(dataName)} Is Nothing OrElse {SanitizeVariableName(dataName)}.Equals(\"\") Then");
+          sb.AppendLine($"        If {SanitizeVariableName(dataName)} Is Nothing Then");
           sb.AppendLine($"            {SanitizeVariableName(dataName)} = {formattedValue}");
           sb.AppendLine($"        End If");
         }
@@ -590,7 +592,7 @@ public class BluePrismCodeGen
     var sortedStages = SortStagesByExecutionOrder(stages);
 
     // Stages to skip (Block stages are also skipped - they are handled by coordinates check)
-    var skipStages = new HashSet<string> { "SubSheetInfo", "Data", "Collection", "WaitEnd", "End", "Anchor", "ProcessInfo", "Block" };
+    var skipStages = new HashSet<string> { "Block", "SubSheetInfo", "Data", "Collection", "WaitEnd", "End", "Anchor", "ProcessInfo" };
 
     foreach (var stage in sortedStages)
     {
@@ -664,14 +666,8 @@ public class BluePrismCodeGen
         case "Resume":
           GenerateResumeStage(stage, sb);
           break;
-        case "Anchor":
-          GenerateAnchorStage(stage, sb);
-          break;
         case "WaitStart":
           GenerateWaitStage(stage, sb);
-          break;
-        case "Block":
-          GenerateBlockStage(stage, sb);
           break;
         default:
           sb.AppendLine($"        ' TODO: Implement stage type '{stageType}'");
@@ -823,7 +819,7 @@ public class BluePrismCodeGen
             if (!string.IsNullOrEmpty(initialValue))
             {
               var formattedValue = FormatInitialValue(inputType, initialValue, dataStage);
-              sb.AppendLine($"        If {SanitizeVariableName(inputName)} Is Nothing OrElse {SanitizeVariableName(inputName)}.Equals(\"\") Then");
+              sb.AppendLine($"        If {SanitizeVariableName(inputName)} Is Nothing Then");
               sb.AppendLine($"            {SanitizeVariableName(inputName)} = {formattedValue}");
               sb.AppendLine($"        End If");
             }
@@ -940,15 +936,116 @@ public class BluePrismCodeGen
   {
     var name = stage.Attribute("name")?.Value;
     var onsuccess = stage.Element("onsuccess")?.Value;
+    var processId = stage.Element("processid")?.Value;
 
-    sb.AppendLine($"        ' Call Process: {name}");
-    sb.AppendLine($"        ' TODO: Implement process call");
+    // Find process name from processid by searching in all XML files
+    var processName = FindProcessNameById(processId);
+
+    if (!string.IsNullOrEmpty(processName))
+    {
+      var className = SanitizeClassName(processName);
+
+      // Process inputs
+      var inputs = stage.Element("inputs")?.Elements("input").ToList();
+      var inputParams = new List<string>();
+      if (inputs != null)
+      {
+        foreach (var input in inputs)
+        {
+          var inputName = input.Attribute("name")?.Value;
+          var inputExpr = input.Attribute("expr")?.Value;
+          var sanitizedInputName = SanitizeVariableName(inputName ?? "");
+
+          if (!string.IsNullOrEmpty(inputExpr))
+          {
+            var formattedExpr = FormatExpression(inputExpr);
+            inputParams.Add($"{sanitizedInputName}:={formattedExpr}");
+          }
+          else if (!string.IsNullOrEmpty(inputName))
+          {
+            var sanitizedValue = SanitizeVariableName(inputName);
+            inputParams.Add($"{sanitizedInputName}:={sanitizedValue}");
+          }
+        }
+      }
+
+      // Process outputs
+      var outputs = stage.Element("outputs")?.Elements("output").ToList();
+      var outputParams = new List<string>();
+      if (outputs != null)
+      {
+        foreach (var output in outputs)
+        {
+          var outputName = output.Attribute("name")?.Value;
+          var outputStage = output.Attribute("stage")?.Value;
+          var sanitizedOutputName = SanitizeVariableName(outputName ?? "");
+
+          if (!string.IsNullOrEmpty(outputStage))
+          {
+            var sanitizedStage = SanitizeVariableName(outputStage);
+            outputParams.Add($"{sanitizedOutputName}:={sanitizedStage}");
+          }
+          else if (!string.IsNullOrEmpty(outputName))
+          {
+            var sanitizedValue = SanitizeVariableName(outputName);
+            outputParams.Add($"{sanitizedOutputName}:={sanitizedValue}");
+          }
+        }
+      }
+
+      var allParams = inputParams.Concat(outputParams).ToList();
+      var paramString = string.Join(", ", allParams);
+
+      if (!string.IsNullOrEmpty(paramString))
+        sb.AppendLine($"        {className}.Instance.Main({paramString})");
+      else
+        sb.AppendLine($"        {className}.Instance.Main()");
+    }
+    else
+    {
+      sb.AppendLine($"        ' Call Process: {name}");
+      sb.AppendLine($"        ' TODO: Implement process call (processid: {processId})");
+    }
 
     if (!string.IsNullOrEmpty(onsuccess))
     {
       var targetStage = FindStageName(onsuccess, stage.Document!);
       sb.AppendLine($"        GoTo {targetStage}");
     }
+  }
+
+  /// <summary>
+  /// Finds the process name by searching for the processid in all XML files
+  /// </summary>
+  private string? FindProcessNameById(string? processId)
+  {
+    if (string.IsNullOrEmpty(processId)) return null;
+
+    var xmlDirectory = Path.Combine(Directory.GetCurrentDirectory(), "xml");
+    if (!Directory.Exists(xmlDirectory)) return null;
+
+    var xmlFiles = Directory.GetFiles(xmlDirectory, "*.xml");
+    foreach (var xmlFile in xmlFiles)
+    {
+      try
+      {
+        var doc = XDocument.Load(xmlFile);
+        var process = doc.Root;
+        if (process?.Name.LocalName != "process") continue;
+
+        var preferredId = process.Attribute("preferredid")?.Value;
+        if (preferredId == processId)
+        {
+          return process.Attribute("name")?.Value;
+        }
+      }
+      catch
+      {
+        // Skip invalid XML files
+      }
+    }
+
+    return null;
   }
 
   private void GenerateCodeStage(XElement stage, System.Text.StringBuilder sb)
@@ -1163,31 +1260,69 @@ public class BluePrismCodeGen
       sb.AppendLine($"        Select Case True");
       foreach (var choice in choices)
       {
-        var choiceName = choice.Attribute("name")?.Value;
-        var expression = choice.Attribute("expression")?.Value;
+        var choiceName = choice.Element("name")?.Value;
         var ontrue = choice.Element("ontrue")?.Value;
-        sb.AppendLine($"            Case: {choiceName} = {expression}");
+
+        // Generate expression from choice element and condition
+        var choiceExpression = GenerateWaitChoiceExpression(choice);
+
+        sb.AppendLine($"            Case {choiceExpression} ' {choiceName}");
         if (!string.IsNullOrEmpty(ontrue))
         {
           var targetStage = ResolveAnchorChain(ontrue, stage.Document!);
           sb.AppendLine($"                GoTo {targetStage}");
         }
       }
+      if (waitEnd != null)
+      {
+        var waitEndOnSuccess = waitEnd.Element("onsuccess")?.Value;
+        if (!string.IsNullOrEmpty(waitEndOnSuccess))
+        {
+          var elseTarget = ResolveAnchorChain(waitEndOnSuccess, stage.Document!);
+          sb.AppendLine($"            Case Else");
+          sb.AppendLine($"                GoTo {elseTarget}");
+        }
+      }
       sb.AppendLine($"        End Select");
     }
   }
 
-  private void GenerateBlockStage(XElement stage, System.Text.StringBuilder sb)
+  /// <summary>
+  /// Generates the expression for a WaitStart choice.
+  /// Format: Application.Element("elementId").conditionId = True
+  /// </summary>
+  private string GenerateWaitChoiceExpression(XElement choice)
   {
-    var name = stage.Attribute("name")?.Value;
-    sb.AppendLine($"        ' Block: {name}");
+    var element = choice.Element("element");
+    var elementId = element?.Attribute("id")?.Value;
+    var condition = choice.Element("condition");
+    var conditionId = condition?.Element("id")?.Value;
+    var compareType = choice.Attribute("comparetype")?.Value;
+    var replyValue = choice.Attribute("reply")?.Value;
 
-    var onsuccess = stage.Element("onsuccess")?.Value;
-    if (!string.IsNullOrEmpty(onsuccess))
+    // If we have element and condition, generate proper expression
+    if (!string.IsNullOrEmpty(elementId) && !string.IsNullOrEmpty(conditionId))
     {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
-      sb.AppendLine($"        GoTo {targetStage}");
+      var comparison = compareType?.ToLower() switch
+      {
+        "equal" => "=",
+        "notequal" => "<>",
+        "lessthan" => "<",
+        "greaterthan" => ">",
+        "lessthanorequal" => "<=",
+        "greaterthanorequal" => ">=",
+        _ => "="
+      };
+
+      // Determine the value to compare (reply attribute or default True)
+      var compareValue = replyValue?.ToLower() == "true" ? "True" : "False";
+
+      return $"Application.Element(\"{elementId}\").{conditionId} {comparison} {compareValue}";
     }
+
+    // Fallback: return the expression attribute if present
+    var expression = choice.Attribute("expression")?.Value;
+    return FormatExpression(expression);
   }
 
   /// <summary>
@@ -1400,6 +1535,26 @@ public class BluePrismCodeGen
     };
   }
 
+  /// <summary>
+  /// Returns the default value for an optional parameter based on the BluePrism data type.
+  /// Used to make all parameters optional with sensible defaults.
+  /// </summary>
+  private string GetOptionalDefaultValue(string bluePrismType)
+  {
+    return bluePrismType?.ToLower() switch
+    {
+      "text" or "password" => "Nothing",
+      "number" => "Nothing",
+      "flag" or "boolean" => "Nothing",
+      "date" or "datetime" => "Nothing",
+      "time" or "timespan" => "Nothing",
+      "collection" => "Nothing",
+      "binary" => "Nothing",
+      "object" => "Nothing",
+      _ => "Nothing"
+    };
+  }
+
   private string SanitizeClassName(string name)
   {
     var sanitized = System.Text.RegularExpressions.Regex.Replace(name ?? "", @"[^a-zA-Z0-9_]", "_");
@@ -1473,7 +1628,7 @@ public class BluePrismCodeGen
   /// </summary>
   private void CopyTemplateFile()
   {
-    var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Template_BP_Base.vb");
+    var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "templates", "Template_BP_Base.vb");
     var outputPath = Path.Combine(_outputDirectory, "_BP_Base.vb");
 
     // Try different relative paths
@@ -1500,7 +1655,7 @@ public class BluePrismCodeGen
   /// </summary>
   private void CopyProjectFile()
   {
-    var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Template_BP_Project.vbproj");
+    var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "templates", "Template_BP_Project.vbproj");
     var outputPath = Path.Combine(_outputDirectory, "BluePrism_Generated.vbproj");
 
     // Try different relative paths

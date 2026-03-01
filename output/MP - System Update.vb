@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - System Update
 ' Version: 1.0
-' Generated: 2026-02-27 20:40:11
+' Generated: 2026-03-01 15:17:44
 
 Imports System
 Imports System.Collections.Generic
@@ -85,8 +85,7 @@ Public Class MP___System_Update
         GoTo Process_5eb89ba8_fa28_4939_b7d7_cc29a13cf616_Label
 
         Process_5eb89ba8_fa28_4939_b7d7_cc29a13cf616_Label: ' Call Process A
-        ' Call Process: Call Process A
-        ' TODO: Implement process call
+        MP___Subprocess_A.Instance.Main(Name:=MyText, Char_Count:=Char_Count)
         GoTo End_1f3bb070_109c_4bbc_babf_3ef6af6b6fa2_Label
 
         End_1f3bb070_109c_4bbc_babf_3ef6af6b6fa2_Label:
@@ -103,7 +102,7 @@ Public Class MP___System_Update
         Dim VNR As String
 
         ' Initialize local variables with alwaysinit
-        If VNR Is Nothing OrElse VNR.Equals("") Then
+        If VNR Is Nothing Then
             VNR = "AB123456"""
         End If
 
@@ -139,25 +138,25 @@ Public Class MP___System_Update
         Dim Coll3 As DataTable
 
         ' Initialize local variables with alwaysinit
-        If Data1 Is Nothing OrElse Data1.Equals("") Then
+        If Data1 Is Nothing Then
             Data1 = DateTime.Parse("2026/02/01")
         End If
-        If Data2 Is Nothing OrElse Data2.Equals("") Then
+        If Data2 Is Nothing Then
             Data2 = DateTime.Parse("2026-02-11 15:37:42Z")
         End If
-        If Data3 Is Nothing OrElse Data3.Equals("") Then
+        If Data3 Is Nothing Then
             Data3 = False
         End If
-        If Data6 Is Nothing OrElse Data6.Equals("") Then
+        If Data6 Is Nothing Then
             Data6 = 4.5
         End If
-        If Data9 Is Nothing OrElse Data9.Equals("") Then
+        If Data9 Is Nothing Then
             Data9 = "something"
         End If
-        If Data10 Is Nothing OrElse Data10.Equals("") Then
+        If Data10 Is Nothing Then
             Data10 = TimeSpan.Parse("10:20:33")
         End If
-        If Data11 Is Nothing OrElse Data11.Equals("") Then
+        If Data11 Is Nothing Then
             Data11 = TimeSpan.Parse("1.02:03:04")
         End If
 

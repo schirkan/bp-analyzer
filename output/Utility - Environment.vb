@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-02-27 20:40:11
+' Generated: 2026-03-01 15:17:44
 ' 
 ' Utilities for interacting with the environment - read screen resolution, determine OS type, etc.
 ' 
@@ -136,7 +136,7 @@ Public Class Utility___Environment
     ''' </summary>
     ''' <param name="Process_Name">The name of the process to kill</param>
     ''' <param name="Process_ID">The unique numeric identifier of a specific process on the system.</param>
-    Public Sub Kill_Process(ByVal Process_Name As String, ByVal Process_ID As Decimal)
+    Public Sub Kill_Process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Process_ID As Decimal = Nothing)
 
         ' Initialize input parameters with alwaysinit
 
@@ -166,7 +166,7 @@ Public Class Utility___Environment
     ''' </summary>
     ''' <param name="Process_Names">The names of the processes to get memory statistics for</param>
     ''' <param name="Process_Statistics">A collection of process statistics including the working set and the virtual memory size</param>
-    Public Sub Read_Memory_Stats(ByVal Process_Names As DataTable, ByRef Process_Statistics As DataTable)
+    Public Sub Read_Memory_Stats(Optional ByVal Process_Names As DataTable = Nothing, Optional ByRef Process_Statistics As DataTable = Nothing)
 
         ' Local variables
         Dim Processes As DataTable
@@ -204,7 +204,7 @@ Public Class Utility___Environment
     ''' </summary>
     ''' <param name="Process_Name">The name of the process you want stats for</param>
     ''' <param name="Working_Set">The working set number holding memory stats for your process</param>
-    Public Sub Read_Process_Working_Set(ByVal Process_Name As String, ByRef Working_Set As Decimal)
+    Public Sub Read_Process_Working_Set(Optional ByVal Process_Name As String = Nothing, Optional ByRef Working_Set As Decimal = Nothing)
 
         ' Initialize input parameters with alwaysinit
 
@@ -232,21 +232,21 @@ Public Class Utility___Environment
     ''' <param name="Working_Folder">Optional - the application working folder</param>
     ''' <param name="Timeout">How long to wait for the application to finish. Default is 10 seconds</param>
     ''' <param name="Ignore_Timeout">Flag that indicates the Digital Worker should wait for the process to complete indefinitely. Default is False.</param>
-    Public Sub Run_Process_Until_Ended(ByVal Application As String, ByVal Arguments As String, ByVal Working_Folder As String, ByVal Timeout As TimeSpan, ByVal Ignore_Timeout As Boolean)
+    Public Sub Run_Process_Until_Ended(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Working_Folder As String = Nothing, Optional ByVal Timeout As TimeSpan = Nothing, Optional ByVal Ignore_Timeout As Boolean = Nothing)
 
         ' Local variables
         Dim Fail_Datetime_Reached_ As Boolean
 
         ' Initialize local variables with alwaysinit
-        If Fail_Datetime_Reached_ Is Nothing OrElse Fail_Datetime_Reached_.Equals("") Then
+        If Fail_Datetime_Reached_ Is Nothing Then
             Fail_Datetime_Reached_ = False
         End If
 
         ' Initialize input parameters with alwaysinit
-        If Timeout Is Nothing OrElse Timeout.Equals("") Then
+        If Timeout Is Nothing Then
             Timeout = TimeSpan.Parse("0.00:00:10")
         End If
-        If Ignore_Timeout Is Nothing OrElse Ignore_Timeout.Equals("") Then
+        If Ignore_Timeout Is Nothing Then
             Ignore_Timeout = False
         End If
 
@@ -296,7 +296,7 @@ Public Class Utility___Environment
     ''' Sets the contents of the clipboard.
     ''' </summary>
     ''' <param name="Clipboard">The value to set the clipboard to.</param>
-    Public Sub Set_Clipboard(ByVal Clipboard As String)
+    Public Sub Set_Clipboard(Optional ByVal Clipboard As String = Nothing)
 
         ' Initialize input parameters with alwaysinit
 
@@ -339,10 +339,10 @@ Public Class Utility___Environment
     ''' <param name="Use_Shell">Optional. Boolean value that determines whether the Windows shell should be used to launch the process. Default value is True. If you experience issue launching a process, try changing this value to False.</param>
     ''' <param name="Process_ID">The unique identifier of the new process.</param>
     ''' <param name="Process_Name">The the name of the process.</param>
-    Public Sub Start_Process(ByVal Application As String, ByVal Arguments As String, ByVal Use_Shell As Boolean, ByRef Process_ID As Decimal, ByRef Process_Name As String)
+    Public Sub Start_Process(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Use_Shell As Boolean = Nothing, Optional ByRef Process_ID As Decimal = Nothing, Optional ByRef Process_Name As String = Nothing)
 
         ' Initialize input parameters with alwaysinit
-        If Use_Shell Is Nothing OrElse Use_Shell.Equals("") Then
+        If Use_Shell Is Nothing Then
             Use_Shell = True
         End If
 
@@ -374,10 +374,10 @@ Public Class Utility___Environment
     ''' <param name="Process_Name">The name of the process to start.</param>
     ''' <param name="Arguments">The arguments that coincide with the process.</param>
     ''' <param name="Timeout">Optional: The number of milliseconds to wait for the process to exit. Default value is -1 which waits indefinitely.</param>
-    Public Sub Start_Process_Read_Stderr_and_Stdout(ByVal Process_Name As String, ByVal Arguments As String, ByVal Timeout As Decimal, ByRef Standard_Output As String, ByRef Standard_Error As String)
+    Public Sub Start_Process_Read_Stderr_and_Stdout(Optional ByVal Process_Name As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Timeout As Decimal = Nothing, Optional ByRef Standard_Output As String = Nothing, Optional ByRef Standard_Error As String = Nothing)
 
         ' Initialize input parameters with alwaysinit
-        If Timeout Is Nothing OrElse Timeout.Equals("") Then
+        If Timeout Is Nothing Then
             Timeout = -1
         End If
 
@@ -447,13 +447,13 @@ Public Class Utility___Environment
     ''' <param name="Vertical_Resolution">The number of pixels in the vertical screen axis</param>
     ''' <param name="Success">A Flag indicating success or failure of the action.</param>
     ''' <param name="Return_Code">The numeric return code returned by the operating system.</param>
-    Public Sub Set_Screen_Resolution(ByVal Vertical_Resolution As Decimal, ByVal Horizontal_Resolution As Decimal, ByRef Success As Boolean, ByRef Return_Code As Decimal)
+    Public Sub Set_Screen_Resolution(Optional ByVal Vertical_Resolution As Decimal = Nothing, Optional ByVal Horizontal_Resolution As Decimal = Nothing, Optional ByRef Success As Boolean = Nothing, Optional ByRef Return_Code As Decimal = Nothing)
 
         ' Local variables
         Dim Timeout As TimeSpan
 
         ' Initialize local variables with alwaysinit
-        If Timeout Is Nothing OrElse Timeout.Equals("") Then
+        If Timeout Is Nothing Then
             Timeout = TimeSpan.Parse("0.00:00:30")
         End If
 
@@ -522,10 +522,10 @@ Public Class Utility___Environment
     ''' <param name="Maximum_wait_time__seconds_">The maximum time to wait for the process to complete</param>
     ''' <param name="Process_Name">The name of the process to attach to</param>
     ''' <param name="Found_">True=process found, false=process not found</param>
-    Public Sub Wait_for_Process(ByVal Maximum_wait_time__seconds_ As Decimal, ByVal Process_Name As String, ByRef Found_ As Boolean)
+    Public Sub Wait_for_Process(Optional ByVal Maximum_wait_time__seconds_ As Decimal = Nothing, Optional ByVal Process_Name As String = Nothing, Optional ByRef Found_ As Boolean = Nothing)
 
         ' Initialize input parameters with alwaysinit
-        If Maximum_wait_time__seconds_ Is Nothing OrElse Maximum_wait_time__seconds_.Equals("") Then
+        If Maximum_wait_time__seconds_ Is Nothing Then
             Maximum_wait_time__seconds_ = 0
         End If
 
@@ -563,10 +563,10 @@ Public Class Utility___Environment
     ''' <param name="Process_Name">The name of the process to attach to</param>
     ''' <param name="Window_Title">The title of the window within the process</param>
     ''' <param name="Wait">The maximum amount of time to wait for</param>
-    Public Sub Wait_for_Process_Window(ByVal Process_Name As String, ByVal Window_Title As String, ByVal Wait As Decimal, ByRef Found As Boolean)
+    Public Sub Wait_for_Process_Window(Optional ByVal Process_Name As String = Nothing, Optional ByVal Window_Title As String = Nothing, Optional ByVal Wait As Decimal = Nothing, Optional ByRef Found As Boolean = Nothing)
 
         ' Initialize input parameters with alwaysinit
-        If Wait Is Nothing OrElse Wait.Equals("") Then
+        If Wait Is Nothing Then
             Wait = 0
         End If
 

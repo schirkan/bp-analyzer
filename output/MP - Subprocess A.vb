@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - Subprocess A
 ' Version: 1.0
-' Generated: 2026-02-27 20:40:11
+' Generated: 2026-03-01 15:17:44
 ' 
 ' This is a test subprocess
 
@@ -42,7 +42,7 @@ Public Class MP___Subprocess_A
     ''' <summary>
     ''' Main process method (stages without subsheet)
     ''' </summary>
-    Public Sub Main(ByVal Name As String, ByRef Char_Count As Decimal)
+    Public Sub Main(Optional ByVal Name As String = Nothing, Optional ByRef Char_Count As Decimal = Nothing)
 
         ' Initialize input parameters with alwaysinit
 

@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: bp demo
 ' Version: 1.0
-' Generated: 2026-02-27 20:40:11
+' Generated: 2026-03-01 15:17:44
 ' 
 ' This page is like the class constructor
 ' 
@@ -79,7 +79,7 @@ Public Class bp_demo
     ''' </summary>
     ''' <param name="VNR">Vertragsnummer (LF123456789)</param>
     ''' <param name="VerwSysSl">Verwaltungssystem Schlüssel</param>
-    Public Sub MyPublicAction(ByVal VNR As String, ByRef VerwSysSl As String)
+    Public Sub MyPublicAction(Optional ByVal VNR As String = Nothing, Optional ByRef VerwSysSl As String = Nothing)
 
         ' Initialize input parameters with alwaysinit
 
@@ -105,7 +105,7 @@ Public Class bp_demo
     ''' concatenates value with global value
     ''' </summary>
     ''' <param name="Value">Text</param>
-    Private Sub InteralAction(ByVal Value As String)
+    Private Sub InteralAction(Optional ByVal Value As String = Nothing)
 
         ' Initialize input parameters with alwaysinit
 
