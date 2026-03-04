@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-04 20:08:23
+' Generated: 2026-03-04 20:17:58
 ' 
 ' Utilities for interacting with the environment - read screen resolution, determine OS type, etc.
 
@@ -90,8 +90,6 @@ Public Class Utility___Environment
         ' Local variables
         Dim Enabled_ As Boolean
 
-        ' Initialize local variables with initialvalue
-
         ' Get Font Smoothing Enabled
         ' Code Stage: Get Font Smoothing Enabled
         ' Original code:
@@ -108,8 +106,6 @@ Public Class Utility___Environment
     ''' <param name="Clipboard">The value from the clipboard.</param>
     Public Sub Get_Clipboard(Optional ByRef Clipboard As String = Nothing)
 
-        ' Initialize local variables with initialvalue
-
         ' Get
         Clipboard = GetClipboard()
 
@@ -120,8 +116,6 @@ Public Class Utility___Environment
     ''' </summary>
     ''' <param name="Machine_Name">The hostname of the machine running this action</param>
     Public Sub Get_Machine_Name(Optional ByRef Machine_Name As String = Nothing)
-
-        ' Initialize local variables with initialvalue
 
         ' GetMachineName
         ' Code Stage: GetMachineName
@@ -137,8 +131,6 @@ Public Class Utility___Environment
     ''' <param name="Horizontal_Resolution">The number of pixels in the horizontal screen axis</param>
     ''' <param name="Vertical_Resolution">The number of pixels in the vertical screen axis</param>
     Public Sub Get_Screen_Resolution(Optional ByRef Horizontal_Resolution As Decimal = Nothing, Optional ByRef Vertical_Resolution As Decimal = Nothing)
-
-        ' Initialize local variables with initialvalue
 
         ' GetResolution
         ' Code Stage: GetResolution
@@ -159,8 +151,6 @@ Public Class Utility___Environment
         ' Local variables
         Dim Username As String
 
-        ' Initialize local variables with initialvalue
-
         ' GetUserName
         ' Code Stage: GetUserName
         ' Original code:
@@ -177,10 +167,6 @@ Public Class Utility___Environment
     ''' <param name="Process_Name">The name of the process to kill</param>
     ''' <param name="Process_ID">The unique numeric identifier of a specific process on the system.</param>
     Public Sub Kill_Process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Process_ID As Decimal = Nothing)
-
-        ' Initialize local variables with initialvalue
-
-        ' Initialize input parameters with alwaysinit
 
         ' Kill Process1
         ' Code Stage: Kill Process1
@@ -208,8 +194,6 @@ Public Class Utility___Environment
 
         ' Local variables
         Dim Processes As DataTable
-
-        ' Initialize local variables with initialvalue
 
         ' Initialize local variables with input values
         Processes = Process_Names
@@ -243,12 +227,10 @@ Public Class Utility___Environment
     ''' <param name="Working_Set">The working set number holding memory stats for your process</param>
     Public Sub Read_Process_Working_Set(Optional ByVal Process_Name As String = Nothing, Optional ByRef Working_Set As Decimal = Nothing)
 
-        ' Initialize local variables with initialvalue
+        ' Initialize variables with initialvalue
         If Working_Set Is Nothing Then
             Working_Set = "0"
         End If
-
-        ' Initialize input parameters with alwaysinit
 
         ' Get Memory Set
         ' Code Stage: Get Memory Set
@@ -275,20 +257,12 @@ Public Class Utility___Environment
         ' Local variables
         Dim Fail_Datetime_Reached_ As Boolean
 
-        ' Initialize local variables with initialvalue
+        ' Initialize variables with initialvalue
         If Timeout Is Nothing Then
             Timeout = TimeSpan.Parse("0.00:00:10")
         End If
         If Fail_Datetime_Reached_ Is Nothing Then
             Fail_Datetime_Reached_ = False
-        End If
-        If Ignore_Timeout Is Nothing Then
-            Ignore_Timeout = False
-        End If
-
-        ' Initialize input parameters with alwaysinit
-        If Timeout Is Nothing Then
-            Timeout = TimeSpan.Parse("0.00:00:10")
         End If
         If Ignore_Timeout Is Nothing Then
             Ignore_Timeout = False
@@ -339,10 +313,6 @@ Public Class Utility___Environment
     ''' <param name="Clipboard">The value to set the clipboard to.</param>
     Public Sub Set_Clipboard(Optional ByVal Clipboard As String = Nothing)
 
-        ' Initialize local variables with initialvalue
-
-        ' Initialize input parameters with alwaysinit
-
         ' Is Empty?
         If Len(Trim(Clipboard)) = 0 Then
             GoTo Calculation_bcb5c983_a5fb_4b30_b14f_7a1509fff980_Label
@@ -378,12 +348,7 @@ Public Class Utility___Environment
     ''' <param name="Process_Name">The the name of the process.</param>
     Public Sub Start_Process(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Use_Shell As Boolean = Nothing, Optional ByRef Process_ID As Decimal = Nothing, Optional ByRef Process_Name As String = Nothing)
 
-        ' Initialize local variables with initialvalue
-        If Use_Shell Is Nothing Then
-            Use_Shell = True
-        End If
-
-        ' Initialize input parameters with alwaysinit
+        ' Initialize variables with initialvalue
         If Use_Shell Is Nothing Then
             Use_Shell = True
         End If
@@ -414,12 +379,7 @@ Public Class Utility___Environment
     ''' <param name="Timeout">Optional: The number of milliseconds to wait for the process to exit. Default value is -1 which waits indefinitely.</param>
     Public Sub Start_Process_Read_Stderr_and_Stdout(Optional ByVal Process_Name As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Timeout As Decimal = Nothing, Optional ByRef Standard_Output As String = Nothing, Optional ByRef Standard_Error As String = Nothing)
 
-        ' Initialize local variables with initialvalue
-        If Timeout Is Nothing Then
-            Timeout = -1
-        End If
-
-        ' Initialize input parameters with alwaysinit
+        ' Initialize variables with initialvalue
         If Timeout Is Nothing Then
             Timeout = -1
         End If
@@ -491,12 +451,10 @@ Public Class Utility___Environment
         ' Local variables
         Dim Timeout As TimeSpan
 
-        ' Initialize local variables with initialvalue
+        ' Initialize variables with initialvalue
         If Timeout Is Nothing Then
             Timeout = TimeSpan.Parse("0.00:00:30")
         End If
-
-        ' Initialize input parameters with alwaysinit
 
         ' Set Screen Resolution
         ' Code Stage: Set Screen Resolution
@@ -560,17 +518,12 @@ Public Class Utility___Environment
     ''' <param name="Found_">True=process found, false=process not found</param>
     Public Sub Wait_for_Process(Optional ByVal Maximum_wait_time__seconds_ As Decimal = Nothing, Optional ByVal Process_Name As String = Nothing, Optional ByRef Found_ As Boolean = Nothing)
 
-        ' Initialize local variables with initialvalue
+        ' Initialize variables with initialvalue
         If Maximum_wait_time__seconds_ Is Nothing Then
             Maximum_wait_time__seconds_ = 0
         End If
         If Found_ Is Nothing Then
             Found_ = False
-        End If
-
-        ' Initialize input parameters with alwaysinit
-        If Maximum_wait_time__seconds_ Is Nothing Then
-            Maximum_wait_time__seconds_ = 0
         End If
 
         ' Wait for process
@@ -605,7 +558,7 @@ Public Class Utility___Environment
     ''' <param name="Wait">The maximum amount of time to wait for</param>
     Public Sub Wait_for_Process_Window(Optional ByVal Process_Name As String = Nothing, Optional ByVal Window_Title As String = Nothing, Optional ByVal Wait As Decimal = Nothing, Optional ByRef Found As Boolean = Nothing)
 
-        ' Initialize local variables with initialvalue
+        ' Initialize variables with initialvalue
         If Found Is Nothing Then
             Found = False
         End If
@@ -613,12 +566,7 @@ Public Class Utility___Environment
             Wait = 0
         End If
 
-        ' Initialize input parameters with alwaysinit
-        If Wait Is Nothing Then
-            Wait = 0
-        End If
-
-        ' Find Process
+        Code_d3b1986a_fa70_41e9_a8af_cd2ffc78342e_Label: ' Find Process
         ' Code Stage: Find Process
         ' Original code:
         ' try
@@ -649,6 +597,11 @@ Public Class Utility___Environment
         Wait = Wait-0.5
         ' Wait
         ' Wait: Wait (Type: WaitStart)
+        ' Wait 0.5 seconds for condition with 0 choice(s)
+        Select Case True
+            Case Else
+                GoTo Code_d3b1986a_fa70_41e9_a8af_cd2ffc78342e_Label
+        End Select
 
         End_b6fdc874_6a8d_405b_946e_10b6b47a6ae1_Label:
 

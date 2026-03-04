@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Windows Settings
 ' Version: 1.0
-' Generated: 2026-03-04 20:08:24
+' Generated: 2026-03-04 20:17:59
 
 Imports System
 Imports System.Collections.Generic
@@ -60,7 +60,7 @@ Public Class Windows_Settings
         ' Local variables
         Dim FilePath As String
 
-        ' Initialize local variables with initialvalue
+        ' Initialize variables with initialvalue
         If FilePath Is Nothing Then
             FilePath = "ms-settings:windowsupdate"
         End If

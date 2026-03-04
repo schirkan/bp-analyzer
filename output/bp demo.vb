@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: bp demo
 ' Version: 1.0
-' Generated: 2026-03-04 20:08:23
+' Generated: 2026-03-04 20:17:58
 ' 
 ' This page is like the class constructor
 
@@ -48,8 +48,6 @@ Public Class bp_demo
     ''' </summary>
     Public Sub New()
 
-        ' Initialize local variables with initialvalue
-
     End Sub
 
     ''' <summary>
@@ -65,10 +63,6 @@ Public Class bp_demo
     ''' <param name="VNR">Vertragsnummer (LF123456789)</param>
     ''' <param name="VerwSysSl">Verwaltungssystem Schlüssel</param>
     Public Sub MyPublicAction(Optional ByVal VNR As String = Nothing, Optional ByRef VerwSysSl As String = Nothing)
-
-        ' Initialize local variables with initialvalue
-
-        ' Initialize input parameters with alwaysinit
 
         ' Set VerwSysSl
         On Error GoTo Recover_8247b8bb_c2bb_4895_9e43_99be2b466b50_Label
@@ -90,10 +84,6 @@ Public Class bp_demo
     ''' </summary>
     ''' <param name="Value">Text</param>
     Private Sub InteralAction(Optional ByVal Value As String = Nothing)
-
-        ' Initialize local variables with initialvalue
-
-        ' Initialize input parameters with alwaysinit
 
         ' value empty?
         On Error GoTo Recover_e58b2971_f6b9_4152_9eac_d76e7cd54a1b_Label

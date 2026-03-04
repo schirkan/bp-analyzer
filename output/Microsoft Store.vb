@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Microsoft Store
 ' Version: 1.0
-' Generated: 2026-03-04 20:08:23
+' Generated: 2026-03-04 20:17:58
 ' 
 '
 
@@ -62,7 +62,7 @@ Public Class Microsoft_Store
         ' Local variables
         Dim FilePath As String
 
-        ' Initialize local variables with initialvalue
+        ' Initialize variables with initialvalue
         If FilePath Is Nothing Then
             FilePath = "C:\Program Files\WindowsApps\Microsoft.WindowsStore_22512.1401.6.0_x64__8wekyb3d8bbwe\WinStore.App.exe"
         End If

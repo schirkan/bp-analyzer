@@ -567,7 +567,7 @@ public class BluePrismCodeGen
     var stagesWithInitialValue = allDataStages.Where(e => e.Element("initialvalue") != null).ToList();
     if (stagesWithInitialValue.Any())
     {
-      sb.AppendLine("        ' Initialize local variables with initialvalue");
+      var commentWritten = false;
       foreach (var dataStage in stagesWithInitialValue)
       {
         var dataName = dataStage.Attribute("name")?.Value!;
@@ -576,6 +576,11 @@ public class BluePrismCodeGen
 
         if (!string.IsNullOrEmpty(initialValue))
         {
+          if (!commentWritten)
+          {
+            sb.AppendLine("        ' Initialize variables with initialvalue");
+            commentWritten = true;
+          }
           var formattedValue = FormatInitialValue(dataType, initialValue, dataStage);
           sb.AppendLine($"        If {SanitizeVariableName(dataName)} Is Nothing Then");
           sb.AppendLine($"            {SanitizeVariableName(dataName)} = {formattedValue}");
@@ -765,33 +770,6 @@ public class BluePrismCodeGen
   private void GenerateStartStageForMethod(XElement stage, System.Text.StringBuilder sb)
   {
     var inputs = stage.Element("inputs")?.Elements("input").ToList();
-    var hasInputsWithAlwaysInit = false;
-
-    // First pass: check if any input has alwaysinit
-    if (inputs != null && inputs.Any())
-    {
-      foreach (var input in inputs)
-      {
-        // Check if the corresponding data stage has alwaysinit
-        var inputName = input.Attribute("name")?.Value;
-        if (!string.IsNullOrEmpty(inputName))
-        {
-          // Find the corresponding Data stage in the same subsheet
-          var subsheetId = stage.Element("subsheetid")?.Value;
-          var dataStage = stage.Document?.Descendants()
-            .FirstOrDefault(e =>
-              e.Attribute("type")?.Value == "Data" &&
-              e.Attribute("name")?.Value == inputName &&
-              e.Element("subsheetid")?.Value == subsheetId);
-
-          if (dataStage?.Element("alwaysinit") != null)
-          {
-            hasInputsWithAlwaysInit = true;
-            break;
-          }
-        }
-      }
-    }
 
     // Generate input stage assignments: map input parameters to local variables
     // Example: Data8 = InData1 (where InData1 is the input param, Data8 is the local variable)
@@ -817,54 +795,6 @@ public class BluePrismCodeGen
       if (hasInputAssignments)
       {
         sb.AppendLine();
-      }
-    }
-
-    // Generate initialization for inputs with alwaysinit
-    if (hasInputsWithAlwaysInit && inputs != null)
-    {
-      sb.AppendLine("        ' Initialize input parameters with alwaysinit");
-      foreach (var input in inputs)
-      {
-        var inputName = input.Attribute("name")?.Value;
-        var inputType = input.Attribute("type")?.Value ?? "text";
-
-        if (!string.IsNullOrEmpty(inputName))
-        {
-          // Find the corresponding Data stage
-          var subsheetId = stage.Element("subsheetid")?.Value;
-          var dataStage = stage.Document?.Descendants()
-            .FirstOrDefault(e =>
-              e.Attribute("type")?.Value == "Data" &&
-              e.Attribute("name")?.Value == inputName &&
-              e.Element("subsheetid")?.Value == subsheetId);
-
-          if (dataStage?.Element("alwaysinit") != null)
-          {
-            var initialValue = dataStage.Element("initialvalue")?.Value;
-            if (!string.IsNullOrEmpty(initialValue))
-            {
-              var formattedValue = FormatInitialValue(inputType, initialValue, dataStage);
-              sb.AppendLine($"        If {SanitizeVariableName(inputName)} Is Nothing Then");
-              sb.AppendLine($"            {SanitizeVariableName(inputName)} = {formattedValue}");
-              sb.AppendLine($"        End If");
-            }
-          }
-        }
-      }
-      sb.AppendLine();
-    }
-
-    if (inputs != null && inputs.Any())
-    {
-      foreach (var input in inputs)
-      {
-        var inputName = input.Attribute("name")?.Value;
-        var expr = input.Attribute("expr")?.Value;
-        if (!string.IsNullOrEmpty(expr))
-        {
-          sb.AppendLine($"        ' {inputName} = {expr}");
-        }
       }
     }
 
@@ -1229,10 +1159,10 @@ public class BluePrismCodeGen
     }
 
     var choices = stage.Element("choices")?.Elements("choice").ToList();
+    sb.AppendLine($"        ' Wait {timeout} seconds for condition with {choices?.Count} choice(s)");
+    sb.AppendLine($"        Select Case True");
     if (choices != null && choices.Any())
     {
-      sb.AppendLine($"        ' Wait {timeout} seconds for condition with {choices.Count} choice(s)");
-      sb.AppendLine($"        Select Case True");
       foreach (var choice in choices)
       {
         var choiceName = choice.Element("name")?.Value;
@@ -1244,17 +1174,17 @@ public class BluePrismCodeGen
         sb.AppendLine($"            Case {choiceExpression} ' {choiceName}");
         GenerateGoTo(sb, stage.Document, ontrue, 16);
       }
-      if (waitEnd != null)
-      {
-        var onsuccess = waitEnd.Element("onsuccess")?.Value;
-        if (!string.IsNullOrEmpty(onsuccess))
-        {
-          sb.AppendLine($"            Case Else");
-          GenerateGoTo(sb, stage.Document, onsuccess, 16);
-        }
-      }
-      sb.AppendLine($"        End Select");
     }
+    if (waitEnd != null)
+    {
+      var onsuccess = waitEnd.Element("onsuccess")?.Value;
+      if (!string.IsNullOrEmpty(onsuccess))
+      {
+        sb.AppendLine($"            Case Else");
+        GenerateGoTo(sb, stage.Document, onsuccess, 16);
+      }
+    }
+    sb.AppendLine($"        End Select");
   }
 
   /// <summary>

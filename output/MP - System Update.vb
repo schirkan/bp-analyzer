@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - System Update
 ' Version: 1.0
-' Generated: 2026-03-04 20:08:23
+' Generated: 2026-03-04 20:17:58
 
 Imports System
 Imports System.Collections.Generic
@@ -48,7 +48,7 @@ Public Class MP___System_Update
         ' Local variables
         Dim Char_Count As Decimal
 
-        ' Initialize local variables with initialvalue
+        ' Initialize variables with initialvalue
         If MyText Is Nothing Then
             MyText = "Hallo Welt"
         End If
@@ -83,7 +83,7 @@ Public Class MP___System_Update
         Dim VerwSysSl As String
         Dim VNR As String
 
-        ' Initialize local variables with initialvalue
+        ' Initialize variables with initialvalue
         If VNR Is Nothing Then
             VNR = "AB123456"""
         End If
@@ -115,7 +115,7 @@ Public Class MP___System_Update
         Dim Coll2 As DataTable
         Dim Coll3 As DataTable
 
-        ' Initialize local variables with initialvalue
+        ' Initialize variables with initialvalue
         If Data1 Is Nothing Then
             Data1 = DateTime.Parse("2026/02/01")
         End If
