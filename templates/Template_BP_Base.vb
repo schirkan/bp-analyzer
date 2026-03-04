@@ -25,9 +25,9 @@ Public Class BP_Base
     ''' Raises a BluePrism exception with type and message
     ''' </summary>
     ''' <param name="exceptionType">The type of exception (e.g., "System Exception")</param>
-    ''' <param name="exceptionText">The exception message</param>
-    Protected Shared Sub RaiseException(exceptionType As String, exceptionText As String)
-        Throw New BP_Exception(exceptionType, exceptionText)
+    ''' <param name="ExceptionDetail">The exception message</param>
+    Protected Shared Sub RaiseException(exceptionType As String, ExceptionDetail As String)
+        Throw New BP_Exception(exceptionType, ExceptionDetail)
     End Sub
 
     ''' <summary>
@@ -82,7 +82,7 @@ Public Class BP_Base
     ''' Gets the stored exception text
     ''' </summary>
     ''' <returns>The exception text</returns>
-    Protected Shared Function ExceptionText() As String
+    Protected Shared Function ExceptionDetail() As String
         If _lastException Is Nothing Then
             Throw New Exception("No exception stored")
         End If
@@ -561,9 +561,9 @@ Public Class BP_Base
         ''' Constructor
         ''' </summary>
         ''' <param name="exceptionType">The type of exception</param>
-        ''' <param name="exceptionText">The exception message</param>
-        Public Sub New(exceptionType As String, exceptionText As String)
-            MyBase.New(exceptionText)
+        ''' <param name="ExceptionDetail">The exception message</param>
+        Public Sub New(exceptionType As String, ExceptionDetail As String)
+            MyBase.New(ExceptionDetail)
             Me.ExceptionType = exceptionType
         End Sub
 

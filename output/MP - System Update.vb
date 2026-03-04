@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - System Update
 ' Version: 1.0
-' Generated: 2026-03-01 15:17:44
+' Generated: 2026-03-04 16:44:00
 
 Imports System
 Imports System.Collections.Generic
@@ -118,7 +118,7 @@ Public Class MP___System_Update
     ''' <summary>
     ''' BluePrism method: Variable_Test
     ''' </summary>
-    Private Sub Variable_Test()
+    Private Sub Variable_Test(Optional ByVal InData1 As String = Nothing, Optional ByVal InData2 As Decimal = Nothing, Optional ByRef OutValue1 As DateTime = Nothing, Optional ByRef OutValue2 As Boolean = Nothing)
 
         ' Local variables
         Dim Data1 As DateTime
@@ -160,6 +160,10 @@ Public Class MP___System_Update
             Data11 = TimeSpan.Parse("1.02:03:04")
         End If
 
+        ' Initialize local variables with input values
+        Data8 = InData1
+        Data6 = InData2
+
         GoTo Decision_4a05cdbe_f075_4c4f_972b_7e63880a1bb6_Label
         Decision_4a05cdbe_f075_4c4f_972b_7e63880a1bb6_Label: ' MyToggle?
         If MyToggle Then
@@ -179,6 +183,8 @@ Public Class MP___System_Update
         GoTo End_71b0a2dc_32e2_4505_aff3_7368fe044655_Label
 
         End_71b0a2dc_32e2_4505_aff3_7368fe044655_Label:
+        OutValue1 = Data1
+        OutValue2 = MyToggle
 
     End Sub
 

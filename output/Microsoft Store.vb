@@ -1,20 +1,9 @@
 ' Generated from BluePrism object: Microsoft Store
 ' Version: 1.0
-' Generated: 2026-03-01 15:17:44
+' Generated: 2026-03-04 16:44:00
 ' 
 ' 
 
-' 
-' References:
-'   - System.dll
-'   - System.Data.dll
-'   - System.Xml.dll
-'   - System.Drawing.dll
-' 
-' Imports:
-'   - System
-'   - System.Drawing
-'   - System.Data
 
 Imports System
 Imports System.Collections.Generic

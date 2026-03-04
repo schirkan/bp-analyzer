@@ -1,17 +1,6 @@
 ' Generated from BluePrism object: Windows Settings
 ' Version: 1.0
-' Generated: 2026-03-01 15:17:44
-' 
-' References:
-'   - System.dll
-'   - System.Data.dll
-'   - System.Xml.dll
-'   - System.Drawing.dll
-' 
-' Imports:
-'   - System
-'   - System.Drawing
-'   - System.Data
+' Generated: 2026-03-04 16:44:00
 
 Imports System
 Imports System.Collections.Generic
@@ -160,7 +149,7 @@ Public Class Windows_Settings
         Navigate_b53b3ace_8c40_4a32_8015_49a288f7a245_Label: ' Click Nach Updates suchen
         ' Navigate: UI automation
         ' TODO: Implement
-        GoTo Anchor_276d7232_e5be_40f5_9314_ff008b228bd8_Label
+        GoTo End_1c4fc2e7_022b_4fb2_9bef_f30a7cb3c9c3_Label
 
         End_1c4fc2e7_022b_4fb2_9bef_f30a7cb3c9c3_Label:
 

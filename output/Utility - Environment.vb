@@ -1,29 +1,8 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-01 15:17:44
+' Generated: 2026-03-04 16:44:00
 ' 
 ' Utilities for interacting with the environment - read screen resolution, determine OS type, etc.
-' 
-' References:
-'   - System.Data.dll
-'   - System.Xml.dll
-'   - System.Drawing.dll
-'   - system.windows.forms.dll
-'   - Microsoft.VisualBasic.dll
-'   - System.Management.dll
-'   - mscorlib.dll
-' 
-' Imports:
-'   - System
-'   - System.Drawing
-'   - System.Windows.Forms
-'   - System.Diagnostics
-'   - System.Data
-'   - Microsoft.VisualBasic
-'   - System.Threading
-'   - System.Management
-'   - System.Runtime.InteropServices
-'   - System.Threading.Tasks
 
 Imports System
 Imports System.Collections.Generic
@@ -109,28 +88,104 @@ Public Class Utility___Environment
     ''' Gets the font smoothing setting for the current environment.
     ''' </summary>
     ''' <param name="Enabled">True if font smoothing is enabled</param>
-    Public Sub Font_Smoothing_Enabled(    ' Error generating subsheet: Object reference not set to an instance of an object.
+    Public Sub Font_Smoothing_Enabled(Optional ByRef Enabled As Boolean = Nothing)
+
+        ' Local variables
+        Dim Enabled_ As Boolean
+
+        ' Initialize local variables with alwaysinit
+
+        GoTo Code_96f9fe29_f641_44ab_ab0e_a4091edaec4c_Label
+        Code_96f9fe29_f641_44ab_ab0e_a4091edaec4c_Label: ' Get Font Smoothing Enabled
+        ' Code Stage: Get Font Smoothing Enabled
+        ' Original code:
+        ' Enabled=System.Windows.Forms.Systeminformation.IsFontSmoothingEnabled
+        ' TODO: Convert to VB.Net
+        GoTo End_9150eaee_22ec_4228_803e_123c888b87e5_Label
+
+        End_9150eaee_22ec_4228_803e_123c888b87e5_Label:
+        Enabled = Enabled_
+
+    End Sub
+
     ''' <summary>
     ''' Gets the contents of the clipboard.
     ''' </summary>
     ''' <param name="Clipboard">The value from the clipboard.</param>
-    Public Sub Get_Clipboard(    ' Error generating subsheet: Object reference not set to an instance of an object.
+    Public Sub Get_Clipboard(Optional ByRef Clipboard As String = Nothing)
+
+        GoTo Calculation_106d82b6_72c5_41b6_af2c_3ab3709a9c4e_Label
+        Calculation_106d82b6_72c5_41b6_af2c_3ab3709a9c4e_Label: ' Get
+        Clipboard = GetClipboard()
+        GoTo End_211e889c_ac33_46c2_8c6a_3d01c6f1ae4a_Label
+
+        End_211e889c_ac33_46c2_8c6a_3d01c6f1ae4a_Label:
+
+    End Sub
+
     ''' <summary>
     ''' BluePrism method: Get_Machine_Name
     ''' </summary>
     ''' <param name="Machine_Name">The hostname of the machine running this action</param>
-    Public Sub Get_Machine_Name(    ' Error generating subsheet: Object reference not set to an instance of an object.
+    Public Sub Get_Machine_Name(Optional ByRef Machine_Name As String = Nothing)
+
+        GoTo Code_61db579f_944a_4ba8_aedc_bdf80bc31cb7_Label
+        Code_61db579f_944a_4ba8_aedc_bdf80bc31cb7_Label: ' GetMachineName
+        ' Code Stage: GetMachineName
+        ' Original code:
+        ' machineName = Environment.MachineName
+        ' TODO: Convert to VB.Net
+        GoTo End_a69b53e7_8e67_4383_9b6f_28c57c9a82eb_Label
+
+        End_a69b53e7_8e67_4383_9b6f_28c57c9a82eb_Label:
+
+    End Sub
+
     ''' <summary>
     ''' Gets the resolution of the screen in pixels for the current environment.
     ''' </summary>
     ''' <param name="Horizontal_Resolution">The number of pixels in the horizontal screen axis</param>
     ''' <param name="Vertical_Resolution">The number of pixels in the vertical screen axis</param>
-    Public Sub Get_Screen_Resolution(    ' Error generating subsheet: Object reference not set to an instance of an object.
+    Public Sub Get_Screen_Resolution(Optional ByRef Horizontal_Resolution As Decimal = Nothing, Optional ByRef Vertical_Resolution As Decimal = Nothing)
+
+        GoTo Code_bd2d0918_9c73_4138_90b8_538eaa06f135_Label
+        Code_bd2d0918_9c73_4138_90b8_538eaa06f135_Label: ' GetResolution
+        ' Code Stage: GetResolution
+        ' Original code:
+        ' dim S As Size = Screen.PrimaryScreen.Bounds.Size
+        ' Horizontal_Resolution = S.Width
+        ' Vertical_Resolution = S.Height
+        ' TODO: Convert to VB.Net
+        GoTo End_3348aa7d_5b76_4d3f_a590_e571a9a83494_Label
+
+        End_3348aa7d_5b76_4d3f_a590_e571a9a83494_Label:
+
+    End Sub
+
     ''' <summary>
     ''' BluePrism method: Get_User_Name
     ''' </summary>
     ''' <param name="User_Name">The name of the logged in user in the current system</param>
-    Public Sub Get_User_Name(    ' Error generating subsheet: Object reference not set to an instance of an object.
+    Public Sub Get_User_Name(Optional ByRef User_Name As String = Nothing)
+
+        ' Local variables
+        Dim Username As String
+
+        ' Initialize local variables with alwaysinit
+
+        GoTo Code_c731c906_58b6_4969_bd70_b7ecd7fa47ae_Label
+        Code_c731c906_58b6_4969_bd70_b7ecd7fa47ae_Label: ' GetUserName
+        ' Code Stage: GetUserName
+        ' Original code:
+        ' username = Environment.UserName
+        ' TODO: Convert to VB.Net
+        GoTo End_ddc4be1a_94ee_4487_b6dc_0f12e4fc40ae_Label
+
+        End_ddc4be1a_94ee_4487_b6dc_0f12e4fc40ae_Label:
+        User_Name = Username
+
+    End Sub
+
     ''' <summary>
     ''' If you provide just the Process Name, all processes with the given name will be terminated. If you provide the Process Name and  the Process ID (or just the Process ID), the Process ID takes precendence and only that specific process will be terminated.
     ''' </summary>
@@ -172,6 +227,9 @@ Public Class Utility___Environment
         Dim Processes As DataTable
 
         ' Initialize local variables with alwaysinit
+
+        ' Initialize local variables with input values
+        Processes = Process_Names
 
         GoTo Code_c64eaa40_85d5_42b9_bcfe_0e314328bccb_Label
         Code_c64eaa40_85d5_42b9_bcfe_0e314328bccb_Label: ' Get Stats

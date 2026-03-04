@@ -1,6 +1,7 @@
 using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Linq;
+using System.CodeDom.Compiler;
 
 namespace BPAnalyzer;
 
@@ -68,6 +69,7 @@ public class BluePrismCodeGen
       catch (Exception ex)
       {
         Console.WriteLine($"Error processing {xmlFile}: {ex.Message}");
+        Console.WriteLine(ex.StackTrace);
       }
     }
 
@@ -108,12 +110,12 @@ public class BluePrismCodeGen
       var references = processInfo.Element("references")?.Elements("reference");
       if (references != null && references.Any())
       {
-        sb.AppendLine($"' ");
-        sb.AppendLine($"' References:");
+        // sb.AppendLine($"' ");
+        // sb.AppendLine($"' References:");
         foreach (var reference in references)
         {
           var refValue = reference.Value;
-          sb.AppendLine($"'   - {refValue}");
+          // sb.AppendLine($"'   - {refValue}");
           allReferences.Add(refValue);
         }
       }
@@ -121,12 +123,12 @@ public class BluePrismCodeGen
       var imports = processInfo.Element("imports")?.Elements("import");
       if (imports != null && imports.Any())
       {
-        sb.AppendLine($"' ");
-        sb.AppendLine($"' Imports:");
+        // sb.AppendLine($"' ");
+        // sb.AppendLine($"' Imports:");
         foreach (var import in imports)
         {
           var importValue = import.Value;
-          sb.AppendLine($"'   - {importValue}");
+          // sb.AppendLine($"'   - {importValue}");
           allImports.Add(importValue);
         }
       }
@@ -311,7 +313,7 @@ public class BluePrismCodeGen
 
       if (globalStages.Any())
       {
-        GenerateMethod(process, sb, "New", "Public", "Constructor - initialization code from stages without subsheet", globalStages, isObject, true);
+        GenerateMethod(sb, "New", "Public", "Constructor - initialization code from stages without subsheet", globalStages, true);
         sb.AppendLine();
       }
     }
@@ -324,7 +326,7 @@ public class BluePrismCodeGen
 
       if (mainStages.Any())
       {
-        GenerateMethod(process, sb, "Main", "Public", "Main process method (stages without subsheet)", mainStages, isObject, false);
+        GenerateMethod(sb, "Main", "Public", "Main process method (stages without subsheet)", mainStages, false);
         sb.AppendLine();
       }
     }
@@ -351,7 +353,7 @@ public class BluePrismCodeGen
         var published = subsheet.Attribute("published")?.Value?.ToLower() == "true";
 
         // Find SubSheetInfo stage for this subsheet to get narrative
-        var subSheetInfoStage = subsheetStages?.FirstOrDefault(s => s.Attribute("type")?.Value == "SubSheetInfo");
+        var subSheetInfoStage = subsheetStages.FirstOrDefault(s => s.Attribute("type")?.Value == "SubSheetInfo");
         var methodNarrative = subSheetInfoStage?.Element("narrative")?.Value;
 
         // Determine visibility
@@ -373,7 +375,7 @@ public class BluePrismCodeGen
 
         var methodName = isDestructor ? "Finalize" : SanitizeMethodName(subsheetName);
 
-        GenerateMethod(process, sb, methodName, methodVisibility, methodNarrative, subsheetStages, isObject, isDestructor);
+        GenerateMethod(sb, methodName, methodVisibility, methodNarrative, subsheetStages, isDestructor);
         sb.AppendLine();
       }
       catch (Exception ex)
@@ -407,38 +409,44 @@ public class BluePrismCodeGen
   /// <summary>
   /// Unified method generation - generates a method from stages
   /// </summary>
-  private void GenerateMethod(XElement process, System.Text.StringBuilder sb, string methodName, string methodVisibility, string? methodNarrative, List<XElement> stages, bool isObject, bool isConstructor, string? processNarrative = null)
+  private void GenerateMethod(
+    System.Text.StringBuilder sb,
+    string methodName,
+    string methodVisibility,
+    string? methodNarrative,
+    List<XElement> stages,
+    bool isConstructor)
   {
-    // Guard against null or empty stages
-    if (stages == null || stages.Count == 0)
+    // Find Start and End stages - with null checks
+    var startStage = stages.FirstOrDefault(s => s.Attribute("type")?.Value == "Start");
+    var endStage = stages.FirstOrDefault(s => s.Attribute("type")?.Value == "End");
+
+    // Start AND End stage are required
+    if (startStage == null || endStage == null)
     {
       return;
     }
 
-    // Find Start and End stages - with null checks
-    var startStage = stages?.FirstOrDefault(s => s.Attribute("type")?.Value == "Start");
-    var endStage = stages?.FirstOrDefault(s => s.Attribute("type")?.Value == "End");
-
     // Collect input parameter names from Start stage
-    var inputParamNames = startStage?.Element("inputs")?.Elements("input")
+    var inputParamNames = startStage.Element("inputs")?.Elements("input")
         .Select(i => i.Attribute("name")?.Value?.ToLower())
         .Where(n => !string.IsNullOrEmpty(n))
-        .ToHashSet();
+        .ToHashSet() ?? [];
 
     // Collect output parameter names from End stage
-    var outputParamNames = endStage?.Element("outputs")?.Elements("output")
+    var outputParamNames = endStage.Element("outputs")?.Elements("output")
         .Select(o => o.Attribute("name")?.Value?.ToLower())
         .Where(n => !string.IsNullOrEmpty(n))
-        .ToHashSet();
+        .ToHashSet() ?? [];
 
     // Combine input and output parameter names
-    var paramNames = (inputParamNames ?? []).Union(outputParamNames ?? []).ToHashSet();
+    var paramNames = inputParamNames.Union(outputParamNames).ToHashSet();
 
     // Collect input parameters from Start stage
-    var inputs = startStage?.Element("inputs")?.Elements("input").ToList() ?? new List<XElement>();
+    var inputs = startStage.Element("inputs")?.Elements("input").ToList() ?? new List<XElement>();
 
     // Collect output parameters from End stage
-    var outputs = endStage?.Element("outputs")?.Elements("output").ToList() ?? new List<XElement>();
+    var outputs = endStage.Element("outputs")?.Elements("output").ToList() ?? new List<XElement>();
 
     // Method documentation with uniform comments - handle multiline descriptions
     sb.AppendLine($"    ''' <summary>");
@@ -515,7 +523,7 @@ public class BluePrismCodeGen
     // Generate local data items
     // For constructor: exclude private, initial value, and alwaysinit
     // For other methods: include Data/Collection stages that are NOT input/output parameters
-    var localDataStages = (stages ?? new List<XElement>())
+    var localDataStages = stages
       .Where(e =>
       {
         var stageType = e.Attribute("type")?.Value;
@@ -765,7 +773,7 @@ public class BluePrismCodeGen
 
   private void GenerateStartStageForMethod(XElement stage, System.Text.StringBuilder sb)
   {
-    var inputs = stage.Element("inputs")?.Elements("input");
+    var inputs = stage.Element("inputs")?.Elements("input").ToList();
     var hasInputsWithAlwaysInit = false;
 
     // First pass: check if any input has alwaysinit
@@ -791,6 +799,33 @@ public class BluePrismCodeGen
             break;
           }
         }
+      }
+    }
+
+    // Generate input stage assignments: map input parameters to local variables
+    // Example: Data8 = InData1 (where InData1 is the input param, Data8 is the local variable)
+    if (inputs != null && inputs.Any())
+    {
+      var hasInputAssignments = false;
+      foreach (var input in inputs)
+      {
+        var inputName = input.Attribute("name")?.Value;
+        var stageName = input.Attribute("stage")?.Value; // This is the local variable name
+
+        // If stage attribute exists and differs from input name, generate assignment
+        if (!string.IsNullOrEmpty(inputName) && !string.IsNullOrEmpty(stageName) && stageName != inputName)
+        {
+          if (!hasInputAssignments)
+          {
+            sb.AppendLine("        ' Initialize local variables with input values");
+            hasInputAssignments = true;
+          }
+          sb.AppendLine($"        {SanitizeVariableName(stageName)} = {SanitizeVariableName(inputName)}");
+        }
+      }
+      if (hasInputAssignments)
+      {
+        sb.AppendLine();
       }
     }
 
@@ -842,25 +877,14 @@ public class BluePrismCodeGen
       }
     }
 
-    var onsuccess = stage.Element("onsuccess")?.Value;
-    if (!string.IsNullOrEmpty(onsuccess))
-    {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
-      sb.AppendLine($"        GoTo {targetStage}");
-    }
-    else
-    {
-      sb.AppendLine($"        ' No path defined");
-    }
+    GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
   }
 
   private void GenerateActionStage(XElement stage, System.Text.StringBuilder sb)
   {
-    var name = stage.Attribute("name")?.Value;
     var resource = stage.Element("resource");
     var objectName = resource?.Attribute("object")?.Value;
     var action = resource?.Attribute("action")?.Value;
-    var onsuccess = stage.Element("onsuccess")?.Value;
 
     if (!string.IsNullOrEmpty(objectName) && !string.IsNullOrEmpty(action))
     {
@@ -925,17 +949,12 @@ public class BluePrismCodeGen
         sb.AppendLine($"        {className}.Instance.{sanitizedActionName}()");
     }
 
-    if (!string.IsNullOrEmpty(onsuccess))
-    {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
-      sb.AppendLine($"        GoTo {targetStage}");
-    }
+    GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
   }
 
   private void GenerateProcessStage(XElement stage, System.Text.StringBuilder sb)
   {
     var name = stage.Attribute("name")?.Value;
-    var onsuccess = stage.Element("onsuccess")?.Value;
     var processId = stage.Element("processid")?.Value;
 
     // Find process name from processid by searching in all XML files
@@ -1007,11 +1026,18 @@ public class BluePrismCodeGen
       sb.AppendLine($"        ' TODO: Implement process call (processid: {processId})");
     }
 
-    if (!string.IsNullOrEmpty(onsuccess))
+    GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
+  }
+
+  private void GenerateGoTo(System.Text.StringBuilder sb, XDocument? document, string? targetStageId, int indentation = 8)
+  {
+    if (string.IsNullOrEmpty(targetStageId) || document == null)
     {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
-      sb.AppendLine($"        GoTo {targetStage}");
+      return;
     }
+    var targetStageLabel = FindStageLabel(targetStageId, document);
+    var spaces = "".PadLeft(indentation);
+    sb.AppendLine($"{spaces}GoTo {targetStageLabel}");
   }
 
   /// <summary>
@@ -1071,11 +1097,7 @@ public class BluePrismCodeGen
 
     sb.AppendLine($"        ' TODO: Convert to VB.Net");
 
-    if (!string.IsNullOrEmpty(onsuccess))
-    {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
-      sb.AppendLine($"        GoTo {targetStage}");
-    }
+    GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
   }
 
   private void GenerateDecisionStage(XElement stage, System.Text.StringBuilder sb)
@@ -1087,16 +1109,16 @@ public class BluePrismCodeGen
     var formattedExpression = FormatExpression(expression);
     sb.AppendLine($"        If {formattedExpression} Then");
 
-    if (!string.IsNullOrEmpty(ontrue) && !string.IsNullOrEmpty(onfalse))
+    if (!string.IsNullOrEmpty(ontrue))
     {
-      var trueTarget = ResolveAnchorChain(ontrue, stage.Document!);
-      var falseTarget = ResolveAnchorChain(onfalse, stage.Document!);
-
-      sb.AppendLine($"            GoTo {trueTarget}");
-      sb.AppendLine($"        Else");
-      sb.AppendLine($"            GoTo {falseTarget}");
-      sb.AppendLine($"        End If");
+      GenerateGoTo(sb, stage.Document, ontrue, 12);
     }
+    if (!string.IsNullOrEmpty(onfalse))
+    {
+      sb.AppendLine($"        Else");
+      GenerateGoTo(sb, stage.Document, onfalse, 12);
+    }
+    sb.AppendLine($"        End If");
   }
 
   private void GenerateCalculationStage(XElement stage, System.Text.StringBuilder sb)
@@ -1109,11 +1131,7 @@ public class BluePrismCodeGen
     var formattedStageName = SanitizeVariableName(stageName ?? "");
     sb.AppendLine($"        {formattedStageName} = {formattedCalculation}");
 
-    if (!string.IsNullOrEmpty(onsuccess))
-    {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
-      sb.AppendLine($"        GoTo {targetStage}");
-    }
+    GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
   }
 
   private void GenerateMultipleCalculationStage(XElement stage, System.Text.StringBuilder sb)
@@ -1129,31 +1147,20 @@ public class BluePrismCodeGen
       }
     }
 
-    var onsuccess = stage.Element("onsuccess")?.Value;
-    if (!string.IsNullOrEmpty(onsuccess))
-    {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
-      sb.AppendLine($"        GoTo {targetStage}");
-    }
+    GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
   }
 
   private void GenerateNavigateStage(XElement stage, System.Text.StringBuilder sb)
   {
-    var onsuccess = stage.Element("onsuccess")?.Value;
     sb.AppendLine($"        ' Navigate: UI automation");
     sb.AppendLine($"        ' TODO: Implement");
 
-    if (!string.IsNullOrEmpty(onsuccess))
-    {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
-      sb.AppendLine($"        GoTo {targetStage}");
-    }
+    GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
   }
 
   private void GenerateNoteStage(XElement stage, System.Text.StringBuilder sb)
   {
     var narrative = stage.Element("narrative")?.Value;
-    var onsuccess = stage.Element("onsuccess")?.Value;
 
     if (!string.IsNullOrEmpty(narrative))
     {
@@ -1169,11 +1176,7 @@ public class BluePrismCodeGen
       }
     }
 
-    if (!string.IsNullOrEmpty(onsuccess))
-    {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
-      sb.AppendLine($"        GoTo {targetStage}");
-    }
+    GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
   }
 
   private void GenerateExceptionStage(XElement stage, System.Text.StringBuilder sb)
@@ -1190,23 +1193,15 @@ public class BluePrismCodeGen
     }
     else
     {
-      // Raise the exception (StoreException will be called in Recover stage)
       sb.AppendLine($"        RaiseException(\"{exceptionType}\", {detail})");
     }
   }
 
   private void GenerateRecoverStage(XElement stage, System.Text.StringBuilder sb)
   {
-    var onsuccess = stage.Element("onsuccess")?.Value;
-
-    // Store the current exception using Err.GetException()
     sb.AppendLine($"        StoreException()");
 
-    if (!string.IsNullOrEmpty(onsuccess))
-    {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
-      sb.AppendLine($"        GoTo {targetStage}");
-    }
+    GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
   }
 
   private void GenerateResumeStage(XElement stage, System.Text.StringBuilder sb)
@@ -1218,20 +1213,8 @@ public class BluePrismCodeGen
 
     if (!string.IsNullOrEmpty(onsuccess))
     {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
+      var targetStage = FindStageLabel(onsuccess, stage.Document!);
       sb.AppendLine($"        Resume {targetStage}");
-    }
-  }
-
-  private void GenerateAnchorStage(XElement stage, System.Text.StringBuilder sb)
-  {
-    var onsuccess = stage.Element("onsuccess")?.Value;
-    sb.AppendLine($"        ' Anchor point");
-
-    if (!string.IsNullOrEmpty(onsuccess))
-    {
-      var targetStage = FindStageName(onsuccess, stage.Document!);
-      sb.AppendLine($"        GoTo {targetStage}");
     }
   }
 
@@ -1267,20 +1250,15 @@ public class BluePrismCodeGen
         var choiceExpression = GenerateWaitChoiceExpression(choice);
 
         sb.AppendLine($"            Case {choiceExpression} ' {choiceName}");
-        if (!string.IsNullOrEmpty(ontrue))
-        {
-          var targetStage = ResolveAnchorChain(ontrue, stage.Document!);
-          sb.AppendLine($"                GoTo {targetStage}");
-        }
+        GenerateGoTo(sb, stage.Document, ontrue, 16);
       }
       if (waitEnd != null)
       {
-        var waitEndOnSuccess = waitEnd.Element("onsuccess")?.Value;
-        if (!string.IsNullOrEmpty(waitEndOnSuccess))
+        var onsuccess = waitEnd.Element("onsuccess")?.Value;
+        if (!string.IsNullOrEmpty(onsuccess))
         {
-          var elseTarget = ResolveAnchorChain(waitEndOnSuccess, stage.Document!);
           sb.AppendLine($"            Case Else");
-          sb.AppendLine($"                GoTo {elseTarget}");
+          GenerateGoTo(sb, stage.Document, onsuccess, 16);
         }
       }
       sb.AppendLine($"        End Select");
@@ -1397,21 +1375,18 @@ public class BluePrismCodeGen
     return stages.Any(s => s.Attribute("type")?.Value == "Recover");
   }
 
-  private string FindStageName(string stageId, XDocument doc)
+  private string FindStageLabel(string stageId, XDocument doc)
   {
-    if (string.IsNullOrEmpty(stageId)) return "Unknown_Label";
+    if (string.IsNullOrEmpty(stageId)) return GetStageLabel("Unknown", stageId);
 
     var stage = doc.Descendants().FirstOrDefault(e => e.Name.LocalName == "stage" && e.Attribute("stageid")?.Value == stageId);
 
     // If stage not found, return unknown label
-    if (stage == null)
-    {
-      return "Unknown_Label";
-    }
+    if (stage == null) return GetStageLabel("Unknown", stageId);
 
     var stageType = stage.Attribute("type")?.Value ?? "Unknown";
 
-    // For End stages, use GetEndLabel
+    // find first end stage on page
     if (stageType == "End")
     {
       var stageSubsheetId = stage.Element("subsheetid")?.Value;
@@ -1431,7 +1406,12 @@ public class BluePrismCodeGen
       return GetStageLabel("End", endStage.Attribute("stageid")?.Value ?? stageId);
     }
 
-    // Use consistent label format: Type_StageId_Label
+    // Use ResolveAnchorChain to automatically follow Anchor stages
+    if (stageType == "Anchor")
+    {
+      return ResolveAnchorChain(stageId, doc);
+    }
+
     return GetStageLabel(stageType, stageId);
   }
 
@@ -1459,21 +1439,27 @@ public class BluePrismCodeGen
     {
       visited.Add(currentId);
 
-      var stage = doc.Descendants()
-          .FirstOrDefault(e => e.Name.LocalName == "stage" && e.Attribute("stageid")?.Value == currentId);
+      var stage = doc.Descendants().FirstOrDefault(e => e.Name.LocalName == "stage" && e.Attribute("stageid")?.Value == currentId);
 
-      if (stage == null) break;
+      if (stage == null)
+      {
+        // Stage not found - return a label with the original stageId
+        return GetStageLabel("Unknown", stageId);
+      }
 
       var stageType = stage.Attribute("type")?.Value;
       if (stageType != "Anchor")
       {
-        return FindStageName(currentId, doc);
+        // Found a non-Anchor stage
+        return FindStageLabel(currentId, doc);
       }
 
       currentId = stage.Element("onsuccess")?.Value;
     }
 
-    return FindStageName(stageId, doc);
+    // If we get here, either the chain is empty or we have a loop
+    // Return a label with the original stageId
+    return GetStageLabel("Unknown", stageId);
   }
 
   private string SanitizeMethodName(string name)
@@ -1616,9 +1602,6 @@ public class BluePrismCodeGen
       if (varName.Contains('.')) return match.Value; // Keep original if not handled
       return SanitizeVariableName(varName);
     });
-
-    // Replace BluePrism exception functions with our base class methods
-    result = result.Replace("ExceptionDetail()", "ExceptionText()");
 
     return result;
   }

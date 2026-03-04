@@ -18,7 +18,7 @@
     <name>Variable Test</name>
     <view>
       <camerax>0</camerax>
-      <cameray>21</cameray>
+      <cameray>63</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -146,11 +146,19 @@
   <stage stageid="ffbd078e-2ea0-4795-8ab7-31c0c6a38edd" name="Start" type="Start">
     <subsheetid>da65086d-4794-4b77-a06e-0c67a6dcf0d8</subsheetid>
     <display x="15" y="-105" />
+    <inputs>
+      <input type="text" name="InData1" stage="Data8" />
+      <input type="number" name="InData2" stage="Data6" />
+    </inputs>
     <onsuccess>4a05cdbe-f075-4c4f-972b-7e63880a1bb6</onsuccess>
   </stage>
   <stage stageid="71b0a2dc-32e2-4505-aff3-7368fe044655" name="End" type="End">
     <subsheetid>da65086d-4794-4b77-a06e-0c67a6dcf0d8</subsheetid>
     <display x="15" y="75" />
+    <outputs>
+      <output type="date" name="OutValue1" stage="Data1" />
+      <output type="flag" name="OutValue2" stage="MyToggle" />
+    </outputs>
   </stage>
   <stage stageid="41230623-4a9b-4730-bcfe-49df8f8c722a" name="Data1" type="Data">
     <subsheetid>da65086d-4794-4b77-a06e-0c67a6dcf0d8</subsheetid>

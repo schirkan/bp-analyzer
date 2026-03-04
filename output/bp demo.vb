@@ -1,19 +1,8 @@
 ' Generated from BluePrism object: bp demo
 ' Version: 1.0
-' Generated: 2026-03-01 15:17:44
+' Generated: 2026-03-04 16:44:00
 ' 
 ' This page is like the class constructor
-' 
-' References:
-'   - System.dll
-'   - System.Data.dll
-'   - System.Xml.dll
-'   - System.Drawing.dll
-' 
-' Imports:
-'   - System
-'   - System.Drawing
-'   - System.Data
 
 Imports System
 Imports System.Collections.Generic
@@ -142,7 +131,7 @@ Public Class bp_demo
         Calculation_6ad99ace_a4e2_4919_9a22_e7baa3af2bde_Label: ' Log Exception
         On Error GoTo Recover_e58b2971_f6b9_4152_9eac_d76e7cd54a1b_Label
         Value = "Type: " & ExceptionType() & NewLine() &
-"Details: " & ExceptionText()
+"Details: " & ExceptionDetail()
         GoTo Exception_a987ff7d_de3a_4d2c_bcca_696cda7cdcb2_Label
 
         End_ab996bd9_e5f6_4c28_a59e_cc84ab29e58c_Label:

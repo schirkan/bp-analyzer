@@ -165,11 +165,39 @@
 - [ ] generate method to evaluate expressions
   - MyToggle = DataBinder.Eval(Me, "[MyToggle] = False")
 
-## Hinweise zu verbleibenden TODOs in generierten Dateien
+- [ ] add missing system methods to Temaplte_BP_Base.vb
+  - 
 
-Die folgenden TODOs in den generierten .vb-Dateien sind "by design" und erfordern manuelle Implementierung:
+- [ ] implement stage type=Navigate
+  - 
 
-1. **Navigate-Stages**: `' TODO: Implement` - UI-Automatisierung kann nicht aus BluePrism-XML generiert werden
-2. **Note-Stages mit leerem Narrative**: `' Todo` - BluePrism-Note ohne Textinhalt
+- [ ] implement stage type=Reader
+  - 
 
-Diese müssen manuell vom Entwickler implementiert werden, da die UI-Aktionen (Klicks, Eingaben, etc.) nicht aus dem XML extrahiert werden können.
+- [ ] implement stage type=Writer
+  - 
+
+- [ ] implement stage type=Code
+
+- [ ] fix global variables
+  - if <private /> is not present in Data stage, change the variable definition from "Dim" to "Static"
+
+- [x] implement input stage tage
+  - sample xml:
+    ```    
+    <stage stageid="ffbd078e-2ea0-4795-8ab7-31c0c6a38edd" name="Start" type="Start">
+      <subsheetid>da65086d-4794-4b77-a06e-0c67a6dcf0d8</subsheetid>
+      <display x="15" y="-105" />
+      <inputs>
+        <input type="text" name="InData1" stage="Data8" />
+        <input type="number" name="InData2" stage="Data6" />
+      </inputs>
+      <onsuccess>4a05cdbe-f075-4c4f-972b-7e63880a1bb6</onsuccess>
+    </stage>
+    ```
+  - expected code after "Local variables" and before "Initialize local variables with alwaysinit":
+    ```
+    ' Initialize local variables with input values
+    Data8 = InData1
+    Data6 = InData2
+    ```
