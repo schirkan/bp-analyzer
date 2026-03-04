@@ -179,8 +179,8 @@
 
 - [ ] implement stage type=Code
 
-- [ ] fix global variables
-  - if <private /> is not present in Data stage, change the variable definition from "Dim" to "Static"
+- [ ] fix static variables
+  - if data stage does not have <alwaysinit />: change variable definition from "Dim" to "Static"
 
 - [x] implement input stage tage
   - sample xml:

@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Windows Settings
 ' Version: 1.0
-' Generated: 2026-03-04 16:44:00
+' Generated: 2026-03-04 20:08:24
 
 Imports System
 Imports System.Collections.Generic
@@ -43,18 +43,12 @@ Public Class Windows_Settings
     ''' </summary>
     Public Sub New()
 
-        GoTo End_076175b6_1dbb_424c_9b83_b9c525bc6c8e_Label
-        End_076175b6_1dbb_424c_9b83_b9c525bc6c8e_Label:
-
     End Sub
 
     ''' <summary>
     ''' Destructor (CleanUp) - called when object is disposed
     ''' </summary>
     Protected Overrides Sub Finalize()
-
-        GoTo End_12a1042d_0c0f_4a78_a8de_07dcb3acabba_Label
-        End_12a1042d_0c0f_4a78_a8de_07dcb3acabba_Label:
 
     End Sub
 
@@ -66,24 +60,19 @@ Public Class Windows_Settings
         ' Local variables
         Dim FilePath As String
 
-        ' Initialize local variables with alwaysinit
+        ' Initialize local variables with initialvalue
         If FilePath Is Nothing Then
             FilePath = "ms-settings:windowsupdate"
         End If
 
-        GoTo Action_e6083316_bbfc_449a_876a_f3a3ca77566b_Label
-        Action_e6083316_bbfc_449a_876a_f3a3ca77566b_Label: ' Start Process
+        ' Start Process
         On Error GoTo Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label
         Utility___Environment.Instance.Start_Process(Application:=FilePath, Arguments:=Arguments, Use_Shell:=Use_Shell, Process_ID:=Process_ID, Process_Name:=Process_Name)
-        GoTo Navigate_1e01d250_1eb1_4733_b192_d31129adc9ab_Label
-
         Navigate_1e01d250_1eb1_4733_b192_d31129adc9ab_Label: ' Attach
         On Error GoTo Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label
         ' Navigate: UI automation
         ' TODO: Implement
-        GoTo WaitStart_dbd18af1_b077_4a8d_b57a_b93974da4696_Label
-
-        WaitStart_dbd18af1_b077_4a8d_b57a_b93974da4696_Label: ' W5
+        ' W5
         On Error GoTo Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label
         ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 1 choice(s)
@@ -100,9 +89,7 @@ Public Class Windows_Settings
 
         Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label: ' Recover
         StoreException()
-        GoTo Resume_22279869_9f1d_4c2a_b01d_a3d3405d3240_Label
-
-        Resume_22279869_9f1d_4c2a_b01d_a3d3405d3240_Label: ' Resume
+        ' Resume
         ClearException()
         Resume Navigate_1e01d250_1eb1_4733_b192_d31129adc9ab_Label
 
@@ -115,13 +102,9 @@ Public Class Windows_Settings
     ''' </summary>
     Public Sub Terminate()
 
-        GoTo Navigate_c0522690_c8cc_4709_8dc8_251d04f2b9e6_Label
-        Navigate_c0522690_c8cc_4709_8dc8_251d04f2b9e6_Label: ' Terminate
+        ' Terminate
         ' Navigate: UI automation
         ' TODO: Implement
-        GoTo End_c3e50599_76d3_41e6_aaca_7e038ba5b207_Label
-
-        End_c3e50599_76d3_41e6_aaca_7e038ba5b207_Label:
 
     End Sub
 
@@ -130,8 +113,7 @@ Public Class Windows_Settings
     ''' </summary>
     Public Sub Start_Updates()
 
-        GoTo WaitStart_0da68cf3_200e_4ccf_95fa_0175699daf6d_Label
-        WaitStart_0da68cf3_200e_4ccf_95fa_0175699daf6d_Label: ' W5
+        ' W5
         ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 2 choice(s)
         Select Case True
@@ -149,8 +131,6 @@ Public Class Windows_Settings
         Navigate_b53b3ace_8c40_4a32_8015_49a288f7a245_Label: ' Click Nach Updates suchen
         ' Navigate: UI automation
         ' TODO: Implement
-        GoTo End_1c4fc2e7_022b_4fb2_9bef_f30a7cb3c9c3_Label
-
         End_1c4fc2e7_022b_4fb2_9bef_f30a7cb3c9c3_Label:
 
     End Sub
@@ -160,8 +140,7 @@ Public Class Windows_Settings
     ''' </summary>
     Public Sub Wait_Updates_Finished()
 
-        GoTo WaitStart_fe44beea_7779_433a_b6ab_7ada27117a21_Label
-        WaitStart_fe44beea_7779_433a_b6ab_7ada27117a21_Label: ' W120
+        ' W120
         ' Wait: W120 (Type: WaitStart)
         ' Wait 120 seconds for condition with 1 choice(s)
         Select Case True
@@ -187,13 +166,12 @@ Public Class Windows_Settings
         Exception_a4d98b2d_573f_472c_806f_8a67b73efeec_Label: ' SE
         RaiseException("System Exception", "Download Header not found")
 
-        Note_94e2ca8f_1591_4135_9c8e_da6a38d1da07_Label: ' Note1
+        ' Note1
         ' Todo
 
         End_74264245_4139_4e07_9f3b_ddeb9ab8850a_Label:
 
     End Sub
-
 
     #End Region
 

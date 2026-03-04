@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - Subprocess A
 ' Version: 1.0
-' Generated: 2026-03-04 16:44:00
+' Generated: 2026-03-04 20:08:23
 ' 
 ' This is a test subprocess
 
@@ -44,17 +44,14 @@ Public Class MP___Subprocess_A
     ''' </summary>
     Public Sub Main(Optional ByVal Name As String = Nothing, Optional ByRef Char_Count As Decimal = Nothing)
 
+        ' Initialize local variables with initialvalue
+
         ' Initialize input parameters with alwaysinit
 
-        GoTo Calculation_94e477c2_f432_419e_bffc_e912c152acfd_Label
-        Calculation_94e477c2_f432_419e_bffc_e912c152acfd_Label: ' Calc Char Count
+        ' Calc Char Count
         Char_Count = Len(Name)
-        GoTo End_7f8f449f_a21d_4a5f_89de_1ceb5b5b58d5_Label
-
-        End_7f8f449f_a21d_4a5f_89de_1ceb5b5b58d5_Label:
 
     End Sub
-
 
     #End Region
 

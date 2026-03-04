@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - System Update
 ' Version: 1.0
-' Generated: 2026-03-04 16:44:00
+' Generated: 2026-03-04 20:08:23
 
 Imports System
 Imports System.Collections.Generic
@@ -47,48 +47,30 @@ Public Class MP___System_Update
 
         ' Local variables
         Dim Char_Count As Decimal
-        Dim MyText As String
 
-        ' Initialize local variables with alwaysinit
+        ' Initialize local variables with initialvalue
+        If MyText Is Nothing Then
+            MyText = "Hallo Welt"
+        End If
 
-        GoTo Action_4539a66d_7d69_4673_b8bb_5efa1232b757_Label
-        Action_4539a66d_7d69_4673_b8bb_5efa1232b757_Label: ' Launch
+        ' Launch
         Microsoft_Store.Instance.Launch()
-        GoTo Action_f23e67c2_11c0_4346_a801_5a214e91b6ff_Label
-
-        Action_f23e67c2_11c0_4346_a801_5a214e91b6ff_Label: ' Start Updates
+        ' Start Updates
         Microsoft_Store.Instance.Start_Updates()
-        GoTo Action_b3ccbd6d_cca2_45db_9cfc_219e49f755b8_Label
-
-        Action_b3ccbd6d_cca2_45db_9cfc_219e49f755b8_Label: ' Launch
+        ' Launch
         Windows_Settings.Instance.Launch()
-        GoTo Action_f3c341e4_9757_4782_9b2e_ae78d124d7d9_Label
-
-        Action_f3c341e4_9757_4782_9b2e_ae78d124d7d9_Label: ' Start Updates
+        ' Start Updates
         Windows_Settings.Instance.Start_Updates()
-        GoTo Action_c1d50530_9cb0_4086_ac25_09bcddb32444_Label
-
-        Action_c1d50530_9cb0_4086_ac25_09bcddb32444_Label: ' Wait Updates Finished
+        ' Wait Updates Finished
         Microsoft_Store.Instance.Wait_Updates_Finished()
-        GoTo Action_d1d55292_946c_4fa5_8ba4_aab9481ffe7c_Label
-
-        Action_d1d55292_946c_4fa5_8ba4_aab9481ffe7c_Label: ' Terminate
+        ' Terminate
         Microsoft_Store.Instance.Terminate()
-        GoTo Action_617b589a_e24f_4b18_8b8b_696abab94bf7_Label
-
-        Action_617b589a_e24f_4b18_8b8b_696abab94bf7_Label: ' Wait Updates Finished
+        ' Wait Updates Finished
         Windows_Settings.Instance.Wait_Updates_Finished()
-        GoTo Action_54d85639_3e6d_487a_8b8e_f3e95427e046_Label
-
-        Action_54d85639_3e6d_487a_8b8e_f3e95427e046_Label: ' Terminate
+        ' Terminate
         Windows_Settings.Instance.Terminate()
-        GoTo Process_5eb89ba8_fa28_4939_b7d7_cc29a13cf616_Label
-
-        Process_5eb89ba8_fa28_4939_b7d7_cc29a13cf616_Label: ' Call Process A
+        ' Call Process A
         MP___Subprocess_A.Instance.Main(Name:=MyText, Char_Count:=Char_Count)
-        GoTo End_1f3bb070_109c_4bbc_babf_3ef6af6b6fa2_Label
-
-        End_1f3bb070_109c_4bbc_babf_3ef6af6b6fa2_Label:
 
     End Sub
 
@@ -101,17 +83,13 @@ Public Class MP___System_Update
         Dim VerwSysSl As String
         Dim VNR As String
 
-        ' Initialize local variables with alwaysinit
+        ' Initialize local variables with initialvalue
         If VNR Is Nothing Then
             VNR = "AB123456"""
         End If
 
-        GoTo Action_0a4a56fe_a66f_4922_b04d_b26c81313910_Label
-        Action_0a4a56fe_a66f_4922_b04d_b26c81313910_Label: ' MyPublicAction
+        ' MyPublicAction
         bp_demo.Instance.MyPublicAction(VNR:=VNR, VerwSysSl:=VerwSysSl)
-        GoTo End_5fa21eeb_0828_4758_8d6f_16361a445fa1_Label
-
-        End_5fa21eeb_0828_4758_8d6f_16361a445fa1_Label:
 
     End Sub
 
@@ -132,12 +110,12 @@ Public Class MP___System_Update
         Dim Data9 As String
         Dim Data10 As TimeSpan
         Dim Data11 As TimeSpan
-        Dim MyToggle As Boolean
+        Static MyToggle As Boolean
         Dim Coll1 As DataTable
         Dim Coll2 As DataTable
         Dim Coll3 As DataTable
 
-        ' Initialize local variables with alwaysinit
+        ' Initialize local variables with initialvalue
         If Data1 Is Nothing Then
             Data1 = DateTime.Parse("2026/02/01")
         End If
@@ -159,13 +137,15 @@ Public Class MP___System_Update
         If Data11 Is Nothing Then
             Data11 = TimeSpan.Parse("1.02:03:04")
         End If
+        If MyToggle Is Nothing Then
+            MyToggle = False
+        End If
 
         ' Initialize local variables with input values
         Data8 = InData1
         Data6 = InData2
 
-        GoTo Decision_4a05cdbe_f075_4c4f_972b_7e63880a1bb6_Label
-        Decision_4a05cdbe_f075_4c4f_972b_7e63880a1bb6_Label: ' MyToggle?
+        ' MyToggle?
         If MyToggle Then
             GoTo Calculation_da6d4891_f555_46b1_b752_73b463373de8_Label
         Else
@@ -174,20 +154,15 @@ Public Class MP___System_Update
 
         Calculation_da6d4891_f555_46b1_b752_73b463373de8_Label: ' Toggle boolean value
         MyToggle = MyToggle = False
-        GoTo MultipleCalculation_acac267a_d52f_473a_8266_3116177d865f_Label
-
         MultipleCalculation_acac267a_d52f_473a_8266_3116177d865f_Label: ' Multi1
-        ' Data5 = 123
-        ' Data6 = 7.8
-        ' Data8 = "tttt"
-        GoTo End_71b0a2dc_32e2_4505_aff3_7368fe044655_Label
-
-        End_71b0a2dc_32e2_4505_aff3_7368fe044655_Label:
+        Data5 = 123
+        Data6 = 7.8
+        Data8 = "tttt"
+        
         OutValue1 = Data1
         OutValue2 = MyToggle
 
     End Sub
-
 
     #End Region
 

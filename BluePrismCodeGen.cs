@@ -1,7 +1,5 @@
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using System.Collections.Generic;
-using System.Linq;
-using System.CodeDom.Compiler;
 
 namespace BPAnalyzer;
 
@@ -154,8 +152,11 @@ public class BluePrismCodeGen
       foreach (var import in allImports)
       {
         // Skip duplicates and already imported namespaces
-        if (import != "System" && import != "System.Collections.Generic" &&
-            import != "System.Linq" && import != "System.Text" && import != "System.Data")
+        if (import != "System" &&
+            import != "System.Collections.Generic" &&
+            import != "System.Linq" &&
+            import != "System.Text" &&
+            import != "System.Data")
         {
           sb.AppendLine($"Imports {import}");
         }
@@ -207,43 +208,35 @@ public class BluePrismCodeGen
     // Class footer
     sb.AppendLine("End Class");
 
-    return sb.ToString();
-  }
+    var code = sb.ToString();
 
-  private void GenerateObjectReferences(XElement process, System.Text.StringBuilder sb)
-  {
-    // Find all Action stages and collect unique object names
-    var actionStages = process.Descendants()
-        .Where(e => e.Name.LocalName == "stage" && e.Attribute("type")?.Value == "Action")
-        .ToList();
-
-    var objectNames = new HashSet<string>();
-    foreach (var stage in actionStages)
+    // remove unnecessary Goto statements and labels
+    var allStages = process.Descendants().Where(e => e.Name.LocalName == "stage").ToList();
+    foreach (var stage in allStages)
     {
-      var resource = stage.Element("resource");
-      var objectName = resource?.Attribute("object")?.Value;
-      if (!string.IsNullOrEmpty(objectName))
+      var stageId = stage.Attribute("stageid")?.Value;
+      var stageType = stage.Attribute("type")?.Value;
+      if (stageId == null || stageType == null) continue;
+      var stageLabel = GetStageLabel(stageType, stageId);
+
+      // find & remove Goto directly before label
+      // GoTo Decision_4a05cdbe_f075_4c4f_972b_7e63880a1bb6_Label
+      // Decision_4a05cdbe_f075_4c4f_972b_7e63880a1bb6_Label:
+      code = Regex.Replace(code, $"GoTo {stageLabel}\\s*{stageLabel}:", $"{stageLabel}:");
+
+      // remove labels without references
+      var firstIndex = code.IndexOf(stageLabel);
+      var lastIndex = code.LastIndexOf(stageLabel);
+      if (firstIndex == lastIndex)
       {
-        objectNames.Add(objectName);
+        code = Regex.Replace(code, $"{stageLabel}: *", "");
       }
     }
 
-    if (objectNames.Count == 0)
-    {
-      sb.AppendLine("    ' No object references");
-      return;
-    }
+    // remove multiple new lines
+    code = Regex.Replace(code, "\\s*(\n\r)+", "$1");
 
-    foreach (var objectName in objectNames)
-    {
-      var sanitizedVarName = "_" + SanitizeVariableName(objectName);
-      var className = SanitizeClassName(objectName);
-
-      sb.AppendLine($"    ''' <summary>");
-      sb.AppendLine($"    ''' Object reference: {objectName}");
-      sb.AppendLine($"    ''' </summary>");
-      sb.AppendLine($"    Private {sanitizedVarName} As {className} = New {className}()");
-    }
+    return code;
   }
 
   private void GenerateGlobalDataItems(XElement process, System.Text.StringBuilder sb)
@@ -439,7 +432,7 @@ public class BluePrismCodeGen
         .Where(n => !string.IsNullOrEmpty(n))
         .ToHashSet() ?? [];
 
-    // Combine input and output parameter names
+    // Combine input and output parameter data stage names
     var paramNames = inputParamNames.Union(outputParamNames).ToHashSet();
 
     // Collect input parameters from Start stage
@@ -520,37 +513,31 @@ public class BluePrismCodeGen
     sb.AppendLine(string.Join(", ", paramList) + ")");
     sb.AppendLine();
 
-    // Generate local data items
-    // For constructor: exclude private, initial value, and alwaysinit
-    // For other methods: include Data/Collection stages that are NOT input/output parameters
-    var localDataStages = stages
+    // Generate all data items
+    var allDataStages = stages
       .Where(e =>
       {
+        // include only data/collection stages
         var stageType = e.Attribute("type")?.Value;
         if (stageType != "Data" && stageType != "Collection") return false;
 
-        if (isConstructor)
-        {
-          // Skip if private
-          if (e.Element("private") != null) return false;
-          // Skip if has initial value (these become global)
-          if (!string.IsNullOrEmpty(e.Element("initialvalue")?.Value)) return false;
-          // Skip Collection with alwaysinit (these become global)
-          if (stageType == "Collection" && e.Element("alwaysinit") != null) return false;
-          return true;
-        }
-        else
-        {
-          // For non-constructor methods, include data/collection stages
-          // EXCEPT those that are input/output parameters
-          var stageName = e.Attribute("name")?.Value?.ToLower();
-          if (string.IsNullOrEmpty(stageName)) return false;
+        return true;
+      })
+      .ToList();
 
-          // Skip if this is an input or output parameter
-          if (paramNames.Contains(stageName)) return false;
+    // Generate local data items
+    var localDataStages = allDataStages
+      .Where(e =>
+      {
+        // Skip if not private
+        if (e.Element("private") == null) return false;
 
-          return true;
-        }
+        // Skip if this is an input or output parameter
+        var stageName = e.Attribute("name")?.Value?.ToLower();
+        if (string.IsNullOrEmpty(stageName)) return false;
+        if (paramNames.Contains(stageName)) return false;
+
+        return true;
       })
       .ToList();
 
@@ -561,23 +548,27 @@ public class BluePrismCodeGen
       sb.AppendLine("        ' Local variables");
 
       // First: define variables without initialization
+      // Use Static for variables without alwaysinit (retains value between executions)
+      // Use Dim for variables with alwaysinit (initialized every time)
       foreach (var dataStage in localDataStages)
       {
         var dataName = dataStage.Attribute("name")?.Value!;
         var dataType = dataStage.Element("datatype")?.Value ?? "text";
         var vbType = MapDataType(dataType, dataStage);
+        var hasAlwaysInit = dataStage.Element("alwaysinit") != null;
+        var keyword = hasAlwaysInit ? "Dim" : "Static";
 
-        sb.AppendLine($"        Dim {SanitizeVariableName(dataName)} As {vbType}");
+        sb.AppendLine($"        {keyword} {SanitizeVariableName(dataName)} As {vbType}");
       }
       sb.AppendLine();
     }
 
-    // Generate initialization section for local variables with alwaysinit
-    var alwaysInitLocalStages = localDataStages.Where(e => e.Element("alwaysinit") != null).ToList();
-    if (alwaysInitLocalStages.Any())
+    // Generate initialization section for variables with <initialvalue>
+    var stagesWithInitialValue = allDataStages.Where(e => e.Element("initialvalue") != null).ToList();
+    if (stagesWithInitialValue.Any())
     {
-      sb.AppendLine("        ' Initialize local variables with alwaysinit");
-      foreach (var dataStage in alwaysInitLocalStages)
+      sb.AppendLine("        ' Initialize local variables with initialvalue");
+      foreach (var dataStage in stagesWithInitialValue)
       {
         var dataName = dataStage.Attribute("name")?.Value!;
         var dataType = dataStage.Element("datatype")?.Value ?? "text";
@@ -1125,11 +1116,10 @@ public class BluePrismCodeGen
   {
     var calculation = stage.Element("calculation")?.Attribute("expression")?.Value;
     var stageName = stage.Element("calculation")?.Attribute("stage")?.Value;
-    var onsuccess = stage.Element("onsuccess")?.Value;
 
-    var formattedCalculation = FormatExpression(calculation);
+    var formattedExpression = FormatExpression(calculation);
     var formattedStageName = SanitizeVariableName(stageName ?? "");
-    sb.AppendLine($"        {formattedStageName} = {formattedCalculation}");
+    sb.AppendLine($"        {formattedStageName} = {formattedExpression}");
 
     GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
   }
@@ -1142,8 +1132,10 @@ public class BluePrismCodeGen
       foreach (var calc in calculations)
       {
         var expression = calc.Attribute("expression")?.Value;
+        var formattedExpression = FormatExpression(expression);
         var targetStage = calc.Attribute("stage")?.Value;
-        sb.AppendLine($"        ' {targetStage} = {expression}");
+        var formattedStageName = SanitizeVariableName(targetStage ?? "");
+        sb.AppendLine($"        {formattedStageName} = {formattedExpression}");
       }
     }
 

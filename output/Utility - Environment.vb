@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-04 16:44:00
+' Generated: 2026-03-04 20:08:23
 ' 
 ' Utilities for interacting with the environment - read screen resolution, determine OS type, etc.
 
@@ -53,18 +53,18 @@ Public Class Utility___Environment
     Public Sub New()
 
         GoTo End_9e4646d0_d8c7_44d6_a5d9_9509e3ba8883_Label
-        Note_faf2adc8_9198_4483_b6dc_e67e978cbf7b_Label: ' new
+        ' new
         ' Initialise Page
         ' This is an optional page where you might choose to perform some initialisation tasks after your business object is loaded.
         ' The initialise action will be called automatically immediately after loading your business object.
         ' You will not be able to call this action from a business process, nor will it be called at any other time than after the creation of the object.
 
-        Note_39258065_1e18_4bab_a733_c1dca96896e6_Label: ' Note2
+        ' Note2
         ' © 2024 Blue Prism Limited
         ' Licensed under the Blue Prism Asset Terms for Modifiable Assets
         ' https://portal.blueprism.com/agreements
 
-        Note_0eb2c15b_34c0_40ed_b0df_53cf297023e3_Label: ' Version Info
+        ' Version Info
         ' Version: 10.1.8
 
         End_9e4646d0_d8c7_44d6_a5d9_9509e3ba8883_Label:
@@ -76,11 +76,8 @@ Public Class Utility___Environment
     ''' </summary>
     Public Sub Clear_Clipboard()
 
-        GoTo SubSheet_d1113981_40f5_450a_8b7e_e059eed37e76_Label
-        SubSheet_d1113981_40f5_450a_8b7e_e059eed37e76_Label: ' Set Clipboard
+        ' Set Clipboard
         ' TODO: Implement stage type 'SubSheet'
-
-        End_e13b6d4e_e05c_491e_ace6_54389e4a99fb_Label:
 
     End Sub
 
@@ -93,17 +90,14 @@ Public Class Utility___Environment
         ' Local variables
         Dim Enabled_ As Boolean
 
-        ' Initialize local variables with alwaysinit
+        ' Initialize local variables with initialvalue
 
-        GoTo Code_96f9fe29_f641_44ab_ab0e_a4091edaec4c_Label
-        Code_96f9fe29_f641_44ab_ab0e_a4091edaec4c_Label: ' Get Font Smoothing Enabled
+        ' Get Font Smoothing Enabled
         ' Code Stage: Get Font Smoothing Enabled
         ' Original code:
         ' Enabled=System.Windows.Forms.Systeminformation.IsFontSmoothingEnabled
         ' TODO: Convert to VB.Net
-        GoTo End_9150eaee_22ec_4228_803e_123c888b87e5_Label
-
-        End_9150eaee_22ec_4228_803e_123c888b87e5_Label:
+        
         Enabled = Enabled_
 
     End Sub
@@ -114,12 +108,10 @@ Public Class Utility___Environment
     ''' <param name="Clipboard">The value from the clipboard.</param>
     Public Sub Get_Clipboard(Optional ByRef Clipboard As String = Nothing)
 
-        GoTo Calculation_106d82b6_72c5_41b6_af2c_3ab3709a9c4e_Label
-        Calculation_106d82b6_72c5_41b6_af2c_3ab3709a9c4e_Label: ' Get
-        Clipboard = GetClipboard()
-        GoTo End_211e889c_ac33_46c2_8c6a_3d01c6f1ae4a_Label
+        ' Initialize local variables with initialvalue
 
-        End_211e889c_ac33_46c2_8c6a_3d01c6f1ae4a_Label:
+        ' Get
+        Clipboard = GetClipboard()
 
     End Sub
 
@@ -129,15 +121,13 @@ Public Class Utility___Environment
     ''' <param name="Machine_Name">The hostname of the machine running this action</param>
     Public Sub Get_Machine_Name(Optional ByRef Machine_Name As String = Nothing)
 
-        GoTo Code_61db579f_944a_4ba8_aedc_bdf80bc31cb7_Label
-        Code_61db579f_944a_4ba8_aedc_bdf80bc31cb7_Label: ' GetMachineName
+        ' Initialize local variables with initialvalue
+
+        ' GetMachineName
         ' Code Stage: GetMachineName
         ' Original code:
         ' machineName = Environment.MachineName
         ' TODO: Convert to VB.Net
-        GoTo End_a69b53e7_8e67_4383_9b6f_28c57c9a82eb_Label
-
-        End_a69b53e7_8e67_4383_9b6f_28c57c9a82eb_Label:
 
     End Sub
 
@@ -148,17 +138,15 @@ Public Class Utility___Environment
     ''' <param name="Vertical_Resolution">The number of pixels in the vertical screen axis</param>
     Public Sub Get_Screen_Resolution(Optional ByRef Horizontal_Resolution As Decimal = Nothing, Optional ByRef Vertical_Resolution As Decimal = Nothing)
 
-        GoTo Code_bd2d0918_9c73_4138_90b8_538eaa06f135_Label
-        Code_bd2d0918_9c73_4138_90b8_538eaa06f135_Label: ' GetResolution
+        ' Initialize local variables with initialvalue
+
+        ' GetResolution
         ' Code Stage: GetResolution
         ' Original code:
         ' dim S As Size = Screen.PrimaryScreen.Bounds.Size
         ' Horizontal_Resolution = S.Width
         ' Vertical_Resolution = S.Height
         ' TODO: Convert to VB.Net
-        GoTo End_3348aa7d_5b76_4d3f_a590_e571a9a83494_Label
-
-        End_3348aa7d_5b76_4d3f_a590_e571a9a83494_Label:
 
     End Sub
 
@@ -171,17 +159,14 @@ Public Class Utility___Environment
         ' Local variables
         Dim Username As String
 
-        ' Initialize local variables with alwaysinit
+        ' Initialize local variables with initialvalue
 
-        GoTo Code_c731c906_58b6_4969_bd70_b7ecd7fa47ae_Label
-        Code_c731c906_58b6_4969_bd70_b7ecd7fa47ae_Label: ' GetUserName
+        ' GetUserName
         ' Code Stage: GetUserName
         ' Original code:
         ' username = Environment.UserName
         ' TODO: Convert to VB.Net
-        GoTo End_ddc4be1a_94ee_4487_b6dc_0f12e4fc40ae_Label
-
-        End_ddc4be1a_94ee_4487_b6dc_0f12e4fc40ae_Label:
+        
         User_Name = Username
 
     End Sub
@@ -193,10 +178,11 @@ Public Class Utility___Environment
     ''' <param name="Process_ID">The unique numeric identifier of a specific process on the system.</param>
     Public Sub Kill_Process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Process_ID As Decimal = Nothing)
 
+        ' Initialize local variables with initialvalue
+
         ' Initialize input parameters with alwaysinit
 
-        GoTo Code_697bc06f_0d64_430d_a5ea_b3fd02b746c8_Label
-        Code_697bc06f_0d64_430d_a5ea_b3fd02b746c8_Label: ' Kill Process1
+        ' Kill Process1
         ' Code Stage: Kill Process1
         ' Original code:
         ' Try
@@ -210,9 +196,6 @@ Public Class Utility___Environment
         ' Catch ex As Exception
         ' End Try
         ' TODO: Convert to VB.Net
-        GoTo End_e9c6833a_30a3_4233_840b_35d605e44199_Label
-
-        End_e9c6833a_30a3_4233_840b_35d605e44199_Label:
 
     End Sub
 
@@ -226,13 +209,12 @@ Public Class Utility___Environment
         ' Local variables
         Dim Processes As DataTable
 
-        ' Initialize local variables with alwaysinit
+        ' Initialize local variables with initialvalue
 
         ' Initialize local variables with input values
         Processes = Process_Names
 
-        GoTo Code_c64eaa40_85d5_42b9_bcfe_0e314328bccb_Label
-        Code_c64eaa40_85d5_42b9_bcfe_0e314328bccb_Label: ' Get Stats
+        ' Get Stats
         ' Code Stage: Get Stats
         ' Original code:
         ' GC.Collect()
@@ -251,9 +233,6 @@ Public Class Utility___Environment
         ' Next
         ' Next
         ' TODO: Convert to VB.Net
-        GoTo End_83912618_be8e_4f5a_860a_03cc449519c4_Label
-
-        End_83912618_be8e_4f5a_860a_03cc449519c4_Label:
 
     End Sub
 
@@ -264,10 +243,14 @@ Public Class Utility___Environment
     ''' <param name="Working_Set">The working set number holding memory stats for your process</param>
     Public Sub Read_Process_Working_Set(Optional ByVal Process_Name As String = Nothing, Optional ByRef Working_Set As Decimal = Nothing)
 
+        ' Initialize local variables with initialvalue
+        If Working_Set Is Nothing Then
+            Working_Set = "0"
+        End If
+
         ' Initialize input parameters with alwaysinit
 
-        GoTo Code_92e54184_9c46_425a_a681_ca15d5f38671_Label
-        Code_92e54184_9c46_425a_a681_ca15d5f38671_Label: ' Get Memory Set
+        ' Get Memory Set
         ' Code Stage: Get Memory Set
         ' Original code:
         ' For Each P As Process in Process.GetProcesses()
@@ -276,9 +259,6 @@ Public Class Utility___Environment
         ' End If
         ' Next
         ' TODO: Convert to VB.Net
-        GoTo End_d9a48cd9_620d_4b45_87bb_cb1a223d729e_Label
-
-        End_d9a48cd9_620d_4b45_87bb_cb1a223d729e_Label:
 
     End Sub
 
@@ -295,9 +275,15 @@ Public Class Utility___Environment
         ' Local variables
         Dim Fail_Datetime_Reached_ As Boolean
 
-        ' Initialize local variables with alwaysinit
+        ' Initialize local variables with initialvalue
+        If Timeout Is Nothing Then
+            Timeout = TimeSpan.Parse("0.00:00:10")
+        End If
         If Fail_Datetime_Reached_ Is Nothing Then
             Fail_Datetime_Reached_ = False
+        End If
+        If Ignore_Timeout Is Nothing Then
+            Ignore_Timeout = False
         End If
 
         ' Initialize input parameters with alwaysinit
@@ -308,8 +294,7 @@ Public Class Utility___Environment
             Ignore_Timeout = False
         End If
 
-        GoTo Code_0b84d4bb_deea_40c5_96eb_6adcf59fe7cf_Label
-        Code_0b84d4bb_deea_40c5_96eb_6adcf59fe7cf_Label: ' Run Process
+        ' Run Process
         ' Code Stage: Run Process
         ' Original code:
         ' Dim timeoutInMillisec as Integer
@@ -330,9 +315,7 @@ Public Class Utility___Environment
         ' timedOut = Not proc.WaitForExit(timeoutInMillisec)
         ' End Using
         ' TODO: Convert to VB.Net
-        GoTo Decision_7fa022c9_fce8_496a_a40b_9119406000db_Label
-
-        Decision_7fa022c9_fce8_496a_a40b_9119406000db_Label: ' Timed Out?
+        ' Timed Out?
         If Fail_Datetime_Reached_ Then
             GoTo Exception_433c4289_a312_4554_bc27_6ee3c7ace153_Label
         Else
@@ -342,7 +325,7 @@ Public Class Utility___Environment
         Exception_433c4289_a312_4554_bc27_6ee3c7ace153_Label: ' System Exception
         RaiseException("System Exception", "Application " & [Application] & " was still running after the maximum time period")
 
-        Note_b9cc5d73_bc01_42f2_9e63_b22a31808b03_Label: ' Note3
+        ' Note3
         ' 20201006
         ' The Ignore Timeout flag was added to addres an issue with using a TimeSpan to specify the timeout value. If the user wants the process to wait indefinitely for the process to complete the timeout value needs to be -1. However, you cannot create a TimeSpan with a millisecond value of -1 using the Blue Prism MakeTimeSpan() function. To address this, we added a flag that controls how to code stage handled the timeout value. By doing this we don't break existing deployments that actually make use of the TimeSpan data type for inputting the timeout.
 
@@ -356,10 +339,11 @@ Public Class Utility___Environment
     ''' <param name="Clipboard">The value to set the clipboard to.</param>
     Public Sub Set_Clipboard(Optional ByVal Clipboard As String = Nothing)
 
+        ' Initialize local variables with initialvalue
+
         ' Initialize input parameters with alwaysinit
 
-        GoTo Decision_1e934dc5_5507_4854_bf49_df3d1e55998f_Label
-        Decision_1e934dc5_5507_4854_bf49_df3d1e55998f_Label: ' Is Empty?
+        ' Is Empty?
         If Len(Trim(Clipboard)) = 0 Then
             GoTo Calculation_bcb5c983_a5fb_4b30_b14f_7a1509fff980_Label
         Else
@@ -368,8 +352,6 @@ Public Class Utility___Environment
 
         Calculation_bcb5c983_a5fb_4b30_b14f_7a1509fff980_Label: ' Set Value
         Clipboard = Chr(0)
-        GoTo Code_54826c34_2991_4964_b0a3_0e0a2f951f29_Label
-
         Code_54826c34_2991_4964_b0a3_0e0a2f951f29_Label: ' Set
         ' Code Stage: Set
         ' Original code:
@@ -383,9 +365,6 @@ Public Class Utility___Environment
         ' thread.Start(Clipboard)
         ' thread.join()
         ' TODO: Convert to VB.Net
-        GoTo End_d2b91dd7_f7a4_45e5_8b5c_8f867e6be05c_Label
-
-        End_d2b91dd7_f7a4_45e5_8b5c_8f867e6be05c_Label:
 
     End Sub
 
@@ -399,13 +378,17 @@ Public Class Utility___Environment
     ''' <param name="Process_Name">The the name of the process.</param>
     Public Sub Start_Process(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Use_Shell As Boolean = Nothing, Optional ByRef Process_ID As Decimal = Nothing, Optional ByRef Process_Name As String = Nothing)
 
+        ' Initialize local variables with initialvalue
+        If Use_Shell Is Nothing Then
+            Use_Shell = True
+        End If
+
         ' Initialize input parameters with alwaysinit
         If Use_Shell Is Nothing Then
             Use_Shell = True
         End If
 
-        GoTo Code_8fd5d005_95ec_43c3_acae_de13b914eb3e_Label
-        Code_8fd5d005_95ec_43c3_acae_de13b914eb3e_Label: ' Start Process
+        ' Start Process
         ' Code Stage: Start Process
         ' Original code:
         ' Dim processName As String = Application
@@ -420,9 +403,6 @@ Public Class Utility___Environment
         ' id = Convert.ToInt32(process.Id)
         ' name = process.ProcessName
         ' TODO: Convert to VB.Net
-        GoTo End_9c57d68b_5d25_4c88_8bb1_8f7c6aa327d3_Label
-
-        End_9c57d68b_5d25_4c88_8bb1_8f7c6aa327d3_Label:
 
     End Sub
 
@@ -434,13 +414,17 @@ Public Class Utility___Environment
     ''' <param name="Timeout">Optional: The number of milliseconds to wait for the process to exit. Default value is -1 which waits indefinitely.</param>
     Public Sub Start_Process_Read_Stderr_and_Stdout(Optional ByVal Process_Name As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Timeout As Decimal = Nothing, Optional ByRef Standard_Output As String = Nothing, Optional ByRef Standard_Error As String = Nothing)
 
+        ' Initialize local variables with initialvalue
+        If Timeout Is Nothing Then
+            Timeout = -1
+        End If
+
         ' Initialize input parameters with alwaysinit
         If Timeout Is Nothing Then
             Timeout = -1
         End If
 
-        GoTo Code_d8552129_84eb_4d65_8bee_d06820fb6e5f_Label
-        Code_d8552129_84eb_4d65_8bee_d06820fb6e5f_Label: ' Run Process read Output
+        ' Run Process read Output
         ' Code Stage: Run Process read Output
         ' Original code:
         ' ' create a Process object
@@ -492,9 +476,6 @@ Public Class Utility___Environment
         ' End If
         ' End Try
         ' TODO: Convert to VB.Net
-        GoTo End_e9699401_5328_4e3b_ad11_bd29880236e4_Label
-
-        End_e9699401_5328_4e3b_ad11_bd29880236e4_Label:
 
     End Sub
 
@@ -510,15 +491,14 @@ Public Class Utility___Environment
         ' Local variables
         Dim Timeout As TimeSpan
 
-        ' Initialize local variables with alwaysinit
+        ' Initialize local variables with initialvalue
         If Timeout Is Nothing Then
             Timeout = TimeSpan.Parse("0.00:00:30")
         End If
 
         ' Initialize input parameters with alwaysinit
 
-        GoTo Code_e060664b_b423_4175_b38c_3ea531203b49_Label
-        Code_e060664b_b423_4175_b38c_3ea531203b49_Label: ' Set Screen Resolution
+        ' Set Screen Resolution
         ' Code Stage: Set Screen Resolution
         ' Original code:
         ' ' Set the default return value.
@@ -553,9 +533,7 @@ Public Class Utility___Environment
         ' modeIndex = modeIndex + 1
         ' Loop
         ' TODO: Convert to VB.Net
-        GoTo Decision_a06cb66a_a25f_4170_9364_4fa4104a9393_Label
-
-        Decision_a06cb66a_a25f_4170_9364_4fa4104a9393_Label: ' Success?
+        ' Success?
         If Success = True Then
             GoTo End_c6bd6956_f378_418e_8880_30d84f5acad6_Label
         Else
@@ -563,11 +541,11 @@ Public Class Utility___Environment
         End If
 
         MultipleCalculation_d317d7bf_2ed3_4b48_8e0c_62e5598f7a11_Label: ' Clear Dimensions
-        ' Horizontal Resolution = 0
-        ' Vertical Resolution = 0
+        Horizontal_Resolution = 0
+        Vertical_Resolution = 0
         GoTo End_c6bd6956_f378_418e_8880_30d84f5acad6_Label
 
-        Note_d4a94b84_c140_4d74_9ece_7b75b2548a30_Label: ' Note1
+        ' Note1
         ' Note: Make sure you only pass in the screen resolution that is supported
 
         End_c6bd6956_f378_418e_8880_30d84f5acad6_Label:
@@ -582,13 +560,20 @@ Public Class Utility___Environment
     ''' <param name="Found_">True=process found, false=process not found</param>
     Public Sub Wait_for_Process(Optional ByVal Maximum_wait_time__seconds_ As Decimal = Nothing, Optional ByVal Process_Name As String = Nothing, Optional ByRef Found_ As Boolean = Nothing)
 
+        ' Initialize local variables with initialvalue
+        If Maximum_wait_time__seconds_ Is Nothing Then
+            Maximum_wait_time__seconds_ = 0
+        End If
+        If Found_ Is Nothing Then
+            Found_ = False
+        End If
+
         ' Initialize input parameters with alwaysinit
         If Maximum_wait_time__seconds_ Is Nothing Then
             Maximum_wait_time__seconds_ = 0
         End If
 
-        GoTo Code_dfe0f2dc_5806_4cf9_82f3_269f9b06b03f_Label
-        Code_dfe0f2dc_5806_4cf9_82f3_269f9b06b03f_Label: ' Wait for process
+        ' Wait for process
         ' Code Stage: Wait for process
         ' Original code:
         ' Try
@@ -609,9 +594,6 @@ Public Class Utility___Environment
         ' Catch ex As Exception
         ' End Try
         ' TODO: Convert to VB.Net
-        GoTo End_55ae0a29_1ee0_4fd1_b077_eeb2e6f1e9dd_Label
-
-        End_55ae0a29_1ee0_4fd1_b077_eeb2e6f1e9dd_Label:
 
     End Sub
 
@@ -623,13 +605,20 @@ Public Class Utility___Environment
     ''' <param name="Wait">The maximum amount of time to wait for</param>
     Public Sub Wait_for_Process_Window(Optional ByVal Process_Name As String = Nothing, Optional ByVal Window_Title As String = Nothing, Optional ByVal Wait As Decimal = Nothing, Optional ByRef Found As Boolean = Nothing)
 
+        ' Initialize local variables with initialvalue
+        If Found Is Nothing Then
+            Found = False
+        End If
+        If Wait Is Nothing Then
+            Wait = 0
+        End If
+
         ' Initialize input parameters with alwaysinit
         If Wait Is Nothing Then
             Wait = 0
         End If
 
-        GoTo Code_d3b1986a_fa70_41e9_a8af_cd2ffc78342e_Label
-        Code_d3b1986a_fa70_41e9_a8af_cd2ffc78342e_Label: ' Find Process
+        ' Find Process
         ' Code Stage: Find Process
         ' Original code:
         ' try
@@ -642,9 +631,7 @@ Public Class Utility___Environment
         ' catch e as exception
         ' end try
         ' TODO: Convert to VB.Net
-        GoTo Decision_d0d526bd_c3dd_4eb6_bbe7_2d46cca6e06f_Label
-
-        Decision_d0d526bd_c3dd_4eb6_bbe7_2d46cca6e06f_Label: ' Found?
+        ' Found?
         If Found Then
             GoTo End_b6fdc874_6a8d_405b_946e_10b6b47a6ae1_Label
         Else
@@ -660,9 +647,7 @@ Public Class Utility___Environment
 
         Calculation_ba11e756_90e9_4cd7_a787_a41c2818e4b6_Label: ' Count Down
         Wait = Wait-0.5
-        GoTo WaitStart_4498756a_e9e1_4bef_86e6_3b7ed91a7439_Label
-
-        WaitStart_4498756a_e9e1_4bef_86e6_3b7ed91a7439_Label: ' Wait
+        ' Wait
         ' Wait: Wait (Type: WaitStart)
 
         End_b6fdc874_6a8d_405b_946e_10b6b47a6ae1_Label:
@@ -674,11 +659,7 @@ Public Class Utility___Environment
     ''' </summary>
     Protected Overrides Sub Finalize()
 
-        GoTo End_8b25238a_79e9_40d3_80f6_810d9937f1da_Label
-        End_8b25238a_79e9_40d3_80f6_810d9937f1da_Label:
-
     End Sub
-
 
     #End Region
 

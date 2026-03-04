@@ -1,9 +1,8 @@
 ' Generated from BluePrism object: Microsoft Store
 ' Version: 1.0
-' Generated: 2026-03-04 16:44:00
+' Generated: 2026-03-04 20:08:23
 ' 
-' 
-
+'
 
 Imports System
 Imports System.Collections.Generic
@@ -46,18 +45,12 @@ Public Class Microsoft_Store
     ''' </summary>
     Public Sub New()
 
-        GoTo End_00af6ff0_0baa_4db7_8388_c9a31823062d_Label
-        End_00af6ff0_0baa_4db7_8388_c9a31823062d_Label:
-
     End Sub
 
     ''' <summary>
     ''' Destructor (CleanUp) - called when object is disposed
     ''' </summary>
     Protected Overrides Sub Finalize()
-
-        GoTo End_f033793f_07b2_4874_ab79_167fa719d87e_Label
-        End_f033793f_07b2_4874_ab79_167fa719d87e_Label:
 
     End Sub
 
@@ -69,22 +62,17 @@ Public Class Microsoft_Store
         ' Local variables
         Dim FilePath As String
 
-        ' Initialize local variables with alwaysinit
+        ' Initialize local variables with initialvalue
         If FilePath Is Nothing Then
             FilePath = "C:\Program Files\WindowsApps\Microsoft.WindowsStore_22512.1401.6.0_x64__8wekyb3d8bbwe\WinStore.App.exe"
         End If
 
-        GoTo Action_4626cdba_27ab_40ea_af94_afb2dc3f2984_Label
-        Action_4626cdba_27ab_40ea_af94_afb2dc3f2984_Label: ' Start Process
+        ' Start Process
         Utility___Environment.Instance.Start_Process(Application:=FilePath, Arguments:=Arguments, Use_Shell:=Use_Shell, Process_ID:=Process_ID, Process_Name:=Process_Name)
-        GoTo Navigate_5a127fca_258d_4aed_9d17_ea586664d634_Label
-
-        Navigate_5a127fca_258d_4aed_9d17_ea586664d634_Label: ' Attach
+        ' Attach
         ' Navigate: UI automation
         ' TODO: Implement
-        GoTo WaitStart_703731aa_fa0b_43e4_8e67_71c3256583c4_Label
-
-        WaitStart_703731aa_fa0b_43e4_8e67_71c3256583c4_Label: ' W5
+        ' W5
         ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
@@ -106,13 +94,9 @@ Public Class Microsoft_Store
     ''' </summary>
     Public Sub Terminate()
 
-        GoTo Navigate_329eda4b_fa88_4114_88d7_254fdb819343_Label
-        Navigate_329eda4b_fa88_4114_88d7_254fdb819343_Label: ' Terminate
+        ' Terminate
         ' Navigate: UI automation
         ' TODO: Implement
-        GoTo End_e0c54172_5ab9_495a_b395_7f61b2c1cf38_Label
-
-        End_e0c54172_5ab9_495a_b395_7f61b2c1cf38_Label:
 
     End Sub
 
@@ -121,8 +105,7 @@ Public Class Microsoft_Store
     ''' </summary>
     Public Sub Start_Updates()
 
-        GoTo WaitStart_dd4bc616_c65b_461f_b482_c40cbf80e967_Label
-        WaitStart_dd4bc616_c65b_461f_b482_c40cbf80e967_Label: ' W5
+        ' W5
         ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
@@ -138,9 +121,7 @@ Public Class Microsoft_Store
         Navigate_f9be3a31_fdf8_4827_8df3_8ab0fbd5d302_Label: ' GoTo Downloads
         ' Navigate: UI automation
         ' TODO: Implement
-        GoTo WaitStart_d07aa237_9fbd_4313_a6a4_d8d82bbf1420_Label
-
-        WaitStart_d07aa237_9fbd_4313_a6a4_d8d82bbf1420_Label: ' W5
+        ' W5
         ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
@@ -218,15 +199,15 @@ Public Class Microsoft_Store
         ' No Updates
         GoTo End_23ba7d3f_cc9b_4bf6_bb28_545408febcae_Label
 
-        Note_c7f1bf75_f44c_4526_9fa1_d99452938648_Label: ' Note2
+        ' Note2
         ' TODO
         GoTo WaitStart_cf9ecce9_11c0_48ca_a533_6c59e4ae1d17_Label
 
-        Note_5c9a6e81_d341_4ba5_a12c_fadb62049062_Label: ' Note2
+        ' Note2
         ' TODO
         GoTo Navigate_7a1602d1_74e3_482c_9a3f_58d3e85baf51_Label
 
-        Note_ff41673e_6a98_4243_94d4_a816f5a50240_Label: ' Note2
+        ' Note2
         ' TODO
         GoTo WaitStart_a027ef03_3f55_4ae4_ae16_cee7f7dc29f1_Label
 
@@ -239,15 +220,10 @@ Public Class Microsoft_Store
     ''' </summary>
     Public Sub Wait_Updates_Finished()
 
-        GoTo Note_83e2dc68_fc7d_48c2_94d3_066baf1e9d29_Label
-        Note_83e2dc68_fc7d_48c2_94d3_066baf1e9d29_Label: ' Note2
+        ' Note2
         ' TODO
-        GoTo End_e4e938c4_17f2_4c92_9fa0_491ffd390327_Label
-
-        End_e4e938c4_17f2_4c92_9fa0_491ffd390327_Label:
 
     End Sub
-
 
     #End Region
 
