@@ -181,6 +181,12 @@ public static class MethodGenerator
         sb.AppendLine("    End Sub");
         sb.AppendLine();
     }
+
+    /// <summary>
+    /// Generate method body from code stage
+    /// </summary>
+    /// <param name="sb"></param>
+    /// <param name="codeStage"></param>
     public static void GenerateMethodBodyFromCodeStage(System.Text.StringBuilder sb, XElement codeStage)
     {
         var code = codeStage.Element("code")?.Value;
@@ -194,7 +200,7 @@ public static class MethodGenerator
     }
 
     /// <summary>
-    /// Generate method body
+    /// Generate method body from stages
     /// </summary>
     /// <param name="sb"></param>
     /// <param name="stages"></param>
