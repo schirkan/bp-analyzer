@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - System Update
 ' Version: 1.0
-' Generated: 2026-03-04 20:17:58
+' Generated: 2026-03-06 21:52:19
 
 Imports System
 Imports System.Collections.Generic
@@ -75,7 +75,7 @@ Public Class MP___System_Update
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Dummy
+    ''' BluePrism page: Dummy
     ''' </summary>
     Private Sub Dummy()
 
@@ -94,7 +94,7 @@ Public Class MP___System_Update
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Variable_Test
+    ''' BluePrism page: Variable_Test
     ''' </summary>
     Private Sub Variable_Test(Optional ByVal InData1 As String = Nothing, Optional ByVal InData2 As Decimal = Nothing, Optional ByRef OutValue1 As DateTime = Nothing, Optional ByRef OutValue2 As Boolean = Nothing)
 

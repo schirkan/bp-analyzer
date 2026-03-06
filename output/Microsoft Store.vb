@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Microsoft Store
 ' Version: 1.0
-' Generated: 2026-03-04 20:17:58
+' Generated: 2026-03-06 21:52:19
 ' 
 '
 
@@ -55,7 +55,7 @@ Public Class Microsoft_Store
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Launch
+    ''' BluePrism page: Launch
     ''' </summary>
     Public Sub Launch()
 
@@ -68,12 +68,11 @@ Public Class Microsoft_Store
         End If
 
         ' Start Process
-        Utility___Environment.Instance.Start_Process(Application:=FilePath, Arguments:=Arguments, Use_Shell:=Use_Shell, Process_ID:=Process_ID, Process_Name:=Process_Name)
+        Utility___Environment.Instance.Start_Process(Application:=FilePath)
         ' Attach
         ' Navigate: UI automation
         ' TODO: Implement
         ' W5
-        ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("b048ceed-93fb-48da-99af-7fafeec74d4e").CheckExists = True ' Main Window Check Exists
@@ -90,7 +89,7 @@ Public Class Microsoft_Store
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Terminate
+    ''' BluePrism page: Terminate
     ''' </summary>
     Public Sub Terminate()
 
@@ -101,12 +100,11 @@ Public Class Microsoft_Store
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Start_Updates
+    ''' BluePrism page: Start_Updates
     ''' </summary>
     Public Sub Start_Updates()
 
         ' W5
-        ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("4bb2d38e-758b-428a-8f6e-a0b6638ab5e3").CheckExists = True ' Downloads Check Exists
@@ -122,7 +120,6 @@ Public Class Microsoft_Store
         ' Navigate: UI automation
         ' TODO: Implement
         ' W5
-        ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("0340b82e-9c61-45bd-a50b-f5691247a070").CheckExists = True ' Header: Updates und Downloads Check Exists
@@ -140,7 +137,6 @@ Public Class Microsoft_Store
         GoTo WaitStart_a61f62ae_7993_470f_8d1f_cffdcd5bea5b_Label
 
         WaitStart_473090d3_a621_4fc2_8436_25fc69a82067_Label: ' W5
-        ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("2a7db9d3-154c-404c-b610-5c3ae51ecb32").CheckExists = True ' Button: Nach Updates suchen Check Exists
@@ -153,7 +149,6 @@ Public Class Microsoft_Store
         RaiseException("System Exception", "Nach Updates suchen Button not found")
 
         WaitStart_a61f62ae_7993_470f_8d1f_cffdcd5bea5b_Label: ' W120
-        ' Wait: W120 (Type: WaitStart)
         ' Wait 120 seconds for condition with 2 choice(s)
         Select Case True
             Case Application.Element("397fb78c-8c08-4dc0-987c-3ca33d3762a4").CheckExists = True ' Button: Die Überprüfung auf Updates wurde abgeschlossen. Check Exists
@@ -173,7 +168,6 @@ Public Class Microsoft_Store
         GoTo WaitStart_a027ef03_3f55_4ae4_ae16_cee7f7dc29f1_Label
 
         WaitStart_cf9ecce9_11c0_48ca_a533_6c59e4ae1d17_Label: ' W2
-        ' Wait: W2 (Type: WaitStart)
         ' Wait 2 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("2a7db9d3-154c-404c-b610-5c3ae51ecb32").CheckExists = True ' Button: Nach Updates suchen Check Exists
@@ -183,7 +177,6 @@ Public Class Microsoft_Store
         End Select
 
         WaitStart_a027ef03_3f55_4ae4_ae16_cee7f7dc29f1_Label: ' W5
-        ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("2a7db9d3-154c-404c-b610-5c3ae51ecb32").CheckExists = True ' Button: Nach Updates suchen Check Exists
@@ -216,7 +209,7 @@ Public Class Microsoft_Store
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Wait_Updates_Finished
+    ''' BluePrism page: Wait_Updates_Finished
     ''' </summary>
     Public Sub Wait_Updates_Finished()
 

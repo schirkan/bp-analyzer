@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Windows Settings
 ' Version: 1.0
-' Generated: 2026-03-04 20:17:59
+' Generated: 2026-03-06 21:52:19
 
 Imports System
 Imports System.Collections.Generic
@@ -53,7 +53,7 @@ Public Class Windows_Settings
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Launch
+    ''' BluePrism page: Launch
     ''' </summary>
     Public Sub Launch()
 
@@ -67,14 +67,13 @@ Public Class Windows_Settings
 
         ' Start Process
         On Error GoTo Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label
-        Utility___Environment.Instance.Start_Process(Application:=FilePath, Arguments:=Arguments, Use_Shell:=Use_Shell, Process_ID:=Process_ID, Process_Name:=Process_Name)
+        Utility___Environment.Instance.Start_Process(Application:=FilePath)
         Navigate_1e01d250_1eb1_4733_b192_d31129adc9ab_Label: ' Attach
         On Error GoTo Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label
         ' Navigate: UI automation
         ' TODO: Implement
         ' W5
         On Error GoTo Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label
-        ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("4e5490be-f4da-4f82-ace1-cbf647c8b4e6").CheckExists = True ' Main Window Check Exists
@@ -98,7 +97,7 @@ Public Class Windows_Settings
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Terminate
+    ''' BluePrism page: Terminate
     ''' </summary>
     Public Sub Terminate()
 
@@ -109,12 +108,11 @@ Public Class Windows_Settings
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Start_Updates
+    ''' BluePrism page: Start_Updates
     ''' </summary>
     Public Sub Start_Updates()
 
         ' W5
-        ' Wait: W5 (Type: WaitStart)
         ' Wait 5 seconds for condition with 2 choice(s)
         Select Case True
             Case Application.Element("b026cc78-c68f-4a73-b198-bba0c63c8ef2").CheckExists = True ' Button: Nach Updates suchen Check Exists
@@ -136,12 +134,11 @@ Public Class Windows_Settings
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Wait_Updates_Finished
+    ''' BluePrism page: Wait_Updates_Finished
     ''' </summary>
     Public Sub Wait_Updates_Finished()
 
         ' W120
-        ' Wait: W120 (Type: WaitStart)
         ' Wait 120 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("a98756de-6ac0-4a36-a601-a27ea429ac4f").CheckExists = False ' Label: Es wird nach Updates gesucht... Check Exists
@@ -154,7 +151,6 @@ Public Class Windows_Settings
         RaiseException("System Exception", "Download Header not found")
 
         WaitStart_ddd70967_7e0f_4c5f_afb5_6f6041fdacab_Label: ' W120
-        ' Wait: W120 (Type: WaitStart)
         ' Wait 120 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("d4098baf-b2ed-491f-a65a-7dc1ece7b4cd").CheckExists = True ' Label: Sie sind auf dem neuesten Stand. Check Exists

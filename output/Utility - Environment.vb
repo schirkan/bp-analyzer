@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-04 20:17:58
+' Generated: 2026-03-06 21:52:19
 ' 
 ' Utilities for interacting with the environment - read screen resolution, determine OS type, etc.
 
@@ -91,10 +91,10 @@ Public Class Utility___Environment
         Dim Enabled_ As Boolean
 
         ' Get Font Smoothing Enabled
-        ' Code Stage: Get Font Smoothing Enabled
         ' Original code:
         ' Enabled=System.Windows.Forms.Systeminformation.IsFontSmoothingEnabled
         ' TODO: Convert to VB.Net
+        CodeStage_Get_Font_Smoothing_Enabled(Enabled:=Enabled_)
         
         Enabled = Enabled_
 
@@ -112,16 +112,16 @@ Public Class Utility___Environment
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Get_Machine_Name
+    ''' BluePrism page: Get_Machine_Name
     ''' </summary>
     ''' <param name="Machine_Name">The hostname of the machine running this action</param>
     Public Sub Get_Machine_Name(Optional ByRef Machine_Name As String = Nothing)
 
         ' GetMachineName
-        ' Code Stage: GetMachineName
         ' Original code:
         ' machineName = Environment.MachineName
         ' TODO: Convert to VB.Net
+        CodeStage_GetMachineName(machineName:=Machine_Name)
 
     End Sub
 
@@ -133,17 +133,17 @@ Public Class Utility___Environment
     Public Sub Get_Screen_Resolution(Optional ByRef Horizontal_Resolution As Decimal = Nothing, Optional ByRef Vertical_Resolution As Decimal = Nothing)
 
         ' GetResolution
-        ' Code Stage: GetResolution
         ' Original code:
         ' dim S As Size = Screen.PrimaryScreen.Bounds.Size
         ' Horizontal_Resolution = S.Width
         ' Vertical_Resolution = S.Height
         ' TODO: Convert to VB.Net
+        CodeStage_GetResolution(Horizontal_Resolution:=Horizontal_Resolution, Vertical_Resolution:=Vertical_Resolution)
 
     End Sub
 
     ''' <summary>
-    ''' BluePrism method: Get_User_Name
+    ''' BluePrism page: Get_User_Name
     ''' </summary>
     ''' <param name="User_Name">The name of the logged in user in the current system</param>
     Public Sub Get_User_Name(Optional ByRef User_Name As String = Nothing)
@@ -152,10 +152,10 @@ Public Class Utility___Environment
         Dim Username As String
 
         ' GetUserName
-        ' Code Stage: GetUserName
         ' Original code:
         ' username = Environment.UserName
         ' TODO: Convert to VB.Net
+        CodeStage_GetUserName(username:=Username)
         
         User_Name = Username
 
@@ -169,7 +169,6 @@ Public Class Utility___Environment
     Public Sub Kill_Process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Process_ID As Decimal = Nothing)
 
         ' Kill Process1
-        ' Code Stage: Kill Process1
         ' Original code:
         ' Try
         ' If (Len(Trim(Process_Name)) > 0) And (Process_ID = 0) Then
@@ -182,6 +181,7 @@ Public Class Utility___Environment
         ' Catch ex As Exception
         ' End Try
         ' TODO: Convert to VB.Net
+        CodeStage_Kill_Process1(Process_Name:=Process_Name, Process_ID:=Process_ID)
 
     End Sub
 
@@ -199,7 +199,6 @@ Public Class Utility___Environment
         Processes = Process_Names
 
         ' Get Stats
-        ' Code Stage: Get Stats
         ' Original code:
         ' GC.Collect()
         ' Process_Statistics = New DataTable
@@ -217,6 +216,7 @@ Public Class Utility___Environment
         ' Next
         ' Next
         ' TODO: Convert to VB.Net
+        CodeStage_Get_Stats(Processes:=Processes, Process_Statistics:=Process_Statistics)
 
     End Sub
 
@@ -233,7 +233,6 @@ Public Class Utility___Environment
         End If
 
         ' Get Memory Set
-        ' Code Stage: Get Memory Set
         ' Original code:
         ' For Each P As Process in Process.GetProcesses()
         ' If P.ProcessName = Proc Then
@@ -241,6 +240,7 @@ Public Class Utility___Environment
         ' End If
         ' Next
         ' TODO: Convert to VB.Net
+        CodeStage_Get_Memory_Set(Proc:=Process_Name, Working_Set:=Working_Set)
 
     End Sub
 
@@ -269,7 +269,6 @@ Public Class Utility___Environment
         End If
 
         ' Run Process
-        ' Code Stage: Run Process
         ' Original code:
         ' Dim timeoutInMillisec as Integer
         ' Dim startTime as Date = Date.Now
@@ -289,6 +288,7 @@ Public Class Utility___Environment
         ' timedOut = Not proc.WaitForExit(timeoutInMillisec)
         ' End Using
         ' TODO: Convert to VB.Net
+        CodeStage_Run_Process(appn:=Application, args:=Arguments, dir:=Working_Folder, timeout:=Timeout, ignoreTimeout:=Ignore_Timeout, timedOut:=Fail_Datetime_Reached_)
         ' Timed Out?
         If Fail_Datetime_Reached_ Then
             GoTo Exception_433c4289_a312_4554_bc27_6ee3c7ace153_Label
@@ -323,7 +323,6 @@ Public Class Utility___Environment
         Calculation_bcb5c983_a5fb_4b30_b14f_7a1509fff980_Label: ' Set Value
         Clipboard = Chr(0)
         Code_54826c34_2991_4964_b0a3_0e0a2f951f29_Label: ' Set
-        ' Code Stage: Set
         ' Original code:
         ' 'System.Windows.Forms.Clipboard.SetDataObject(Clipboard)
         ' Dim thread As New Thread(
@@ -335,6 +334,7 @@ Public Class Utility___Environment
         ' thread.Start(Clipboard)
         ' thread.join()
         ' TODO: Convert to VB.Net
+        CodeStage_Set(Clipboard:=Clipboard)
 
     End Sub
 
@@ -354,7 +354,6 @@ Public Class Utility___Environment
         End If
 
         ' Start Process
-        ' Code Stage: Start Process
         ' Original code:
         ' Dim processName As String = Application
         ' Dim process As New Process() With {
@@ -368,6 +367,7 @@ Public Class Utility___Environment
         ' id = Convert.ToInt32(process.Id)
         ' name = process.ProcessName
         ' TODO: Convert to VB.Net
+        CodeStage_Start_Process(Application:=Application, Arguments:=Arguments, Use_Shell:=Use_Shell, id:=Process_ID, name:=Process_Name)
 
     End Sub
 
@@ -385,7 +385,6 @@ Public Class Utility___Environment
         End If
 
         ' Run Process read Output
-        ' Code Stage: Run Process read Output
         ' Original code:
         ' ' create a Process object
         ' Dim startInfo As New ProcessStartInfo()
@@ -436,6 +435,7 @@ Public Class Utility___Environment
         ' End If
         ' End Try
         ' TODO: Convert to VB.Net
+        CodeStage_Run_Process_read_Output(Argument:=Arguments, Process_Name:=Process_Name, Timeout:=Timeout, Standard_Output:=Standard_Output, Standard_Error:=Standard_Error)
 
     End Sub
 
@@ -446,7 +446,7 @@ Public Class Utility___Environment
     ''' <param name="Vertical_Resolution">The number of pixels in the vertical screen axis</param>
     ''' <param name="Success">A Flag indicating success or failure of the action.</param>
     ''' <param name="Return_Code">The numeric return code returned by the operating system.</param>
-    Public Sub Set_Screen_Resolution(Optional ByVal Vertical_Resolution As Decimal = Nothing, Optional ByVal Horizontal_Resolution As Decimal = Nothing, Optional ByRef Success As Boolean = Nothing, Optional ByRef Return_Code As Decimal = Nothing)
+    Public Sub Set_Screen_Resolution(Optional ByVal Vertical_Resolution As Decimal = Nothing, Optional ByVal Horizontal_Resolution As Decimal = Nothing, Optional ByRef Horizontal_Resolution As Decimal = Nothing, Optional ByRef Vertical_Resolution As Decimal = Nothing, Optional ByRef Success As Boolean = Nothing, Optional ByRef Return_Code As Decimal = Nothing)
 
         ' Local variables
         Dim Timeout As TimeSpan
@@ -457,7 +457,6 @@ Public Class Utility___Environment
         End If
 
         ' Set Screen Resolution
-        ' Code Stage: Set Screen Resolution
         ' Original code:
         ' ' Set the default return value.
         ' Success = False
@@ -491,6 +490,7 @@ Public Class Utility___Environment
         ' modeIndex = modeIndex + 1
         ' Loop
         ' TODO: Convert to VB.Net
+        CodeStage_Set_Screen_Resolution(Horizontal:=Horizontal_Resolution, Vertical:=Vertical_Resolution, Success:=Success, Return_Code:=Return_Code)
         ' Success?
         If Success = True Then
             GoTo End_c6bd6956_f378_418e_8880_30d84f5acad6_Label
@@ -527,7 +527,6 @@ Public Class Utility___Environment
         End If
 
         ' Wait for process
-        ' Code Stage: Wait for process
         ' Original code:
         ' Try
         ' Found_ = False
@@ -547,6 +546,7 @@ Public Class Utility___Environment
         ' Catch ex As Exception
         ' End Try
         ' TODO: Convert to VB.Net
+        CodeStage_Wait_for_process(Process_Name:=Process_Name, Max_Wait:=Maximum_wait_time__seconds_, Found_:=Found_)
 
     End Sub
 
@@ -567,7 +567,6 @@ Public Class Utility___Environment
         End If
 
         Code_d3b1986a_fa70_41e9_a8af_cd2ffc78342e_Label: ' Find Process
-        ' Code Stage: Find Process
         ' Original code:
         ' try
         ' for each p as system.diagnostics.process in system.diagnostics.process.getprocessesbyname(process_name)
@@ -579,6 +578,7 @@ Public Class Utility___Environment
         ' catch e as exception
         ' end try
         ' TODO: Convert to VB.Net
+        CodeStage_Find_Process(Process_Name:=Process_Name, Window_Title:=Window_Title, Found:=Found)
         ' Found?
         If Found Then
             GoTo End_b6fdc874_6a8d_405b_946e_10b6b47a6ae1_Label
@@ -596,7 +596,6 @@ Public Class Utility___Environment
         Calculation_ba11e756_90e9_4cd7_a787_a41c2818e4b6_Label: ' Count Down
         Wait = Wait-0.5
         ' Wait
-        ' Wait: Wait (Type: WaitStart)
         ' Wait 0.5 seconds for condition with 0 choice(s)
         Select Case True
             Case Else
