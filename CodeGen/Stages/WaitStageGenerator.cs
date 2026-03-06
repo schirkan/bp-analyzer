@@ -64,8 +64,10 @@ public class WaitStageGenerator : StageGeneratorBase
         var compareType = choice.Attribute("comparetype")?.Value;
         var replyValue = choice.Attribute("reply")?.Value;
 
+        var elementName = AppModelResolver.FindElementNameById(choice.Document?.Root?.Element("appdef"), elementId);
+
         // If we have element and condition, generate proper expression
-        if (!string.IsNullOrEmpty(elementId) && !string.IsNullOrEmpty(conditionId))
+        if (!string.IsNullOrEmpty(elementName) && !string.IsNullOrEmpty(conditionId))
         {
             var comparison = compareType?.ToLower() switch
             {
@@ -81,7 +83,7 @@ public class WaitStageGenerator : StageGeneratorBase
             // Determine the value to compare (reply attribute or default True)
             var compareValue = replyValue?.ToLower() == "true" ? "True" : "False";
 
-            return $"Application.Element(\"{elementId}\").{conditionId} {comparison} {compareValue}";
+            return $"Application.Element(\"{elementName}\", \"{elementId}\").{conditionId} {comparison} {compareValue}";
         }
 
         // Fallback: return the expression attribute if present
