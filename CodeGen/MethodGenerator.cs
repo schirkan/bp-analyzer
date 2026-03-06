@@ -94,16 +94,18 @@ public static class MethodGenerator
             endStage = codeStage;
         }
 
-        // Collect input/output parameter names
+        // Collect input/output parameter names (case-insensitive for duplicate detection)
         var inputParamNames = startStage.Element("inputs")?.Elements("input")
-            .Select(i => i.Attribute("name")?.Value?.ToLower())
+            .Select(i => i.Attribute("name")?.Value?.Trim())
             .Where(n => !string.IsNullOrEmpty(n))
-            .ToHashSet() as HashSet<string> ?? [];
+            .Select(n => n!.ToLower())
+            .ToHashSet(StringComparer.OrdinalIgnoreCase) ?? new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         var outputParamNames = endStage.Element("outputs")?.Elements("output")
-            .Select(o => o.Attribute("name")?.Value?.ToLower())
+            .Select(o => o.Attribute("name")?.Value?.Trim())
             .Where(n => !string.IsNullOrEmpty(n))
-            .ToHashSet() as HashSet<string> ?? [];
+            .Select(n => n!.ToLower())
+            .ToHashSet(StringComparer.OrdinalIgnoreCase) ?? new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         var paramNames = inputParamNames.Union(outputParamNames).ToHashSet();
 
@@ -152,9 +154,11 @@ public static class MethodGenerator
             var vbType = TypeMapper.MapDataType(inputType);
             var sanitizedName = NameSanitizer.SanitizeVariableName(inputName);
             var defaultValue = TypeMapper.GetOptionalDefaultValue(inputType);
+            var nullableMarker = TypeMapper.IsValueType(inputType) ? "?" : "";
 
-            if (outputParamNames.Contains(inputName)) continue;
-            paramList.Add($"Optional ByVal {sanitizedName} As {vbType} = {defaultValue}");
+            // Skip if this input name exists in outputs (case-insensitive)
+            if (outputParamNames.Contains(inputName.ToLower())) continue;
+            paramList.Add($"Optional ByVal {sanitizedName} As {vbType}{nullableMarker} = {defaultValue}");
         }
 
         foreach (var output in outputs)
@@ -164,7 +168,9 @@ public static class MethodGenerator
             var vbType = TypeMapper.MapDataType(outputType);
             var sanitizedName = NameSanitizer.SanitizeVariableName(outputName);
             var defaultValue = TypeMapper.GetOptionalDefaultValue(outputType);
-            paramList.Add($"Optional ByRef {sanitizedName} As {vbType} = {defaultValue}");
+            var nullableMarker = TypeMapper.IsValueType(outputType) ? "?" : "";
+
+            paramList.Add($"Optional ByRef {sanitizedName} As {vbType}{nullableMarker} = {defaultValue}");
         }
         sb.AppendLine(string.Join(", ", paramList) + ")");
         sb.AppendLine();
@@ -298,6 +304,8 @@ public static class MethodGenerator
             {
                 var inputName = input.Attribute("name")?.Value;
                 var stageName = input.Attribute("stage")?.Value;
+                var inputType = input.Attribute("type")?.Value ?? "text";
+                var isValueType = TypeMapper.IsValueType(inputType);
 
                 if (!string.IsNullOrEmpty(inputName) && !string.IsNullOrEmpty(stageName) && stageName != inputName)
                 {
@@ -306,7 +314,22 @@ public static class MethodGenerator
                         sb.AppendLine("        ' Initialize local variables with input values");
                         hasInputAssignments = true;
                     }
-                    sb.AppendLine($"        {NameSanitizer.SanitizeVariableName(stageName)} = {NameSanitizer.SanitizeVariableName(inputName)}");
+                    
+                    // Only use HasValue/Value pattern for value types (nullable types)
+                    // For reference types (String, DataTable), just assign directly
+                    if (isValueType)
+                    {
+                        sb.AppendLine($"        If {NameSanitizer.SanitizeVariableName(inputName)}.HasValue Then");
+                        sb.AppendLine($"            {NameSanitizer.SanitizeVariableName(stageName)} = {NameSanitizer.SanitizeVariableName(inputName)}.Value");
+                        sb.AppendLine($"        End If");
+                    }
+                    else
+                    {
+                        // For reference types, check for Nothing
+                        sb.AppendLine($"        If {NameSanitizer.SanitizeVariableName(inputName)} IsNot Nothing Then");
+                        sb.AppendLine($"            {NameSanitizer.SanitizeVariableName(stageName)} = {NameSanitizer.SanitizeVariableName(inputName)}");
+                        sb.AppendLine($"        End If");
+                    }
                 }
             }
             if (hasInputAssignments) sb.AppendLine();

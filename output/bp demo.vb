@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: bp demo
 ' Version: 1.0
-' Generated: 2026-03-06 23:30:49
+' Generated: 2026-03-07 00:47:22
 
 Imports System
 Imports System.Collections.Generic
@@ -116,6 +116,12 @@ Public Class bp_demo
         End_ab996bd9_e5f6_4c28_a59e_cc84ab29e58c_Label:
 
     End Sub
+
+    #End Region
+
+    #Region "App Model"
+
+    Protected Application As Object
 
     #End Region
 

@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Windows Settings
 ' Version: 1.0
-' Generated: 2026-03-06 23:30:50
+' Generated: 2026-03-07 00:47:22
 
 Imports System
 Imports System.Collections.Generic
@@ -58,9 +58,7 @@ Public Class Windows_Settings
         Dim FilePath As String
 
         ' Initialize variables with initialvalue
-        If FilePath Is Nothing Then
-            FilePath = "ms-settings:windowsupdate"
-        End If
+        FilePath = "ms-settings:windowsupdate"
 
         ' Start Process
         On Error GoTo Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label
@@ -162,6 +160,12 @@ Public Class Windows_Settings
         End_74264245_4139_4e07_9f3b_ddeb9ab8850a_Label:
 
     End Sub
+
+    #End Region
+
+    #Region "App Model"
+
+    Protected Application As Object
 
     #End Region
 

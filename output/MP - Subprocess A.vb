@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - Subprocess A
 ' Version: 1.0
-' Generated: 2026-03-06 23:30:49
+' Generated: 2026-03-07 00:47:22
 
 Imports System
 Imports System.Collections.Generic
@@ -37,7 +37,7 @@ Public Class MP___Subprocess_A
     ''' <summary>
     ''' This is a test subprocess
     ''' </summary>
-    Public Sub Main(Optional ByVal Name As String = Nothing, Optional ByRef Char_Count As Decimal = Nothing)
+    Public Sub Main(Optional ByVal Name As String = Nothing, Optional ByRef Char_Count As Decimal? = Nothing)
 
         ' Calc Char Count
         Char_Count = Len(Name)

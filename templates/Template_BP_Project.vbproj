@@ -4,7 +4,7 @@
     <TargetFramework>net48</TargetFramework>
     <RootNamespace>BluePrismGenerated</RootNamespace>
     <OutputType>Library</OutputType>
-    <OptionStrict>On</OptionStrict>
+    <OptionStrict>Off</OptionStrict>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -19,6 +19,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Management" />
     <!-- REFERENCES -->
   </ItemGroup>
 

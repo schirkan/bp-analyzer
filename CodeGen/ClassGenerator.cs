@@ -116,6 +116,14 @@ public static class ClassGenerator
 
         if (isObject)
         {
+            // App Model
+            sb.AppendLine("    #Region \"App Model\"");
+            sb.AppendLine();
+            sb.AppendLine("    Protected Application As Object");
+            sb.AppendLine();
+            sb.AppendLine("    #End Region");
+            sb.AppendLine();
+
             var globalCode = processInfo?.Element("code")?.Value ?? "";
             if (!string.IsNullOrWhiteSpace(globalCode))
             {
@@ -127,6 +135,7 @@ public static class ClassGenerator
                 sb.AppendLine("    #End Region");
                 sb.AppendLine();
             }
+
             var hasCodeStages = process.Descendants("stage").Any(x => x.Attribute("type")?.Value == "Code");
             if (hasCodeStages)
             {

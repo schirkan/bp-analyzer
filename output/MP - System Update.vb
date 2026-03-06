@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - System Update
 ' Version: 1.0
-' Generated: 2026-03-06 23:30:49
+' Generated: 2026-03-07 00:47:22
 
 Imports System
 Imports System.Collections.Generic
@@ -43,7 +43,7 @@ Public Class MP___System_Update
     Public Sub Main()
 
         ' Local variables
-        Dim Char_Count As Decimal
+        Dim Char_Count As Decimal?
 
         ' Initialize variables with initialvalue
         If MyText Is Nothing Then
@@ -81,9 +81,7 @@ Public Class MP___System_Update
         Dim VNR As String
 
         ' Initialize variables with initialvalue
-        If VNR Is Nothing Then
-            VNR = "AB123456"""
-        End If
+        VNR = "AB123456"""
 
         ' MyPublicAction
         bp_demo.Instance.MyPublicAction(VNR:=VNR, VerwSysSl:=VerwSysSl)
@@ -93,54 +91,44 @@ Public Class MP___System_Update
     ''' <summary>
     ''' BluePrism page: Variable_Test
     ''' </summary>
-    Private Sub Variable_Test(Optional ByVal InData1 As String = Nothing, Optional ByVal InData2 As Decimal = Nothing, Optional ByRef OutValue1 As DateTime = Nothing, Optional ByRef OutValue2 As Boolean = Nothing)
+    Private Sub Variable_Test(Optional ByVal InData1 As String = Nothing, Optional ByVal InData2 As Decimal? = Nothing, Optional ByRef OutValue1 As DateTime? = Nothing, Optional ByRef OutValue2 As Boolean? = Nothing)
 
         ' Local variables
-        Dim Data1 As DateTime
-        Dim Data2 As DateTime
-        Dim Data3 As Boolean
-        Dim Data4 As Boolean
-        Dim Data5 As Decimal
-        Dim Data6 As Decimal
+        Dim Data1 As DateTime?
+        Dim Data2 As DateTime?
+        Dim Data3 As Boolean?
+        Dim Data4 As Boolean?
+        Dim Data5 As Decimal?
+        Dim Data6 As Decimal?
         Dim Data7 As String
         Dim Data8 As String
         Dim Data9 As String
-        Dim Data10 As TimeSpan
-        Dim Data11 As TimeSpan
-        Static MyToggle As Boolean
+        Dim Data10 As TimeSpan?
+        Dim Data11 As TimeSpan?
+        Static MyToggle As Boolean?
         Dim Coll1 As DataTable
         Dim Coll2 As DataTable
         Dim Coll3 As DataTable
 
         ' Initialize variables with initialvalue
-        If Data1 Is Nothing Then
-            Data1 = DateTime.Parse("2026/02/01")
-        End If
-        If Data2 Is Nothing Then
-            Data2 = DateTime.Parse("2026-02-11 15:37:42Z")
-        End If
-        If Data3 Is Nothing Then
-            Data3 = False
-        End If
-        If Data6 Is Nothing Then
-            Data6 = 4.5
-        End If
-        If Data9 Is Nothing Then
-            Data9 = "something"
-        End If
-        If Data10 Is Nothing Then
-            Data10 = TimeSpan.Parse("10:20:33")
-        End If
-        If Data11 Is Nothing Then
-            Data11 = TimeSpan.Parse("1.02:03:04")
-        End If
+        Data1 = DateTime.Parse("2026/02/01")
+        Data2 = DateTime.Parse("2026-02-11 15:37:42Z")
+        Data3 = False
+        Data6 = 4.5
+        Data9 = "something"
+        Data10 = TimeSpan.Parse("10:20:33")
+        Data11 = TimeSpan.Parse("1.02:03:04")
         If MyToggle Is Nothing Then
             MyToggle = False
         End If
 
         ' Initialize local variables with input values
-        Data8 = InData1
-        Data6 = InData2
+        If InData1 IsNot Nothing Then
+            Data8 = InData1
+        End If
+        If InData2.HasValue Then
+            Data6 = InData2.Value
+        End If
 
         ' MyToggle?
         If MyToggle Then

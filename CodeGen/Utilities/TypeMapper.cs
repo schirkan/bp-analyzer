@@ -84,4 +84,24 @@ public static class TypeMapper
             _ => "Nothing"
         };
     }
+
+    /// <summary>
+    /// Determines if a BluePrism data type maps to a VB.NET value type (which can be nullable).
+    /// Reference types like String and DataTable cannot use nullable (?).
+    /// </summary>
+    public static bool IsValueType(string bluePrismType)
+    {
+        return bluePrismType?.ToLower() switch
+        {
+            "text" or "password" => false,  // String - reference type
+            "number" => true,                // Decimal - value type
+            "flag" or "boolean" => true,      // Boolean - value type
+            "date" or "datetime" => true,     // DateTime - value type
+            "time" or "timespan" => true,     // TimeSpan - value type
+            "collection" => false,            // DataTable - reference type
+            "binary" => false,                // Byte() - reference type (array)
+            "object" => false,                // Object - reference type
+            _ => false                        // Default to reference type
+        };
+    }
 }

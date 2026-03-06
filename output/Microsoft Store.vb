@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Microsoft Store
 ' Version: 1.0
-' Generated: 2026-03-06 23:30:49
+' Generated: 2026-03-07 00:47:22
 
 Imports System
 Imports System.Collections.Generic
@@ -58,9 +58,7 @@ Public Class Microsoft_Store
         Dim FilePath As String
 
         ' Initialize variables with initialvalue
-        If FilePath Is Nothing Then
-            FilePath = "C:\Program Files\WindowsApps\Microsoft.WindowsStore_22512.1401.6.0_x64__8wekyb3d8bbwe\WinStore.App.exe"
-        End If
+        FilePath = "C:\Program Files\WindowsApps\Microsoft.WindowsStore_22512.1401.6.0_x64__8wekyb3d8bbwe\WinStore.App.exe"
 
         ' Start Process
         Utility___Environment.Instance.Start_Process(Application:=FilePath)
@@ -207,6 +205,12 @@ Public Class Microsoft_Store
         ' TODO
 
     End Sub
+
+    #End Region
+
+    #Region "App Model"
+
+    Protected Application As Object
 
     #End Region
 

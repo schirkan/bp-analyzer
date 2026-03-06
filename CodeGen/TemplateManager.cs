@@ -23,17 +23,20 @@ public class TemplateManager
         // Try different relative paths
         if (!File.Exists(templatePath))
         {
+            templatePath = Path.Combine(Directory.GetCurrentDirectory(), "templates", "Template_BP_Base.vb");
+        }
+        if (!File.Exists(templatePath))
+        {
             templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Template_BP_Base.vb");
         }
-
         if (!File.Exists(templatePath))
         {
             templatePath = "Template_BP_Base.vb";
         }
 
-        if (File.Exists(templatePath) && !File.Exists(outputPath))
+        if (File.Exists(templatePath))
         {
-            File.Copy(templatePath, outputPath, false);
+            File.Copy(templatePath, outputPath, true);
             Console.WriteLine($"Generated: {outputPath}");
         }
     }
@@ -49,9 +52,12 @@ public class TemplateManager
         // Try different relative paths
         if (!File.Exists(templatePath))
         {
+            templatePath = Path.Combine(Directory.GetCurrentDirectory(), "templates", "Template_BP_Project.vbproj");
+        }
+        if (!File.Exists(templatePath))
+        {
             templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Template_BP_Project.vbproj");
         }
-
         if (!File.Exists(templatePath))
         {
             templatePath = "Template_BP_Project.vbproj";

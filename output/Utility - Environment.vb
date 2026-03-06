@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-06 23:30:50
+' Generated: 2026-03-07 00:47:22
 
 Imports System
 Imports System.Collections.Generic
@@ -80,10 +80,10 @@ Public Class Utility___Environment
     ''' Gets the font smoothing setting for the current environment.
     ''' </summary>
     ''' <param name="Enabled">True if font smoothing is enabled</param>
-    Public Sub Font_Smoothing_Enabled(Optional ByRef Enabled As Boolean = Nothing)
+    Public Sub Font_Smoothing_Enabled(Optional ByRef Enabled As Boolean? = Nothing)
 
         ' Local variables
-        Dim Enabled_ As Boolean
+        Dim Enabled_ As Boolean?
 
         ' Get Font Smoothing Enabled
         CodeStage_Get_Font_Smoothing_Enabled(Enabled:=Enabled_)
@@ -119,7 +119,7 @@ Public Class Utility___Environment
     ''' </summary>
     ''' <param name="Horizontal_Resolution">The number of pixels in the horizontal screen axis</param>
     ''' <param name="Vertical_Resolution">The number of pixels in the vertical screen axis</param>
-    Public Sub Get_Screen_Resolution(Optional ByRef Horizontal_Resolution As Decimal = Nothing, Optional ByRef Vertical_Resolution As Decimal = Nothing)
+    Public Sub Get_Screen_Resolution(Optional ByRef Horizontal_Resolution As Decimal? = Nothing, Optional ByRef Vertical_Resolution As Decimal? = Nothing)
 
         ' GetResolution
         CodeStage_GetResolution(Horizontal_Resolution:=Horizontal_Resolution, Vertical_Resolution:=Vertical_Resolution)
@@ -147,7 +147,7 @@ Public Class Utility___Environment
     ''' </summary>
     ''' <param name="Process_Name">The name of the process to kill</param>
     ''' <param name="Process_ID">The unique numeric identifier of a specific process on the system.</param>
-    Public Sub Kill_Process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Process_ID As Decimal = Nothing)
+    Public Sub Kill_Process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Process_ID As Decimal? = Nothing)
 
         ' Kill Process1
         CodeStage_Kill_Process1(Process_Name:=Process_Name, Process_ID:=Process_ID)
@@ -165,7 +165,9 @@ Public Class Utility___Environment
         Dim Processes As DataTable
 
         ' Initialize local variables with input values
-        Processes = Process_Names
+        If Process_Names IsNot Nothing Then
+            Processes = Process_Names
+        End If
 
         ' Get Stats
         CodeStage_Get_Stats(Processes:=Processes, Process_Statistics:=Process_Statistics)
@@ -177,12 +179,10 @@ Public Class Utility___Environment
     ''' </summary>
     ''' <param name="Process_Name">The name of the process you want stats for</param>
     ''' <param name="Working_Set">The working set number holding memory stats for your process</param>
-    Public Sub Read_Process_Working_Set(Optional ByVal Process_Name As String = Nothing, Optional ByRef Working_Set As Decimal = Nothing)
+    Public Sub Read_Process_Working_Set(Optional ByVal Process_Name As String = Nothing, Optional ByRef Working_Set As Decimal? = Nothing)
 
         ' Initialize variables with initialvalue
-        If Working_Set Is Nothing Then
-            Working_Set = "0"
-        End If
+        Working_Set = "0"
 
         ' Get Memory Set
         CodeStage_Get_Memory_Set(Proc:=Process_Name, Working_Set:=Working_Set)
@@ -197,21 +197,15 @@ Public Class Utility___Environment
     ''' <param name="Working_Folder">Optional - the application working folder</param>
     ''' <param name="Timeout">How long to wait for the application to finish. Default is 10 seconds</param>
     ''' <param name="Ignore_Timeout">Flag that indicates the Digital Worker should wait for the process to complete indefinitely. Default is False.</param>
-    Public Sub Run_Process_Until_Ended(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Working_Folder As String = Nothing, Optional ByVal Timeout As TimeSpan = Nothing, Optional ByVal Ignore_Timeout As Boolean = Nothing)
+    Public Sub Run_Process_Until_Ended(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Working_Folder As String = Nothing, Optional ByVal Timeout As TimeSpan? = Nothing, Optional ByVal Ignore_Timeout As Boolean? = Nothing)
 
         ' Local variables
-        Dim Fail_Datetime_Reached_ As Boolean
+        Dim Fail_Datetime_Reached_ As Boolean?
 
         ' Initialize variables with initialvalue
-        If Timeout Is Nothing Then
-            Timeout = TimeSpan.Parse("0.00:00:10")
-        End If
-        If Fail_Datetime_Reached_ Is Nothing Then
-            Fail_Datetime_Reached_ = False
-        End If
-        If Ignore_Timeout Is Nothing Then
-            Ignore_Timeout = False
-        End If
+        Timeout = TimeSpan.Parse("0.00:00:10")
+        Fail_Datetime_Reached_ = False
+        Ignore_Timeout = False
 
         ' Run Process
         CodeStage_Run_Process(appn:=Application, args:=Arguments, dir:=Working_Folder, timeout:=Timeout, ignoreTimeout:=Ignore_Timeout, timedOut:=Fail_Datetime_Reached_)
@@ -261,12 +255,10 @@ Public Class Utility___Environment
     ''' <param name="Use_Shell">Optional. Boolean value that determines whether the Windows shell should be used to launch the process. Default value is True. If you experience issue launching a process, try changing this value to False.</param>
     ''' <param name="Process_ID">The unique identifier of the new process.</param>
     ''' <param name="Process_Name">The the name of the process.</param>
-    Public Sub Start_Process(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Use_Shell As Boolean = Nothing, Optional ByRef Process_ID As Decimal = Nothing, Optional ByRef Process_Name As String = Nothing)
+    Public Sub Start_Process(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Use_Shell As Boolean? = Nothing, Optional ByRef Process_ID As Decimal? = Nothing, Optional ByRef Process_Name As String = Nothing)
 
         ' Initialize variables with initialvalue
-        If Use_Shell Is Nothing Then
-            Use_Shell = True
-        End If
+        Use_Shell = True
 
         ' Start Process
         CodeStage_Start_Process(Application:=Application, Arguments:=Arguments, Use_Shell:=Use_Shell, id:=Process_ID, name:=Process_Name)
@@ -279,12 +271,10 @@ Public Class Utility___Environment
     ''' <param name="Process_Name">The name of the process to start.</param>
     ''' <param name="Arguments">The arguments that coincide with the process.</param>
     ''' <param name="Timeout">Optional: The number of milliseconds to wait for the process to exit. Default value is -1 which waits indefinitely.</param>
-    Public Sub Start_Process_Read_Stderr_and_Stdout(Optional ByVal Process_Name As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Timeout As Decimal = Nothing, Optional ByRef Standard_Output As String = Nothing, Optional ByRef Standard_Error As String = Nothing)
+    Public Sub Start_Process_Read_Stderr_and_Stdout(Optional ByVal Process_Name As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Timeout As Decimal? = Nothing, Optional ByRef Standard_Output As String = Nothing, Optional ByRef Standard_Error As String = Nothing)
 
         ' Initialize variables with initialvalue
-        If Timeout Is Nothing Then
-            Timeout = -1
-        End If
+        Timeout = -1
 
         ' Run Process read Output
         CodeStage_Run_Process_read_Output(Argument:=Arguments, Process_Name:=Process_Name, Timeout:=Timeout, Standard_Output:=Standard_Output, Standard_Error:=Standard_Error)
@@ -298,15 +288,13 @@ Public Class Utility___Environment
     ''' <param name="Vertical_Resolution">The number of pixels in the vertical screen axis</param>
     ''' <param name="Success">A Flag indicating success or failure of the action.</param>
     ''' <param name="Return_Code">The numeric return code returned by the operating system.</param>
-    Public Sub Set_Screen_Resolution(Optional ByVal Vertical_Resolution As Decimal = Nothing, Optional ByVal Horizontal_Resolution As Decimal = Nothing, Optional ByRef Horizontal_Resolution As Decimal = Nothing, Optional ByRef Vertical_Resolution As Decimal = Nothing, Optional ByRef Success As Boolean = Nothing, Optional ByRef Return_Code As Decimal = Nothing)
+    Public Sub Set_Screen_Resolution(Optional ByRef Horizontal_Resolution As Decimal? = Nothing, Optional ByRef Vertical_Resolution As Decimal? = Nothing, Optional ByRef Success As Boolean? = Nothing, Optional ByRef Return_Code As Decimal? = Nothing)
 
         ' Local variables
-        Dim Timeout As TimeSpan
+        Dim Timeout As TimeSpan?
 
         ' Initialize variables with initialvalue
-        If Timeout Is Nothing Then
-            Timeout = TimeSpan.Parse("0.00:00:30")
-        End If
+        Timeout = TimeSpan.Parse("0.00:00:30")
 
         ' Set Screen Resolution
         CodeStage_Set_Screen_Resolution(Horizontal:=Horizontal_Resolution, Vertical:=Vertical_Resolution, Success:=Success, Return_Code:=Return_Code)
@@ -335,15 +323,11 @@ Public Class Utility___Environment
     ''' <param name="Maximum_wait_time__seconds_">The maximum time to wait for the process to complete</param>
     ''' <param name="Process_Name">The name of the process to attach to</param>
     ''' <param name="Found_">True=process found, false=process not found</param>
-    Public Sub Wait_for_Process(Optional ByVal Maximum_wait_time__seconds_ As Decimal = Nothing, Optional ByVal Process_Name As String = Nothing, Optional ByRef Found_ As Boolean = Nothing)
+    Public Sub Wait_for_Process(Optional ByVal Maximum_wait_time__seconds_ As Decimal? = Nothing, Optional ByVal Process_Name As String = Nothing, Optional ByRef Found_ As Boolean? = Nothing)
 
         ' Initialize variables with initialvalue
-        If Maximum_wait_time__seconds_ Is Nothing Then
-            Maximum_wait_time__seconds_ = 0
-        End If
-        If Found_ Is Nothing Then
-            Found_ = False
-        End If
+        Maximum_wait_time__seconds_ = 0
+        Found_ = False
 
         ' Wait for process
         CodeStage_Wait_for_process(Process_Name:=Process_Name, Max_Wait:=Maximum_wait_time__seconds_, Found_:=Found_)
@@ -356,15 +340,11 @@ Public Class Utility___Environment
     ''' <param name="Process_Name">The name of the process to attach to</param>
     ''' <param name="Window_Title">The title of the window within the process</param>
     ''' <param name="Wait">The maximum amount of time to wait for</param>
-    Public Sub Wait_for_Process_Window(Optional ByVal Process_Name As String = Nothing, Optional ByVal Window_Title As String = Nothing, Optional ByVal Wait As Decimal = Nothing, Optional ByRef Found As Boolean = Nothing)
+    Public Sub Wait_for_Process_Window(Optional ByVal Process_Name As String = Nothing, Optional ByVal Window_Title As String = Nothing, Optional ByVal Wait As Decimal? = Nothing, Optional ByRef Found As Boolean? = Nothing)
 
         ' Initialize variables with initialvalue
-        If Found Is Nothing Then
-            Found = False
-        End If
-        If Wait Is Nothing Then
-            Wait = 0
-        End If
+        Found = False
+        Wait = 0
 
         Code_d3b1986a_fa70_41e9_a8af_cd2ffc78342e_Label: ' Find Process
         CodeStage_Find_Process(Process_Name:=Process_Name, Window_Title:=Window_Title, Found:=Found)
@@ -401,6 +381,12 @@ Public Class Utility___Environment
     Protected Overrides Sub Finalize()
 
     End Sub
+
+    #End Region
+
+    #Region "App Model"
+
+    Protected Application As Object
 
     #End Region
 
@@ -537,7 +523,7 @@ Public Class Utility___Environment
     ''' <summary>
     ''' GetResolution
     ''' </summary>
-    Private Sub CodeStage_GetResolution(Optional ByRef Horizontal_Resolution As Decimal = Nothing, Optional ByRef Vertical_Resolution As Decimal = Nothing)
+    Private Sub CodeStage_GetResolution(Optional ByRef Horizontal_Resolution As Decimal? = Nothing, Optional ByRef Vertical_Resolution As Decimal? = Nothing)
 
         dim S As Size = Screen.PrimaryScreen.Bounds.Size
         Horizontal_Resolution = S.Width
@@ -548,7 +534,7 @@ Public Class Utility___Environment
     ''' <summary>
     ''' Kill Process1
     ''' </summary>
-    Private Sub CodeStage_Kill_Process1(Optional ByVal Process_Name As String = Nothing, Optional ByVal Process_ID As Decimal = Nothing)
+    Private Sub CodeStage_Kill_Process1(Optional ByVal Process_Name As String = Nothing, Optional ByVal Process_ID As Decimal? = Nothing)
 
         Try
         	If (Len(Trim(Process_Name)) > 0) And (Process_ID = 0) Then
@@ -590,7 +576,7 @@ Public Class Utility___Environment
     ''' <summary>
     ''' Get Memory Set
     ''' </summary>
-    Private Sub CodeStage_Get_Memory_Set(Optional ByVal Proc As String = Nothing, Optional ByRef Working_Set As Decimal = Nothing)
+    Private Sub CodeStage_Get_Memory_Set(Optional ByVal Proc As String = Nothing, Optional ByRef Working_Set As Decimal? = Nothing)
 
         
         For Each P As Process in Process.GetProcesses()
@@ -604,7 +590,7 @@ Public Class Utility___Environment
     ''' <summary>
     ''' Get Font Smoothing Enabled
     ''' </summary>
-    Private Sub CodeStage_Get_Font_Smoothing_Enabled(Optional ByRef Enabled As Boolean = Nothing)
+    Private Sub CodeStage_Get_Font_Smoothing_Enabled(Optional ByRef Enabled As Boolean? = Nothing)
 
         Enabled=System.Windows.Forms.Systeminformation.IsFontSmoothingEnabled
 
@@ -613,7 +599,7 @@ Public Class Utility___Environment
     ''' <summary>
     ''' Start Process
     ''' </summary>
-    Private Sub CodeStage_Start_Process(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Use_Shell As Boolean = Nothing, Optional ByRef id As Decimal = Nothing, Optional ByRef name As String = Nothing)
+    Private Sub CodeStage_Start_Process(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Use_Shell As Boolean? = Nothing, Optional ByRef id As Decimal? = Nothing, Optional ByRef name As String = Nothing)
 
         Dim processName As String = Application
         
@@ -635,7 +621,7 @@ Public Class Utility___Environment
     ''' <summary>
     ''' Run Process
     ''' </summary>
-    Private Sub CodeStage_Run_Process(Optional ByVal appn As String = Nothing, Optional ByVal args As String = Nothing, Optional ByVal dir As String = Nothing, Optional ByVal timeout As TimeSpan = Nothing, Optional ByVal ignoreTimeout As Boolean = Nothing, Optional ByRef timedOut As Boolean = Nothing)
+    Private Sub CodeStage_Run_Process(Optional ByVal appn As String = Nothing, Optional ByVal args As String = Nothing, Optional ByVal dir As String = Nothing, Optional ByVal timeout As TimeSpan? = Nothing, Optional ByVal ignoreTimeout As Boolean? = Nothing, Optional ByRef timedOut As Boolean? = Nothing)
 
         Dim timeoutInMillisec as Integer
         Dim startTime as Date = Date.Now
@@ -664,7 +650,7 @@ Public Class Utility___Environment
     ''' <summary>
     ''' Wait for process
     ''' </summary>
-    Private Sub CodeStage_Wait_for_process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Max_Wait As Decimal = Nothing, Optional ByRef Found_ As Boolean = Nothing)
+    Private Sub CodeStage_Wait_for_process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Max_Wait As Decimal? = Nothing, Optional ByRef Found_ As Boolean? = Nothing)
 
         Try
         	Found_ = False
@@ -689,7 +675,7 @@ Public Class Utility___Environment
     ''' <summary>
     ''' Find Process
     ''' </summary>
-    Private Sub CodeStage_Find_Process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Window_Title As String = Nothing, Optional ByRef Found As Boolean = Nothing)
+    Private Sub CodeStage_Find_Process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Window_Title As String = Nothing, Optional ByRef Found As Boolean? = Nothing)
 
         try
         
@@ -748,7 +734,7 @@ Public Class Utility___Environment
     ''' <summary>
     ''' Run Process read Output
     ''' </summary>
-    Private Sub CodeStage_Run_Process_read_Output(Optional ByVal Argument As String = Nothing, Optional ByVal Process_Name As String = Nothing, Optional ByVal Timeout As Decimal = Nothing, Optional ByRef Standard_Output As String = Nothing, Optional ByRef Standard_Error As String = Nothing)
+    Private Sub CodeStage_Run_Process_read_Output(Optional ByVal Argument As String = Nothing, Optional ByVal Process_Name As String = Nothing, Optional ByVal Timeout As Decimal? = Nothing, Optional ByRef Standard_Output As String = Nothing, Optional ByRef Standard_Error As String = Nothing)
 
         ' create a Process object
         Dim startInfo As New ProcessStartInfo()
@@ -812,7 +798,7 @@ Public Class Utility___Environment
     ''' <summary>
     ''' Set Screen Resolution
     ''' </summary>
-    Private Sub CodeStage_Set_Screen_Resolution(Optional ByVal Horizontal As Decimal = Nothing, Optional ByVal Vertical As Decimal = Nothing, Optional ByRef Success As Boolean = Nothing, Optional ByRef Return_Code As Decimal = Nothing)
+    Private Sub CodeStage_Set_Screen_Resolution(Optional ByVal Horizontal As Decimal? = Nothing, Optional ByVal Vertical As Decimal? = Nothing, Optional ByRef Success As Boolean? = Nothing, Optional ByRef Return_Code As Decimal? = Nothing)
 
         ' Set the default return value.
         Success = False

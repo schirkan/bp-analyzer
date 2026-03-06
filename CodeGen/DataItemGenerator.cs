@@ -101,8 +101,10 @@ public static class DataItemGenerator
             var vbType = TypeMapper.MapDataType(dataType, dataStage);
             var hasAlwaysInit = dataStage.Element("alwaysinit") != null;
             var keyword = hasAlwaysInit ? "Dim" : "Static";
+            // Make local variables nullable for value types
+            var nullableMarker = TypeMapper.IsValueType(dataType) ? "?" : "";
 
-            sb.AppendLine($"        {keyword} {NameSanitizer.SanitizeVariableName(dataName)} As {vbType}");
+            sb.AppendLine($"        {keyword} {NameSanitizer.SanitizeVariableName(dataName)} As {vbType}{nullableMarker}");
         }
         sb.AppendLine();
     }
@@ -131,6 +133,7 @@ public static class DataItemGenerator
             var dataName = dataStage.Attribute("name")?.Value!;
             var dataType = dataStage.Element("datatype")?.Value ?? "text";
             var initialValue = dataStage.Element("initialvalue")?.Value;
+            var alwaysinit = dataStage.Element("alwaysinit");
 
             if (!string.IsNullOrEmpty(initialValue))
             {
@@ -141,9 +144,17 @@ public static class DataItemGenerator
                 }
 
                 var formattedValue = TypeMapper.FormatInitialValue(dataType, initialValue, dataStage);
-                sb.AppendLine($"        If {NameSanitizer.SanitizeVariableName(dataName)} Is Nothing Then");
-                sb.AppendLine($"            {NameSanitizer.SanitizeVariableName(dataName)} = {formattedValue}");
-                sb.AppendLine($"        End If");
+                if (alwaysinit == null)
+                {
+                    sb.AppendLine($"        If {NameSanitizer.SanitizeVariableName(dataName)} Is Nothing Then");
+                    sb.AppendLine($"            {NameSanitizer.SanitizeVariableName(dataName)} = {formattedValue}");
+                    sb.AppendLine($"        End If");
+                }
+                else
+                {
+                    sb.AppendLine($"        {NameSanitizer.SanitizeVariableName(dataName)} = {formattedValue}");
+                }
+
             }
         }
         sb.AppendLine();
