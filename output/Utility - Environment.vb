@@ -1,8 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-06 21:52:19
-' 
-' Utilities for interacting with the environment - read screen resolution, determine OS type, etc.
+' Generated: 2026-03-06 22:53:06
 
 Imports System
 Imports System.Collections.Generic
@@ -26,9 +24,6 @@ Public Class Utility___Environment
 
     #Region "Singleton Instance"
 
-    ''' <summary>
-    ''' Shared singleton instance
-    ''' </summary>
     Private Shared ReadOnly _lazyInstance As New Lazy(Of Utility___Environment)(Function() New Utility___Environment())
 
     Public Shared ReadOnly Property Instance As Utility___Environment
@@ -48,7 +43,7 @@ Public Class Utility___Environment
     #Region "Methods"
 
     ''' <summary>
-    ''' Constructor - initialization code from stages without subsheet
+    ''' Utilities for interacting with the environment - read screen resolution, determine OS type, etc.
     ''' </summary>
     Public Sub New()
 
@@ -91,9 +86,6 @@ Public Class Utility___Environment
         Dim Enabled_ As Boolean
 
         ' Get Font Smoothing Enabled
-        ' Original code:
-        ' Enabled=System.Windows.Forms.Systeminformation.IsFontSmoothingEnabled
-        ' TODO: Convert to VB.Net
         CodeStage_Get_Font_Smoothing_Enabled(Enabled:=Enabled_)
         
         Enabled = Enabled_
@@ -118,9 +110,6 @@ Public Class Utility___Environment
     Public Sub Get_Machine_Name(Optional ByRef Machine_Name As String = Nothing)
 
         ' GetMachineName
-        ' Original code:
-        ' machineName = Environment.MachineName
-        ' TODO: Convert to VB.Net
         CodeStage_GetMachineName(machineName:=Machine_Name)
 
     End Sub
@@ -133,11 +122,6 @@ Public Class Utility___Environment
     Public Sub Get_Screen_Resolution(Optional ByRef Horizontal_Resolution As Decimal = Nothing, Optional ByRef Vertical_Resolution As Decimal = Nothing)
 
         ' GetResolution
-        ' Original code:
-        ' dim S As Size = Screen.PrimaryScreen.Bounds.Size
-        ' Horizontal_Resolution = S.Width
-        ' Vertical_Resolution = S.Height
-        ' TODO: Convert to VB.Net
         CodeStage_GetResolution(Horizontal_Resolution:=Horizontal_Resolution, Vertical_Resolution:=Vertical_Resolution)
 
     End Sub
@@ -152,9 +136,6 @@ Public Class Utility___Environment
         Dim Username As String
 
         ' GetUserName
-        ' Original code:
-        ' username = Environment.UserName
-        ' TODO: Convert to VB.Net
         CodeStage_GetUserName(username:=Username)
         
         User_Name = Username
@@ -169,18 +150,6 @@ Public Class Utility___Environment
     Public Sub Kill_Process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Process_ID As Decimal = Nothing)
 
         ' Kill Process1
-        ' Original code:
-        ' Try
-        ' If (Len(Trim(Process_Name)) > 0) And (Process_ID = 0) Then
-        ' For Each p As System.Diagnostics.Process in System.Diagnostics.Process.GetProcessesByName(Process_Name)
-        ' p.Kill
-        ' Next
-        ' ElseIf (Process_ID > 0) Then
-        ' KillProcessAndChildren(Convert.ToInt32(Process_ID))
-        ' End If
-        ' Catch ex As Exception
-        ' End Try
-        ' TODO: Convert to VB.Net
         CodeStage_Kill_Process1(Process_Name:=Process_Name, Process_ID:=Process_ID)
 
     End Sub
@@ -199,23 +168,6 @@ Public Class Utility___Environment
         Processes = Process_Names
 
         ' Get Stats
-        ' Original code:
-        ' GC.Collect()
-        ' Process_Statistics = New DataTable
-        ' process_statistics.Columns.Add("Process Name", GetType(String))
-        ' process_statistics.Columns.Add("PID", GetType(Decimal))
-        ' process_statistics.Columns.Add("Working Set", GetType(Decimal))
-        ' process_statistics.Columns.Add("Virtual Memory", GetType(Decimal))
-        ' For Each R As DataRow in Processes.Rows
-        ' dim ProcName As String = CStr(R("Process Name"))
-        ' Dim PID As Integer = CInt(R("PID"))
-        ' For Each P As Process in Process.GetProcesses()
-        ' If P.ProcessName = ProcName OrElse P.ID = PID Then
-        ' Process_Statistics.Rows.Add(New Object() {P.ProcessName, P.ID, P.WorkingSet64, P.VirtualMemorySize64})
-        ' End If
-        ' Next
-        ' Next
-        ' TODO: Convert to VB.Net
         CodeStage_Get_Stats(Processes:=Processes, Process_Statistics:=Process_Statistics)
 
     End Sub
@@ -233,13 +185,6 @@ Public Class Utility___Environment
         End If
 
         ' Get Memory Set
-        ' Original code:
-        ' For Each P As Process in Process.GetProcesses()
-        ' If P.ProcessName = Proc Then
-        ' Working_Set += P.WorkingSet64
-        ' End If
-        ' Next
-        ' TODO: Convert to VB.Net
         CodeStage_Get_Memory_Set(Proc:=Process_Name, Working_Set:=Working_Set)
 
     End Sub
@@ -269,25 +214,6 @@ Public Class Utility___Environment
         End If
 
         ' Run Process
-        ' Original code:
-        ' Dim timeoutInMillisec as Integer
-        ' Dim startTime as Date = Date.Now
-        ' Dim info as New ProcessStartInfo(appn)
-        ' timedOut = False
-        ' If args <> "" Then info.Arguments = args
-        ' If dir <> "" Then info.WorkingDirectory = dir
-        ' ' 20211006
-        ' ' Adjusted the logic to account for situations where the use wants the Digital Worker to
-        ' ' wait indefinitely until the specified process completes.
-        ' If (ignoreTimeout) Then
-        ' timeoutInMillisec = -1 ' Infinite wait
-        ' Else
-        ' timeoutInMillisec = CInt(timeout.TotalMilliseconds)
-        ' End If
-        ' Using proc As Process = Process.Start(info)
-        ' timedOut = Not proc.WaitForExit(timeoutInMillisec)
-        ' End Using
-        ' TODO: Convert to VB.Net
         CodeStage_Run_Process(appn:=Application, args:=Arguments, dir:=Working_Folder, timeout:=Timeout, ignoreTimeout:=Ignore_Timeout, timedOut:=Fail_Datetime_Reached_)
         ' Timed Out?
         If Fail_Datetime_Reached_ Then
@@ -323,17 +249,6 @@ Public Class Utility___Environment
         Calculation_bcb5c983_a5fb_4b30_b14f_7a1509fff980_Label: ' Set Value
         Clipboard = Chr(0)
         Code_54826c34_2991_4964_b0a3_0e0a2f951f29_Label: ' Set
-        ' Original code:
-        ' 'System.Windows.Forms.Clipboard.SetDataObject(Clipboard)
-        ' Dim thread As New Thread(
-        ' Sub(ByVal data As Object)
-        ' System.Windows.Forms.Clipboard.SetText(data)
-        ' End Sub
-        ' )
-        ' thread.SetApartmentState(ApartmentState.STA)
-        ' thread.Start(Clipboard)
-        ' thread.join()
-        ' TODO: Convert to VB.Net
         CodeStage_Set(Clipboard:=Clipboard)
 
     End Sub
@@ -354,19 +269,6 @@ Public Class Utility___Environment
         End If
 
         ' Start Process
-        ' Original code:
-        ' Dim processName As String = Application
-        ' Dim process As New Process() With {
-        ' .StartInfo = New ProcessStartInfo() With {
-        ' .FileName = processName,
-        ' .Arguments = Arguments,
-        ' .UseShellExecute = Use_Shell
-        ' }
-        ' }
-        ' process.Start()
-        ' id = Convert.ToInt32(process.Id)
-        ' name = process.ProcessName
-        ' TODO: Convert to VB.Net
         CodeStage_Start_Process(Application:=Application, Arguments:=Arguments, Use_Shell:=Use_Shell, id:=Process_ID, name:=Process_Name)
 
     End Sub
@@ -385,56 +287,6 @@ Public Class Utility___Environment
         End If
 
         ' Run Process read Output
-        ' Original code:
-        ' ' create a Process object
-        ' Dim startInfo As New ProcessStartInfo()
-        ' startInfo.FileName = Process_Name
-        ' startInfo.Arguments = Argument
-        ' startInfo.RedirectStandardOutput = True
-        ' startInfo.RedirectStandardError = True
-        ' startInfo.UseShellExecute = False
-        ' startInfo.CreateNoWindow = False
-        ' Dim process As New Process()
-        ' process.StartInfo = startInfo
-        ' ' add handlers to read stdout and stderr content
-        ' Dim stdOutput As String = ""
-        ' Dim stdError As String = ""
-        ' AddHandler process.OutputDataReceived, Sub(sender, args)
-        ' If args.Data IsNot Nothing Then
-        ' stdOutput += args.Data
-        ' End If
-        ' End Sub
-        ' AddHandler process.ErrorDataReceived, Sub(sender, args)
-        ' If args.Data IsNot Nothing Then
-        ' stdError += args.Data
-        ' End If
-        ' End Sub
-        ' ' run process until exit or timeout
-        ' Try
-        ' process.Start()
-        ' process.BeginOutputReadLine()
-        ' process.BeginErrorReadLine()
-        ' Dim timeoutTask As Task = Task.Delay(timeout)
-        ' Dim processExitTask As Task = Task.Run(Sub() process.WaitForExit())
-        ' If Task.WhenAny(timeoutTask, processExitTask).Result Is timeoutTask Then
-        ' Dim timeoutMessage As String = Environment.NewLine & "Timeout reached: " & timeout & "ms"
-        ' Standard_Output = stdOutput & timeoutMessage
-        ' Standard_Error += stdError & timeoutMessage
-        ' process.Kill()
-        ' Else
-        ' process.WaitForExit()
-        ' Standard_Output = stdOutput
-        ' Standard_Error = stdError
-        ' End If
-        ' Catch ex As Exception
-        ' Standard_Output = stdOutput
-        ' Standard_Error = stdError & Environment.NewLine & "Code stage error: " & ex.Message
-        ' Finally
-        ' If process IsNot Nothing Then
-        ' process.Dispose()
-        ' End If
-        ' End Try
-        ' TODO: Convert to VB.Net
         CodeStage_Run_Process_read_Output(Argument:=Arguments, Process_Name:=Process_Name, Timeout:=Timeout, Standard_Output:=Standard_Output, Standard_Error:=Standard_Error)
 
     End Sub
@@ -457,39 +309,6 @@ Public Class Utility___Environment
         End If
 
         ' Set Screen Resolution
-        ' Original code:
-        ' ' Set the default return value.
-        ' Success = False
-        ' Return_Code = -2
-        ' Dim screen As Screen = screen.PrimaryScreen
-        ' Dim iWidth As Integer = Horizontal
-        ' Dim iHeight As Integer = Vertical
-        ' Dim dm As DEVMODE1 = New DEVMODE1
-        ' dm.dmDeviceName = New String(New Char(32) {})
-        ' dm.dmFormName = New String(New Char(32) {})
-        ' dm.dmSize = CType(Marshal.SizeOf(dm), Short)
-        ' Dim modeIndex as Integer = 0
-        ' Do While (User_32.EnumDisplaySettings(Nothing, modeIndex, dm) > 0)
-        ' If ((dm.dmPelsWidth = iWidth) And (dm.dmPelsHeight = iHeight)) Then
-        ' Dim iRet As Integer = User_32.ChangeDisplaySettings(dm, User_32.CDS_TEST)
-        ' If iRet = User_32.DISP_CHANGE_FAILED Then
-        ' Success = False
-        ' Else
-        ' iRet = User_32.ChangeDisplaySettings(dm, User_32.CDS_UPDATEREGISTRY)
-        ' Select Case iRet
-        ' Case User_32.DISP_CHANGE_SUCCESSFUL
-        ' ' Success!!
-        ' Success = True
-        ' Case Else
-        ' Success = False
-        ' End Select
-        ' End If
-        ' Return_Code = iRet
-        ' Exit Do
-        ' End If
-        ' modeIndex = modeIndex + 1
-        ' Loop
-        ' TODO: Convert to VB.Net
         CodeStage_Set_Screen_Resolution(Horizontal:=Horizontal_Resolution, Vertical:=Vertical_Resolution, Success:=Success, Return_Code:=Return_Code)
         ' Success?
         If Success = True Then
@@ -527,25 +346,6 @@ Public Class Utility___Environment
         End If
 
         ' Wait for process
-        ' Original code:
-        ' Try
-        ' Found_ = False
-        ' Dim bProcFound as Boolean = False
-        ' Dim iLoop as Integer = 0
-        ' Dim myProcesses() As System.Diagnostics.Process
-        ' Dim instance As System.Diagnostics.Process
-        ' Do While bProcFound = False AND iLoop < Max_Wait
-        ' myProcesses = System.Diagnostics.Process.GetProcessesByName(Process_Name)
-        ' For Each instance In myProcesses
-        ' bProcFound = True
-        ' Found_ = True
-        ' Next
-        ' Threading.Thread.Sleep(1000)
-        ' iloop += 1
-        ' Loop
-        ' Catch ex As Exception
-        ' End Try
-        ' TODO: Convert to VB.Net
         CodeStage_Wait_for_process(Process_Name:=Process_Name, Max_Wait:=Maximum_wait_time__seconds_, Found_:=Found_)
 
     End Sub
@@ -567,17 +367,6 @@ Public Class Utility___Environment
         End If
 
         Code_d3b1986a_fa70_41e9_a8af_cd2ffc78342e_Label: ' Find Process
-        ' Original code:
-        ' try
-        ' for each p as system.diagnostics.process in system.diagnostics.process.getprocessesbyname(process_name)
-        ' if p.mainwindowtitle.trim.tolower like window_title.trim.tolower then
-        ' found = true
-        ' exit sub
-        ' end if
-        ' next
-        ' catch e as exception
-        ' end try
-        ' TODO: Convert to VB.Net
         CodeStage_Find_Process(Process_Name:=Process_Name, Window_Title:=Window_Title, Found:=Found)
         ' Found?
         If Found Then
@@ -610,6 +399,456 @@ Public Class Utility___Environment
     ''' Destructor (CleanUp) - called when object is disposed
     ''' </summary>
     Protected Overrides Sub Finalize()
+
+    End Sub
+
+    #End Region
+
+    #Region "Global Code"
+
+        <DllImport("kernel32.dll", SetLastError:=True)> _
+        Private Shared Function CreateToolhelp32Snapshot(ByVal dwFlags As UInteger, ByVal th32ProcessID As UInteger) As IntPtr
+        End Function
+        
+        <DllImport("kernel32.dll")> _
+        Private Shared Function Process32First(ByVal hSnapshot As IntPtr, ByRef lppe As PROCESSENTRY32) As Boolean
+        End Function
+        
+        <DllImport("kernel32.dll")> _
+        Private Shared Function Process32Next(ByVal hSnapshot As IntPtr, ByRef lppe As PROCESSENTRY32) As Boolean
+        End Function
+        
+        <StructLayout(LayoutKind.Sequential)>
+        Public Structure PROCESSENTRY32
+        	Public dwSize As UInteger
+        	Public cntUsage As UInteger
+        	Public th32ProcessID As UInteger
+        	Public th32DefaultHeapID As IntPtr
+        	Public th32ModuleID As UInteger
+        	Public cntThreads As UInteger
+        	Public th32ParentProcessID As UInteger
+        	Public pcPriClassBase As Integer
+        	Public dwFlags As UInteger
+        	<MarshalAs(UnmanagedType.ByValTStr, SizeConst:=260)>
+        	Public szExeFile As String
+        End Structure
+        
+        Shared TH32CS_SNAPPROCESS As UInteger = 2
+        
+        <StructLayout(LayoutKind.Sequential)> _
+        Public Structure DEVMODE1
+        	<MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)> _
+        	Public dmDeviceName As String
+        	Public dmSpecVersion As Short
+        	Public dmDriverVersion As Short
+        	Public dmSize As Short
+        	Public dmDriverExtra As Short
+        	Public dmFields As Integer
+        	Public dmOrientation As Short
+        	Public dmPaperSize As Short
+        	Public dmPaperLength As Short
+        	Public dmPaperWidth As Short
+        	Public dmScale As Short
+        	Public dmCopies As Short
+        	Public dmDefaultSource As Short
+        	Public dmPrintQuality As Short
+        	Public dmColor As Short
+        	Public dmDuplex As Short
+        	Public dmYResolution As Short
+        	Public dmTTOption As Short
+        	Public dmCollate As Short
+        	<MarshalAs(UnmanagedType.ByValTStr,  SizeConst:=32)> _
+        	Public dmFormName As String
+        	Public dmLogPixels As Short
+        	Public dmBitsPerPel As Short
+        	Public dmPelsWidth As Integer
+        	Public dmPelsHeight As Integer
+        	Public dmDisplayFlags As Integer
+        	Public dmDisplayFrequency As Integer
+        	Public dmICMMethod As Integer
+        	Public dmICMIntent As Integer
+        	Public dmMediaType As Integer
+        	Public dmDitherType As Integer
+        	Public dmReserved1 As Integer
+        	Public dmReserved2 As Integer
+        	Public dmPanningWidth As Integer
+        	Public dmPanningHeight As Integer
+        End Structure
+        
+        Class User_32
+        	<DllImport("user32.dll")> _
+        	Public Shared Function EnumDisplaySettings(ByVal deviceName As String, ByVal modeNum As Integer, ByRef devMode As DEVMODE1) As Integer
+        	End Function
+        
+        	<DllImport("user32.dll")> _
+        	Public Shared Function ChangeDisplaySettings(ByRef devMode As DEVMODE1, ByVal flags As Integer) As Integer
+        	End Function
+        
+        	Public Const ENUM_CURRENT_SETTINGS As Integer = -1
+        	Public Const CDS_UPDATEREGISTRY As Integer = 1
+        	Public Const CDS_TEST As Integer = 2
+        	Public Const DISP_CHANGE_SUCCESSFUL As Integer = 0
+        	Public Const DISP_CHANGE_RESTART As Integer = 1
+        	Public Const DISP_CHANGE_FAILED As Integer = -1
+        End Class
+        
+        Private Shared Function GetParentProcess(iCurrentPid As Integer ) As Process
+        	Dim iParentPid As Integer = 0
+        	Dim oHnd As IntPtr = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0)
+        	If oHnd = IntPtr.Zero Then Return Nothing
+        	Dim oProcInfo As PROCESSENTRY32 = New PROCESSENTRY32()
+        	oProcInfo.dwSize = CUInt(System.Runtime.InteropServices.Marshal.SizeOf(GetType(PROCESSENTRY32)))
+        	If Process32First(oHnd, oProcInfo) = False Then Return Nothing
+        
+        	Do
+        		If iCurrentPid = oProcInfo.th32ProcessID Then iParentPid = CInt(oProcInfo.th32ParentProcessID)
+        	Loop While iParentPid = 0 AndAlso Process32Next(oHnd, oProcInfo)
+        
+        	If iParentPid > 0 Then
+        		Return Process.GetProcessById(iParentPid)
+        	Else
+        		Return Nothing
+        	End If
+        End Function
+        
+        ' Internal subroutine to kill a specific process and any child processes it owns.
+        Private Shared Sub KillProcessAndChildren(ByVal pid As Integer)
+            Dim processSearcher As ManagementObjectSearcher = New ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" & pid)
+            Dim processCollection As ManagementObjectCollection = processSearcher.[Get]()
+        
+            Try
+                Dim proc As Process = Process.GetProcessById(pid)
+                If Not proc.HasExited Then proc.Kill()
+            Catch __unusedArgumentException1__ As ArgumentException
+            End Try
+        
+            If processCollection IsNot Nothing Then
+        
+                For Each mo As ManagementObject In processCollection
+                    KillProcessAndChildren(Convert.ToInt32(mo("ProcessID")))
+                Next
+            End If
+        End Sub
+
+    #End Region
+
+    #Region "Code Stages"
+
+    ''' <summary>
+    ''' GetResolution
+    ''' </summary>
+    Private Sub CodeStage_GetResolution(Optional ByRef Horizontal_Resolution As Decimal = Nothing, Optional ByRef Vertical_Resolution As Decimal = Nothing)
+
+        dim S As Size = Screen.PrimaryScreen.Bounds.Size
+        Horizontal_Resolution = S.Width
+        Vertical_Resolution = S.Height
+
+    End Sub
+
+    ''' <summary>
+    ''' Kill Process1
+    ''' </summary>
+    Private Sub CodeStage_Kill_Process1(Optional ByVal Process_Name As String = Nothing, Optional ByVal Process_ID As Decimal = Nothing)
+
+        Try
+        	If (Len(Trim(Process_Name)) > 0) And (Process_ID = 0) Then
+        		For Each p As System.Diagnostics.Process in System.Diagnostics.Process.GetProcessesByName(Process_Name)
+        			p.Kill
+        		Next
+        	ElseIf (Process_ID > 0) Then
+        		KillProcessAndChildren(Convert.ToInt32(Process_ID))
+        	End If
+        Catch ex As Exception
+        End Try
+
+    End Sub
+
+    ''' <summary>
+    ''' Get Stats
+    ''' </summary>
+    Private Sub CodeStage_Get_Stats(Optional ByVal Processes As DataTable = Nothing, Optional ByRef Process_Statistics As DataTable = Nothing)
+
+        GC.Collect()
+        Process_Statistics = New DataTable
+        process_statistics.Columns.Add("Process Name", GetType(String))
+        process_statistics.Columns.Add("PID", GetType(Decimal))
+        process_statistics.Columns.Add("Working Set", GetType(Decimal))
+        process_statistics.Columns.Add("Virtual Memory", GetType(Decimal))
+        
+        For Each R As DataRow in Processes.Rows
+        	dim ProcName As String = CStr(R("Process Name"))
+        	Dim PID As Integer = CInt(R("PID"))
+        	For Each P As Process in Process.GetProcesses()
+        		If P.ProcessName = ProcName OrElse P.ID = PID Then
+        			Process_Statistics.Rows.Add(New Object() {P.ProcessName, P.ID, P.WorkingSet64, P.VirtualMemorySize64})
+        		End If
+        	Next
+        Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Get Memory Set
+    ''' </summary>
+    Private Sub CodeStage_Get_Memory_Set(Optional ByVal Proc As String = Nothing, Optional ByRef Working_Set As Decimal = Nothing)
+
+        
+        For Each P As Process in Process.GetProcesses()
+        	If P.ProcessName = Proc Then
+        		Working_Set += P.WorkingSet64
+        	End If
+        Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Get Font Smoothing Enabled
+    ''' </summary>
+    Private Sub CodeStage_Get_Font_Smoothing_Enabled(Optional ByRef Enabled As Boolean = Nothing)
+
+        Enabled=System.Windows.Forms.Systeminformation.IsFontSmoothingEnabled
+
+    End Sub
+
+    ''' <summary>
+    ''' Start Process
+    ''' </summary>
+    Private Sub CodeStage_Start_Process(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Use_Shell As Boolean = Nothing, Optional ByRef id As Decimal = Nothing, Optional ByRef name As String = Nothing)
+
+        Dim processName As String = Application
+        
+        Dim process As New Process() With {
+        	.StartInfo = New ProcessStartInfo() With {
+        		.FileName = processName,
+        		.Arguments = Arguments,
+        		.UseShellExecute = Use_Shell
+        	}
+        }
+        
+        process.Start()
+        
+        id = Convert.ToInt32(process.Id)
+        name = process.ProcessName
+
+    End Sub
+
+    ''' <summary>
+    ''' Run Process
+    ''' </summary>
+    Private Sub CodeStage_Run_Process(Optional ByVal appn As String = Nothing, Optional ByVal args As String = Nothing, Optional ByVal dir As String = Nothing, Optional ByVal timeout As TimeSpan = Nothing, Optional ByVal ignoreTimeout As Boolean = Nothing, Optional ByRef timedOut As Boolean = Nothing)
+
+        Dim timeoutInMillisec as Integer
+        Dim startTime as Date = Date.Now
+        Dim info as New ProcessStartInfo(appn)
+        
+        timedOut = False
+        
+        If args <> "" Then info.Arguments = args
+        If dir <> "" Then info.WorkingDirectory = dir
+        
+        ' 20211006
+        ' Adjusted the logic to account for situations where the use wants the Digital Worker to
+        ' wait indefinitely until the specified process completes.
+        If (ignoreTimeout) Then
+        	timeoutInMillisec = -1 ' Infinite wait
+        Else
+        	timeoutInMillisec = CInt(timeout.TotalMilliseconds)
+        End If
+        
+        Using proc As Process = Process.Start(info)
+        	timedOut = Not proc.WaitForExit(timeoutInMillisec)
+        End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Wait for process
+    ''' </summary>
+    Private Sub CodeStage_Wait_for_process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Max_Wait As Decimal = Nothing, Optional ByRef Found_ As Boolean = Nothing)
+
+        Try
+        	Found_ = False
+        	Dim bProcFound as Boolean = False
+        	Dim iLoop as Integer = 0
+        	Dim myProcesses() As System.Diagnostics.Process
+        	Dim instance As System.Diagnostics.Process
+        	Do While bProcFound = False AND iLoop < Max_Wait
+        		myProcesses = System.Diagnostics.Process.GetProcessesByName(Process_Name)
+        		For Each instance In myProcesses
+        			bProcFound = True
+        			Found_ = True
+        		Next
+        		Threading.Thread.Sleep(1000)
+        		iloop += 1
+        	Loop
+        Catch ex As Exception
+        End Try
+
+    End Sub
+
+    ''' <summary>
+    ''' Find Process
+    ''' </summary>
+    Private Sub CodeStage_Find_Process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Window_Title As String = Nothing, Optional ByRef Found As Boolean = Nothing)
+
+        try
+        
+        for each p as system.diagnostics.process in system.diagnostics.process.getprocessesbyname(process_name)
+        
+        	if p.mainwindowtitle.trim.tolower like window_title.trim.tolower then
+        		found = true
+        		exit sub
+        	end if
+        
+        next
+        
+        catch e as exception
+        end try
+
+    End Sub
+
+    ''' <summary>
+    ''' Set
+    ''' </summary>
+    Private Sub CodeStage_Set(Optional ByVal Clipboard As String = Nothing)
+
+        'System.Windows.Forms.Clipboard.SetDataObject(Clipboard)
+        
+        Dim thread As New Thread(
+        	Sub(ByVal data As Object)
+        		System.Windows.Forms.Clipboard.SetText(data)
+        	End Sub
+        )
+        thread.SetApartmentState(ApartmentState.STA)
+        thread.Start(Clipboard)
+        thread.join()
+
+    End Sub
+
+    ''' <summary>
+    ''' GetUserName
+    ''' </summary>
+    Private Sub CodeStage_GetUserName(Optional ByRef username As String = Nothing)
+
+        
+        username = Environment.UserName
+
+    End Sub
+
+    ''' <summary>
+    ''' GetMachineName
+    ''' </summary>
+    Private Sub CodeStage_GetMachineName(Optional ByRef machineName As String = Nothing)
+
+        
+        machineName = Environment.MachineName
+
+    End Sub
+
+    ''' <summary>
+    ''' Run Process read Output
+    ''' </summary>
+    Private Sub CodeStage_Run_Process_read_Output(Optional ByVal Argument As String = Nothing, Optional ByVal Process_Name As String = Nothing, Optional ByVal Timeout As Decimal = Nothing, Optional ByRef Standard_Output As String = Nothing, Optional ByRef Standard_Error As String = Nothing)
+
+        ' create a Process object
+        Dim startInfo As New ProcessStartInfo()
+        startInfo.FileName = Process_Name
+        startInfo.Arguments = Argument
+        startInfo.RedirectStandardOutput = True
+        startInfo.RedirectStandardError = True
+        startInfo.UseShellExecute = False
+        startInfo.CreateNoWindow = False
+        
+        Dim process As New Process()
+        process.StartInfo = startInfo
+        
+        ' add handlers to read stdout and stderr content
+        Dim stdOutput As String = ""
+        Dim stdError As String = ""
+        AddHandler process.OutputDataReceived, Sub(sender, args)
+        											If args.Data IsNot Nothing Then
+        												stdOutput += args.Data
+        											End If
+        										End Sub
+        AddHandler process.ErrorDataReceived, Sub(sender, args)
+        											If args.Data IsNot Nothing Then
+        												stdError += args.Data
+        											End If
+        										End Sub
+        
+        ' run process until exit or timeout
+        Try
+        	process.Start()
+        	process.BeginOutputReadLine()
+        	process.BeginErrorReadLine()
+        
+        	Dim timeoutTask As Task = Task.Delay(timeout)
+        	Dim processExitTask As Task = Task.Run(Sub() process.WaitForExit())
+        
+        	If Task.WhenAny(timeoutTask, processExitTask).Result Is timeoutTask Then
+        		Dim timeoutMessage As String = Environment.NewLine & "Timeout reached: " & timeout & "ms"
+        		Standard_Output = stdOutput & timeoutMessage
+        		Standard_Error += stdError & timeoutMessage
+        		process.Kill()
+        	Else
+        		process.WaitForExit()
+        		Standard_Output = stdOutput
+        		Standard_Error = stdError
+        	End If
+        	
+        
+        Catch ex As Exception
+        	Standard_Output = stdOutput
+        	Standard_Error = stdError & Environment.NewLine & "Code stage error: " & ex.Message
+        
+        Finally
+        	If process IsNot Nothing Then
+        		process.Dispose()
+        	End If
+        End Try
+
+    End Sub
+
+    ''' <summary>
+    ''' Set Screen Resolution
+    ''' </summary>
+    Private Sub CodeStage_Set_Screen_Resolution(Optional ByVal Horizontal As Decimal = Nothing, Optional ByVal Vertical As Decimal = Nothing, Optional ByRef Success As Boolean = Nothing, Optional ByRef Return_Code As Decimal = Nothing)
+
+        ' Set the default return value.
+        Success = False
+        Return_Code = -2
+        
+        Dim screen As Screen = screen.PrimaryScreen
+        Dim iWidth As Integer = Horizontal
+        Dim iHeight As Integer = Vertical
+        Dim dm As DEVMODE1 = New DEVMODE1
+        
+        dm.dmDeviceName = New String(New Char(32) {})
+        dm.dmFormName = New String(New Char(32) {})
+        dm.dmSize = CType(Marshal.SizeOf(dm), Short)
+        
+        Dim modeIndex as Integer = 0
+        Do While (User_32.EnumDisplaySettings(Nothing, modeIndex, dm) > 0)
+        	If ((dm.dmPelsWidth = iWidth) And (dm.dmPelsHeight = iHeight)) Then
+        		Dim iRet As Integer = User_32.ChangeDisplaySettings(dm, User_32.CDS_TEST)
+        		If iRet = User_32.DISP_CHANGE_FAILED Then
+        			Success = False
+        		Else
+        			iRet = User_32.ChangeDisplaySettings(dm, User_32.CDS_UPDATEREGISTRY)
+        		
+        			Select Case iRet
+        				Case User_32.DISP_CHANGE_SUCCESSFUL
+        					' Success!!
+        					Success = True
+        				Case Else
+        					Success = False
+        			End Select
+        		End If	
+        		Return_Code = iRet
+        		Exit Do
+        	End If
+        	modeIndex = modeIndex + 1
+        Loop
 
     End Sub
 

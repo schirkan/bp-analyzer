@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - System Update
 ' Version: 1.0
-' Generated: 2026-03-06 21:52:19
+' Generated: 2026-03-06 22:53:06
 
 Imports System
 Imports System.Collections.Generic
@@ -16,9 +16,6 @@ Public Class MP___System_Update
 
     #Region "Singleton Instance"
 
-    ''' <summary>
-    ''' Shared singleton instance
-    ''' </summary>
     Private Shared ReadOnly _lazyInstance As New Lazy(Of MP___System_Update)(Function() New MP___System_Update())
 
     Public Shared ReadOnly Property Instance As MP___System_Update
@@ -41,7 +38,7 @@ Public Class MP___System_Update
     #Region "Methods"
 
     ''' <summary>
-    ''' Main process method (stages without subsheet)
+    ''' Main process entry point
     ''' </summary>
     Public Sub Main()
 

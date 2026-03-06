@@ -24,8 +24,7 @@ public static class ClassGenerator
         var isObject = processType == "object";
 
         // Get ProcessInfo for class documentation
-        var processInfo = process.Descendants()
-            .FirstOrDefault(e => e.Attribute("type")?.Value == "ProcessInfo");
+        var processInfo = process.Descendants().First(e => e.Attribute("type")?.Value == "ProcessInfo");
 
         // Class header with ProcessInfo as class comments
         sb.AppendLine($"' Generated from BluePrism {(isObject ? "object" : "process")}: {processName}");
@@ -36,33 +35,23 @@ public static class ClassGenerator
         var allReferences = new HashSet<string>();
         var allImports = new HashSet<string>();
 
-        if (processInfo != null)
+        var references = processInfo.Element("references")?.Elements("reference");
+        if (references != null && references.Any())
         {
-            var narrative = process.Attribute("narrative")?.Value;
-            if (!string.IsNullOrEmpty(narrative))
+            foreach (var reference in references)
             {
-                sb.AppendLine($"' ");
-                sb.AppendLine($"' {narrative}");
+                var refValue = reference.Value;
+                allReferences.Add(refValue);
             }
+        }
 
-            var references = processInfo.Element("references")?.Elements("reference");
-            if (references != null && references.Any())
+        var imports = processInfo.Element("imports")?.Elements("import");
+        if (imports != null && imports.Any())
+        {
+            foreach (var import in imports)
             {
-                foreach (var reference in references)
-                {
-                    var refValue = reference.Value;
-                    allReferences.Add(refValue);
-                }
-            }
-
-            var imports = processInfo.Element("imports")?.Elements("import");
-            if (imports != null && imports.Any())
-            {
-                foreach (var import in imports)
-                {
-                    var importValue = import.Value;
-                    allImports.Add(importValue);
-                }
+                var importValue = import.Value;
+                allImports.Add(importValue);
             }
         }
 
@@ -125,6 +114,32 @@ public static class ClassGenerator
         sb.AppendLine("    #End Region");
         sb.AppendLine();
 
+        if (isObject)
+        {
+            var globalCode = processInfo?.Element("code")?.Value ?? "";
+            if (!string.IsNullOrWhiteSpace(globalCode))
+            {
+                // Generate global code
+                sb.AppendLine("    #Region \"Global Code\"");
+                sb.AppendLine();
+                MethodGenerator.GenerateMethodBodyFromCodeStage(sb, processInfo!);
+                sb.AppendLine();
+                sb.AppendLine("    #End Region");
+                sb.AppendLine();
+            }
+            var hasCodeStages = process.Descendants("stage").Any(x => x.Attribute("type")?.Value == "Code");
+            if (hasCodeStages)
+            {
+                // Generate code stages as methods
+                sb.AppendLine("    #Region \"Code Stages\"");
+                sb.AppendLine();
+                MethodGenerator.GenerateCodeStageAsMethods(process, sb);
+                sb.AppendLine();
+                sb.AppendLine("    #End Region");
+                sb.AppendLine();
+            }
+        }
+
         // Class footer
         sb.AppendLine("End Class");
 
@@ -138,9 +153,6 @@ public static class ClassGenerator
     {
         sb.AppendLine("    #Region \"Singleton Instance\"");
         sb.AppendLine();
-        sb.AppendLine($"    ''' <summary>");
-        sb.AppendLine($"    ''' Shared singleton instance");
-        sb.AppendLine($"    ''' </summary>");
         sb.AppendLine($"    Private Shared ReadOnly _lazyInstance As New Lazy(Of {className})(Function() New {className}())");
         sb.AppendLine();
         sb.AppendLine($"    Public Shared ReadOnly Property Instance As {className}");

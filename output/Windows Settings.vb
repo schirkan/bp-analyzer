@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Windows Settings
 ' Version: 1.0
-' Generated: 2026-03-06 21:52:19
+' Generated: 2026-03-06 22:53:06
 
 Imports System
 Imports System.Collections.Generic
@@ -17,9 +17,6 @@ Public Class Windows_Settings
 
     #Region "Singleton Instance"
 
-    ''' <summary>
-    ''' Shared singleton instance
-    ''' </summary>
     Private Shared ReadOnly _lazyInstance As New Lazy(Of Windows_Settings)(Function() New Windows_Settings())
 
     Public Shared ReadOnly Property Instance As Windows_Settings
@@ -39,7 +36,7 @@ Public Class Windows_Settings
     #Region "Methods"
 
     ''' <summary>
-    ''' Constructor - initialization code from stages without subsheet
+    ''' Constructor (Initialize) - called when object is created
     ''' </summary>
     Public Sub New()
 

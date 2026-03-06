@@ -10,40 +10,41 @@ namespace BPAnalyzer.CodeGen;
 /// </summary>
 public static class MethodGenerator
 {
+    public static void GenerateCodeStageAsMethods(XElement process, System.Text.StringBuilder sb)
+    {
+        var codeStages = process.Descendants().Where(e => e.Name.LocalName == "stage" && e.Attribute("type")?.Value == "Code").ToList();
+
+        foreach (var codeStage in codeStages)
+        {
+            var name = codeStage.Attribute("name")?.Value ?? "";
+            var methodName = NameSanitizer.SanitizeMethodName("CodeStage_" + name);
+
+            GenerateMethod(sb, methodName, "Private", name, [codeStage]);
+        }
+    }
+
     /// <summary>
     /// Generates all subsheets as methods (Main, Constructor, Destructor, and custom methods).
     /// </summary>
     public static void GenerateSubsheetsAsMethods(XElement process, System.Text.StringBuilder sb, bool isObject = false)
     {
         var subsheets = process.Descendants("subsheet").ToList();
-        var allStages = process.Descendants()
-            .Where(e => e.Name.LocalName == "stage")
-            .ToList();
+        var allStages = process.Descendants().Where(e => e.Name.LocalName == "stage").ToList();
+        var stagesWithoutSubsheet = allStages.Where(e => string.IsNullOrEmpty(e.Element("subsheetid")?.Value)).ToList();
 
-        // For objects: generate constructor for stages without subsheetid (initialization)
-        if (isObject)
+        if (stagesWithoutSubsheet.Any())
         {
-            var globalStages = allStages
-                .Where(e => string.IsNullOrEmpty(e.Element("subsheetid")?.Value))
-                .ToList();
+            var narrative = process.Attribute("narrative")?.Value;
 
-            if (globalStages.Any())
+            if (isObject)
             {
-                GenerateMethod(sb, "New", "Public", "Constructor - initialization code from stages without subsheet", globalStages, true);
-                sb.AppendLine();
+                // For objects: generate constructor for stages without subsheetid (initialization)
+                GenerateMethod(sb, "New", "Public", narrative ?? "Constructor - object initialization", stagesWithoutSubsheet);
             }
-        }
-        else
-        {
-            // For processes: generate Main method for stages without subsheetid
-            var mainStages = allStages
-                .Where(e => string.IsNullOrEmpty(e.Element("subsheetid")?.Value))
-                .ToList();
-
-            if (mainStages.Any())
+            else
             {
-                GenerateMethod(sb, "Main", "Public", "Main process method (stages without subsheet)", mainStages, false);
-                sb.AppendLine();
+                // For processes: generate Main method for stages without subsheetid
+                GenerateMethod(sb, "Main", "Public", narrative ?? "Main process method", stagesWithoutSubsheet);
             }
         }
 
@@ -55,34 +56,14 @@ public static class MethodGenerator
                 var subsheetId = subsheet.Attribute("subsheetid")?.Value;
                 var subsheetName = subsheet.Element("name")?.Value ?? "Unnamed";
                 var subsheetType = subsheet.Attribute("type")?.Value ?? "Normal";
-
-                var subsheetStages = allStages
-                    .Where(e => e.Element("subsheetid")?.Value == subsheetId)
-                    .ToList();
-
+                var subsheetStages = allStages.Where(e => e.Element("subsheetid")?.Value == subsheetId).ToList();
                 var published = subsheet.Attribute("published")?.Value?.ToLower() == "true";
                 var subSheetInfoStage = subsheetStages.FirstOrDefault(s => s.Attribute("type")?.Value == "SubSheetInfo");
                 var methodNarrative = subSheetInfoStage?.Element("narrative")?.Value;
-
-                string methodVisibility;
                 var isDestructor = subsheetType == "CleanUp";
-
-                if (isDestructor)
-                {
-                    methodVisibility = "Protected Overrides";
-                }
-                else if (isObject)
-                {
-                    methodVisibility = published ? "Public" : "Private";
-                }
-                else
-                {
-                    methodVisibility = "Private";
-                }
-
+                var methodVisibility = isDestructor ? "Protected Overrides" : published ? "Public" : "Private";
                 var methodName = isDestructor ? "Finalize" : NameSanitizer.SanitizeMethodName(subsheetName);
-                GenerateMethod(sb, methodName, methodVisibility, methodNarrative, subsheetStages, isDestructor);
-                sb.AppendLine();
+                GenerateMethod(sb, methodName, methodVisibility, methodNarrative, subsheetStages);
             }
             catch (Exception ex)
             {
@@ -99,13 +80,19 @@ public static class MethodGenerator
         string methodName,
         string methodVisibility,
         string? methodNarrative,
-        List<XElement> stages,
-        bool isConstructor)
+        List<XElement> stages)
     {
         var startStage = stages.FirstOrDefault(s => s.Attribute("type")?.Value == "Start");
         var endStage = stages.FirstOrDefault(s => s.Attribute("type")?.Value == "End");
+        XElement? codeStage = null;
 
-        if (startStage == null || endStage == null) return;
+        if (startStage == null || endStage == null)
+        {
+            codeStage = stages.FirstOrDefault(s => s.Attribute("type")?.Value == "Code");
+            if (codeStage == null) return;
+            startStage = codeStage;
+            endStage = codeStage;
+        }
 
         // Collect input/output parameter names
         var inputParamNames = startStage.Element("inputs")?.Elements("input")
@@ -132,26 +119,24 @@ public static class MethodGenerator
         }
         sb.AppendLine($"    ''' </summary>");
 
-        // Parameter descriptions
-        if (inputs.Any() || outputs.Any())
+        // Parameter descriptions        
+        foreach (var input in inputs)
         {
-            foreach (var input in inputs)
+            var inputName = input.Attribute("name")?.Value ?? "";
+            var inputNarrative = input.Attribute("narrative")?.Value;
+            if (!string.IsNullOrEmpty(inputNarrative))
             {
-                var inputName = input.Attribute("name")?.Value ?? "";
-                var inputNarrative = input.Attribute("narrative")?.Value;
-                if (!string.IsNullOrEmpty(inputNarrative))
-                {
-                    sb.AppendLine($"    ''' <param name=\"{NameSanitizer.SanitizeVariableName(inputName)}\">{inputNarrative}</param>");
-                }
+                sb.AppendLine($"    ''' <param name=\"{NameSanitizer.SanitizeVariableName(inputName)}\">{inputNarrative}</param>");
             }
-            foreach (var output in outputs)
+        }
+
+        foreach (var output in outputs)
+        {
+            var outputName = output.Attribute("name")?.Value ?? "";
+            var outputNarrative = output.Attribute("narrative")?.Value;
+            if (!string.IsNullOrEmpty(outputNarrative))
             {
-                var outputName = output.Attribute("name")?.Value ?? "";
-                var outputNarrative = output.Attribute("narrative")?.Value;
-                if (!string.IsNullOrEmpty(outputNarrative))
-                {
-                    sb.AppendLine($"    ''' <param name=\"{NameSanitizer.SanitizeVariableName(outputName)}\">{outputNarrative}</param>");
-                }
+                sb.AppendLine($"    ''' <param name=\"{NameSanitizer.SanitizeVariableName(outputName)}\">{outputNarrative}</param>");
             }
         }
 
@@ -181,15 +166,46 @@ public static class MethodGenerator
             var defaultValue = TypeMapper.GetOptionalDefaultValue(outputType);
             paramList.Add($"Optional ByRef {sanitizedName} As {vbType} = {defaultValue}");
         }
-
         sb.AppendLine(string.Join(", ", paramList) + ")");
         sb.AppendLine();
 
+        if (codeStage != null)
+        {
+            GenerateMethodBodyFromCodeStage(sb, codeStage);
+        }
+        else
+        {
+            GenerateMethodBodyFromStages(sb, stages, endStage, paramNames);
+        }
+
+        sb.AppendLine("    End Sub");
+        sb.AppendLine();
+    }
+    public static void GenerateMethodBodyFromCodeStage(System.Text.StringBuilder sb, XElement codeStage)
+    {
+        var code = codeStage.Element("code")?.Value;
+
+        if (string.IsNullOrWhiteSpace(code)) return;
+        foreach (var line in code.Split('\n'))
+        {
+            sb.AppendLine($"        {line}");
+        }
+        sb.AppendLine();
+    }
+
+    /// <summary>
+    /// Generate method body
+    /// </summary>
+    /// <param name="sb"></param>
+    /// <param name="stages"></param>
+    /// <param name="endStage"></param>
+    /// <param name="paramNames"></param>
+    private static void GenerateMethodBodyFromStages(System.Text.StringBuilder sb, List<XElement> stages, XElement endStage, HashSet<string> paramNames)
+    {
         // Local variables and initialization
         DataItemGenerator.GenerateLocalDataItems(sb, stages, paramNames);
         DataItemGenerator.GenerateInitialValueInitialization(sb, stages);
 
-        // Generate method body
         var sortedStages = FlowController.SortStagesByExecutionOrder(stages);
 
         foreach (var stage in sortedStages)
@@ -260,8 +276,6 @@ public static class MethodGenerator
             }
             sb.AppendLine();
         }
-
-        sb.AppendLine("    End Sub");
     }
 
     /// <summary>

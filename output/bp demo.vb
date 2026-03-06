@@ -1,8 +1,6 @@
 ' Generated from BluePrism object: bp demo
 ' Version: 1.0
-' Generated: 2026-03-06 21:52:19
-' 
-' This page is like the class constructor
+' Generated: 2026-03-06 22:53:06
 
 Imports System
 Imports System.Collections.Generic
@@ -19,9 +17,6 @@ Public Class bp_demo
 
     #Region "Singleton Instance"
 
-    ''' <summary>
-    ''' Shared singleton instance
-    ''' </summary>
     Private Shared ReadOnly _lazyInstance As New Lazy(Of bp_demo)(Function() New bp_demo())
 
     Public Shared ReadOnly Property Instance As bp_demo
@@ -44,7 +39,7 @@ Public Class bp_demo
     #Region "Methods"
 
     ''' <summary>
-    ''' Constructor - initialization code from stages without subsheet
+    ''' This page is like the class constructor
     ''' </summary>
     Public Sub New()
 

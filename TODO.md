@@ -202,5 +202,5 @@
     Data6 = InData2
     ```
 
-- [ ] implement global code
-- [ ] code stage with params
+- [x] implement global code
+- [x] code stage with params

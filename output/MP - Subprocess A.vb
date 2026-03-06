@@ -1,8 +1,6 @@
 ' Generated from BluePrism process: MP - Subprocess A
 ' Version: 1.0
-' Generated: 2026-03-06 21:52:19
-' 
-' This is a test subprocess
+' Generated: 2026-03-06 22:53:06
 
 Imports System
 Imports System.Collections.Generic
@@ -18,9 +16,6 @@ Public Class MP___Subprocess_A
 
     #Region "Singleton Instance"
 
-    ''' <summary>
-    ''' Shared singleton instance
-    ''' </summary>
     Private Shared ReadOnly _lazyInstance As New Lazy(Of MP___Subprocess_A)(Function() New MP___Subprocess_A())
 
     Public Shared ReadOnly Property Instance As MP___Subprocess_A
@@ -40,7 +35,7 @@ Public Class MP___Subprocess_A
     #Region "Methods"
 
     ''' <summary>
-    ''' Main process method (stages without subsheet)
+    ''' This is a test subprocess
     ''' </summary>
     Public Sub Main(Optional ByVal Name As String = Nothing, Optional ByRef Char_Count As Decimal = Nothing)
 

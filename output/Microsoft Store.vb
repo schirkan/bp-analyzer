@@ -1,8 +1,6 @@
 ' Generated from BluePrism object: Microsoft Store
 ' Version: 1.0
-' Generated: 2026-03-06 21:52:19
-' 
-'
+' Generated: 2026-03-06 22:53:06
 
 Imports System
 Imports System.Collections.Generic
@@ -19,9 +17,6 @@ Public Class Microsoft_Store
 
     #Region "Singleton Instance"
 
-    ''' <summary>
-    ''' Shared singleton instance
-    ''' </summary>
     Private Shared ReadOnly _lazyInstance As New Lazy(Of Microsoft_Store)(Function() New Microsoft_Store())
 
     Public Shared ReadOnly Property Instance As Microsoft_Store
@@ -41,7 +36,7 @@ Public Class Microsoft_Store
     #Region "Methods"
 
     ''' <summary>
-    ''' Constructor - initialization code from stages without subsheet
+    ''' Constructor (Initialize) - called when object is created
     ''' </summary>
     Public Sub New()
 
