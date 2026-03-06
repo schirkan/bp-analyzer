@@ -16,4 +16,16 @@ public class NavigateStageGenerator : StageGeneratorBase
 
         GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
     }
+
+
+    /// <summary>
+    /// Finds the element name by ID using LINQ (descendants).
+    /// </summary>
+    private static string? FindElementNameById(XElement parent, string elementId)
+    {
+        return parent.Descendants("element")
+            .Where(e => e.Element("id")?.Value.Equals(elementId, StringComparison.OrdinalIgnoreCase) == true)
+            .Select(e => e.Attribute("name")?.Value)
+            .FirstOrDefault();
+    }
 }

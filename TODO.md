@@ -165,7 +165,7 @@
 - [ ] generate method to evaluate expressions
   - MyToggle = DataBinder.Eval(Me, "[MyToggle] = False")
 
-- [ ] add missing system methods to Temaplte_BP_Base.vb
+- [ ] add missing system methods to Template_BP_Base.vb
   - 
 
 - [ ] implement stage type=Navigate
@@ -177,12 +177,12 @@
 - [ ] implement stage type=Writer
   - 
 
-- [ ] implement stage type=Code
+- [x] implement stage type=Code
 
-- [ ] fix static variables
+- [x] fix static variables
   - if data stage does not have <alwaysinit />: change variable definition from "Dim" to "Static"
 
-- [x] implement input stage tage
+- [x] implement input stage
   - sample xml:
     ```    
     <stage stageid="ffbd078e-2ea0-4795-8ab7-31c0c6a38edd" name="Start" type="Start">
