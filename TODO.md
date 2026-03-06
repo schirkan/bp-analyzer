@@ -201,3 +201,6 @@
     Data8 = InData1
     Data6 = InData2
     ```
+
+- [ ] implement global code
+- [ ] code stage with params

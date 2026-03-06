@@ -479,35 +479,30 @@ public class BluePrismCodeGen
     sb.Append($"    {methodType} {methodName}(");
     var paramList = new List<string>();
 
-    // Add input parameters (only for non-constructor)
-    if (!isConstructor)
+    // Add input parameters (skip if also an output)
+    foreach (var input in inputs)
     {
-      foreach (var input in inputs)
-      {
-        var inputName = input.Attribute("name")?.Value ?? "";
-        var inputType = input.Attribute("type")?.Value ?? "text";
-        var vbType = MapDataType(inputType);
-        var defaultValue = GetOptionalDefaultValue(inputType);
-        paramList.Add($"Optional ByVal {SanitizeVariableName(inputName)} As {vbType} = {defaultValue}");
-      }
+      var inputName = input.Attribute("name")?.Value ?? "";
+      var inputType = input.Attribute("type")?.Value ?? "text";
+      var vbType = MapDataType(inputType);
+      var sanitizedName = SanitizeVariableName(inputName);
+      var defaultValue = GetOptionalDefaultValue(inputType);
 
-      // Add output parameters (skip if already added as input - they become ByRef)
-      foreach (var output in outputs)
-      {
-        var outputName = output.Attribute("name")?.Value ?? "";
-        var outputType = output.Attribute("type")?.Value ?? "text";
-        var vbType = MapDataType(outputType);
-        var sanitizedName = SanitizeVariableName(outputName);
-        var defaultValue = GetOptionalDefaultValue(outputType);
+      if (outputParamNames.Contains(inputName)) continue;
 
-        // Skip if already added as input (they become ByRef, but we only need to declare once)
-        if (inputParamNames.Contains(outputName?.ToLower()))
-        {
-          continue; // Already added as ByVal input, now acts as ByRef
-        }
+      paramList.Add($"Optional ByVal {sanitizedName} As {vbType} = {defaultValue}");
+    }
 
-        paramList.Add($"Optional ByRef {sanitizedName} As {vbType} = {defaultValue}");
-      }
+    // Add output parameters
+    foreach (var output in outputs)
+    {
+      var outputName = output.Attribute("name")?.Value ?? "";
+      var outputType = output.Attribute("type")?.Value ?? "text";
+      var vbType = MapDataType(outputType);
+      var sanitizedName = SanitizeVariableName(outputName);
+      var defaultValue = GetOptionalDefaultValue(outputType);
+
+      paramList.Add($"Optional ByRef {sanitizedName} As {vbType} = {defaultValue}");
     }
 
     sb.AppendLine(string.Join(", ", paramList) + ")");
@@ -999,7 +994,6 @@ public class BluePrismCodeGen
   {
     var name = stage.Attribute("name")?.Value;
     var code = stage.Element("code")?.Value;
-    var onsuccess = stage.Element("onsuccess")?.Value;
 
     sb.AppendLine($"        ' Code Stage: {name}");
 
