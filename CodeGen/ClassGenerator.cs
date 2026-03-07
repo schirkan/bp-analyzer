@@ -119,7 +119,7 @@ public static class ClassGenerator
             // App Model
             sb.AppendLine("    #Region \"App Model\"");
             sb.AppendLine();
-            sb.AppendLine("    Protected Application As Object");
+            sb.AppendLine("    Protected Application As Object"); // TODO
             sb.AppendLine();
             sb.AppendLine("    #End Region");
             sb.AppendLine();
@@ -199,12 +199,15 @@ public static class ClassGenerator
             var lastIndex = code.LastIndexOf(stageLabel);
             if (firstIndex == lastIndex)
             {
-                code = System.Text.RegularExpressions.Regex.Replace(code, $"{stageLabel}: *", "");
+                code = System.Text.RegularExpressions.Regex.Replace(code, $" *{stageLabel}:", "");
             }
         }
 
         // Remove multiple newlines
-        code = System.Text.RegularExpressions.Regex.Replace(code, "\\s*(\n\r)+", "$1");
+        code = System.Text.RegularExpressions.Regex.Replace(code, "\\s*\r\n(\r\n)+", "\r\n\r\n");
+
+        // switch label and comment
+        code = System.Text.RegularExpressions.Regex.Replace(code, "(\\w*_Label:)\\s+(' .*)", "$2\n        $1");
 
         return code;
     }

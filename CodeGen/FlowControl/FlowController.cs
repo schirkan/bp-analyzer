@@ -33,10 +33,7 @@ public static class FlowController
             if (stageType == "Anchor")
             {
                 var anchorOnsuccess = stage.Element("onsuccess")?.Value;
-                if (!string.IsNullOrEmpty(anchorOnsuccess) && stageDict.TryGetValue(anchorOnsuccess, out var anchorNextStage))
-                {
-                    Visit(anchorNextStage);
-                }
+                if (!string.IsNullOrEmpty(anchorOnsuccess) && stageDict.TryGetValue(anchorOnsuccess, out var anchorNextStage)) Visit(anchorNextStage);
                 return;
             }
 
@@ -45,16 +42,20 @@ public static class FlowController
             sorted.Add(stage);
 
             var onsuccess = stage.Element("onsuccess")?.Value;
-            if (!string.IsNullOrEmpty(onsuccess) && stageDict.TryGetValue(onsuccess, out var nextStage))
-            {
-                Visit(nextStage);
-            }
+            if (!string.IsNullOrEmpty(onsuccess) && stageDict.TryGetValue(onsuccess, out var nextStage)) Visit(nextStage);
 
             var ontrue = stage.Element("ontrue")?.Value;
             var onfalse = stage.Element("onfalse")?.Value;
 
             if (!string.IsNullOrEmpty(ontrue) && stageDict.TryGetValue(ontrue, out var trueStage)) Visit(trueStage);
             if (!string.IsNullOrEmpty(onfalse) && stageDict.TryGetValue(onfalse, out var falseStage)) Visit(falseStage);
+
+            var groupId = stage.Element("groupid")?.Value;
+            if (!string.IsNullOrEmpty(groupId))
+            {
+                var nextGroupStage = stages.FirstOrDefault(e => e.Element("groupid")?.Value == groupId);
+                if (nextGroupStage != null) Visit(nextGroupStage);
+            }
         }
 
         Visit(startStage);
@@ -109,6 +110,6 @@ public static class FlowController
     /// </summary>
     public static readonly HashSet<string> SkipStages = new()
     {
-        "Block", "SubSheetInfo", "Data", "Collection", "WaitEnd", "End", "Anchor", "ProcessInfo"
+        "Block", "SubSheetInfo", "Data", "Collection", "WaitEnd", "End", "Anchor", "ProcessInfo", "ChoiceEnd"
     };
 }

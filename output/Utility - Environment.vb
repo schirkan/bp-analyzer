@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-07 21:39:29
+' Generated: 2026-03-07 23:14:33
 
 Imports System
 Imports System.Collections.Generic
@@ -48,6 +48,7 @@ Public Class Utility___Environment
     Public Sub New()
 
         GoTo End_9e4646d0_d8c7_44d6_a5d9_9509e3ba8883_Label
+
         ' new
         ' Initialise Page
         ' This is an optional page where you might choose to perform some initialisation tasks after your business object is loaded.
@@ -87,7 +88,7 @@ Public Class Utility___Environment
 
         ' Get Font Smoothing Enabled
         CodeStage_Get_Font_Smoothing_Enabled(Enabled:=Enabled_)
-        
+
         Enabled = Enabled_
 
     End Sub
@@ -137,7 +138,7 @@ Public Class Utility___Environment
 
         ' GetUserName
         CodeStage_GetUserName(username:=Username)
-        
+
         User_Name = Username
 
     End Sub
@@ -209,6 +210,7 @@ Public Class Utility___Environment
 
         ' Run Process
         CodeStage_Run_Process(appn:=Application, args:=Arguments, dir:=Working_Folder, timeout:=Timeout, ignoreTimeout:=Ignore_Timeout, timedOut:=Fail_Datetime_Reached_)
+
         ' Timed Out?
         If Fail_Datetime_Reached_ Then
             GoTo Exception_433c4289_a312_4554_bc27_6ee3c7ace153_Label
@@ -216,7 +218,8 @@ Public Class Utility___Environment
             GoTo End_f6878e25_301c_4540_a15d_7a83dfc57a75_Label
         End If
 
-        Exception_433c4289_a312_4554_bc27_6ee3c7ace153_Label: ' System Exception
+        ' System Exception
+        Exception_433c4289_a312_4554_bc27_6ee3c7ace153_Label:
         RaiseException("System Exception", "Application " & [Application] & " was still running after the maximum time period")
 
         ' Note3
@@ -240,9 +243,12 @@ Public Class Utility___Environment
             GoTo Code_54826c34_2991_4964_b0a3_0e0a2f951f29_Label
         End If
 
-        Calculation_bcb5c983_a5fb_4b30_b14f_7a1509fff980_Label: ' Set Value
+        ' Set Value
+        Calculation_bcb5c983_a5fb_4b30_b14f_7a1509fff980_Label:
         Clipboard = Chr(0)
-        Code_54826c34_2991_4964_b0a3_0e0a2f951f29_Label: ' Set
+
+        ' Set
+        Code_54826c34_2991_4964_b0a3_0e0a2f951f29_Label:
         CodeStage_Set(Clipboard:=Clipboard)
 
     End Sub
@@ -298,6 +304,7 @@ Public Class Utility___Environment
 
         ' Set Screen Resolution
         CodeStage_Set_Screen_Resolution(Horizontal:=Horizontal_Resolution, Vertical:=Vertical_Resolution, Success:=Success, Return_Code:=Return_Code)
+
         ' Success?
         If Success = True Then
             GoTo End_c6bd6956_f378_418e_8880_30d84f5acad6_Label
@@ -305,7 +312,8 @@ Public Class Utility___Environment
             GoTo MultipleCalculation_d317d7bf_2ed3_4b48_8e0c_62e5598f7a11_Label
         End If
 
-        MultipleCalculation_d317d7bf_2ed3_4b48_8e0c_62e5598f7a11_Label: ' Clear Dimensions
+        ' Clear Dimensions
+        MultipleCalculation_d317d7bf_2ed3_4b48_8e0c_62e5598f7a11_Label:
         Horizontal_Resolution = 0
         Vertical_Resolution = 0
         GoTo End_c6bd6956_f378_418e_8880_30d84f5acad6_Label
@@ -346,8 +354,10 @@ Public Class Utility___Environment
         Found = False
         Wait = 0
 
-        Code_d3b1986a_fa70_41e9_a8af_cd2ffc78342e_Label: ' Find Process
+        ' Find Process
+        Code_d3b1986a_fa70_41e9_a8af_cd2ffc78342e_Label:
         CodeStage_Find_Process(Process_Name:=Process_Name, Window_Title:=Window_Title, Found:=Found)
+
         ' Found?
         If Found Then
             GoTo End_b6fdc874_6a8d_405b_946e_10b6b47a6ae1_Label
@@ -355,15 +365,18 @@ Public Class Utility___Environment
             GoTo Decision_a5225d0b_41b3_4ed2_9f7c_31461a1f262a_Label
         End If
 
-        Decision_a5225d0b_41b3_4ed2_9f7c_31461a1f262a_Label: ' Wait?
+        ' Wait?
+        Decision_a5225d0b_41b3_4ed2_9f7c_31461a1f262a_Label:
         If Wait>0 Then
             GoTo Calculation_ba11e756_90e9_4cd7_a787_a41c2818e4b6_Label
         Else
             GoTo End_b6fdc874_6a8d_405b_946e_10b6b47a6ae1_Label
         End If
 
-        Calculation_ba11e756_90e9_4cd7_a787_a41c2818e4b6_Label: ' Count Down
+        ' Count Down
+        Calculation_ba11e756_90e9_4cd7_a787_a41c2818e4b6_Label:
         Wait = Wait-0.5
+
         ' Wait
         ' Wait 0.5 seconds for condition with 0 choice(s)
         Select Case True

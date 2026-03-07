@@ -9,11 +9,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 public interface IStageGenerator
 {
     /// <summary>
-    /// The type of stage this generator handles.
-    /// </summary>
-    string StageType { get; }
-
-    /// <summary>
     /// Generates VB.NET code for the given stage.
     /// </summary>
     /// <param name="stage">The XML element representing the stage.</param>

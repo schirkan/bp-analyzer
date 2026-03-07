@@ -7,8 +7,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public class ExceptionStageGenerator : StageGeneratorBase
 {
-    public override string StageType => "Exception";
-
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         var exceptionElement = stage.Element("exception");

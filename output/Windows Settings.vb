@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Windows Settings
 ' Version: 1.0
-' Generated: 2026-03-07 21:39:29
+' Generated: 2026-03-07 23:14:34
 
 Imports System
 Imports System.Collections.Generic
@@ -63,9 +63,11 @@ Public Class Windows_Settings
         ' Start Process
         On Error GoTo Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label
         Utility___Environment.Instance.Start_Process(Application:=FilePath)
-        Navigate_1e01d250_1eb1_4733_b192_d31129adc9ab_Label: ' Attach
+        ' Attach
+        Navigate_1e01d250_1eb1_4733_b192_d31129adc9ab_Label:
         On Error GoTo Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label
         Application.Element("Windows Settings", "90f3791d-64d2-4092-b521-c2d17a374f3c").AttachApplication()
+
         ' W5
         On Error GoTo Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label
         ' Wait 5 seconds for condition with 1 choice(s)
@@ -76,12 +78,15 @@ Public Class Windows_Settings
                 GoTo Exception_a633f109_5378_49d5_b8a5_8183c121fcd1_Label
         End Select
 
-        Exception_a633f109_5378_49d5_b8a5_8183c121fcd1_Label: ' SE
+        ' SE
+        Exception_a633f109_5378_49d5_b8a5_8183c121fcd1_Label:
         On Error GoTo Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label
         RaiseException("System Exception", "Main Window not found")
 
-        Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label: ' Recover
+        ' Recover
+        Recover_4ffeef72_e362_489a_a654_925ac2f298f8_Label:
         StoreException()
+
         ' Resume
         ClearException()
         Resume Navigate_1e01d250_1eb1_4733_b192_d31129adc9ab_Label
@@ -116,10 +121,12 @@ Public Class Windows_Settings
                 GoTo Exception_7bb9abfd_827f_4596_9d92_1633bf69719f_Label
         End Select
 
-        Exception_7bb9abfd_827f_4596_9d92_1633bf69719f_Label: ' SE
+        ' SE
+        Exception_7bb9abfd_827f_4596_9d92_1633bf69719f_Label:
         RaiseException("System Exception", "Download Menu not found")
 
-        Navigate_b53b3ace_8c40_4a32_8015_49a288f7a245_Label: ' Click Nach Updates suchen
+        ' Click Nach Updates suchen
+        Navigate_b53b3ace_8c40_4a32_8015_49a288f7a245_Label:
         Application.Element("Button: Nach Updates suchen", "b026cc78-c68f-4a73-b198-bba0c63c8ef2").UIAButtonPress()
         End_1c4fc2e7_022b_4fb2_9bef_f30a7cb3c9c3_Label:
 
@@ -139,10 +146,12 @@ Public Class Windows_Settings
                 GoTo Exception_593a7e45_5803_476b_83c7_2a6d2cd7f909_Label
         End Select
 
-        Exception_593a7e45_5803_476b_83c7_2a6d2cd7f909_Label: ' SE
+        ' SE
+        Exception_593a7e45_5803_476b_83c7_2a6d2cd7f909_Label:
         RaiseException("System Exception", "Download Header not found")
 
-        WaitStart_ddd70967_7e0f_4c5f_afb5_6f6041fdacab_Label: ' W120
+        ' W120
+        WaitStart_ddd70967_7e0f_4c5f_afb5_6f6041fdacab_Label:
         ' Wait 120 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Label: Sie sind auf dem neuesten Stand.", "d4098baf-b2ed-491f-a65a-7dc1ece7b4cd").CheckExists = True ' Label: Sie sind auf dem neuesten Stand. Check Exists
@@ -151,7 +160,8 @@ Public Class Windows_Settings
                 GoTo Exception_a4d98b2d_573f_472c_806f_8a67b73efeec_Label
         End Select
 
-        Exception_a4d98b2d_573f_472c_806f_8a67b73efeec_Label: ' SE
+        ' SE
+        Exception_a4d98b2d_573f_472c_806f_8a67b73efeec_Label:
         RaiseException("System Exception", "Download Header not found")
 
         ' Note1

@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using BPAnalyzer.CodeGen.FlowControl;
 using BPAnalyzer.CodeGen.Utilities;
 
 namespace BPAnalyzer.CodeGen.Stages;
@@ -8,8 +9,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public class ActionStageGenerator : StageGeneratorBase
 {
-    public override string StageType => "Action";
-
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         var resource = stage.Element("resource");
@@ -29,6 +28,6 @@ public class ActionStageGenerator : StageGeneratorBase
             sb.AppendLine($"        {className}.Instance.{sanitizedActionName}({paramString})");
         }
 
-        GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
+        StageNavigator.GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
     }
 }

@@ -12,6 +12,7 @@ public static class StageGeneratorFactory
         { "Process", new ProcessStageGenerator() },
         { "SubSheet", new SubSheetStageGenerator() },
         { "Alert", new AlertStageGenerator() },
+        { "ChoiceStart", new ChoiceStageGenerator() },
         { "Decision", new DecisionStageGenerator() },
         { "Calculation", new CalculationStageGenerator() },
         { "MultipleCalculation", new MultipleCalculationStageGenerator() },
@@ -21,7 +22,9 @@ public static class StageGeneratorFactory
         { "Recover", new RecoverStageGenerator() },
         { "Resume", new ResumeStageGenerator() },
         { "WaitStart", new WaitStageGenerator() },
-        { "Navigate", new NavigateStageGenerator() }
+        { "Navigate", new NavigateStageGenerator() },
+        { "Read", new ReadStageGenerator() },
+        { "Write", new WriteStageGenerator() }
     };
 
     /// <summary>

@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using BPAnalyzer.CodeGen.FlowControl;
 using BPAnalyzer.CodeGen.Utilities;
 
 namespace BPAnalyzer.CodeGen.Stages;
@@ -8,8 +9,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public class DecisionStageGenerator : StageGeneratorBase
 {
-    public override string StageType => "Decision";
-
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         var expression = stage.Element("decision")?.Attribute("expression")?.Value;
@@ -21,12 +20,12 @@ public class DecisionStageGenerator : StageGeneratorBase
 
         if (!string.IsNullOrEmpty(ontrue))
         {
-            GenerateGoTo(sb, stage.Document, ontrue, 12);
+            StageNavigator.GenerateGoTo(sb, stage.Document, ontrue, 12);
         }
         if (!string.IsNullOrEmpty(onfalse))
         {
             sb.AppendLine($"        Else");
-            GenerateGoTo(sb, stage.Document, onfalse, 12);
+            StageNavigator.GenerateGoTo(sb, stage.Document, onfalse, 12);
         }
         sb.AppendLine($"        End If");
     }

@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using BPAnalyzer.CodeGen.FlowControl;
 using BPAnalyzer.CodeGen.Utilities;
 
 namespace BPAnalyzer.CodeGen.Stages;
@@ -9,8 +10,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public class SubSheetStageGenerator : StageGeneratorBase
 {
-    public override string StageType => "SubSheet";
-
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         var name = stage.Attribute("name")?.Value;
@@ -32,6 +31,6 @@ public class SubSheetStageGenerator : StageGeneratorBase
             sb.AppendLine($"        {methodName}({paramString})");
         }
 
-        GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
+        StageNavigator.GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
     }
 }

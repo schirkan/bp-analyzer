@@ -128,7 +128,9 @@ public static class MethodGenerator
             var inputNarrative = input.Attribute("narrative")?.Value;
             if (!string.IsNullOrEmpty(inputNarrative))
             {
-                sb.AppendLine($"    ''' <param name=\"{NameSanitizer.SanitizeVariableName(inputName)}\">{inputNarrative}</param>");
+                // Remove special characters that break VB.NET doc comments
+                var cleanNarrative = new string(inputNarrative.Where(c => !"<>&'\"".Contains(c)).ToArray());
+                sb.AppendLine($"    ''' <param name=\"{NameSanitizer.SanitizeVariableName(inputName)}\">{cleanNarrative}</param>");
             }
         }
 
@@ -138,7 +140,9 @@ public static class MethodGenerator
             var outputNarrative = output.Attribute("narrative")?.Value;
             if (!string.IsNullOrEmpty(outputNarrative))
             {
-                sb.AppendLine($"    ''' <param name=\"{NameSanitizer.SanitizeVariableName(outputName)}\">{outputNarrative}</param>");
+                // Remove special characters that break VB.NET doc comments
+                var cleanNarrative = new string(outputNarrative.Where(c => !"<>&'\"".Contains(c)).ToArray());
+                sb.AppendLine($"    ''' <param name=\"{NameSanitizer.SanitizeVariableName(outputName)}\">{cleanNarrative}</param>");
             }
         }
 
@@ -238,7 +242,8 @@ public static class MethodGenerator
 
             // Generate label
             var labelName = StageNavigator.GetLabel(stageType, stageId);
-            sb.AppendLine($"        {labelName}: ' {stageName}");
+            sb.AppendLine($"        {labelName}:"); // will be switched in post processing
+            sb.AppendLine($"        ' {stageName}");
 
             // Add error handling
             var recoverStage = stages.FirstOrDefault(s => s.Attribute("type")?.Value == "Recover");
@@ -314,7 +319,7 @@ public static class MethodGenerator
                         sb.AppendLine("        ' Initialize local variables with input values");
                         hasInputAssignments = true;
                     }
-                    
+
                     // Only use HasValue/Value pattern for value types (nullable types)
                     // For reference types (String, DataTable), just assign directly
                     if (isValueType)
@@ -336,12 +341,7 @@ public static class MethodGenerator
         }
 
         // Generate GoTo
-        var targetStageId = stage.Element("onsuccess")?.Value;
-        if (!string.IsNullOrEmpty(targetStageId) && stage.Document != null)
-        {
-            var targetStageLabel = StageNavigator.ResolveStageLabel(targetStageId, stage.Document);
-            sb.AppendLine($"        GoTo {targetStageLabel}");
-        }
+        StageNavigator.GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
     }
 
     /// <summary>

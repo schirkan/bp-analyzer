@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using BPAnalyzer.CodeGen.FlowControl;
 using BPAnalyzer.CodeGen.Utilities;
 
 namespace BPAnalyzer.CodeGen.Stages;
@@ -8,8 +9,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public class MultipleCalculationStageGenerator : StageGeneratorBase
 {
-    public override string StageType => "MultipleCalculation";
-
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         var calculations = stage.Element("steps")?.Elements("calculation");
@@ -25,6 +24,6 @@ public class MultipleCalculationStageGenerator : StageGeneratorBase
             }
         }
 
-        GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
+        StageNavigator.GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
     }
 }

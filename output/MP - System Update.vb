@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - System Update
 ' Version: 1.0
-' Generated: 2026-03-07 21:39:29
+' Generated: 2026-03-07 23:14:33
 
 Imports System
 Imports System.Collections.Generic
@@ -41,18 +41,25 @@ Public Class MP___System_Update
 
         ' Launch
         Microsoft_Store.Instance.Launch()
+
         ' Start Updates
         Microsoft_Store.Instance.Start_Updates()
+
         ' Launch
         Windows_Settings.Instance.Launch()
+
         ' Start Updates
         Windows_Settings.Instance.Start_Updates()
+
         ' Wait Updates Finished
         Microsoft_Store.Instance.Wait_Updates_Finished()
+
         ' Terminate
         Microsoft_Store.Instance.Terminate()
+
         ' Wait Updates Finished
         Windows_Settings.Instance.Wait_Updates_Finished()
+
         ' Terminate
         Windows_Settings.Instance.Terminate()
 

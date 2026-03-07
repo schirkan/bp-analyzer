@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using BPAnalyzer.CodeGen.FlowControl;
 using BPAnalyzer.CodeGen.Utilities;
 
 namespace BPAnalyzer.CodeGen.Stages;
@@ -8,8 +9,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public class ProcessStageGenerator : StageGeneratorBase
 {
-    public override string StageType => "Process";
-
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         var name = stage.Attribute("name")?.Value;
@@ -38,6 +37,6 @@ public class ProcessStageGenerator : StageGeneratorBase
             sb.AppendLine($"        ' TODO: Implement process call (processid: {processId})");
         }
 
-        GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
+        StageNavigator.GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
     }
 }

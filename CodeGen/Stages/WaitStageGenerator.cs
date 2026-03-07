@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using BPAnalyzer.CodeGen.FlowControl;
 using BPAnalyzer.CodeGen.Utilities;
 
 namespace BPAnalyzer.CodeGen.Stages;
@@ -8,8 +9,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public class WaitStageGenerator : StageGeneratorBase
 {
-    public override string StageType => "WaitStart";
-
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         var timeout = stage.Element("timeout")?.Value ?? "0";
@@ -37,7 +36,7 @@ public class WaitStageGenerator : StageGeneratorBase
                 var choiceExpression = GenerateWaitChoiceExpression(choice);
 
                 sb.AppendLine($"            Case {choiceExpression} ' {choiceName}");
-                GenerateGoTo(sb, stage.Document, ontrue, 16);
+                StageNavigator.GenerateGoTo(sb, stage.Document, ontrue, 16);
             }
         }
         if (waitEnd != null)
@@ -46,7 +45,7 @@ public class WaitStageGenerator : StageGeneratorBase
             if (!string.IsNullOrEmpty(onsuccess))
             {
                 sb.AppendLine($"            Case Else");
-                GenerateGoTo(sb, stage.Document, onsuccess, 16);
+                StageNavigator.GenerateGoTo(sb, stage.Document, onsuccess, 16);
             }
         }
         sb.AppendLine($"        End Select");

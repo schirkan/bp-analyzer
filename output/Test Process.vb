@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: Test Process
 ' Version: 1.0
-' Generated: 2026-03-07 21:39:29
+' Generated: 2026-03-07 23:14:33
 
 Imports System
 Imports System.Collections.Generic
@@ -54,8 +54,10 @@ Public Class Test_Process
 
         ' Variable Test
         Variable_Test(InData1:=MyText, InData2:=123, OutValue1:=OutValue1, OutValue2:=OutValue2)
+
         ' Dummy
         Dummy()
+
         ' Call Process A
         MP___Subprocess_A.Instance.Main(Name:=MyText, Char_Count:=Char_Count)
 
@@ -77,6 +79,7 @@ Public Class Test_Process
 
         ' MyPublicAction
         bp_demo.Instance.MyPublicAction(VNR:=local_VNR, VerwSysSl:=local_VerwSysSl)
+
         ' bp demo::Get URL
         bp_demo.Instance.Get_URL(URL:=URL, Window_Title:=Window_Title)
 
@@ -131,32 +134,41 @@ Public Class Test_Process
             GoTo MultipleCalculation_acac267a_d52f_473a_8266_3116177d865f_Label
         End If
 
-        Calculation_da6d4891_f555_46b1_b752_73b463373de8_Label: ' Toggle boolean value
+        ' Toggle boolean value
+        Calculation_da6d4891_f555_46b1_b752_73b463373de8_Label:
         MyToggle = MyToggle = False
-        MultipleCalculation_acac267a_d52f_473a_8266_3116177d865f_Label: ' Multi1
+
+        ' Multi1
+        MultipleCalculation_acac267a_d52f_473a_8266_3116177d865f_Label:
         Data5 = 1
         Data6 = 7.8
         Data8 = "tttt"
+
         ' Zahl?
-        ' TODO: Implement stage type 'ChoiceStart'
+        Select Case True
+            Case Data5 = 1 ' Zahl ist 1
+                GoTo Action_34cf90dc_b7d5_48b7_b761_aeb1b50a88d0_Label
+            Case Data5 = 2 ' Zahl ist 2
+                GoTo Calculation_52d2150c_e804_4b02_a498_b578b5ff5086_Label
+            Case Else
+                GoTo Alert_c2f88d70_7f44_4b5e_861a_e3750d98f600_Label
+        End Select
 
-        ' not ok
-        ' TODO: Implement stage type 'ChoiceEnd'
+        ' Alert1
+        Alert_c2f88d70_7f44_4b5e_861a_e3750d98f600_Label:
+        BP_Alert.Notify("Achtung Achtung")
 
-        Exception_64973bec_3d19_4f43_986e_74ecc17b6776_Label: ' BE
+        ' BE
         RaiseException("Business Exception", "Zahl ist nicht 1 oder 2")
 
         ' Calc1
+        Calculation_52d2150c_e804_4b02_a498_b578b5ff5086_Label:
         Data6 = Data5 + 6
+
         ' Collections::Count Rows
+        Action_34cf90dc_b7d5_48b7_b761_aeb1b50a88d0_Label:
         Blueprism_AutomateProcessCore_clsCollectionActions.Instance.Count_Rows(Collection_Name:="Coll2", Count:=Count)
-        GoTo End_71b0a2dc_32e2_4505_aff3_7368fe044655_Label
 
-        ' Alert1
-        BP_Alert.Notify("Achtung Achtung")
-        GoTo Exception_64973bec_3d19_4f43_986e_74ecc17b6776_Label
-
-        End_71b0a2dc_32e2_4505_aff3_7368fe044655_Label:
         OutValue1 = Data1
         OutValue2 = MyToggle
 

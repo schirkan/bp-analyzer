@@ -9,6 +9,21 @@ namespace BPAnalyzer.CodeGen.FlowControl;
 public static class StageNavigator
 {
     /// <summary>
+    /// Generates the GoTo statement for the next stage.
+    /// </summary>
+    public static void GenerateGoTo(System.Text.StringBuilder sb, XDocument? document, string? targetStageId, int indentation = 8)
+    {
+        if (string.IsNullOrEmpty(targetStageId) || document == null)
+        {
+            return;
+        }
+
+        var targetStageLabel = ResolveStageLabel(targetStageId, document);
+        var spaces = "".PadLeft(indentation);
+        sb.AppendLine($"{spaces}GoTo {targetStageLabel}");
+    }
+
+    /// <summary>
     /// Resolves the stage label for a given stage ID, following anchor chains.
     /// </summary>
     public static string ResolveStageLabel(string stageId, XDocument doc)

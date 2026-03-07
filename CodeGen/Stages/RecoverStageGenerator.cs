@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using BPAnalyzer.CodeGen.FlowControl;
 
 namespace BPAnalyzer.CodeGen.Stages;
 
@@ -7,12 +8,10 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public class RecoverStageGenerator : StageGeneratorBase
 {
-    public override string StageType => "Recover";
-
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         sb.AppendLine($"        StoreException()");
 
-        GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
+        StageNavigator.GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
     }
 }

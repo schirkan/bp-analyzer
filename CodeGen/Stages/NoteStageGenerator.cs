@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using BPAnalyzer.CodeGen.FlowControl;
 
 namespace BPAnalyzer.CodeGen.Stages;
 
@@ -7,8 +8,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public class NoteStageGenerator : StageGeneratorBase
 {
-    public override string StageType => "Note";
-
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         var narrative = stage.Element("narrative")?.Value;
@@ -27,6 +26,6 @@ public class NoteStageGenerator : StageGeneratorBase
             }
         }
 
-        GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
+        StageNavigator.GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
     }
 }

@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using BPAnalyzer.CodeGen.FlowControl;
 using BPAnalyzer.CodeGen.Utilities;
 
 namespace BPAnalyzer.CodeGen.Stages;
@@ -8,8 +9,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public class NavigateStageGenerator : StageGeneratorBase
 {
-    public override string StageType => "Navigate";
-
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         var document = stage.Document;
@@ -18,7 +17,7 @@ public class NavigateStageGenerator : StageGeneratorBase
         if (steps.Count == 0)
         {
             sb.AppendLine($"        ' Navigate: No steps defined");
-            GenerateGoTo(sb, document, stage.Element("onsuccess")?.Value);
+            StageNavigator.GenerateGoTo(sb, document, stage.Element("onsuccess")?.Value);
             return;
         }
 
@@ -42,7 +41,7 @@ public class NavigateStageGenerator : StageGeneratorBase
                 var argValue = arg.Element("value")?.Value;
                 if (!string.IsNullOrEmpty(argId) && !string.IsNullOrEmpty(argValue))
                 {
-                    paramList.Add($"{argId}:=\"{argValue}\"");
+                    paramList.Add($"{argId}:={ExpressionParser.FormatExpression(argValue)}");
                 }
             }
 
@@ -51,6 +50,6 @@ public class NavigateStageGenerator : StageGeneratorBase
             sb.AppendLine($"        Application.Element(\"{elementName}\", \"{elementId}\").{sanitizedActionName}({paramString})");
         }
 
-        GenerateGoTo(sb, document, stage.Element("onsuccess")?.Value);
+        StageNavigator.GenerateGoTo(sb, document, stage.Element("onsuccess")?.Value);
     }
 }

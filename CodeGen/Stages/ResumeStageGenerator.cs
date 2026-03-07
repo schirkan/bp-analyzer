@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using BPAnalyzer.CodeGen.FlowControl;
 
 namespace BPAnalyzer.CodeGen.Stages;
 
@@ -7,8 +8,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public class ResumeStageGenerator : StageGeneratorBase
 {
-    public override string StageType => "Resume";
-
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         var onsuccess = stage.Element("onsuccess")?.Value;
@@ -18,7 +17,7 @@ public class ResumeStageGenerator : StageGeneratorBase
 
         if (!string.IsNullOrEmpty(onsuccess))
         {
-            var targetStage = FindStageLabel(onsuccess, stage.Document!);
+            var targetStage = StageNavigator.ResolveStageLabel(onsuccess, stage.Document!);
             sb.AppendLine($"        Resume {targetStage}");
         }
     }
