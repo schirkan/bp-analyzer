@@ -168,17 +168,11 @@
 - [ ] add missing system methods to Template_BP_Base.vb
   - 
 
-- [ ] implement stage type=Navigate
-  - 
-
-- [ ] implement stage type=Reader
-  - 
-
-- [ ] implement stage type=Writer
-  - 
-
+- [ ] implement app model xml
+- [x] implement stage type=Navigate
+- [x] implement stage type=Reader
+- [x] implement stage type=Writer
 - [x] implement stage type=Code
-
 - [x] fix static variables
   - if data stage does not have <alwaysinit />: change variable definition from "Dim" to "Static"
 
