@@ -569,4 +569,20 @@ Public Class BP_Base
 
     End Class
 
+    ''' <summary>
+    ''' Helper class for Alert stages
+    ''' </summary>
+    Protected Class BP_Alert
+
+        ''' <summary>
+        ''' Shows an alert message (dummy implementation)
+        ''' </summary>
+        ''' <param name="message">The alert message</param>
+        Public Shared Sub Notify(message As String)
+            ' TODO: Implement actual alert functionality (e.g., MessageBox.Show)
+            Console.WriteLine("[ALERT] " & message)
+        End Sub
+
+    End Class
+
 End Class

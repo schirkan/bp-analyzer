@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: Test Process
 ' Version: 1.0
-' Generated: 2026-03-07 21:21:22
+' Generated: 2026-03-07 21:39:29
 
 Imports System
 Imports System.Collections.Generic
@@ -53,11 +53,9 @@ Public Class Test_Process
         End If
 
         ' Variable Test
-        ' TODO: Implement stage type 'SubSheet'
-
+        Variable_Test(InData1:=MyText, InData2:=123, OutValue1:=OutValue1, OutValue2:=OutValue2)
         ' Dummy
-        ' TODO: Implement stage type 'SubSheet'
-
+        Dummy()
         ' Call Process A
         MP___Subprocess_A.Instance.Main(Name:=MyText, Char_Count:=Char_Count)
 
@@ -145,7 +143,7 @@ Public Class Test_Process
         ' not ok
         ' TODO: Implement stage type 'ChoiceEnd'
 
-        ' BE
+        Exception_64973bec_3d19_4f43_986e_74ecc17b6776_Label: ' BE
         RaiseException("Business Exception", "Zahl ist nicht 1 oder 2")
 
         ' Calc1
@@ -155,7 +153,8 @@ Public Class Test_Process
         GoTo End_71b0a2dc_32e2_4505_aff3_7368fe044655_Label
 
         ' Alert1
-        ' TODO: Implement stage type 'Alert'
+        BP_Alert.Notify("Achtung Achtung")
+        GoTo Exception_64973bec_3d19_4f43_986e_74ecc17b6776_Label
 
         End_71b0a2dc_32e2_4505_aff3_7368fe044655_Label:
         OutValue1 = Data1

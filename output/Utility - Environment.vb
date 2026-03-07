@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-07 21:21:22
+' Generated: 2026-03-07 21:39:29
 
 Imports System
 Imports System.Collections.Generic
@@ -72,7 +72,7 @@ Public Class Utility___Environment
     Public Sub Clear_Clipboard()
 
         ' Set Clipboard
-        ' TODO: Implement stage type 'SubSheet'
+        Set_Clipboard(Clipboard:=Chr(0))
 
     End Sub
 

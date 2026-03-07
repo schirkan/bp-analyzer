@@ -149,6 +149,10 @@ Bereits umgesetzt (Auszug aus TODO):
 
 ## 8) Hinweise für zukünftige Agent-Arbeit
 
+### WICHTIG: Dateien vor dem Ändern neu einlesen
+
+Bevor du eine Datei bearbeitest, musst du sie immer mit `read_file` neu einlesen, um manuelle Änderungen nicht zu überschreiben.
+
 ### Suchen in Dateien
 
 **WICHTIG:** Bei der Verwendung von `search_files` muss der `path`-Parameter immer ein konkretes Verzeichnis oder eine konkrete Datei sein.

@@ -10,6 +10,8 @@ public static class StageGeneratorFactory
     {
         { "Action", new ActionStageGenerator() },
         { "Process", new ProcessStageGenerator() },
+        { "SubSheet", new SubSheetStageGenerator() },
+        { "Alert", new AlertStageGenerator() },
         { "Decision", new DecisionStageGenerator() },
         { "Calculation", new CalculationStageGenerator() },
         { "MultipleCalculation", new MultipleCalculationStageGenerator() },
