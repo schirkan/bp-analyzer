@@ -42,8 +42,11 @@ dotnet run --project BP-Analyzer.csproj -- --codegen xml
 
 ### Prozess-Export (BluePrism Runtime Resource)
 
+**Standard-Ausgabeverzeichnis:** `xml/`
+**Standard-Überschreiben:** `yes` (Dateien werden automatisch überschrieben)
+
 ```bash
-# Basis
+# Basis (exportiert nach xml/ und überschreibt vorhandene Dateien)
 dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess"
 
 # Mit Ausgabepfad
@@ -52,8 +55,8 @@ dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --output="C:\
 # Mit Credentials
 dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --user=admin --password=geheim
 
-# Überschreiben aktivieren
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --overwrite=yes
+# Überschreiben deaktivieren (falls benötigt)
+dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --overwrite=no
 ```
 
 ## 4) Generierte Ausgabe kompilieren
@@ -113,12 +116,24 @@ git log --oneline -n 20
 
 - `Program.cs` – Einstiegspunkt / CLI-Verarbeitung
 - `BluePrismCodeGen.cs` – Kern der XML->VB.NET Codegenerierung
-- `ExporterCLI.cs` – Prozess-Export über BluePrism CLI
 - `BluePrismExporter.cs` – Exportlogik
+- `ExporterCLI.cs` – Prozess-Export über BluePrism CLI
+- `CodeGen/` – Code-Generator Module
+  - `ClassGenerator.cs` – Klassen-Generierung
+  - `MethodGenerator.cs` – Methoden-Generierung
+  - `FlowControl/` – Flusskontrolle
+  - `Stages/` – Stage-Generatoren (Action, Decision, Calculation, etc.)
+  - `Utilities/` – Hilfsklassen (ExpressionParser, NameSanitizer, etc.)
 - `templates/Template_BP_Base.vb` – Basisklassen-Template
 - `templates/Template_BP_Project.vbproj` – VB-Projekt-Template
 - `xml/` – Input-XML-Dateien
 - `output/` – generierte VB-Dateien + `BluePrism_Generated.vbproj`
+
+## 9) Interne BluePrism-Objekte
+
+Bei Exports werden interne BluePrism-Objekte automatisch übersprungen:
+- Objekte mit Prefix `Blueprism.AutomateProcessCore.` werden nicht exportiert
+- Dies verhindert Fehler bei der Abhängigkeitsanalyse
 
 ## 7) Funktionaler Stand (aus TODO.md)
 

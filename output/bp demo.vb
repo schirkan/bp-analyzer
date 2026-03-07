@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: bp demo
 ' Version: 1.0
-' Generated: 2026-03-07 00:47:22
+' Generated: 2026-03-07 21:21:22
 
 Imports System
 Imports System.Collections.Generic
@@ -71,6 +71,57 @@ Public Class bp_demo
         Resume End_874d3dd7_cc13_4d3f_a2ba_cef7c8de0ee7_Label
 
         End_874d3dd7_cc13_4d3f_a2ba_cef7c8de0ee7_Label:
+
+    End Sub
+
+    ''' <summary>
+    ''' BluePrism page: Get_URL
+    ''' </summary>
+    ''' <param name="URL">current URL</param>
+    ''' <param name="Window_Title">current Window Title</param>
+    Public Sub Get_URL(Optional ByRef URL As String = Nothing, Optional ByRef Window_Title As String = Nothing)
+
+        ' Wait1
+        ' Wait 5 seconds for condition with 1 choice(s)
+        Select Case True
+            Case Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").CheckExists = True ' URL Bar Check Exists
+                GoTo Read_d7797c7b_b981_422b_8c44_04144e3bd521_Label
+            Case Else
+                GoTo End_7fc17c15_89e3_42d4_b02d_c2104ae9f78b_Label
+        End Select
+
+        Read_d7797c7b_b981_422b_8c44_04144e3bd521_Label: ' Reader URL+Title
+        ' TODO: Implement stage type 'Read'
+
+        End_7fc17c15_89e3_42d4_b02d_c2104ae9f78b_Label:
+
+    End Sub
+
+    ''' <summary>
+    ''' BluePrism page: Set_URL
+    ''' </summary>
+    ''' <param name="URL">New URL</param>
+    Public Sub Set_URL(Optional ByRef URL As String = Nothing, Optional ByRef Window_Title As String = Nothing)
+
+        ' Initialize variables with initialvalue
+        URL = "http://google.de"
+
+        ' Wait1
+        ' Wait 5 seconds for condition with 1 choice(s)
+        Select Case True
+            Case Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").CheckExists = True ' URL Bar Check Exists
+                GoTo Write_52efde20_3c57_40a5_b946_8b3dc32ce835_Label
+            Case Else
+                GoTo End_0555942f_1c7a_4c1c_aa68_6a107b4b5a52_Label
+        End Select
+
+        Write_52efde20_3c57_40a5_b946_8b3dc32ce835_Label: ' Writer URL
+        ' TODO: Implement stage type 'Write'
+
+        ' Send Enter
+        Application.Element("Main Window", "2660caf7-78b8-4335-af2e-bcf547eaf9a8").ActivateApp()
+        Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").UIASendKeys(newtext:=""{ENTER}"")
+        End_0555942f_1c7a_4c1c_aa68_6a107b4b5a52_Label:
 
     End Sub
 

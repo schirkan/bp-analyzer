@@ -659,7 +659,7 @@
   <subsheet subsheetid="de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51" type="Normal" published="True">
     <name>Launch</name>
     <view>
-      <camerax>0</camerax>
+      <camerax>21</camerax>
       <cameray>0</cameray>
       <zoom version="2">1.25</zoom>
     </view>
@@ -676,7 +676,7 @@
     <name>Start Updates</name>
     <view>
       <camerax>0</camerax>
-      <cameray>42</cameray>
+      <cameray>147</cameray>
       <zoom version="2">1.25</zoom>
     </view>
   </subsheet>
@@ -746,15 +746,15 @@
   <stage stageid="05774252-de6b-4703-9edf-5bd04116cf21" name="End" type="End">
     <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
     <loginhibit />
-    <display x="15" y="75" />
+    <display x="15" y="105" />
   </stage>
   <stage stageid="4626cdba-27ab-40ea-af94-afb2dc3f2984" name="Start Process" type="Action">
     <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
     <loginhibit onsuccess="true" />
-    <display x="15" y="-60" />
+    <display x="15" y="-45" />
     <inputs>
-      <input type="text" name="Application" friendlyname="Application" narrative="The application or short cut to start" expr="[FilePath]" />
       <input type="text" name="Arguments" friendlyname="Arguments" narrative="Any arguments needed for the app" expr="" />
+      <input type="text" name="Application" friendlyname="Application" narrative="The application or short cut to start" expr="[FilePath]" />
       <input type="flag" name="Use Shell" friendlyname="Use Shell" narrative="Optional. Boolean value that determines whether the Windows shell should be used to launch the process. Default value is True. If you experience issue launching a process, try changing this value to False." expr="" />
     </inputs>
     <outputs>
@@ -763,15 +763,6 @@
     </outputs>
     <onsuccess>5a127fca-258d-4aed-9d17-ea586664d634</onsuccess>
     <resource object="Utility - Environment" action="Start Process" />
-  </stage>
-  <stage stageid="ea7786d2-aaa4-403a-8096-5cfbecbc8fda" name="FilePath" type="Data">
-    <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
-    <loginhibit />
-    <display x="-150" y="15" w="120" h="30" />
-    <datatype>text</datatype>
-    <initialvalue xml:space="preserve">C:\Program Files\WindowsApps\Microsoft.WindowsStore_22512.1401.6.0_x64__8wekyb3d8bbwe\WinStore.App.exe</initialvalue>
-    <private />
-    <alwaysinit />
   </stage>
   <stage stageid="f4cca756-8086-4d07-87fd-b63ea6be6736" name="Const" type="Block">
     <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
@@ -782,7 +773,7 @@
   <stage stageid="5a127fca-258d-4aed-9d17-ea586664d634" name="Attach" type="Navigate">
     <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
     <loginhibit />
-    <display x="15" y="-15" />
+    <display x="15" y="15" />
     <onsuccess>703731aa-fa0b-43e4-8e67-71c3256583c4</onsuccess>
     <step>
       <element id="330860ce-038b-499b-9a6c-c1e8140f72a2" />
@@ -826,14 +817,14 @@
   <stage stageid="64d23c84-7580-4890-849b-0281e849a6ce" name="T" type="WaitEnd">
     <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
     <loginhibit />
-    <display x="60" y="30" w="30" h="30" />
+    <display x="60" y="60" w="30" h="30" />
     <onsuccess>427cad4f-4758-4510-801d-acbd6542f39b</onsuccess>
     <groupid>d584cacf-fb10-49a7-9dd0-9cf56e4aeac5</groupid>
   </stage>
   <stage stageid="703731aa-fa0b-43e4-8e67-71c3256583c4" name="W5" type="WaitStart">
     <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
     <loginhibit />
-    <display x="-30" y="30" w="30" h="30" />
+    <display x="-30" y="60" w="30" h="30" />
     <groupid>d584cacf-fb10-49a7-9dd0-9cf56e4aeac5</groupid>
     <choices>
       <choice reply="True" expression="True">
@@ -851,18 +842,18 @@
   </stage>
   <stage stageid="427cad4f-4758-4510-801d-acbd6542f39b" name="SE" type="Exception">
     <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
-    <display x="135" y="30" />
+    <display x="135" y="60" />
     <exception localized="yes" type="System Exception" detail="&quot;Main Window not found&quot;" />
   </stage>
   <stage stageid="46525674-62d6-45e4-94d5-7ceffb155b85" name="Start Updates" type="SubSheetInfo">
     <subsheetid>6e59731b-6dcb-4471-a50b-edcb373114df</subsheetid>
-    <display x="-150" y="-75" w="150" h="90" />
+    <display x="-150" y="15" w="150" h="90" />
   </stage>
   <stage stageid="71ea5730-7d88-45f5-a894-b65e793a6867" name="Start" type="Start">
     <subsheetid>6e59731b-6dcb-4471-a50b-edcb373114df</subsheetid>
     <loginhibit />
-    <display x="15" y="-105" />
-    <onsuccess>dd4bc616-c65b-461f-b482-c40cbf80e967</onsuccess>
+    <display x="15" y="-15" />
+    <onsuccess>d07aa237-9fbd-4313-a6a4-d8d82bbf1420</onsuccess>
   </stage>
   <stage stageid="23ba7d3f-cc9b-4bf6-bb28-545408febcae" name="End" type="End">
     <subsheetid>6e59731b-6dcb-4471-a50b-edcb373114df</subsheetid>
@@ -893,49 +884,6 @@
       <element id="330860ce-038b-499b-9a6c-c1e8140f72a2" />
       <action>
         <id>Terminate</id>
-      </action>
-    </step>
-  </stage>
-  <stage stageid="57f8ce8f-0a8e-43bd-b7a0-ed4dde506123" name="T" type="WaitEnd">
-    <subsheetid>6e59731b-6dcb-4471-a50b-edcb373114df</subsheetid>
-    <loginhibit />
-    <display x="60" y="-60" w="30" h="30" />
-    <onsuccess>9cb9d9fb-2550-4008-8323-a49fc050de05</onsuccess>
-    <groupid>ed005937-3d9c-44ef-9357-007f38bbaf13</groupid>
-  </stage>
-  <stage stageid="dd4bc616-c65b-461f-b482-c40cbf80e967" name="W5" type="WaitStart">
-    <subsheetid>6e59731b-6dcb-4471-a50b-edcb373114df</subsheetid>
-    <loginhibit />
-    <display x="-30" y="-60" w="30" h="30" />
-    <groupid>ed005937-3d9c-44ef-9357-007f38bbaf13</groupid>
-    <choices>
-      <choice reply="True" expression="True">
-        <name>Downloads Check Exists</name>
-        <distance>45</distance>
-        <ontrue>f9be3a31-fdf8-4827-8df3-8ab0fbd5d302</ontrue>
-        <element id="4bb2d38e-758b-428a-8f6e-a0b6638ab5e3" />
-        <condition>
-          <id>CheckExists</id>
-        </condition>
-        <comparetype>Equal</comparetype>
-      </choice>
-    </choices>
-    <timeout>5</timeout>
-  </stage>
-  <stage stageid="9cb9d9fb-2550-4008-8323-a49fc050de05" name="SE" type="Exception">
-    <subsheetid>6e59731b-6dcb-4471-a50b-edcb373114df</subsheetid>
-    <display x="135" y="-60" />
-    <exception localized="yes" type="System Exception" detail="&quot;Download Menu not found&quot;" />
-  </stage>
-  <stage stageid="f9be3a31-fdf8-4827-8df3-8ab0fbd5d302" name="GoTo Downloads" type="Navigate">
-    <subsheetid>6e59731b-6dcb-4471-a50b-edcb373114df</subsheetid>
-    <loginhibit />
-    <display x="15" y="-15" />
-    <onsuccess>d07aa237-9fbd-4313-a6a4-d8d82bbf1420</onsuccess>
-    <step>
-      <element id="4bb2d38e-758b-428a-8f6e-a0b6638ab5e3" />
-      <action>
-        <id>UIAAddToSelection</id>
       </action>
     </step>
   </stage>
@@ -1183,5 +1131,32 @@
     <narrative>TODO</narrative>
     <display x="15" y="-45" />
     <onsuccess>e4e938c4-17f2-4c92-9fa0-491ffd390327</onsuccess>
+  </stage>
+  <stage stageid="e581b405-e9ae-4d5f-a772-c14ee1d0467e" name="FilePath" type="Data">
+    <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
+    <loginhibit />
+    <display x="-150" y="15" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">ms-windows-store://updates</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="131b33a0-29aa-429a-b11b-b290f44954a5" name="Recover" type="Recover">
+    <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
+    <loginhibit />
+    <display x="105" y="-45" />
+    <onsuccess>3c07867a-088d-4f93-b891-81b2c37058b6</onsuccess>
+  </stage>
+  <stage stageid="3c07867a-088d-4f93-b891-81b2c37058b6" name="Resume" type="Resume">
+    <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
+    <loginhibit />
+    <display x="105" y="15" />
+    <onsuccess>5a127fca-258d-4aed-9d17-ea586664d634</onsuccess>
+  </stage>
+  <stage stageid="91250486-a74c-4f2f-acc4-822261a2d88b" name="Block1" type="Block">
+    <subsheetid>de1bbb7e-7eec-473f-b5c8-ccb80d2d0a51</subsheetid>
+    <loginhibit />
+    <display x="-30" y="-75" w="180" h="60" />
+    <font family="Segoe UI" size="10" style="Regular" color="7FB2E5" />
   </stage>
 </process>

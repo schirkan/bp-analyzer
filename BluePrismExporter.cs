@@ -226,6 +226,14 @@ public class BluePrismExporter
   }
 
   /// <summary>
+  /// Prüft, ob ein Objekt ein internes BluePrism-Systemobjekt ist
+  /// </summary>
+  private bool IsInternalObject(string objectName)
+  {
+    return objectName.StartsWith("Blueprism.AutomateProcessCore.", StringComparison.OrdinalIgnoreCase);
+  }
+
+  /// <summary>
   /// Rekursive Hilfsmethode zum Exportieren eines Prozesses und seiner Abhängigkeiten
   /// </summary>
   private void ExportRecursive(string objectName, string outputDirectory, string username, string password, bool overwrite, List<ExportResult> results)
@@ -234,6 +242,14 @@ public class BluePrismExporter
     if (_exportedObjects.Contains(objectName))
     {
       Console.WriteLine($"  -> '{objectName}' wurde bereits exportiert, überspringen...");
+      return;
+    }
+
+    // Skip internal BluePrism objects
+    if (IsInternalObject(objectName))
+    {
+      Console.WriteLine($"  -> '{objectName}' ist ein internes Objekt, überspringen...");
+      _exportedObjects.Add(objectName);
       return;
     }
 

@@ -109,7 +109,7 @@ class Program
         string? outputPath = null;
         string? username = null;
         string? password = null;
-        bool overwrite = false;
+        bool overwrite = true;
 
         // Versuche zuerst benannte Argumente zu parsen
         for (int i = 0; i < args.Length; i++)
@@ -158,7 +158,7 @@ class Program
 
         if (string.IsNullOrWhiteSpace(outputPath))
         {
-            outputPath = System.IO.Directory.GetCurrentDirectory();
+            outputPath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "xml");
         }
 
         // Ausführen des Exports
@@ -225,10 +225,10 @@ class Program
         Console.WriteLine();
         Console.WriteLine("Optionen:");
         Console.WriteLine("  --process=<name>     Name des zu exportierenden Prozesses (erforderlich)");
-        Console.WriteLine("  --output=<pfad>      Ausgabeverzeichnis (Standard: aktuelles Verzeichnis)");
+        Console.WriteLine("  --output=<pfad>      Ausgabeverzeichnis (Standard: xml/)");
         Console.WriteLine("  --user=<benutzername> Blue Prism Benutzername");
         Console.WriteLine("  --password=<passwort> Blue Prism Passwort");
-        Console.WriteLine("  --overwrite=<yes|no> Vorhandene Dateien überschreiben (Standard: no)");
+        Console.WriteLine("  --overwrite=<yes|no> Vorhandene Dateien überschreiben (Standard: yes)");
         Console.WriteLine();
         Console.WriteLine("Beispiele:");
         Console.WriteLine("  BP-Analyzer.exe --process \"MeinProzess\" --output \"C:\\Exporte\"");

@@ -1,12 +1,202 @@
 ﻿<process name="bp demo" version="1.0" bpversion="7.5.0.17125" cpeversion="10.0.110.0" narrative="This page is like the class constructor" byrefcollection="true" processrunningmessage="" disableversioning="false" type="object" runmode="Exclusive" preferredid="4afb82b2-256d-4ac4-8322-48f4316aabe8">
   <appdef>
-    <element name="Application Root">
-      <id>fa5c9b05-0903-45fe-a149-756bbc9a9736</id>
+    <element name="bp demo">
+      <id>5a494fb1-048c-49da-b350-349a223e9361</id>
+      <element name="Main Window">
+        <id>2660caf7-78b8-4335-af2e-bcf547eaf9a8</id>
+        <type>Window</type>
+        <basetype>Window</basetype>
+        <datatype>text</datatype>
+        <diagnose>False</diagnose>
+        <attributes>
+          <attribute name="WindowText" comparisontype="Wildcard" inuse="True" isUserVisible="True">
+            <ProcessValue datatype="text" value="*Microsoft​ Edge" />
+          </attribute>
+          <attribute name="ClassName" inuse="True" isUserVisible="True">
+            <ProcessValue datatype="text" value="Chrome_WidgetWin_1" />
+          </attribute>
+          <attribute name="CtrlID" isUserVisible="True">
+            <ProcessValue datatype="number" value="0" />
+          </attribute>
+          <attribute name="X" isUserVisible="True">
+            <ProcessValue datatype="number" value="339" />
+          </attribute>
+          <attribute name="Y" isUserVisible="True">
+            <ProcessValue datatype="number" value="427" />
+          </attribute>
+          <attribute name="Width" isUserVisible="True">
+            <ProcessValue datatype="number" value="1749" />
+          </attribute>
+          <attribute name="Height" isUserVisible="True">
+            <ProcessValue datatype="number" value="1102" />
+          </attribute>
+          <attribute name="Visible" inuse="True" isUserVisible="True">
+            <ProcessValue datatype="flag" value="True" />
+          </attribute>
+          <attribute name="ScreenVisible" inuse="True" isUserVisible="True">
+            <ProcessValue datatype="flag" value="True" />
+          </attribute>
+          <attribute name="Enabled" inuse="True" isUserVisible="True">
+            <ProcessValue datatype="flag" value="True" />
+          </attribute>
+          <attribute name="Active" isUserVisible="True">
+            <ProcessValue datatype="flag" value="True" />
+          </attribute>
+          <attribute name="Ordinal" isUserVisible="True">
+            <ProcessValue datatype="number" value="3" />
+          </attribute>
+          <attribute name="ChildCount" isUserVisible="True">
+            <ProcessValue datatype="number" value="2" />
+          </attribute>
+          <attribute name="AncestorsText" isUserVisible="True">
+            <ProcessValue datatype="text" value="&lt;UNKNOWN&gt;" />
+          </attribute>
+          <attribute name="AncestorCount" isUserVisible="True">
+            <ProcessValue datatype="number" value="1" />
+          </attribute>
+          <attribute name="TypeName" isUserVisible="True">
+            <ProcessValue datatype="text" value="Chrome_WidgetWin_1" />
+          </attribute>
+          <attribute name="ScreenBounds" isUserVisible="True">
+            <ProcessValue datatype="text" value="RECT:348,427,1519,2078" />
+          </attribute>
+          <attribute name="Style" isUserVisible="True">
+            <ProcessValue datatype="number" value="382664704" />
+          </attribute>
+          <attribute name="matchindex" inuse="True" isUserVisible="True">
+            <ProcessValue datatype="number" value="1" />
+          </attribute>
+          <attribute name="matchreverse" isUserVisible="True">
+            <ProcessValue datatype="flag" value="True" />
+          </attribute>
+        </attributes>
+      </element>
+      <element name="URL Bar">
+        <id>ad4b93a6-97c7-4fa7-acde-f6a00d96ac32</id>
+        <type>UIAEdit</type>
+        <basetype>UIAEdit</basetype>
+        <datatype>text</datatype>
+        <diagnose>False</diagnose>
+        <attributes>
+          <attribute name="uX" isUserVisible="True">
+            <ProcessValue datatype="number" value="523" />
+          </attribute>
+          <attribute name="uY" isUserVisible="True">
+            <ProcessValue datatype="number" value="488" />
+          </attribute>
+          <attribute name="uWidth" isUserVisible="True">
+            <ProcessValue datatype="number" value="845" />
+          </attribute>
+          <attribute name="uHeight" isUserVisible="True">
+            <ProcessValue datatype="number" value="30" />
+          </attribute>
+          <attribute name="uClassName" isUserVisible="True">
+            <ProcessValue datatype="text" value="OmniboxViewViews" />
+          </attribute>
+          <attribute name="uAutomationId" inuse="True" isUserVisible="True">
+            <ProcessValue datatype="text" value="view_1022" />
+          </attribute>
+          <attribute name="uControlType" inuse="True" isUserVisible="True">
+            <ProcessValue datatype="text" value="Edit" />
+          </attribute>
+          <attribute name="uLocalizedControlType" isUserVisible="True">
+            <ProcessValue datatype="text" value="Bearbeiten" />
+          </attribute>
+          <attribute name="uIsPassword" isUserVisible="True">
+            <ProcessValue datatype="flag" value="False" />
+          </attribute>
+          <attribute name="uIsRequiredForForm" isUserVisible="True">
+            <ProcessValue datatype="flag" value="False" />
+          </attribute>
+          <attribute name="uName" inuse="True" isUserVisible="True">
+            <ProcessValue datatype="text" value="Adress- und Suchleiste" />
+          </attribute>
+          <attribute name="uOrientation" isUserVisible="True">
+            <ProcessValue datatype="text" value="None" />
+          </attribute>
+          <attribute name="uItemStatus" isUserVisible="True">
+            <ProcessValue datatype="text" value="" />
+          </attribute>
+          <attribute name="uItemType" isUserVisible="True">
+            <ProcessValue datatype="text" value="" />
+          </attribute>
+          <attribute name="uOffscreen" isUserVisible="True">
+            <ProcessValue datatype="flag" value="False" />
+          </attribute>
+          <attribute name="uTopLevelWindowId" isUserVisible="True">
+            <ProcessValue datatype="text" value="" />
+          </attribute>
+          <attribute name="uLabeledBy" isUserVisible="True">
+            <ProcessValue datatype="text" value="" />
+          </attribute>
+          <attribute name="uEnabled" isUserVisible="True">
+            <ProcessValue datatype="text" value="True" />
+          </attribute>
+          <attribute name="uAcceleratorKey" isUserVisible="True">
+            <ProcessValue datatype="text" value="Ctrl+L" />
+          </attribute>
+          <attribute name="uAccessKey" isUserVisible="True">
+            <ProcessValue datatype="text" value="" />
+          </attribute>
+          <attribute name="uHasKeyboardFocus" isUserVisible="True">
+            <ProcessValue datatype="text" value="False" />
+          </attribute>
+          <attribute name="uHelpText" isUserVisible="True">
+            <ProcessValue datatype="text" value="Webadresse suchen oder eingeben" />
+          </attribute>
+          <attribute name="uProcessId" isUserVisible="True">
+            <ProcessValue datatype="text" value="13212" />
+          </attribute>
+          <attribute name="puControlType" isUserVisible="True">
+            <ProcessValue datatype="text" value="Group" />
+          </attribute>
+          <attribute name="puLocalizedControlType" isUserVisible="True">
+            <ProcessValue datatype="text" value="Gruppe" />
+          </attribute>
+          <attribute name="puClassName" isUserVisible="True">
+            <ProcessValue datatype="text" value="LocationBarView" />
+          </attribute>
+          <attribute name="puName" isUserVisible="True">
+            <ProcessValue datatype="text" value="" />
+          </attribute>
+          <attribute name="puAutomationId" isUserVisible="True">
+            <ProcessValue datatype="text" value="" />
+          </attribute>
+          <attribute name="matchindex" inuse="True" isUserVisible="True">
+            <ProcessValue datatype="number" value="1" />
+          </attribute>
+        </attributes>
+      </element>
       <type>Application</type>
       <basetype>Application</basetype>
       <datatype>unknown</datatype>
       <diagnose>False</diagnose>
     </element>
+    <apptypeinfo>
+      <id>BrowserLaunch</id>
+      <parameters>
+        <parameter>
+          <name>Path</name>
+          <value>C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe</value>
+        </parameter>
+        <parameter>
+          <name>CommandLineParams</name>
+          <value>http://heise.de</value>
+        </parameter>
+        <parameter>
+          <name>prelaunchbrowser</name>
+          <value>True</value>
+        </parameter>
+        <parameter>
+          <name>ProcessMode</name>
+          <value>Internal</value>
+        </parameter>
+        <parameter>
+          <name>ExternalProcessTimeout</name>
+          <value>0</value>
+        </parameter>
+      </parameters>
+    </apptypeinfo>
   </appdef>
   <view>
     <camerax>0</camerax>
@@ -25,6 +215,22 @@
   </subsheet>
   <subsheet subsheetid="88732eb0-daa0-4bbe-9a36-39f2f23b00f9" type="Normal" published="True">
     <name>MyPublicAction</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>-21</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="849a9031-682c-457d-963a-a5e484263acc" type="Normal" published="True">
+    <name>Get URL</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="92e08e0b-a120-4a79-957b-fd1e1760fcda" type="Normal" published="True">
+    <name>Set URL</name>
     <view>
       <camerax>0</camerax>
       <cameray>0</cameray>
@@ -234,5 +440,190 @@
     <display x="-150" y="135" />
     <onsuccess>a987ff7d-de3a-4d2c-bcca-696cda7cdcb2</onsuccess>
     <calculation expression="&quot;Type: &quot; &amp; ExceptionType() &amp; NewLine() &amp;&#xA;&quot;Details: &quot; &amp; ExceptionDetail()" stage="Value" />
+  </stage>
+  <stage stageid="8c56dd1d-ca47-4eae-8048-a6d083e527a9" name="Get URL" type="SubSheetInfo">
+    <subsheetid>849a9031-682c-457d-963a-a5e484263acc</subsheetid>
+    <display x="-150" y="-60" w="150" h="90" />
+  </stage>
+  <stage stageid="c13f82c2-43be-42fc-a948-136ef3ff7202" name="Start" type="Start">
+    <subsheetid>849a9031-682c-457d-963a-a5e484263acc</subsheetid>
+    <loginhibit />
+    <display x="15" y="-90" />
+    <onsuccess>a4105d5b-aa4d-406a-be5d-88a736a5e17d</onsuccess>
+  </stage>
+  <stage stageid="7fc17c15-89e3-42d4-b02d-c2104ae9f78b" name="End" type="End">
+    <subsheetid>849a9031-682c-457d-963a-a5e484263acc</subsheetid>
+    <loginhibit />
+    <display x="15" y="45" />
+    <outputs>
+      <output type="text" name="URL" narrative="current URL" stage="URL" fromStage="URL" />
+      <output type="text" name="Window Title" narrative="current Window Title" stage="Window Title" fromStage="Window Title" />
+    </outputs>
+  </stage>
+  <stage stageid="58dfc496-22f5-4daf-98b4-eab06675f7ad" name="Time Out1" type="WaitEnd">
+    <subsheetid>849a9031-682c-457d-963a-a5e484263acc</subsheetid>
+    <loginhibit />
+    <display x="75" y="-45" w="30" h="30" />
+    <onsuccess>bff19509-c5b3-4378-a20e-47a6f902e98f</onsuccess>
+    <groupid>7f46048c-ad54-478c-88ed-5f4835a208a9</groupid>
+  </stage>
+  <stage stageid="a4105d5b-aa4d-406a-be5d-88a736a5e17d" name="Wait1" type="WaitStart">
+    <subsheetid>849a9031-682c-457d-963a-a5e484263acc</subsheetid>
+    <loginhibit />
+    <display x="-45" y="-45" w="30" h="30" />
+    <groupid>7f46048c-ad54-478c-88ed-5f4835a208a9</groupid>
+    <choices>
+      <choice reply="True" expression="True">
+        <name>URL Bar Check Exists</name>
+        <distance>60</distance>
+        <ontrue>d7797c7b-b981-422b-8c44-04144e3bd521</ontrue>
+        <element id="ad4b93a6-97c7-4fa7-acde-f6a00d96ac32" />
+        <condition>
+          <id>CheckExists</id>
+        </condition>
+        <comparetype>Equal</comparetype>
+      </choice>
+    </choices>
+    <timeout>5</timeout>
+  </stage>
+  <stage stageid="d7797c7b-b981-422b-8c44-04144e3bd521" name="Reader URL+Title" type="Read">
+    <subsheetid>849a9031-682c-457d-963a-a5e484263acc</subsheetid>
+    <loginhibit />
+    <display x="15" y="0" />
+    <onsuccess>7fc17c15-89e3-42d4-b02d-c2104ae9f78b</onsuccess>
+    <step stage="URL">
+      <element id="ad4b93a6-97c7-4fa7-acde-f6a00d96ac32" />
+      <action>
+        <id>UIAGetValue</id>
+      </action>
+    </step>
+    <step stage="Window Title">
+      <element id="2660caf7-78b8-4335-af2e-bcf547eaf9a8" />
+      <action>
+        <id>GetWindowText</id>
+      </action>
+    </step>
+  </stage>
+  <stage stageid="2d194d7c-4778-4692-b779-4800984d6a30" name="URL" type="Data">
+    <subsheetid>849a9031-682c-457d-963a-a5e484263acc</subsheetid>
+    <display x="-150" y="30" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="4aa62d42-6528-49fa-909d-598666fcd560" name="Window Title" type="Data">
+    <subsheetid>849a9031-682c-457d-963a-a5e484263acc</subsheetid>
+    <display x="-150" y="60" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="bff19509-c5b3-4378-a20e-47a6f902e98f" name="Anchor1" type="Anchor">
+    <subsheetid>849a9031-682c-457d-963a-a5e484263acc</subsheetid>
+    <loginhibit />
+    <display x="75" y="45" w="10" h="10" />
+    <onsuccess>7fc17c15-89e3-42d4-b02d-c2104ae9f78b</onsuccess>
+  </stage>
+  <stage stageid="fd857af9-1bdb-4cfa-84c2-b67f18c39f0b" name="Set URL" type="SubSheetInfo">
+    <subsheetid>92e08e0b-a120-4a79-957b-fd1e1760fcda</subsheetid>
+    <display x="-150" y="-60" w="150" h="90" />
+  </stage>
+  <stage stageid="5901e708-655c-45b3-b61d-ca1be4c315fd" name="Start" type="Start">
+    <subsheetid>92e08e0b-a120-4a79-957b-fd1e1760fcda</subsheetid>
+    <loginhibit />
+    <display x="15" y="-90" />
+    <inputs>
+      <input type="text" name="URL" narrative="New URL" stage="URL" />
+    </inputs>
+    <onsuccess>27d474f5-748b-46d3-88e2-5d349e88e35d</onsuccess>
+  </stage>
+  <stage stageid="0555942f-1c7a-4c1c-aa68-6a107b4b5a52" name="End" type="End">
+    <subsheetid>92e08e0b-a120-4a79-957b-fd1e1760fcda</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+    <outputs>
+      <output type="text" name="URL" stage="URL" fromStage="URL" />
+      <output type="text" name="Window Title" stage="Window Title" fromStage="Window Title" />
+    </outputs>
+  </stage>
+  <stage stageid="96bda4b9-9533-44fa-9632-789fe641c75f" name="Time Out1" type="WaitEnd">
+    <subsheetid>92e08e0b-a120-4a79-957b-fd1e1760fcda</subsheetid>
+    <loginhibit />
+    <display x="75" y="-45" w="30" h="30" />
+    <onsuccess>92eb2ace-ba70-418d-b76b-97b61399f444</onsuccess>
+    <groupid>132e68fd-54e1-4b61-ad1c-f2ebfc10667c</groupid>
+  </stage>
+  <stage stageid="27d474f5-748b-46d3-88e2-5d349e88e35d" name="Wait1" type="WaitStart">
+    <subsheetid>92e08e0b-a120-4a79-957b-fd1e1760fcda</subsheetid>
+    <loginhibit />
+    <display x="-45" y="-45" w="30" h="30" />
+    <groupid>132e68fd-54e1-4b61-ad1c-f2ebfc10667c</groupid>
+    <choices>
+      <choice reply="True" expression="True">
+        <name>URL Bar Check Exists</name>
+        <distance>60</distance>
+        <ontrue>52efde20-3c57-40a5-b946-8b3dc32ce835</ontrue>
+        <element id="ad4b93a6-97c7-4fa7-acde-f6a00d96ac32" />
+        <condition>
+          <id>CheckExists</id>
+        </condition>
+        <comparetype>Equal</comparetype>
+      </choice>
+    </choices>
+    <timeout>5</timeout>
+  </stage>
+  <stage stageid="2eeafd4f-20d8-437e-b3b2-0d4ca408649e" name="URL" type="Data">
+    <subsheetid>92e08e0b-a120-4a79-957b-fd1e1760fcda</subsheetid>
+    <display x="-150" y="30" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">http://google.de</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="92eb2ace-ba70-418d-b76b-97b61399f444" name="Anchor1" type="Anchor">
+    <subsheetid>92e08e0b-a120-4a79-957b-fd1e1760fcda</subsheetid>
+    <loginhibit />
+    <display x="75" y="90" w="10" h="10" />
+    <onsuccess>0555942f-1c7a-4c1c-aa68-6a107b4b5a52</onsuccess>
+  </stage>
+  <stage stageid="52efde20-3c57-40a5-b946-8b3dc32ce835" name="Writer URL" type="Write">
+    <subsheetid>92e08e0b-a120-4a79-957b-fd1e1760fcda</subsheetid>
+    <loginhibit />
+    <display x="15" y="0" />
+    <onsuccess>06d30b30-547a-4c18-b971-4fc162c12c6e</onsuccess>
+    <step expr="[URL]">
+      <element id="ad4b93a6-97c7-4fa7-acde-f6a00d96ac32" />
+    </step>
+  </stage>
+  <stage stageid="06d30b30-547a-4c18-b971-4fc162c12c6e" name="Send Enter" type="Navigate" interval="1">
+    <subsheetid>92e08e0b-a120-4a79-957b-fd1e1760fcda</subsheetid>
+    <loginhibit />
+    <display x="15" y="45" />
+    <onsuccess>0555942f-1c7a-4c1c-aa68-6a107b4b5a52</onsuccess>
+    <step>
+      <element id="2660caf7-78b8-4335-af2e-bcf547eaf9a8" />
+      <action>
+        <id>ActivateApp</id>
+      </action>
+    </step>
+    <step>
+      <element id="ad4b93a6-97c7-4fa7-acde-f6a00d96ac32" />
+      <action>
+        <id>UIASendKeys</id>
+        <arguments>
+          <argument>
+            <id>newtext</id>
+            <value>"{ENTER}"</value>
+          </argument>
+          <argument>
+            <id>interval</id>
+            <value>
+            </value>
+          </argument>
+        </arguments>
+      </action>
+    </step>
   </stage>
 </process>

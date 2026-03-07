@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Microsoft Store
 ' Version: 1.0
-' Generated: 2026-03-07 00:47:22
+' Generated: 2026-03-07 21:21:22
 
 Imports System
 Imports System.Collections.Generic
@@ -58,13 +58,16 @@ Public Class Microsoft_Store
         Dim FilePath As String
 
         ' Initialize variables with initialvalue
-        FilePath = "C:\Program Files\WindowsApps\Microsoft.WindowsStore_22512.1401.6.0_x64__8wekyb3d8bbwe\WinStore.App.exe"
+        FilePath = "ms-windows-store://updates"
 
         ' Start Process
+        On Error GoTo Recover_131b33a0_29aa_429a_b11b_b290f44954a5_Label
         Utility___Environment.Instance.Start_Process(Application:=FilePath)
-        ' Attach
+        Navigate_5a127fca_258d_4aed_9d17_ea586664d634_Label: ' Attach
+        On Error GoTo Recover_131b33a0_29aa_429a_b11b_b290f44954a5_Label
         Application.Element("Microsoft Store", "330860ce-038b-499b-9a6c-c1e8140f72a2").AttachApplication()
         ' W5
+        On Error GoTo Recover_131b33a0_29aa_429a_b11b_b290f44954a5_Label
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Main Window", "b048ceed-93fb-48da-99af-7fafeec74d4e").CheckExists = True ' Main Window Check Exists
@@ -74,7 +77,14 @@ Public Class Microsoft_Store
         End Select
 
         Exception_427cad4f_4758_4510_801d_acbd6542f39b_Label: ' SE
+        On Error GoTo Recover_131b33a0_29aa_429a_b11b_b290f44954a5_Label
         RaiseException("System Exception", "Main Window not found")
+
+        Recover_131b33a0_29aa_429a_b11b_b290f44954a5_Label: ' Recover
+        StoreException()
+        ' Resume
+        ClearException()
+        Resume Navigate_5a127fca_258d_4aed_9d17_ea586664d634_Label
 
         End_05774252_de6b_4703_9edf_5bd04116cf21_Label:
 
@@ -95,20 +105,6 @@ Public Class Microsoft_Store
     ''' </summary>
     Public Sub Start_Updates()
 
-        ' W5
-        ' Wait 5 seconds for condition with 1 choice(s)
-        Select Case True
-            Case Application.Element("Downloads", "4bb2d38e-758b-428a-8f6e-a0b6638ab5e3").CheckExists = True ' Downloads Check Exists
-                GoTo Navigate_f9be3a31_fdf8_4827_8df3_8ab0fbd5d302_Label
-            Case Else
-                GoTo Exception_9cb9d9fb_2550_4008_8323_a49fc050de05_Label
-        End Select
-
-        Exception_9cb9d9fb_2550_4008_8323_a49fc050de05_Label: ' SE
-        RaiseException("System Exception", "Download Menu not found")
-
-        Navigate_f9be3a31_fdf8_4827_8df3_8ab0fbd5d302_Label: ' GoTo Downloads
-        Application.Element("Downloads", "4bb2d38e-758b-428a-8f6e-a0b6638ab5e3").UIAAddToSelection()
         ' W5
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True

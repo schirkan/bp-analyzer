@@ -29,6 +29,7 @@
     <Compile Include="Microsoft Store.vb" />
     <Compile Include="MP - Subprocess A.vb" />
     <Compile Include="MP - System Update.vb" />
+    <Compile Include="Test Process.vb" />
     <Compile Include="Utility - Environment.vb" />
     <Compile Include="Windows Settings.vb" />
   </ItemGroup>

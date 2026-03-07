@@ -74,8 +74,11 @@ dotnet run --project BP-Analyzer.csproj -- --codegen xml
 
 Exportiert BluePrism-Prozesse direkt aus der Runtime Resource (erfordert AutomateC.exe).
 
+**Standard-Ausgabeverzeichnis:** `xml/`
+**Standard-Überschreiben:** `yes` (Dateien werden automatisch überschrieben)
+
 ```bash
-# Grundlegender Export
+# Grundlegender Export (nach xml/ mit Überschreiben)
 dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess"
 
 # Mit Ausgabeverzeichnis
@@ -84,22 +87,14 @@ dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --output="C:\
 # Mit Anmeldedaten
 dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --user=admin --password=geheim
 
-# Vorhandene Dateien überschreiben
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --overwrite=yes
+# Überschreiben deaktivieren (falls benötigt)
+dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --overwrite=no
 
 # Alles zusammen
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --output="C:\Exporte" --user=admin --password=geheim --overwrite=yes
+dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --output="C:\Exporte" --user=admin --password=geheim --overwrite=no
 ```
 
-#### Alle Export-CLI-Varianten
-
-| Befehl                                                                             | Beschreibung                |
-| ---------------------------------------------------------------------------------- | --------------------------- |
-| `dotnet run -- --process=Name`                                                     | Prozess mit Standardausgabe |
-| `dotnet run -- --process=Name --output=Pfad`                                       | Mit Ausgabeverzeichnis      |
-| `dotnet run -- --process=Name --user=admin --password=pass`                        | Mit Anmeldedaten            |
-| `dotnet run -- --process=Name --overwrite=yes`                                     | Überschreiben aktivieren    |
-| `dotnet run -- --process=Name --output=Pfad --user=u --password=p --overwrite=yes` | Alle Optionen               |
+**Hinweis:** Interne BluePrism-Objekte (z.B. `Blueprism.AutomateProcessCore.*`) werden automatisch übersprungen.
 
 ## Ausgabe kompilieren
 
