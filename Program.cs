@@ -2,8 +2,6 @@
 // Exportiert Blue Prism Prozesse mit AutomateC.exe CLI
 // Unterstützt rekursiven Export von abhängigen Objekten
 
-using System;
-using System.Linq;
 using BPAnalyzer;
 
 class Program
