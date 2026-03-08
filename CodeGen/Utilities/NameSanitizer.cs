@@ -13,7 +13,8 @@ public static class NameSanitizer
     /// </summary>
     public static string SanitizeClassName(string name)
     {
-        var sanitized = Regex.Replace(name ?? "", @"[^a-zA-Z0-9_]", "_");
+        if (string.IsNullOrEmpty(name)) return "";
+        var sanitized = Regex.Replace(name, @"[^a-zA-Z0-9_]", "_");
         if (!char.IsLetter(sanitized[0])) sanitized = "_" + sanitized;
         return sanitized;
     }
@@ -23,7 +24,8 @@ public static class NameSanitizer
     /// </summary>
     public static string SanitizeVariableName(string name)
     {
-        var sanitized = Regex.Replace(name ?? "", @"[^a-zA-Z0-9_]", "_");
+        if (string.IsNullOrEmpty(name)) return "";
+        var sanitized = Regex.Replace(name, @"[^a-zA-Z0-9_]", "_");
         if (!char.IsLetter(sanitized[0])) sanitized = "_" + sanitized;
         return sanitized;
     }
@@ -33,7 +35,8 @@ public static class NameSanitizer
     /// </summary>
     public static string SanitizeMethodName(string name)
     {
-        var sanitized = Regex.Replace(name ?? "", @"[^a-zA-Z0-9_]", "_");
+        if (string.IsNullOrEmpty(name)) return "";
+        var sanitized = Regex.Replace(name, @"[^a-zA-Z0-9_]", "_");
         if (!char.IsLetter(sanitized[0])) sanitized = "_" + sanitized;
         return sanitized;
     }

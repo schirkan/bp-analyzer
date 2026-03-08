@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-07 23:14:33
+' Generated: 2026-03-08 00:19:21
 
 Imports System
 Imports System.Collections.Generic
@@ -47,7 +47,7 @@ Public Class Utility___Environment
     ''' </summary>
     Public Sub New()
 
-        GoTo End_9e4646d0_d8c7_44d6_a5d9_9509e3ba8883_Label
+        GoTo End__Label
 
         ' new
         ' Initialise Page
@@ -63,7 +63,7 @@ Public Class Utility___Environment
         ' Version Info
         ' Version: 10.1.8
 
-        End_9e4646d0_d8c7_44d6_a5d9_9509e3ba8883_Label:
+        End__Label:
 
     End Sub
 
@@ -99,7 +99,9 @@ Public Class Utility___Environment
     ''' <param name="Clipboard">The value from the clipboard.</param>
     Public Sub Get_Clipboard(Optional ByRef Clipboard As String = Nothing)
 
+        
         ' Get
+        Calculation_Label:
         Clipboard = GetClipboard()
 
     End Sub
@@ -213,20 +215,20 @@ Public Class Utility___Environment
 
         ' Timed Out?
         If Fail_Datetime_Reached_ Then
-            GoTo Exception_433c4289_a312_4554_bc27_6ee3c7ace153_Label
+            GoTo Exception_Label
         Else
-            GoTo End_f6878e25_301c_4540_a15d_7a83dfc57a75_Label
+            GoTo End_Run_Process_Until_Ended_Label
         End If
 
         ' System Exception
-        Exception_433c4289_a312_4554_bc27_6ee3c7ace153_Label:
+        Exception_Label:
         RaiseException("System Exception", "Application " & [Application] & " was still running after the maximum time period")
 
         ' Note3
         ' 20201006
         ' The Ignore Timeout flag was added to addres an issue with using a TimeSpan to specify the timeout value. If the user wants the process to wait indefinitely for the process to complete the timeout value needs to be -1. However, you cannot create a TimeSpan with a millisecond value of -1 using the Blue Prism MakeTimeSpan() function. To address this, we added a flag that controls how to code stage handled the timeout value. By doing this we don't break existing deployments that actually make use of the TimeSpan data type for inputting the timeout.
 
-        End_f6878e25_301c_4540_a15d_7a83dfc57a75_Label:
+        End_Run_Process_Until_Ended_Label:
 
     End Sub
 
@@ -238,17 +240,17 @@ Public Class Utility___Environment
 
         ' Is Empty?
         If Len(Trim(Clipboard)) = 0 Then
-            GoTo Calculation_bcb5c983_a5fb_4b30_b14f_7a1509fff980_Label
+            GoTo Calculation_2_Label
         Else
-            GoTo Code_54826c34_2991_4964_b0a3_0e0a2f951f29_Label
+            GoTo Code_9_Label
         End If
 
         ' Set Value
-        Calculation_bcb5c983_a5fb_4b30_b14f_7a1509fff980_Label:
+        Calculation_2_Label:
         Clipboard = Chr(0)
-
+        
         ' Set
-        Code_54826c34_2991_4964_b0a3_0e0a2f951f29_Label:
+        Code_9_Label:
         CodeStage_Set(Clipboard:=Clipboard)
 
     End Sub
@@ -307,21 +309,21 @@ Public Class Utility___Environment
 
         ' Success?
         If Success = True Then
-            GoTo End_c6bd6956_f378_418e_8880_30d84f5acad6_Label
+            GoTo End_Set_Screen_Resolution_Label
         Else
-            GoTo MultipleCalculation_d317d7bf_2ed3_4b48_8e0c_62e5598f7a11_Label
+            GoTo MultipleCalculation_Label
         End If
 
         ' Clear Dimensions
-        MultipleCalculation_d317d7bf_2ed3_4b48_8e0c_62e5598f7a11_Label:
+        MultipleCalculation_Label:
         Horizontal_Resolution = 0
         Vertical_Resolution = 0
-        GoTo End_c6bd6956_f378_418e_8880_30d84f5acad6_Label
+        GoTo End_Set_Screen_Resolution_Label
 
         ' Note1
         ' Note: Make sure you only pass in the screen resolution that is supported
 
-        End_c6bd6956_f378_418e_8880_30d84f5acad6_Label:
+        End_Set_Screen_Resolution_Label:
 
     End Sub
 
@@ -354,37 +356,38 @@ Public Class Utility___Environment
         Found = False
         Wait = 0
 
+        
         ' Find Process
-        Code_d3b1986a_fa70_41e9_a8af_cd2ffc78342e_Label:
+        Code_14_Label:
         CodeStage_Find_Process(Process_Name:=Process_Name, Window_Title:=Window_Title, Found:=Found)
 
         ' Found?
         If Found Then
-            GoTo End_b6fdc874_6a8d_405b_946e_10b6b47a6ae1_Label
+            GoTo End_Wait_for_Process_Window_Label
         Else
-            GoTo Decision_a5225d0b_41b3_4ed2_9f7c_31461a1f262a_Label
+            GoTo Decision_5_Label
         End If
 
         ' Wait?
-        Decision_a5225d0b_41b3_4ed2_9f7c_31461a1f262a_Label:
+        Decision_5_Label:
         If Wait>0 Then
-            GoTo Calculation_ba11e756_90e9_4cd7_a787_a41c2818e4b6_Label
+            GoTo Calculation_3_Label
         Else
-            GoTo End_b6fdc874_6a8d_405b_946e_10b6b47a6ae1_Label
+            GoTo End_Wait_for_Process_Window_Label
         End If
 
         ' Count Down
-        Calculation_ba11e756_90e9_4cd7_a787_a41c2818e4b6_Label:
+        Calculation_3_Label:
         Wait = Wait-0.5
 
         ' Wait
         ' Wait 0.5 seconds for condition with 0 choice(s)
         Select Case True
             Case Else
-                GoTo Code_d3b1986a_fa70_41e9_a8af_cd2ffc78342e_Label
+                GoTo Code_14_Label
         End Select
 
-        End_b6fdc874_6a8d_405b_946e_10b6b47a6ae1_Label:
+        End_Wait_for_Process_Window_Label:
 
     End Sub
 

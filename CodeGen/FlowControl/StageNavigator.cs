@@ -1,5 +1,6 @@
 using System.Xml.Linq;
 using BPAnalyzer.CodeGen.Utilities;
+using Microsoft.VisualBasic;
 
 namespace BPAnalyzer.CodeGen.FlowControl;
 
@@ -28,12 +29,12 @@ public static class StageNavigator
     /// </summary>
     public static string ResolveStageLabel(string stageId, XDocument doc)
     {
-        if (string.IsNullOrEmpty(stageId)) return GetLabel("Unknown", stageId);
+        if (string.IsNullOrEmpty(stageId)) return GetLabel("Unknown", stageId, doc);
 
         var stage = doc.Descendants()
             .FirstOrDefault(e => e.Name.LocalName == "stage" && e.Attribute("stageid")?.Value == stageId);
 
-        if (stage == null) return GetLabel("Unknown", stageId);
+        if (stage == null) return GetLabel("Unknown", stageId, doc);
 
         var stageType = stage.Attribute("type")?.Value ?? "Unknown";
 
@@ -45,7 +46,7 @@ public static class StageNavigator
                     && e.Attribute("type")?.Value == "End"
                     && e.Element("subsheetid")?.Value == subsheetId);
 
-            return GetLabel("End", endStage?.Attribute("stageid")?.Value ?? stageId);
+            return GetLabel("End", endStage?.Attribute("stageid")?.Value ?? stageId, doc);
         }
 
         if (stageType == "Anchor")
@@ -53,7 +54,7 @@ public static class StageNavigator
             return ResolveAnchorChain(stageId, doc);
         }
 
-        return GetLabel(stageType, stageId);
+        return GetLabel(stageType, stageId, doc);
     }
 
     /// <summary>
@@ -73,7 +74,7 @@ public static class StageNavigator
 
             if (stage == null)
             {
-                return GetLabel("Unknown", stageId);
+                return GetLabel("Unknown", stageId, doc);
             }
 
             var stageType = stage.Attribute("type")?.Value;
@@ -85,15 +86,49 @@ public static class StageNavigator
             currentId = stage.Element("onsuccess")?.Value;
         }
 
-        return GetLabel("Unknown", stageId);
+        return GetLabel("Unknown", stageId, doc);
     }
+
+    private static Dictionary<string, string> _labelMapping = new Dictionary<string, string>();
+    private static Dictionary<string, int> _labelCounter = new Dictionary<string, int>();
 
     /// <summary>
     /// Gets a formatted label for a stage.
     /// </summary>
-    public static string GetLabel(string stageType, string stageId)
+    public static string GetLabel(string stageType, string stageId, XDocument? doc)
     {
-        var sanitizedId = NameSanitizer.SanitizeId(stageId);
-        return $"{stageType}_{sanitizedId}_Label";
+        if (_labelMapping.TryGetValue(stageId, out string? label))
+        {
+            return label;
+        }
+
+        var processId = doc?.Root?.Attribute("preferredid")?.Value;
+        var uniqueId = "_";
+        var key = processId + stageType;
+        if (_labelCounter.TryGetValue(key, out int counter))
+        {
+            _labelCounter[key]++;
+            uniqueId = "_" + _labelCounter[key] + "_";
+        }
+        else
+        {
+            _labelCounter[key] = 1;
+        }
+
+        if (stageType == "End")
+        {
+            var stage = doc?.Root?.Elements("stage").FirstOrDefault(x => x.Attribute("stageid")?.Value == stageId);
+            var subsheetId = stage?.Element("subsheetid")?.Value;
+            var subsheetName = SubsheetResolver.FindSubsheetName(doc, subsheetId);
+            uniqueId = "_" + NameSanitizer.SanitizeMethodName(subsheetName) + "_";
+        }
+
+        // var sanitizedId = NameSanitizer.SanitizeId(stageId);
+        var newLabel = $"{stageType}{uniqueId}Label";
+        _labelMapping.Add(stageId, newLabel);
+        return newLabel;
+
+        // var sanitizedId = NameSanitizer.SanitizeId(stageId);
+        // return $"{stageType}_{sanitizedId}_Label";
     }
 }

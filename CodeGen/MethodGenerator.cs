@@ -241,7 +241,7 @@ public static class MethodGenerator
             }
 
             // Generate label
-            var labelName = StageNavigator.GetLabel(stageType, stageId);
+            var labelName = StageNavigator.GetLabel(stageType, stageId, stage.Document);
             sb.AppendLine($"        {labelName}:"); // will be switched in post processing
             sb.AppendLine($"        ' {stageName}");
 
@@ -252,7 +252,7 @@ public static class MethodGenerator
                 var recoverStageId = recoverStage.Attribute("stageid")?.Value;
                 if (!string.IsNullOrEmpty(recoverStageId))
                 {
-                    var recoverLabel = StageNavigator.GetLabel("Recover", recoverStageId);
+                    var recoverLabel = StageNavigator.GetLabel("Recover", recoverStageId, stage.Document);
                     sb.AppendLine($"        On Error GoTo {recoverLabel}");
                 }
             }
@@ -275,7 +275,7 @@ public static class MethodGenerator
         if (endStage != null)
         {
             var endStageId = endStage.Attribute("stageid")?.Value ?? "";
-            var endLabelName = StageNavigator.GetLabel("End", endStageId);
+            var endLabelName = StageNavigator.GetLabel("End", endStageId, endStage.Document);
             sb.AppendLine($"        {endLabelName}:");
 
             var endOutputs = endStage.Element("outputs")?.Elements("output");

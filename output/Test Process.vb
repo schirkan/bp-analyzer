@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: Test Process
 ' Version: 1.0
-' Generated: 2026-03-07 23:14:33
+' Generated: 2026-03-08 00:19:21
 
 Imports System
 Imports System.Collections.Generic
@@ -129,17 +129,17 @@ Public Class Test_Process
 
         ' MyToggle?
         If MyToggle Then
-            GoTo Calculation_da6d4891_f555_46b1_b752_73b463373de8_Label
+            GoTo Calculation_Label
         Else
-            GoTo MultipleCalculation_acac267a_d52f_473a_8266_3116177d865f_Label
+            GoTo MultipleCalculation_Label
         End If
 
         ' Toggle boolean value
-        Calculation_da6d4891_f555_46b1_b752_73b463373de8_Label:
+        Calculation_Label:
         MyToggle = MyToggle = False
-
+        
         ' Multi1
-        MultipleCalculation_acac267a_d52f_473a_8266_3116177d865f_Label:
+        MultipleCalculation_Label:
         Data5 = 1
         Data6 = 7.8
         Data8 = "tttt"
@@ -147,26 +147,26 @@ Public Class Test_Process
         ' Zahl?
         Select Case True
             Case Data5 = 1 ' Zahl ist 1
-                GoTo Action_34cf90dc_b7d5_48b7_b761_aeb1b50a88d0_Label
+                GoTo Action_3_Label
             Case Data5 = 2 ' Zahl ist 2
-                GoTo Calculation_52d2150c_e804_4b02_a498_b578b5ff5086_Label
+                GoTo Calculation_2_Label
             Case Else
-                GoTo Alert_c2f88d70_7f44_4b5e_861a_e3750d98f600_Label
+                GoTo Alert_Label
         End Select
 
         ' Alert1
-        Alert_c2f88d70_7f44_4b5e_861a_e3750d98f600_Label:
+        Alert_Label:
         BP_Alert.Notify("Achtung Achtung")
 
         ' BE
         RaiseException("Business Exception", "Zahl ist nicht 1 oder 2")
 
         ' Calc1
-        Calculation_52d2150c_e804_4b02_a498_b578b5ff5086_Label:
+        Calculation_2_Label:
         Data6 = Data5 + 6
-
+        
         ' Collections::Count Rows
-        Action_34cf90dc_b7d5_48b7_b761_aeb1b50a88d0_Label:
+        Action_3_Label:
         Blueprism_AutomateProcessCore_clsCollectionActions.Instance.Count_Rows(Collection_Name:="Coll2", Count:=Count)
 
         OutValue1 = Data1

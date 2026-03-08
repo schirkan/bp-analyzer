@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: bp demo
 ' Version: 1.0
-' Generated: 2026-03-07 23:14:33
+' Generated: 2026-03-08 00:19:21
 
 Imports System
 Imports System.Collections.Generic
@@ -60,20 +60,19 @@ Public Class bp_demo
     Public Sub MyPublicAction(Optional ByVal VNR As String = Nothing, Optional ByRef VerwSysSl As String = Nothing)
 
         ' Set VerwSysSl
-        On Error GoTo Recover_8247b8bb_c2bb_4895_9e43_99be2b466b50_Label
+        On Error GoTo Recover_Label
         VerwSysSl = Left(VNR, 2)
-
-        GoTo End_874d3dd7_cc13_4d3f_a2ba_cef7c8de0ee7_Label
+        GoTo End_MyPublicAction_Label
 
         ' Recover
-        Recover_8247b8bb_c2bb_4895_9e43_99be2b466b50_Label:
+        Recover_Label:
         StoreException()
 
         ' Resume
         ClearException()
-        Resume End_874d3dd7_cc13_4d3f_a2ba_cef7c8de0ee7_Label
+        Resume End_MyPublicAction_Label
 
-        End_874d3dd7_cc13_4d3f_a2ba_cef7c8de0ee7_Label:
+        End_MyPublicAction_Label:
 
     End Sub
 
@@ -88,16 +87,17 @@ Public Class bp_demo
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").CheckExists = True ' URL Bar Check Exists
-                GoTo Read_d7797c7b_b981_422b_8c44_04144e3bd521_Label
+                GoTo Read_Label
             Case Else
-                GoTo End_7fc17c15_89e3_42d4_b02d_c2104ae9f78b_Label
+                GoTo End_Get_URL_Label
         End Select
 
         ' Reader URL+Title
-        Read_d7797c7b_b981_422b_8c44_04144e3bd521_Label:
+        Read_Label:
         URL = Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").UIAGetValue()
         Window_Title = Application.Element("Main Window", "2660caf7-78b8-4335-af2e-bcf547eaf9a8").GetWindowText()
-        End_7fc17c15_89e3_42d4_b02d_c2104ae9f78b_Label:
+        
+        End_Get_URL_Label:
 
     End Sub
 
@@ -114,19 +114,20 @@ Public Class bp_demo
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").CheckExists = True ' URL Bar Check Exists
-                GoTo Write_52efde20_3c57_40a5_b946_8b3dc32ce835_Label
+                GoTo Write_Label
             Case Else
-                GoTo End_0555942f_1c7a_4c1c_aa68_6a107b4b5a52_Label
+                GoTo End_Set_URL_Label
         End Select
 
         ' Writer URL
-        Write_52efde20_3c57_40a5_b946_8b3dc32ce835_Label:
+        Write_Label:
         Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").Write(URL)
 
         ' Send Enter
         Application.Element("Main Window", "2660caf7-78b8-4335-af2e-bcf547eaf9a8").ActivateApp()
         Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").UIASendKeys(newtext:="{ENTER}")
-        End_0555942f_1c7a_4c1c_aa68_6a107b4b5a52_Label:
+        
+        End_Set_URL_Label:
 
     End Sub
 
@@ -137,46 +138,45 @@ Public Class bp_demo
     Private Sub InteralAction(Optional ByVal Value As String = Nothing)
 
         ' value empty?
-        On Error GoTo Recover_e58b2971_f6b9_4152_9eac_d76e7cd54a1b_Label
+        On Error GoTo Recover_2_Label
         If Value = "" Then
-            GoTo Exception_02b6ad56_a2b5_4d81_8ec8_61d5ee417ac2_Label
+            GoTo Exception_Label
         Else
-            GoTo Calculation_cbfee36a_a7d4_4121_bfbd_711414022b6a_Label
+            GoTo Calculation_2_Label
         End If
 
         ' SE
-        Exception_02b6ad56_a2b5_4d81_8ec8_61d5ee417ac2_Label:
-        On Error GoTo Recover_e58b2971_f6b9_4152_9eac_d76e7cd54a1b_Label
+        Exception_Label:
+        On Error GoTo Recover_2_Label
         RaiseException("System Exception", "Value is empty")
 
         ' Set Value
-        Calculation_cbfee36a_a7d4_4121_bfbd_711414022b6a_Label:
-        On Error GoTo Recover_e58b2971_f6b9_4152_9eac_d76e7cd54a1b_Label
+        Calculation_2_Label:
+        On Error GoTo Recover_2_Label
         Value = Value & Environment.CurrentRow("Const Value1")
 
         ' Note1
         ' This is a note in BP
-        GoTo End_ab996bd9_e5f6_4c28_a59e_cc84ab29e58c_Label
+        GoTo End_InteralAction_Label
 
         ' Global Recover
-        Recover_e58b2971_f6b9_4152_9eac_d76e7cd54a1b_Label:
+        Recover_2_Label:
         StoreException()
-        GoTo Calculation_6ad99ace_a4e2_4919_9a22_e7baa3af2bde_Label
+        GoTo Calculation_3_Label
 
         ' Re-Throw
-        Exception_a987ff7d_de3a_4d2c_bcca_696cda7cdcb2_Label:
-        On Error GoTo Recover_e58b2971_f6b9_4152_9eac_d76e7cd54a1b_Label
+        Exception_2_Label:
+        On Error GoTo Recover_2_Label
         RethrowException()
 
         ' Log Exception
-        Calculation_6ad99ace_a4e2_4919_9a22_e7baa3af2bde_Label:
-        On Error GoTo Recover_e58b2971_f6b9_4152_9eac_d76e7cd54a1b_Label
+        Calculation_3_Label:
+        On Error GoTo Recover_2_Label
         Value = "Type: " & ExceptionType() & NewLine() &
 "Details: " & ExceptionDetail()
+        GoTo Exception_2_Label
 
-        GoTo Exception_a987ff7d_de3a_4d2c_bcca_696cda7cdcb2_Label
-
-        End_ab996bd9_e5f6_4c28_a59e_cc84ab29e58c_Label:
+        End_InteralAction_Label:
 
     End Sub
 

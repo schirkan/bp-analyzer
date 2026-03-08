@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Microsoft Store
 ' Version: 1.0
-' Generated: 2026-03-07 23:14:33
+' Generated: 2026-03-08 00:19:21
 
 Imports System
 Imports System.Collections.Generic
@@ -61,37 +61,38 @@ Public Class Microsoft_Store
         FilePath = "ms-windows-store://updates"
 
         ' Start Process
-        On Error GoTo Recover_131b33a0_29aa_429a_b11b_b290f44954a5_Label
+        On Error GoTo Recover_Label
         Utility___Environment.Instance.Start_Process(Application:=FilePath)
+        
         ' Attach
-        Navigate_5a127fca_258d_4aed_9d17_ea586664d634_Label:
-        On Error GoTo Recover_131b33a0_29aa_429a_b11b_b290f44954a5_Label
+        Navigate_Label:
+        On Error GoTo Recover_Label
         Application.Element("Microsoft Store", "330860ce-038b-499b-9a6c-c1e8140f72a2").AttachApplication()
 
         ' W5
-        On Error GoTo Recover_131b33a0_29aa_429a_b11b_b290f44954a5_Label
+        On Error GoTo Recover_Label
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Main Window", "b048ceed-93fb-48da-99af-7fafeec74d4e").CheckExists = True ' Main Window Check Exists
-                GoTo End_05774252_de6b_4703_9edf_5bd04116cf21_Label
+                GoTo End_Launch_Label
             Case Else
-                GoTo Exception_427cad4f_4758_4510_801d_acbd6542f39b_Label
+                GoTo Exception_Label
         End Select
 
         ' SE
-        Exception_427cad4f_4758_4510_801d_acbd6542f39b_Label:
-        On Error GoTo Recover_131b33a0_29aa_429a_b11b_b290f44954a5_Label
+        Exception_Label:
+        On Error GoTo Recover_Label
         RaiseException("System Exception", "Main Window not found")
 
         ' Recover
-        Recover_131b33a0_29aa_429a_b11b_b290f44954a5_Label:
+        Recover_Label:
         StoreException()
 
         ' Resume
         ClearException()
-        Resume Navigate_5a127fca_258d_4aed_9d17_ea586664d634_Label
+        Resume Navigate_Label
 
-        End_05774252_de6b_4703_9edf_5bd04116cf21_Label:
+        End_Launch_Label:
 
     End Sub
 
@@ -114,97 +115,97 @@ Public Class Microsoft_Store
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Header: Updates und Downloads", "0340b82e-9c61-45bd-a50b-f5691247a070").CheckExists = True ' Header: Updates und Downloads Check Exists
-                GoTo WaitStart_473090d3_a621_4fc2_8436_25fc69a82067_Label
+                GoTo WaitStart_3_Label
             Case Else
-                GoTo Exception_e8b3fd9d_bd7e_4f39_aee3_2bc8c8b1239b_Label
+                GoTo Exception_2_Label
         End Select
 
         ' SE
-        Exception_e8b3fd9d_bd7e_4f39_aee3_2bc8c8b1239b_Label:
+        Exception_2_Label:
         RaiseException("System Exception", "Download Header not found")
 
         ' Click Nach Updates suchen
-        Navigate_fe0746e7_430a_43f1_8c72_9c40763f31bb_Label:
+        Navigate_3_Label:
         Application.Element("Button: Nach Updates suchen", "2a7db9d3-154c-404c-b610-5c3ae51ecb32").UIAButtonPress()
-        GoTo WaitStart_a61f62ae_7993_470f_8d1f_cffdcd5bea5b_Label
+        GoTo WaitStart_4_Label
 
         ' W5
-        WaitStart_473090d3_a621_4fc2_8436_25fc69a82067_Label:
+        WaitStart_3_Label:
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Button: Nach Updates suchen", "2a7db9d3-154c-404c-b610-5c3ae51ecb32").CheckExists = True ' Button: Nach Updates suchen Check Exists
-                GoTo Navigate_fe0746e7_430a_43f1_8c72_9c40763f31bb_Label
+                GoTo Navigate_3_Label
             Case Else
-                GoTo Exception_ce2d7bf4_fff3_4d86_a6f3_01dd3c9742db_Label
+                GoTo Exception_3_Label
         End Select
 
         ' SE
-        Exception_ce2d7bf4_fff3_4d86_a6f3_01dd3c9742db_Label:
+        Exception_3_Label:
         RaiseException("System Exception", "Nach Updates suchen Button not found")
 
         ' W120
-        WaitStart_a61f62ae_7993_470f_8d1f_cffdcd5bea5b_Label:
+        WaitStart_4_Label:
         ' Wait 120 seconds for condition with 2 choice(s)
         Select Case True
             Case Application.Element("Button: Die Überprüfung auf Updates wurde abgeschlossen.", "397fb78c-8c08-4dc0-987c-3ca33d3762a4").CheckExists = True ' Button: Die Überprüfung auf Updates wurde abgeschlossen. Check Exists
-                GoTo WaitStart_cf9ecce9_11c0_48ca_a533_6c59e4ae1d17_Label
+                GoTo WaitStart_5_Label
             Case Application.Element("Button: Nach Updates suchen", "2a7db9d3-154c-404c-b610-5c3ae51ecb32").CheckExists = True ' Button: Nach Updates suchen Check Exists
-                GoTo WaitStart_cf9ecce9_11c0_48ca_a533_6c59e4ae1d17_Label
+                GoTo WaitStart_5_Label
             Case Else
-                GoTo Exception_8c5feb38_8094_4c3f_a292_ac967710a2e8_Label
+                GoTo Exception_4_Label
         End Select
 
         ' SE
-        Exception_8c5feb38_8094_4c3f_a292_ac967710a2e8_Label:
+        Exception_4_Label:
         RaiseException("System Exception", "Download Header not found")
 
         ' Click Update All
-        Navigate_7a1602d1_74e3_482c_9a3f_58d3e85baf51_Label:
+        Navigate_4_Label:
         ' Navigate: No steps defined
-        GoTo WaitStart_a027ef03_3f55_4ae4_ae16_cee7f7dc29f1_Label
+        GoTo WaitStart_6_Label
 
         ' W2
-        WaitStart_cf9ecce9_11c0_48ca_a533_6c59e4ae1d17_Label:
+        WaitStart_5_Label:
         ' Wait 2 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Button: Nach Updates suchen", "2a7db9d3-154c-404c-b610-5c3ae51ecb32").CheckExists = True ' Button: Nach Updates suchen Check Exists
-                GoTo Navigate_7a1602d1_74e3_482c_9a3f_58d3e85baf51_Label
+                GoTo Navigate_4_Label
             Case Else
-                GoTo Note_95342886_536d_4cc5_93cf_9fb9f009ef0b_Label
+                GoTo Note_Label
         End Select
 
         ' W5
-        WaitStart_a027ef03_3f55_4ae4_ae16_cee7f7dc29f1_Label:
+        WaitStart_6_Label:
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Button: Nach Updates suchen", "2a7db9d3-154c-404c-b610-5c3ae51ecb32").CheckExists = True ' Button: Nach Updates suchen Check Exists
-                GoTo End_23ba7d3f_cc9b_4bf6_bb28_545408febcae_Label
+                GoTo End_Start_Updates_Label
             Case Else
-                GoTo Exception_1bcc03a0_82b4_44d7_b34f_9edda37ef8ac_Label
+                GoTo Exception_5_Label
         End Select
 
         ' SE
-        Exception_1bcc03a0_82b4_44d7_b34f_9edda37ef8ac_Label:
+        Exception_5_Label:
         RaiseException("System Exception", "Nach Updates suchen Button not found")
 
         ' Note1
-        Note_95342886_536d_4cc5_93cf_9fb9f009ef0b_Label:
+        Note_Label:
         ' No Updates
-        GoTo End_23ba7d3f_cc9b_4bf6_bb28_545408febcae_Label
+        GoTo End_Start_Updates_Label
 
         ' Note2
         ' TODO
-        GoTo WaitStart_cf9ecce9_11c0_48ca_a533_6c59e4ae1d17_Label
+        GoTo WaitStart_5_Label
 
         ' Note2
         ' TODO
-        GoTo Navigate_7a1602d1_74e3_482c_9a3f_58d3e85baf51_Label
+        GoTo Navigate_4_Label
 
         ' Note2
         ' TODO
-        GoTo WaitStart_a027ef03_3f55_4ae4_ae16_cee7f7dc29f1_Label
+        GoTo WaitStart_6_Label
 
-        End_23ba7d3f_cc9b_4bf6_bb28_545408febcae_Label:
+        End_Start_Updates_Label:
 
     End Sub
 

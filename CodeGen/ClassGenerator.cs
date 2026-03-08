@@ -186,13 +186,10 @@ public static class ClassGenerator
             var stageType = stage.Attribute("type")?.Value;
             if (stageId == null || stageType == null) continue;
 
-            var stageLabel = StageNavigator.GetLabel(stageType, stageId);
+            var stageLabel = StageNavigator.GetLabel(stageType, stageId, stage.Document);
 
             // Remove Goto directly before label
-            code = System.Text.RegularExpressions.Regex.Replace(
-                code,
-                $"GoTo {stageLabel}\\s*{stageLabel}:",
-                $"{stageLabel}:");
+            code = System.Text.RegularExpressions.Regex.Replace(code, $"GoTo {stageLabel}\\s*?( *{stageLabel}:)", "\r\n$1");
 
             // Remove labels without references
             var firstIndex = code.IndexOf(stageLabel);

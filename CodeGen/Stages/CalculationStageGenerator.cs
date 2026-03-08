@@ -17,7 +17,7 @@ public class CalculationStageGenerator : StageGeneratorBase
         var formattedExpression = ExpressionParser.FormatExpression(calculation);
         var formattedStageName = NameSanitizer.SanitizeVariableName(stageName ?? "");
         sb.AppendLine($"        {formattedStageName} = {formattedExpression}");
-        sb.AppendLine();
+        // sb.AppendLine();
 
         StageNavigator.GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);
     }
