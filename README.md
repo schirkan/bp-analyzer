@@ -276,11 +276,11 @@ bp-analyzer/
 | Navigate          | UI automation       | ✓         | Dummy implementation                       |
 | Write             | UI automation       | ✓         | Dummy implementation                       |
 | Read              | UI automation       | ✓         | Dummy implementation                       |
+| WaitStart/WaitEnd | Wait stages         | ✓         | Dummy implementation                       |
 | Process           | Subprocess call     | ✓         |                                            |
 | Anchor            | Jump marker         | ✓         | Will be skipped in output                  |
 | Block             | Block container     | ✓         | Only used in exception handling            |
-| WaitStart/WaitEnd | Wait stages         | ✓         |                                            |
-| LoopStart/LoopEnd | Loops               | no        |                                            |
+| LoopStart/LoopEnd | Loops               | ✓         | Uses goto statement                        |
 
 ## License
 
