@@ -543,10 +543,6 @@
     <subsheetid>92e08e0b-a120-4a79-957b-fd1e1760fcda</subsheetid>
     <loginhibit />
     <display x="15" y="90" />
-    <outputs>
-      <output type="text" name="URL" stage="URL" fromStage="URL" />
-      <output type="text" name="Window Title" stage="Window Title" fromStage="Window Title" />
-    </outputs>
   </stage>
   <stage stageid="96bda4b9-9533-44fa-9632-789fe641c75f" name="Time Out1" type="WaitEnd">
     <subsheetid>92e08e0b-a120-4a79-957b-fd1e1760fcda</subsheetid>

@@ -2,6 +2,8 @@
 ' This file is copied to the output directory during code generation
 
 Imports System
+Imports System.Collections.Generic
+Imports System.Data
 
 ''' <summary>
 ''' Base class for all generated BluePrism classes
@@ -586,3 +588,140 @@ Public Class BP_Base
     End Class
 
 End Class
+
+''' <summary>
+''' Module containing extension methods for DataTable
+''' Provides BluePrism-compatible row iteration functionality
+''' </summary>
+Public Module DataTableExtensions
+
+    ''' <summary>
+    ''' Dictionary to store current row index for each DataTable (by table name or hash code)
+    ''' </summary>
+    Private _rowIndexes As New Dictionary(Of String, Integer)()
+
+    ''' <summary>
+    ''' Proxy class for accessing DataTable row values with get/set
+    ''' </summary>
+    Public Class DataTableRowProxy
+        Private _table As DataTable
+        Private _columnName As String
+
+        ''' <summary>
+        ''' Constructor
+        ''' </summary>
+        Public Sub New(table As DataTable, columnName As String)
+            _table = table
+            _columnName = columnName
+        End Sub
+
+        ''' <summary>
+        ''' Gets or sets the value of the current row column
+        ''' </summary>
+        Public Property Value As Object
+            Get
+                If _table Is Nothing OrElse _table.Rows.Count = 0 Then
+                    Return String.Empty
+                End If
+
+                ' Get or initialize row index for this table
+                Dim tableName As String = _table.TableName
+                If String.IsNullOrEmpty(tableName) Then
+                    tableName = _table.GetHashCode().ToString()
+                End If
+
+                Dim rowIndex As Integer = 0
+                If _rowIndexes.ContainsKey(tableName) Then
+                    rowIndex = _rowIndexes(tableName)
+                End If
+
+                ' Ensure index is within bounds
+                If rowIndex >= _table.Rows.Count Then
+                    rowIndex = _table.Rows.Count - 1
+                End If
+                If rowIndex < 0 Then rowIndex = 0
+
+                Return _table.Rows(rowIndex)(_columnName)
+            End Get
+            Set(value As Object)
+                If _table IsNot Nothing AndAlso _table.Rows.Count > 0 Then
+                    ' Get or initialize row index for this table
+                    Dim tableName As String = _table.TableName
+                    If String.IsNullOrEmpty(tableName) Then
+                        tableName = _table.GetHashCode().ToString()
+                    End If
+
+                    Dim rowIndex As Integer = 0
+                    If _rowIndexes.ContainsKey(tableName) Then
+                        rowIndex = _rowIndexes(tableName)
+                    End If
+
+                    ' Ensure index is within bounds
+                    If rowIndex >= _table.Rows.Count Then
+                        rowIndex = _table.Rows.Count - 1
+                    End If
+                    If rowIndex < 0 Then rowIndex = 0
+
+                    _table.Rows(rowIndex)(_columnName) = value
+                End If
+            End Set
+        End Property
+    End Class
+
+    ''' <summary>
+    ''' Gets a proxy for accessing the current row value in a DataTable (BluePrism compatibility)
+    ''' Uses the stored row index for the table
+    ''' </summary>
+    ''' <param name="table">The DataTable to get the value from</param>
+    ''' <param name="columnName">The name of the column</param>
+    ''' <returns>A DataTableRowProxy for the current row</returns>
+    <System.Runtime.CompilerServices.Extension()>
+    Public Function GetCurrentRow(table As DataTable, columnName As String) As DataTableRowProxy
+        Return New DataTableRowProxy(table, columnName)
+    End Function
+
+    ''' <summary>
+    ''' Selects the first row in a DataTable for iteration
+    ''' </summary>
+    ''' <param name="table">The DataTable to iterate</param>
+    <System.Runtime.CompilerServices.Extension()>
+    Public Sub SelectFirstRow(table As DataTable)
+        If table IsNot Nothing AndAlso table.Rows.Count > 0 Then
+            Dim tableName As String = table.TableName
+            If String.IsNullOrEmpty(tableName) Then
+                tableName = table.GetHashCode().ToString()
+            End If
+            _rowIndexes(tableName) = 0
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Moves to the next row in a DataTable
+    ''' </summary>
+    ''' <param name="table">The DataTable to iterate</param>
+    ''' <returns>True if there are more rows, False if at the end</returns>
+    <System.Runtime.CompilerServices.Extension()>
+    Public Function SelectNextRow(table As DataTable) As Boolean
+        If table Is Nothing OrElse table.Rows.Count = 0 Then
+            Return False
+        End If
+
+        Dim tableName As String = table.TableName
+        If String.IsNullOrEmpty(tableName) Then
+            tableName = table.GetHashCode().ToString()
+        End If
+
+        Dim currentIndex As Integer = 0
+        If _rowIndexes.ContainsKey(tableName) Then
+            currentIndex = _rowIndexes(tableName)
+        End If
+
+        ' Move to next row
+        currentIndex += 1
+        _rowIndexes(tableName) = currentIndex
+
+        ' Return true if there are more rows
+        Return currentIndex < table.Rows.Count
+    End Function
+
+End Module

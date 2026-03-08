@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Windows Settings
 ' Version: 1.0
-' Generated: 2026-03-08 00:19:21
+' Generated: 2026-03-08 23:43:21
 
 Imports System
 Imports System.Collections.Generic
@@ -40,12 +40,16 @@ Public Class Windows_Settings
     ''' </summary>
     Public Sub New()
 
+        Start_Label:
+
     End Sub
 
     ''' <summary>
     ''' Destructor (CleanUp) - called when object is disposed
     ''' </summary>
     Protected Overrides Sub Finalize()
+
+        Start_2_Label:
 
     End Sub
 
@@ -59,6 +63,9 @@ Public Class Windows_Settings
 
         ' Initialize variables with initialvalue
         FilePath = "ms-settings:windowsupdate"
+
+        Start_3_Label:
+        On Error GoTo Recover_Label
 
         ' Start Process
         On Error GoTo Recover_Label
@@ -102,6 +109,7 @@ Public Class Windows_Settings
     Public Sub Terminate()
 
         ' Terminate
+        Start_4_Label:
         Application.Element("Windows Settings", "90f3791d-64d2-4092-b521-c2d17a374f3c").Terminate()
 
     End Sub

@@ -24,7 +24,7 @@ public static class ExpressionParser
         // Handle Collection column access with multiple levels: [Collection.Column1.Column2.Column3]
         // Becomes: Collection.CurrentRow("Column1").CurrentRow("Column2").CurrentRow("Column3")
         // Note: Column names can have spaces, collection names cannot
-        result = Regex.Replace(result ?? "", @"\[([a-zA-Z_][a-zA-Z0-9_]*)(\.[^\]]+)+\]", match =>
+        result = Regex.Replace(result ?? "", @"\[([a-zA-Z_][a-zA-Z0-9_ ]*)(\.[^\]]+)+\]", match =>
         {
             var fullMatch = match.Groups[0].Value;
             // Remove the outer brackets and split by dots
@@ -40,7 +40,7 @@ public static class ExpressionParser
             for (int i = 1; i < parts.Length; i++)
             {
                 var columnName = parts[i].Trim();
-                vbCode += $".CurrentRow(\"{columnName}\")";
+                vbCode += $".GetCurrentRow(\"{columnName}\").Value";
             }
 
             return vbCode;

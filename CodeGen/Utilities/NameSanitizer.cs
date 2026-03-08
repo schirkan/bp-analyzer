@@ -22,9 +22,13 @@ public static class NameSanitizer
     /// <summary>
     /// Sanitizes a variable name to be a valid VB.NET identifier.
     /// </summary>
-    public static string SanitizeVariableName(string name)
+    public static string SanitizeVariableName(string? name)
     {
         if (string.IsNullOrEmpty(name)) return "";
+        if (name.Contains("."))
+        {
+            return ExpressionParser.FormatExpression("[" + name + "]");
+        }
         var sanitized = Regex.Replace(name, @"[^a-zA-Z0-9_]", "_");
         if (!char.IsLetter(sanitized[0])) sanitized = "_" + sanitized;
         return sanitized;

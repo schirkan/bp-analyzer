@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: Test Process
 ' Version: 1.0
-' Generated: 2026-03-08 00:19:21
+' Generated: 2026-03-08 23:43:19
 
 Imports System
 Imports System.Collections.Generic
@@ -53,7 +53,11 @@ Public Class Test_Process
         End If
 
         ' Variable Test
+        Start_Label:
         Variable_Test(InData1:=MyText, InData2:=123, OutValue1:=OutValue1, OutValue2:=OutValue2)
+
+        ' Loop Test
+        Loop_Test()
 
         ' Dummy
         Dummy()
@@ -78,10 +82,37 @@ Public Class Test_Process
         local_VNR = "AB123456"""
 
         ' MyPublicAction
+        Start_Label:
         bp_demo.Instance.MyPublicAction(VNR:=local_VNR, VerwSysSl:=local_VerwSysSl)
 
         ' bp demo::Get URL
         bp_demo.Instance.Get_URL(URL:=URL, Window_Title:=Window_Title)
+
+    End Sub
+
+    ''' <summary>
+    ''' BluePrism page: Loop_Test
+    ''' </summary>
+    Private Sub Loop_Test()
+
+        ' Local variables
+        Dim Values As DataTable
+        Dim Name As String
+
+        ' Initialize variables with initialvalue
+        Name = "Martin"
+
+        ' Loop Values
+        Values.SelectFirstRow()
+        
+        ' Calculate Distance
+        Action_3_Label:
+        Utility___Strings.Instance.Calculate_Distance(Source:=Values.GetCurrentRow("Name").Value, Target:=Name, Case_Sensitive:=False, Distance:=Values.GetCurrentRow("Distance").Value, Similarity:=Values.GetCurrentRow("Similarity").Value)
+
+        ' Loop Values
+        If Values.SelectNextRow() Then
+            GoTo Action_3_Label
+        End If
 
     End Sub
 
@@ -147,7 +178,7 @@ Public Class Test_Process
         ' Zahl?
         Select Case True
             Case Data5 = 1 ' Zahl ist 1
-                GoTo Action_3_Label
+                GoTo Action_4_Label
             Case Data5 = 2 ' Zahl ist 2
                 GoTo Calculation_2_Label
             Case Else
@@ -166,7 +197,7 @@ Public Class Test_Process
         Data6 = Data5 + 6
         
         ' Collections::Count Rows
-        Action_3_Label:
+        Action_4_Label:
         Blueprism_AutomateProcessCore_clsCollectionActions.Instance.Count_Rows(Collection_Name:="Coll2", Count:=Count)
 
         OutValue1 = Data1

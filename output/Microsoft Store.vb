@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Microsoft Store
 ' Version: 1.0
-' Generated: 2026-03-08 00:19:21
+' Generated: 2026-03-08 23:43:19
 
 Imports System
 Imports System.Collections.Generic
@@ -40,12 +40,16 @@ Public Class Microsoft_Store
     ''' </summary>
     Public Sub New()
 
+        Start_Label:
+
     End Sub
 
     ''' <summary>
     ''' Destructor (CleanUp) - called when object is disposed
     ''' </summary>
     Protected Overrides Sub Finalize()
+
+        Start_2_Label:
 
     End Sub
 
@@ -59,6 +63,9 @@ Public Class Microsoft_Store
 
         ' Initialize variables with initialvalue
         FilePath = "ms-windows-store://updates"
+
+        Start_3_Label:
+        On Error GoTo Recover_Label
 
         ' Start Process
         On Error GoTo Recover_Label
@@ -102,6 +109,7 @@ Public Class Microsoft_Store
     Public Sub Terminate()
 
         ' Terminate
+        Start_4_Label:
         Application.Element("Microsoft Store", "330860ce-038b-499b-9a6c-c1e8140f72a2").Terminate()
 
     End Sub
@@ -112,6 +120,7 @@ Public Class Microsoft_Store
     Public Sub Start_Updates()
 
         ' W5
+        Start_5_Label:
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Header: Updates und Downloads", "0340b82e-9c61-45bd-a50b-f5691247a070").CheckExists = True ' Header: Updates und Downloads Check Exists
@@ -215,6 +224,7 @@ Public Class Microsoft_Store
     Public Sub Wait_Updates_Finished()
 
         ' Note2
+        Start_6_Label:
         ' TODO
 
     End Sub

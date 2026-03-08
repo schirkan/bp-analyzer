@@ -10,6 +10,14 @@
     <name>Dummy</name>
     <view>
       <camerax>0</camerax>
+      <cameray>42</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="ad2039f3-1cc3-4228-ba2d-6aea0b27c1e5" type="Normal" published="False">
+    <name>Loop Test</name>
+    <view>
+      <camerax>0</camerax>
       <cameray>0</cameray>
       <zoom version="2">1.25</zoom>
     </view>
@@ -27,14 +35,14 @@
     <onsuccess>3dcc3017-d79f-4f81-b002-ff7c2054a8c1</onsuccess>
   </stage>
   <stage stageid="1f3bb070-109c-4bbc-babf-3ef6af6b6fa2" name="End" type="End">
-    <display x="-30" y="45" />
+    <display x="-30" y="90" />
   </stage>
   <stage stageid="b09d0aee-5254-423f-a8b5-afaa6b0ae2ad" name="Stage1" type="ProcessInfo">
     <display x="-195" y="-105" w="150" h="90" />
   </stage>
   <stage stageid="5eb89ba8-fa28-4939-b7d7-cc29a13cf616" name="Call Process A" type="Process">
     <loginhibit onsuccess="true" />
-    <display x="-30" y="0" />
+    <display x="-30" y="45" />
     <inputs>
       <input type="text" name="Name" friendlyname="Name" expr="[MyText]" />
     </inputs>
@@ -390,7 +398,7 @@
   </stage>
   <stage stageid="40ef8cff-a3db-42d0-acf8-3e3992f38a15" name="Dummy" type="SubSheet">
     <loginhibit onsuccess="true" />
-    <display x="-30" y="-45" />
+    <display x="-30" y="0" />
     <onsuccess>5eb89ba8-fa28-4939-b7d7-cc29a13cf616</onsuccess>
     <processid>81fb6017-358b-41a7-af11-9f8562919693</processid>
   </stage>
@@ -405,7 +413,7 @@
       <output type="date" name="OutValue1" friendlyname="OutValue1" stage="OutValue1" />
       <output type="flag" name="OutValue2" friendlyname="OutValue2" stage="OutValue2" />
     </outputs>
-    <onsuccess>40ef8cff-a3db-42d0-acf8-3e3992f38a15</onsuccess>
+    <onsuccess>ad30dc75-011f-464a-a563-73ffe0e30c0c</onsuccess>
     <processid>da65086d-4794-4b77-a06e-0c67a6dcf0d8</processid>
   </stage>
   <stage stageid="41adba33-6012-45b9-957e-7705026a7f03" name="bp demo::Get URL" type="Action">
@@ -448,5 +456,94 @@
     <initialvalue />
     <private />
     <alwaysinit />
+  </stage>
+  <stage stageid="ea6ad940-b35c-4e05-b6b3-c35371f62b32" name="Loop Test" type="SubSheetInfo">
+    <subsheetid>ad2039f3-1cc3-4228-ba2d-6aea0b27c1e5</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="a7f33ca6-9795-43e9-94b4-1d7e8655d81f" name="Start" type="Start">
+    <subsheetid>ad2039f3-1cc3-4228-ba2d-6aea0b27c1e5</subsheetid>
+    <display x="-30" y="-135" />
+    <onsuccess>7fb6076f-d8d2-4776-b6b2-28ff554206df</onsuccess>
+  </stage>
+  <stage stageid="c133ab82-89de-4c32-83a3-e3d8fb699dc9" name="End" type="End">
+    <subsheetid>ad2039f3-1cc3-4228-ba2d-6aea0b27c1e5</subsheetid>
+    <display x="-30" y="45" />
+  </stage>
+  <stage stageid="1b9f7623-6a31-475e-b39d-c7dcaab7777a" name="Values" type="Collection">
+    <subsheetid>ad2039f3-1cc3-4228-ba2d-6aea0b27c1e5</subsheetid>
+    <display x="-195" y="-15" w="120" h="30" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Name" type="text" />
+      <field name="Distance" type="number" />
+      <field name="Similarity" type="number" />
+    </collectioninfo>
+    <initialvalue>
+      <row>
+        <field name="Name" type="text" value="Max" />
+        <field name="Distance" type="number" value="" />
+        <field name="Similarity" type="number" value="" />
+      </row>
+      <row>
+        <field name="Name" type="text" value="John" />
+        <field name="Distance" type="number" value="" />
+        <field name="Similarity" type="number" value="" />
+      </row>
+      <row>
+        <field name="Name" type="text" value="Lisa" />
+        <field name="Distance" type="number" value="" />
+        <field name="Similarity" type="number" value="" />
+      </row>
+    </initialvalue>
+  </stage>
+  <stage stageid="70a0af77-bc67-4668-ae50-8acedc13691a" name="Loop Values" type="LoopEnd">
+    <subsheetid>ad2039f3-1cc3-4228-ba2d-6aea0b27c1e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-30" y="0" />
+    <onsuccess>c133ab82-89de-4c32-83a3-e3d8fb699dc9</onsuccess>
+    <groupid>88460553-a6c7-448c-a4a8-7e1c4cdb8de9</groupid>
+  </stage>
+  <stage stageid="7fb6076f-d8d2-4776-b6b2-28ff554206df" name="Loop Values" type="LoopStart">
+    <subsheetid>ad2039f3-1cc3-4228-ba2d-6aea0b27c1e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-30" y="-90" />
+    <onsuccess>8878b949-ad08-4543-8a61-5401d67d5730</onsuccess>
+    <groupid>88460553-a6c7-448c-a4a8-7e1c4cdb8de9</groupid>
+    <looptype>ForEach</looptype>
+    <loopdata>Values</loopdata>
+  </stage>
+  <stage stageid="8878b949-ad08-4543-8a61-5401d67d5730" name="Calculate Distance" type="Action">
+    <subsheetid>ad2039f3-1cc3-4228-ba2d-6aea0b27c1e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-30" y="-45" />
+    <inputs>
+      <input type="text" name="Source" friendlyname="Source" narrative="The string to compare against the Target string." expr="[Values.Name]" />
+      <input type="text" name="Target" friendlyname="Target" narrative="The string that is being compared against." expr="[Name]" />
+      <input type="flag" name="Case Sensitive" friendlyname="Case Sensitive" narrative="A flag indicating whether the comparison should take the case (i.e. Upper vs Lower) into account. Default value is True." expr="False" />
+    </inputs>
+    <outputs>
+      <output type="number" name="Distance" friendlyname="Distance" narrative="The distance between the two strings." stage="Values.Distance" />
+      <output type="number" name="Similarity" friendlyname="Similarity" narrative="The percentage similarity of the two input strings." stage="Values.Similarity" />
+    </outputs>
+    <onsuccess>70a0af77-bc67-4668-ae50-8acedc13691a</onsuccess>
+    <resource object="Utility - Strings" action="Calculate Distance" />
+  </stage>
+  <stage stageid="060dca36-2491-4d8c-85bb-a92a9dcd93f1" name="Name" type="Data">
+    <subsheetid>ad2039f3-1cc3-4228-ba2d-6aea0b27c1e5</subsheetid>
+    <loginhibit onsuccess="true" />
+    <display x="-195" y="15" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">Martin</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="ad30dc75-011f-464a-a563-73ffe0e30c0c" name="Loop Test" type="SubSheet">
+    <loginhibit onsuccess="true" />
+    <display x="-30" y="-45" />
+    <onsuccess>40ef8cff-a3db-42d0-acf8-3e3992f38a15</onsuccess>
+    <processid>ad2039f3-1cc3-4228-ba2d-6aea0b27c1e5</processid>
   </stage>
 </process>

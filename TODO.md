@@ -155,27 +155,12 @@
   - Supports input/output parameters with named arguments
 
 - [x] in all methods all params should be optional
-
-- [ ] implement multicalc
-  - reuse codegen logic from sinlge calc
-  - sample:
-        ' Data5 = 123
-        ' Data6 = 7.8
-        ' Data8 = "tttt"
-- [ ] generate method to evaluate expressions
-  - MyToggle = DataBinder.Eval(Me, "[MyToggle] = False")
-
-- [ ] add missing system methods to Template_BP_Base.vb
-  - 
-
-- [ ] implement app model xml
 - [x] implement stage type=Navigate
 - [x] implement stage type=Reader
 - [x] implement stage type=Writer
 - [x] implement stage type=Code
 - [x] fix static variables
   - if data stage does not have <alwaysinit />: change variable definition from "Dim" to "Static"
-
 - [x] implement input stage
   - sample xml:
     ```    
@@ -198,3 +183,17 @@
 
 - [x] implement global code
 - [x] code stage with params
+- [x] implement multicalc
+  - reuse codegen logic from sinlge calc
+  - sample:
+        ' Data5 = 123
+        ' Data6 = 7.8
+        ' Data8 = "tttt"
+- [x] implement stage type LoopStart and LoopEnd
+- [ ] implement stage type Collection
+- [ ] fix stage type block (on error)
+- [ ] generate method to evaluate expressions
+  - MyToggle = DataBinder.Eval(Me, "[MyToggle] = False")
+- [ ] implement app model xml
+- [ ] add missing system methods to Template_BP_Base.vb
+  - ...

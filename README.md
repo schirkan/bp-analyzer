@@ -2,142 +2,141 @@
 
 BluePrism XML to VB.NET Code Generator
 
-Dieses Tool konvertiert BluePrism XML-Exportdateien in VB.NET-Klassen mit GoTo-basiertem Prozessfluss.
+This tool converts BluePrism XML export files into VB.NET classes with GoTo-based process flow.
 
-## Inhaltsverzeichnis
+## Table of Contents
 
 - [BP-Analyzer](#bp-analyzer)
-  - [Inhaltsverzeichnis](#inhaltsverzeichnis)
+  - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
-  - [CLI-Aufrufe](#cli-aufrufe)
-    - [Code-Generierung](#code-generierung)
-      - [Grundlegende Aufrufe](#grundlegende-aufrufe)
-      - [Alle CLI-Varianten](#alle-cli-varianten)
-    - [Prozess-Export](#prozess-export)
-      - [Alle Export-CLI-Varianten](#alle-export-cli-varianten)
-  - [Ausgabe kompilieren](#ausgabe-kompilieren)
-    - [Mit dotnet MSBuild](#mit-dotnet-msbuild)
-    - [Mit MSBuild (Visual Studio)](#mit-msbuild-visual-studio)
-    - [Kompilierte Ausgabe](#kompilierte-ausgabe)
-  - [Generierter Code](#generierter-code)
+  - [CLI Commands](#cli-commands)
+    - [Code Generation](#code-generation)
+      - [Basic Commands](#basic-commands)
+      - [All CLI Variants](#all-cli-variants)
+    - [Process Export](#process-export)
+  - [Compiling Output](#compiling-output)
+    - [Using dotnet MSBuild](#using-dotnet-msbuild)
+    - [Using MSBuild (Visual Studio)](#using-msbuild-visual-studio)
+    - [Compiled Output](#compiled-output)
+  - [Generated Code](#generated-code)
     - [Singleton Pattern](#singleton-pattern)
     - [Exception Handling](#exception-handling)
-    - [Prozessfluss](#prozessfluss)
-  - [Dateistruktur](#dateistruktur)
-  - [Unterstützte BluePrism-Stages](#unterstützte-blueprism-stages)
-  - [Lizenz](#lizenz)
+    - [Process Flow](#process-flow)
+  - [File Structure](#file-structure)
+  - [Supported BluePrism Stages](#supported-blueprism-stages)
+  - [License](#license)
 
 ## Installation
 
 ```bash
-# Projekt bauen
+# Build project
 dotnet build BP-Analyzer.csproj
 
-# Oder direkt ausführen
+# Or run directly
 dotnet run --project BP-Analyzer.csproj
 ```
 
-## CLI-Aufrufe
+## CLI Commands
 
-### Code-Generierung
+### Code Generation
 
-Konvertiert BluePrism XML-Dateien zu VB.NET-Klassen.
+Converts BluePrism XML files to VB.NET classes.
 
-#### Grundlegende Aufrufe
+#### Basic Commands
 
 ```bash
-# Standard (verwendet "xml" und "output" Verzeichnisse)
+# Default (uses "xml" and "output" directories)
 dotnet run --project BP-Analyzer.csproj -- --codegen
 
-# Mit expliziten Verzeichnissen
+# With explicit directories
 dotnet run --project BP-Analyzer.csproj -- --codegen --xml=xml --output=output
 
-# Kurze Syntax
+# Short syntax
 dotnet run --project BP-Analyzer.csproj -- --codegen xml output
 
-# Einzelnes Verzeichnis (nur xml, output = "output")
+# Single directory (only xml, output = "output")
 dotnet run --project BP-Analyzer.csproj -- --codegen xml
 ```
 
-#### Alle CLI-Varianten
+#### All CLI Variants
 
-| Befehl                                             | Beschreibung                               |
-| -------------------------------------------------- | ------------------------------------------ |
-| `dotnet run -- --codegen`                          | Standard: `xml/` → `output/`               |
-| `dotnet run -- --codegen --xml=meinverzeichnis`    | Eigenes XML-Verzeichnis                    |
-| `dotnet run -- --codegen --output=meinverzeichnis` | Eigenes Ausgabeverzeichnis                 |
-| `dotnet run -- --codegen --xml=xml --output=out`   | Beide Verzeichnisse                        |
-| `dotnet run -- --codegen xml`                      | XML-Verzeichnis als positionaler Parameter |
-| `dotnet run -- --codegen xml out`                  | Beide als positionale Parameter            |
+| Command                                          | Description                           |
+| ------------------------------------------------ | ------------------------------------- |
+| `dotnet run -- --codegen`                        | Default: `xml/` → `output/`           |
+| `dotnet run -- --codegen --xml=mydirectory`      | Custom XML directory                  |
+| `dotnet run -- --codegen --output=mydirectory`   | Custom output directory               |
+| `dotnet run -- --codegen --xml=xml --output=out` | Both directories                      |
+| `dotnet run -- --codegen xml`                    | XML directory as positional parameter |
+| `dotnet run -- --codegen xml out`                | Both as positional parameters         |
 
-### Prozess-Export
+### Process Export
 
-Exportiert BluePrism-Prozesse direkt aus der Runtime Resource (erfordert AutomateC.exe).
+Exports BluePrism processes directly from Runtime Resource (requires AutomateC.exe).
 
-**Standard-Ausgabeverzeichnis:** `xml/`
-**Standard-Überschreiben:** `yes` (Dateien werden automatisch überschrieben)
+**Default output directory:** `xml/`
+**Default overwrite:** `yes` (files are automatically overwritten)
 
 ```bash
-# Grundlegender Export (nach xml/ mit Überschreiben)
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess"
+# Basic export (to xml/ with overwrite)
+dotnet run --project BP-Analyzer.csproj -- --process="MyProcess"
 
-# Mit Ausgabeverzeichnis
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --output="C:\Exporte"
+# With output directory
+dotnet run --project BP-Analyzer.csproj -- --process="MyProcess" --output="C:\Exports"
 
-# Mit Anmeldedaten
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --user=admin --password=geheim
+# With credentials
+dotnet run --project BP-Analyzer.csproj -- --process="MyProcess" --user=admin --password=secret
 
-# Überschreiben deaktivieren (falls benötigt)
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --overwrite=no
+# Disable overwrite (if needed)
+dotnet run --project BP-Analyzer.csproj -- --process="MyProcess" --overwrite=no
 
-# Alles zusammen
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --output="C:\Exporte" --user=admin --password=geheim --overwrite=no
+# All together
+dotnet run --project BP-Analyzer.csproj -- --process="MyProcess" --output="C:\Exports" --user=admin --password=secret --overwrite=no
 ```
 
-**Hinweis:** Interne BluePrism-Objekte (z.B. `Blueprism.AutomateProcessCore.*`) werden automatisch übersprungen.
+**Note:** Internal BluePrism objects (e.g., `Blueprism.AutomateProcessCore.*`) are automatically skipped.
 
-## Ausgabe kompilieren
+## Compiling Output
 
-Die generierten VB.NET-Dateien können mit MSBuild oder dotnet kompiliert werden.
+The generated VB.NET files can be compiled using MSBuild or dotnet.
 
-### Mit dotnet MSBuild
+### Using dotnet MSBuild
 
 ```bash
-# Ins Ausgabeverzeichnis wechseln
+# Change to output directory
 cd output
 
-# Projekt kompilieren
+# Build project
 dotnet build BluePrism_Generated.vbproj
 ```
 
-### Mit MSBuild (Visual Studio)
+### Using MSBuild (Visual Studio)
 
 ```powershell
-# Kompilieren
+# Build
 msbuild BluePrism_Generated.vbproj
 
-# Kompilieren mit Debug-Konfiguration
+# Build with Debug configuration
 msbuild BluePrism_Generated.vbproj /p:Configuration=Debug
 
-# Kompilieren mit Release-Konfiguration
+# Build with Release configuration
 msbuild BluePrism_Generated.vbproj /p:Configuration=Release
 ```
 
-### Kompilierte Ausgabe
+### Compiled Output
 
-Das kompilierte Projekt erstellt eine DLL-Datei:
+The compiled project creates a DLL file:
 
 ```
 output/bin/Debug/BluePrism_Generated.dll
-# oder
+# or
 output/bin/Release/BluePrism_Generated.dll
 ```
 
-## Generierter Code
+## Generated Code
 
 ### Singleton Pattern
 
-Jede generierte Klasse verwendet das Lazy Initialization Singleton Pattern:
+Each generated class uses the Lazy Initialization Singleton Pattern:
 
 ```vb
 Public Class Utility___Environment
@@ -152,107 +151,137 @@ Public Class Utility___Environment
         End Get
     End Property
 
-    ' ... weitere Klassenmember
+    ' ... additional class members
 End Class
 ```
 
-**Verwendung:**
+**Usage:**
 ```vb
-' Statt: _utility.Start_Process(...)
-' Nun:
+' Instead of: _utility.Start_Process(...)
+' Now:
 Utility___Environment.Instance.Start_Process(Application:=FilePath)
 ```
 
 ### Exception Handling
 
-Das BP_Base-Template stellt Exception-Handling-Methoden bereit:
+The BP_Base template provides exception handling methods:
 
 ```vb
-' Exception auslösen
-RaiseException("System Exception", "Fehlermeldung")
+' Raise exception
+RaiseException("System Exception", "Error message")
 
-' Exception speichern (in Recover-Stage)
+' Store exception (in Recover stage)
 StoreException()
 
-' Gespeicherte Exception erneut auslösen
+' Rethrow stored exception
 RethrowException()
 
-' Exception-Informationen abrufen
+' Get exception information
 Dim exType As String = ExceptionType()
 Dim exText As String = ExceptionText()
 ```
 
-### Prozessfluss
+### Process Flow
 
-Der Prozessfluss wird mit GoTo-Labels und Bedingungen rekonstruiert:
+The process flow is reconstructed using GoTo labels and conditions:
 
 ```vb
 Public Sub Main()
     ' Start
     GoTo Start_Main_Label
 
-Start_Main_Label: ' Hauptprozess
-    ' Entscheidung
-    If Bedingung = True Then
+Start_Main_Label: ' Main process
+    ' Decision
+    If condition = True Then
         GoTo True_Path_Label
     Else
         GoTo False_Path_Label
     End If
 
-True_Path_Label: ' True-Pfad
-    ' ... Aktionen
+True_Path_Label: ' True path
+    ' ... actions
     GoTo End_Label
 
-False_Path_Label: ' False-Pfad
-    ' ... Aktionen
+False_Path_Label: ' False path
+    ' ... actions
     GoTo End_Label
 
 End_Label:
-    ' Ausgabe-Parameter zuweisen
+    ' Assign output parameters
 End Sub
 ```
 
-## Dateistruktur
+## File Structure
 
 ```
 bp-analyzer/
-├── xml/                    # BluePrism XML-Exporte
-│   ├── Process1.xml
-│   ├── Process2.xml
+├── xml/                           # BluePrism XML exports (input)
+│   ├── Test Process.xml
+│   ├── Microsoft Store.xml
 │   └── ...
-├── output/                 # Generierte VB.NET-Dateien
-│   ├── _BP_Base.vb        # Basisklasse
-│   ├── Process1.vb
-│   ├── Process2.vb
+├── output/                        # Generated VB.NET files
+│   ├── _BP_Base.vb                # Base class template
+│   ├── Test Process.vb
+│   ├── Microsoft Store.vb
 │   └── BluePrism_Generated.vbproj
-├── Template_BP_Base.vb    # Vorlage für Basisklasse
-├── Template_BP_Project.vbproj  # Vorlage für Projektdatei
-├── BluePrismCodeGen.cs    # Code-Generator
-├── ExporterCLI.cs         # BluePrism CLI-Export
-├── Program.cs             # Haupteinstiegspunkt
-└── BP-Analyzer.csproj     # Projektdatei
+├── templates/                     # VB.NET templates
+│   ├── Template_BP_Base.vb        # Base class template
+│   └── Template_BP_Project.vbproj # VB project template
+├── CodeGen/                       # Code generator modules
+│   ├── ClassGenerator.cs
+│   ├── DataItemGenerator.cs
+│   ├── MethodGenerator.cs
+│   ├── TemplateManager.cs
+│   ├── FlowControl/
+│   │   ├── FlowController.cs
+│   │   └── StageNavigator.cs
+│   ├── Stages/                    # Stage generators
+│   │   ├── ActionStageGenerator.cs
+│   │   ├── DecisionStageGenerator.cs
+│   │   ├── CalculationStageGenerator.cs
+│   │   ├── ExceptionStageGenerator.cs
+│   │   ├── RecoverStageGenerator.cs
+│   │   ├── ResumeStageGenerator.cs
+│   │   └── ... (other stages)
+│   └── Utilities/
+│       ├── ExpressionParser.cs
+│       ├── NameSanitizer.cs
+│       ├── TypeMapper.cs
+│       └── ...
+├── BluePrismCodeGen.cs           # Main code generator
+├── BluePrismExporter.cs          # BluePrism export logic
+├── ExporterCLI.cs                # CLI export commands
+├── Program.cs                    # Entry point
+├── BP-Analyzer.csproj            # Project file
+├── BP-Analyzer.sln               # Solution file
+└── README.md                     # This file
 ```
 
-## Unterstützte BluePrism-Stages
+## Supported BluePrism Stages
 
-| Stage-Typ         | Unterstützt     | Beschreibung         |
-| ----------------- | --------------- | -------------------- |
-| Start             | ✓               | Methodeneingang      |
-| End               | ✓               | Methodenausgang      |
-| Action            | ✓               | Objekt-Aufrufe       |
-| Decision          | ✓               | If/Else-Verzweigung  |
-| Calculation       | ✓               | Variablenzuweisung   |
-| Code              | ✓ (kommentiert) | Code-Stages          |
-| Note              | ✓               | Kommentare           |
-| Exception         | ✓               | Exception auslösen   |
-| Recover           | ✓               | Exception speichern  |
-| Resume            | ✓               | Exception fortsetzen |
-| Navigate          | ✓ (kommentiert) | UI-Automatisierung   |
-| Process           | ✓ (kommentiert) | Unterprozess-Aufruf  |
-| Anchor            | ✓               | Sprungmarke          |
-| Block             | ✓               | Block-Container      |
-| WaitStart/WaitEnd | ✓ (kommentiert) | Warte-Stages         |
+| Stage Type        | Description         | Supported | Notes                                      |
+| ----------------- | ------------------- | --------- | ------------------------------------------ |
+| Start             | Method entry        | ✓         |                                            |
+| End               | Method exit         | ✓         |                                            |
+| Data              | Variables           | ✓         |                                            |
+| Collection        | DataTables          | partial   | column definition + initialization missing |
+| Action            | Object calls        | ✓         |                                            |
+| Decision          | If/Else branch      | ✓         |                                            |
+| Calculation       | Variable assignment | ✓         |                                            |
+| Code              | Code stages         | ✓         | Only VB code generates valid output        |
+| Note              | Comments            | ✓         |                                            |
+| Exception         | Raise exception     | ✓         |                                            |
+| Recover           | Store exception     | ✓         |                                            |
+| Resume            | Resume exception    | ✓         |                                            |
+| Navigate          | UI automation       | ✓         | Dummy implementation                       |
+| Write             | UI automation       | ✓         | Dummy implementation                       |
+| Read              | UI automation       | ✓         | Dummy implementation                       |
+| Process           | Subprocess call     | ✓         |                                            |
+| Anchor            | Jump marker         | ✓         | Will be skipped in output                  |
+| Block             | Block container     | ✓         | Only used in exception handling            |
+| WaitStart/WaitEnd | Wait stages         | ✓         |                                            |
+| LoopStart/LoopEnd | Loops               | no        |                                            |
 
-## Lizenz
+## License
 
 MIT License

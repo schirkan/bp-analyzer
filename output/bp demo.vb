@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: bp demo
 ' Version: 1.0
-' Generated: 2026-03-08 00:19:21
+' Generated: 2026-03-08 23:43:19
 
 Imports System
 Imports System.Collections.Generic
@@ -43,12 +43,16 @@ Public Class bp_demo
     ''' </summary>
     Public Sub New()
 
+        Start_Label:
+
     End Sub
 
     ''' <summary>
     ''' This page is like the class destructor
     ''' </summary>
     Protected Overrides Sub Finalize()
+
+        Start_2_Label:
 
     End Sub
 
@@ -58,6 +62,8 @@ Public Class bp_demo
     ''' <param name="VNR">Vertragsnummer (LF123456789)</param>
     ''' <param name="VerwSysSl">Verwaltungssystem Schlüssel</param>
     Public Sub MyPublicAction(Optional ByVal VNR As String = Nothing, Optional ByRef VerwSysSl As String = Nothing)
+
+        On Error GoTo Recover_Label
 
         ' Set VerwSysSl
         On Error GoTo Recover_Label
@@ -105,7 +111,7 @@ Public Class bp_demo
     ''' BluePrism page: Set_URL
     ''' </summary>
     ''' <param name="URL">New URL</param>
-    Public Sub Set_URL(Optional ByRef URL As String = Nothing, Optional ByRef Window_Title As String = Nothing)
+    Public Sub Set_URL(Optional ByVal URL As String = Nothing)
 
         ' Initialize variables with initialvalue
         URL = "http://google.de"
@@ -137,6 +143,8 @@ Public Class bp_demo
     ''' <param name="Value">Text</param>
     Private Sub InteralAction(Optional ByVal Value As String = Nothing)
 
+        On Error GoTo Recover_2_Label
+
         ' value empty?
         On Error GoTo Recover_2_Label
         If Value = "" Then
@@ -153,7 +161,7 @@ Public Class bp_demo
         ' Set Value
         Calculation_2_Label:
         On Error GoTo Recover_2_Label
-        Value = Value & Environment.CurrentRow("Const Value1")
+        Value = Value & Environment.GetCurrentRow("Const Value1").Value
 
         ' Note1
         ' This is a note in BP

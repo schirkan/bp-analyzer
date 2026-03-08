@@ -91,6 +91,7 @@ public static class TypeMapper
     /// </summary>
     public static bool IsValueType(string bluePrismType)
     {
+        // return false; // TODO
         return bluePrismType?.ToLower() switch
         {
             "text" or "password" => false,  // String - reference type

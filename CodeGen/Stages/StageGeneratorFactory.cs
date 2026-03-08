@@ -24,7 +24,10 @@ public static class StageGeneratorFactory
         { "WaitStart", new WaitStageGenerator() },
         { "Navigate", new NavigateStageGenerator() },
         { "Read", new ReadStageGenerator() },
-        { "Write", new WriteStageGenerator() }
+        { "Write", new WriteStageGenerator() },
+        { "Start", new StartStageGenerator() },
+        { "LoopStart", new LoopStartStageGenerator() },
+        { "LoopEnd", new LoopEndStageGenerator() }
     };
 
     /// <summary>
