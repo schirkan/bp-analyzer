@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: bp demo
 ' Version: 1.0
-' Generated: 2026-03-08 23:43:19
+' Generated: 2026-03-10 15:43:20
 
 Imports System
 Imports System.Collections.Generic
@@ -43,16 +43,12 @@ Public Class bp_demo
     ''' </summary>
     Public Sub New()
 
-        Start_Label:
-
     End Sub
 
     ''' <summary>
     ''' This page is like the class destructor
     ''' </summary>
     Protected Overrides Sub Finalize()
-
-        Start_2_Label:
 
     End Sub
 
@@ -94,9 +90,8 @@ Public Class bp_demo
         Select Case True
             Case Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").CheckExists = True ' URL Bar Check Exists
                 GoTo Read_Label
-            Case Else
-                GoTo End_Get_URL_Label
         End Select
+        GoTo End_Get_URL_Label
 
         ' Reader URL+Title
         Read_Label:
@@ -121,9 +116,8 @@ Public Class bp_demo
         Select Case True
             Case Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").CheckExists = True ' URL Bar Check Exists
                 GoTo Write_Label
-            Case Else
-                GoTo End_Set_URL_Label
         End Select
+        GoTo End_Set_URL_Label
 
         ' Writer URL
         Write_Label:
@@ -149,17 +143,9 @@ Public Class bp_demo
         On Error GoTo Recover_2_Label
         If Value = "" Then
             GoTo Exception_Label
-        Else
-            GoTo Calculation_2_Label
         End If
 
-        ' SE
-        Exception_Label:
-        On Error GoTo Recover_2_Label
-        RaiseException("System Exception", "Value is empty")
-
         ' Set Value
-        Calculation_2_Label:
         On Error GoTo Recover_2_Label
         Value = Value & Environment.GetCurrentRow("Const Value1").Value
 
@@ -167,22 +153,23 @@ Public Class bp_demo
         ' This is a note in BP
         GoTo End_InteralAction_Label
 
+        ' SE
+        Exception_Label:
+        On Error GoTo Recover_2_Label
+        RaiseException("System Exception", "Value is empty")
+
         ' Global Recover
         Recover_2_Label:
         StoreException()
-        GoTo Calculation_3_Label
-
-        ' Re-Throw
-        Exception_2_Label:
-        On Error GoTo Recover_2_Label
-        RethrowException()
 
         ' Log Exception
-        Calculation_3_Label:
         On Error GoTo Recover_2_Label
         Value = "Type: " & ExceptionType() & NewLine() &
 "Details: " & ExceptionDetail()
-        GoTo Exception_2_Label
+
+        ' Re-Throw
+        On Error GoTo Recover_2_Label
+        RethrowException()
 
         End_InteralAction_Label:
 

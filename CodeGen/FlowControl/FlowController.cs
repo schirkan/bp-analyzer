@@ -20,7 +20,7 @@ public static class FlowController
         var sorted = new List<XElement>();
         var visited = new HashSet<string>();
 
-        void Visit(XElement stage)
+        void Visit(XElement? stage)
         {
             if (stage == null) return;
             var stageId = stage.Attribute("stageid")?.Value;
@@ -44,17 +44,30 @@ public static class FlowController
             var onsuccess = stage.Element("onsuccess")?.Value;
             if (!string.IsNullOrEmpty(onsuccess) && stageDict.TryGetValue(onsuccess, out var nextStage)) Visit(nextStage);
 
+            // decision
             var ontrue = stage.Element("ontrue")?.Value;
             var onfalse = stage.Element("onfalse")?.Value;
 
-            if (!string.IsNullOrEmpty(ontrue) && stageDict.TryGetValue(ontrue, out var trueStage)) Visit(trueStage);
             if (!string.IsNullOrEmpty(onfalse) && stageDict.TryGetValue(onfalse, out var falseStage)) Visit(falseStage);
+            if (!string.IsNullOrEmpty(ontrue) && stageDict.TryGetValue(ontrue, out var trueStage)) Visit(trueStage);
 
+            // group for choice, wait and loop
             var groupId = stage.Element("groupid")?.Value;
             if (!string.IsNullOrEmpty(groupId))
             {
                 var nextGroupStage = stages.FirstOrDefault(e => e.Element("groupid")?.Value == groupId);
-                if (nextGroupStage != null) Visit(nextGroupStage);
+                Visit(nextGroupStage);
+            }
+
+            // cases for choice and wait 
+            var choices = stage.Element("choices")?.Elements("choice").ToList();
+            if (choices != null && choices.Any())
+            {
+                foreach (var choice in choices)
+                {
+                    var choiceOntrue = choice.Element("ontrue")?.Value;
+                    if (!string.IsNullOrEmpty(choiceOntrue) && stageDict.TryGetValue(choiceOntrue, out var choiceOntrueStage)) Visit(choiceOntrueStage);
+                }
             }
         }
 
@@ -63,7 +76,7 @@ public static class FlowController
         foreach (var stage in stages)
         {
             var stageId = stage.Attribute("stageid")?.Value!;
-            if (!visited.Contains(stageId)) sorted.Add(stage);
+            if (!visited.Contains(stageId)) Visit(stage); //sorted.Add(stage);
         }
 
         return sorted;

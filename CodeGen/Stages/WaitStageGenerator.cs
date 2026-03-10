@@ -39,16 +39,12 @@ public class WaitStageGenerator : StageGeneratorBase
                 StageNavigator.GenerateGoTo(sb, stage.Document, ontrue, 16);
             }
         }
+        sb.AppendLine($"        End Select");
+
         if (waitEnd != null)
         {
-            var onsuccess = waitEnd.Element("onsuccess")?.Value;
-            if (!string.IsNullOrEmpty(onsuccess))
-            {
-                sb.AppendLine($"            Case Else");
-                StageNavigator.GenerateGoTo(sb, stage.Document, onsuccess, 16);
-            }
+            StageNavigator.GenerateGoTo(sb, stage.Document, waitEnd.Element("onsuccess")?.Value);
         }
-        sb.AppendLine($"        End Select");
     }
 
     /// <summary>

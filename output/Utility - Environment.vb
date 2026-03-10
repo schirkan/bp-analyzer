@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-08 23:43:19
+' Generated: 2026-03-10 15:43:20
 
 Imports System
 Imports System.Collections.Generic
@@ -47,7 +47,6 @@ Public Class Utility___Environment
     ''' </summary>
     Public Sub New()
 
-        Start_Label:
         GoTo End__Label
 
         ' new
@@ -100,9 +99,7 @@ Public Class Utility___Environment
     ''' <param name="Clipboard">The value from the clipboard.</param>
     Public Sub Get_Clipboard(Optional ByRef Clipboard As String = Nothing)
 
-        
         ' Get
-        Calculation_Label:
         Clipboard = GetClipboard()
 
     End Sub
@@ -217,9 +214,8 @@ Public Class Utility___Environment
         ' Timed Out?
         If Fail_Datetime_Reached_ Then
             GoTo Exception_Label
-        Else
-            GoTo End_Run_Process_Until_Ended_Label
         End If
+        GoTo End_Run_Process_Until_Ended_Label
 
         ' System Exception
         Exception_Label:
@@ -242,17 +238,19 @@ Public Class Utility___Environment
         ' Is Empty?
         If Len(Trim(Clipboard)) = 0 Then
             GoTo Calculation_2_Label
-        Else
-            GoTo Code_9_Label
         End If
-
-        ' Set Value
-        Calculation_2_Label:
-        Clipboard = Chr(0)
         
         ' Set
         Code_9_Label:
         CodeStage_Set(Clipboard:=Clipboard)
+        GoTo End_Set_Clipboard_Label
+
+        ' Set Value
+        Calculation_2_Label:
+        Clipboard = Chr(0)
+        GoTo Code_9_Label
+
+        End_Set_Clipboard_Label:
 
     End Sub
 
@@ -311,12 +309,9 @@ Public Class Utility___Environment
         ' Success?
         If Success = True Then
             GoTo End_Set_Screen_Resolution_Label
-        Else
-            GoTo MultipleCalculation_Label
         End If
 
         ' Clear Dimensions
-        MultipleCalculation_Label:
         Horizontal_Resolution = 0
         Vertical_Resolution = 0
         GoTo End_Set_Screen_Resolution_Label
@@ -365,17 +360,13 @@ Public Class Utility___Environment
         ' Found?
         If Found Then
             GoTo End_Wait_for_Process_Window_Label
-        Else
-            GoTo Decision_5_Label
         End If
 
         ' Wait?
-        Decision_5_Label:
         If Wait>0 Then
             GoTo Calculation_3_Label
-        Else
-            GoTo End_Wait_for_Process_Window_Label
         End If
+        GoTo End_Wait_for_Process_Window_Label
 
         ' Count Down
         Calculation_3_Label:
@@ -384,9 +375,8 @@ Public Class Utility___Environment
         ' Wait
         ' Wait 0.5 seconds for condition with 0 choice(s)
         Select Case True
-            Case Else
-                GoTo Code_14_Label
         End Select
+        GoTo Code_14_Label
 
         End_Wait_for_Process_Window_Label:
 

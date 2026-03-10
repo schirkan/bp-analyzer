@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Strings
 ' Version: 6.5.1.14401
-' Generated: 2026-03-08 23:43:19
+' Generated: 2026-03-10 15:43:20
 
 Imports System
 Imports System.Collections.Generic
@@ -46,7 +46,6 @@ Public Class Utility___Strings
     ''' </summary>
     Public Sub New()
 
-        Start_Label:
         GoTo End__Label
 
         ' new
@@ -72,7 +71,6 @@ Public Class Utility___Strings
     ''' </summary>
     Protected Overrides Sub Finalize()
 
-        Start_2_Label:
         GoTo End_Clean_Up_Label
 
         ' new
@@ -106,20 +104,14 @@ Public Class Utility___Strings
         ' Check Input
         If (Len(Trim(Source)) > 0) AND (Len(Trim(Target)) > 0) Then
             GoTo Code_Label
-        Else
-            GoTo Exception_Label
         End If
+
+        ' Invalid Input
+        RaiseException("Invalid Input Parameter", "Please review and correct your input. Values must be provided for both Source and Target.")
 
         ' Calculate Levenshtein Distance
         Code_Label:
         CodeStage_Calculate_Levenshtein_Distance(source:=Source, target:=Target, caseSensitive:=Case_Sensitive, distance:=Distance, similarity:=Similarity)
-        GoTo End_Calculate_Distance_Label
-
-        ' Invalid Input
-        Exception_Label:
-        RaiseException("Invalid Input Parameter", "Please review and correct your input. Values must be provided for both Source and Target.")
-
-        End_Calculate_Distance_Label:
 
     End Sub
 
@@ -366,12 +358,9 @@ Public Class Utility___Strings
         ' Blank XML?
         If Len(Trim(XML)) = 0 Then
             GoTo End_Get_XML_Elements_Label
-        Else
-            GoTo Code_12_Label
         End If
 
         ' Get Elements
-        Code_12_Label:
         CodeStage_Get_Elements(XML:=XML, Element:=Element_Name, Elements:=Elements)
         
         End_Get_XML_Elements_Label:
@@ -475,13 +464,7 @@ Public Class Utility___Strings
         Decision_3_Label:
         If Trim_Values Then
             GoTo Calculation_3_Label
-        Else
-            GoTo Calculation_4_Label
         End If
-
-        ' Do Trim
-        Calculation_3_Label:
-        Values.GetCurrentRow("Item Value").Value = Trim(Values.GetCurrentRow("Item Value").Value)
         
         ' Append Value
         Calculation_4_Label:
@@ -491,6 +474,14 @@ Public Class Utility___Strings
         If Values.SelectNextRow() Then
             GoTo Decision_3_Label
         End If
+        GoTo End_Join_Text_Label
+
+        ' Do Trim
+        Calculation_3_Label:
+        Values.GetCurrentRow("Item Value").Value = Trim(Values.GetCurrentRow("Item Value").Value)
+        GoTo Calculation_4_Label
+
+        End_Join_Text_Label:
 
     End Sub
 
@@ -510,25 +501,21 @@ Public Class Utility___Strings
         ' Blank Padding Character?
         If Len(Padding_Character) = 0 Then
             GoTo Calculation_5_Label
-        Else
-            GoTo Decision_5_Label
         End If
-
-        ' Use Space for Padding
-        Calculation_5_Label:
-        Padding_Character = " "
         
         ' Long Enough?
         Decision_5_Label:
         If Len(Input_String) >= Target_Width Then
             GoTo End_PadLeft_Label
-        Else
-            GoTo Calculation_6_Label
         End If
 
         ' Insert Padding
-        Calculation_6_Label:
         Input_String = Padding_Character & Input_String
+        GoTo Decision_5_Label
+
+        ' Use Space for Padding
+        Calculation_5_Label:
+        Padding_Character = " "
         GoTo Decision_5_Label
 
         End_PadLeft_Label:
@@ -554,28 +541,22 @@ Public Class Utility___Strings
         ' Check Max Count
         If Max_Count >= -1 Then
             GoTo Decision_7_Label
-        Else
-            GoTo Exception_2_Label
         End If
+        
+        ' Invalid Input Data
+        Exception_2_Label:
+        RaiseException("Invalid Input Parameter", "Please verify your input data.")
 
         ' Check Start Pos
         Decision_7_Label:
         If Start_Position >= 0 Then
             GoTo Code_16_Label
-        Else
-            GoTo Exception_2_Label
         End If
+        GoTo Exception_2_Label
 
         ' Perform Replace
         Code_16_Label:
         CodeStage_Perform_Replace(pattern:=Pattern, input:=Input_Data, replacement:=Replacement_Data, max:=Max_Count, start:=Start_Position, output:=Output_Data)
-        GoTo End_Regex_Replace_Label
-
-        ' Invalid Input Data
-        Exception_2_Label:
-        RaiseException("Invalid Input Parameter", "Please verify your input data.")
-
-        End_Regex_Replace_Label:
 
     End Sub
 

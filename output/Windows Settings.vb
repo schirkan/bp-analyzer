@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Windows Settings
 ' Version: 1.0
-' Generated: 2026-03-08 23:43:21
+' Generated: 2026-03-10 15:43:21
 
 Imports System
 Imports System.Collections.Generic
@@ -40,16 +40,12 @@ Public Class Windows_Settings
     ''' </summary>
     Public Sub New()
 
-        Start_Label:
-
     End Sub
 
     ''' <summary>
     ''' Destructor (CleanUp) - called when object is disposed
     ''' </summary>
     Protected Overrides Sub Finalize()
-
-        Start_2_Label:
 
     End Sub
 
@@ -64,7 +60,6 @@ Public Class Windows_Settings
         ' Initialize variables with initialvalue
         FilePath = "ms-settings:windowsupdate"
 
-        Start_3_Label:
         On Error GoTo Recover_Label
 
         ' Start Process
@@ -82,12 +77,9 @@ Public Class Windows_Settings
         Select Case True
             Case Application.Element("Main Window", "4e5490be-f4da-4f82-ace1-cbf647c8b4e6").CheckExists = True ' Main Window Check Exists
                 GoTo End_Launch_Label
-            Case Else
-                GoTo Exception_Label
         End Select
 
         ' SE
-        Exception_Label:
         On Error GoTo Recover_Label
         RaiseException("System Exception", "Main Window not found")
 
@@ -109,7 +101,6 @@ Public Class Windows_Settings
     Public Sub Terminate()
 
         ' Terminate
-        Start_4_Label:
         Application.Element("Windows Settings", "90f3791d-64d2-4092-b521-c2d17a374f3c").Terminate()
 
     End Sub
@@ -126,12 +117,9 @@ Public Class Windows_Settings
                 GoTo Navigate_3_Label
             Case Application.Element("Label: Es wird nach Updates gesucht...", "a98756de-6ac0-4a36-a601-a27ea429ac4f").CheckExists = True ' Label: Es wird nach Updates gesucht... Check Exists
                 GoTo End_Start_Updates_Label
-            Case Else
-                GoTo Exception_2_Label
         End Select
 
         ' SE
-        Exception_2_Label:
         RaiseException("System Exception", "Download Menu not found")
 
         ' Click Nach Updates suchen
@@ -152,12 +140,9 @@ Public Class Windows_Settings
         Select Case True
             Case Application.Element("Label: Es wird nach Updates gesucht...", "a98756de-6ac0-4a36-a601-a27ea429ac4f").CheckExists = False ' Label: Es wird nach Updates gesucht... Check Exists
                 GoTo WaitStart_4_Label
-            Case Else
-                GoTo Exception_3_Label
         End Select
 
         ' SE
-        Exception_3_Label:
         RaiseException("System Exception", "Download Header not found")
 
         ' W120
@@ -166,12 +151,9 @@ Public Class Windows_Settings
         Select Case True
             Case Application.Element("Label: Sie sind auf dem neuesten Stand.", "d4098baf-b2ed-491f-a65a-7dc1ece7b4cd").CheckExists = True ' Label: Sie sind auf dem neuesten Stand. Check Exists
                 GoTo End_Wait_Updates_Finished_Label
-            Case Else
-                GoTo Exception_4_Label
         End Select
 
         ' SE
-        Exception_4_Label:
         RaiseException("System Exception", "Download Header not found")
 
         ' Note1

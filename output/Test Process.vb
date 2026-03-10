@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: Test Process
 ' Version: 1.0
-' Generated: 2026-03-08 23:43:19
+' Generated: 2026-03-10 15:43:20
 
 Imports System
 Imports System.Collections.Generic
@@ -161,13 +161,7 @@ Public Class Test_Process
         ' MyToggle?
         If MyToggle Then
             GoTo Calculation_Label
-        Else
-            GoTo MultipleCalculation_Label
         End If
-
-        ' Toggle boolean value
-        Calculation_Label:
-        MyToggle = MyToggle = False
         
         ' Multi1
         MultipleCalculation_Label:
@@ -181,25 +175,30 @@ Public Class Test_Process
                 GoTo Action_4_Label
             Case Data5 = 2 ' Zahl ist 2
                 GoTo Calculation_2_Label
-            Case Else
-                GoTo Alert_Label
         End Select
 
         ' Alert1
-        Alert_Label:
         BP_Alert.Notify("Achtung Achtung")
 
         ' BE
         RaiseException("Business Exception", "Zahl ist nicht 1 oder 2")
 
-        ' Calc1
-        Calculation_2_Label:
-        Data6 = Data5 + 6
-        
         ' Collections::Count Rows
         Action_4_Label:
         Blueprism_AutomateProcessCore_clsCollectionActions.Instance.Count_Rows(Collection_Name:="Coll2", Count:=Count)
+        GoTo End_Variable_Test_Label
 
+        ' Calc1
+        Calculation_2_Label:
+        Data6 = Data5 + 6
+        GoTo Action_4_Label
+
+        ' Toggle boolean value
+        Calculation_Label:
+        MyToggle = MyToggle = False
+        GoTo MultipleCalculation_Label
+
+        End_Variable_Test_Label:
         OutValue1 = Data1
         OutValue2 = MyToggle
 

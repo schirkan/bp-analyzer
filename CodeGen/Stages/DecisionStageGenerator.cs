@@ -14,19 +14,18 @@ public class DecisionStageGenerator : StageGeneratorBase
         var expression = stage.Element("decision")?.Attribute("expression")?.Value;
         var ontrue = stage.Element("ontrue")?.Value;
         var onfalse = stage.Element("onfalse")?.Value;
-
         var formattedExpression = ExpressionParser.FormatExpression(expression);
-        sb.AppendLine($"        If {formattedExpression} Then");
 
+        sb.AppendLine($"        If {formattedExpression} Then");
         if (!string.IsNullOrEmpty(ontrue))
         {
             StageNavigator.GenerateGoTo(sb, stage.Document, ontrue, 12);
         }
+        sb.AppendLine($"        End If");
+
         if (!string.IsNullOrEmpty(onfalse))
         {
-            sb.AppendLine($"        Else");
-            StageNavigator.GenerateGoTo(sb, stage.Document, onfalse, 12);
+            StageNavigator.GenerateGoTo(sb, stage.Document, onfalse);
         }
-        sb.AppendLine($"        End If");
     }
 }

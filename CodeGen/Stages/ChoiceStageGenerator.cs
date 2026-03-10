@@ -48,17 +48,12 @@ public class ChoiceStageGenerator : StageGeneratorBase
             }
         }
 
-        // Handle ChoiceEnd as Case Else
+        sb.AppendLine($"        End Select");
+
+        // Handle ChoiceEnd
         if (choiceEnd != null)
         {
-            var onsuccess = choiceEnd.Element("onsuccess")?.Value;
-            if (!string.IsNullOrEmpty(onsuccess))
-            {
-                sb.AppendLine($"            Case Else");
-                StageNavigator.GenerateGoTo(sb, stage.Document, onsuccess, 16);
-            }
+            StageNavigator.GenerateGoTo(sb, stage.Document, choiceEnd.Element("onsuccess")?.Value);
         }
-
-        sb.AppendLine($"        End Select");
     }
 }

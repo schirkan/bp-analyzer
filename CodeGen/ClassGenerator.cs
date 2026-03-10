@@ -192,11 +192,11 @@ public static class ClassGenerator
             code = System.Text.RegularExpressions.Regex.Replace(code, $"GoTo {stageLabel}\\s*?( *{stageLabel}:)", "\r\n$1");
 
             // Remove labels without references
-            var firstIndex = code.IndexOf(stageLabel);
-            var lastIndex = code.LastIndexOf(stageLabel);
+            var firstIndex = code.IndexOf(" " + stageLabel);
+            var lastIndex = code.LastIndexOf(" " + stageLabel);
             if (firstIndex == lastIndex)
             {
-                code = System.Text.RegularExpressions.Regex.Replace(code, $" *{stageLabel}:", "");
+                code = System.Text.RegularExpressions.Regex.Replace(code, $" * {stageLabel}:", "");
             }
         }
 
