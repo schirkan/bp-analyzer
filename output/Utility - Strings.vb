@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Strings
 ' Version: 6.5.1.14401
-' Generated: 2026-03-10 19:14:42
+' Generated: 2026-03-10 21:06:29
 
 Imports System
 Imports System.Collections.Generic
@@ -111,7 +111,12 @@ Public Class Utility___Strings
 
         ' Calculate Levenshtein Distance
         Code_Label:
-        CodeStage_Calculate_Levenshtein_Distance(source:=Source, target:=Target, caseSensitive:=Case_Sensitive, distance:=Distance, similarity:=Similarity)
+        CodeStage_Calculate_Levenshtein_Distance(
+            source:=Source, 
+            target:=Target, 
+            caseSensitive:=Case_Sensitive, 
+            distance:=Distance, 
+            similarity:=Similarity)
 
     End Sub
 
@@ -131,10 +136,16 @@ Public Class Utility___Strings
         
         ' Delete from Sample 1
         SubSheet_Label:
-        Delete_Characters(Text_Sample:=Sample_1, Characters_to_Delete:=Conflicting_Characters.GetCurrentRow("Character Group").Value, Amended_Sample:=Sample_1)
+        Delete_Characters(
+            Text_Sample:=Sample_1, 
+            Characters_to_Delete:=Conflicting_Characters.GetCurrentRow("Character Group").Value, 
+            Amended_Sample:=Sample_1)
 
         ' Delete from Sample 2
-        Delete_Characters(Text_Sample:=Sample_2, Characters_to_Delete:=Conflicting_Characters.GetCurrentRow("Character Group").Value, Amended_Sample:=Sample_2)
+        Delete_Characters(
+            Text_Sample:=Sample_2, 
+            Characters_to_Delete:=Conflicting_Characters.GetCurrentRow("Character Group").Value, 
+            Amended_Sample:=Sample_2)
 
         ' Next Character Group
         If Conflicting_Characters.SelectNextRow() Then
@@ -158,7 +169,10 @@ Public Class Utility___Strings
     Public Sub Delete_Characters(Optional ByVal Text_Sample As String = Nothing, Optional ByVal Characters_to_Delete As String = Nothing, Optional ByRef Amended_Sample As String = Nothing)
 
         ' Delete
-        CodeStage_Delete(Text_Sample:=Text_Sample, Characters_to_Delete:=Characters_to_Delete, Amended_Sample:=Amended_Sample)
+        CodeStage_Delete(
+            Text_Sample:=Text_Sample, 
+            Characters_to_Delete:=Characters_to_Delete, 
+            Amended_Sample:=Amended_Sample)
 
     End Sub
 
@@ -170,7 +184,9 @@ Public Class Utility___Strings
     Public Sub Escape_Sendkeys_String(Optional ByVal Sendkeys_Text As String = Nothing, Optional ByRef Escaped_Sendkeys_Text As String = Nothing)
 
         ' Escape Text
-        CodeStage_Escape_Text(SendKeys_Text:=Sendkeys_Text, Escaped_Sendkeys_Text:=Escaped_Sendkeys_Text)
+        CodeStage_Escape_Text(
+            SendKeys_Text:=Sendkeys_Text, 
+            Escaped_Sendkeys_Text:=Escaped_Sendkeys_Text)
 
     End Sub
 
@@ -192,7 +208,14 @@ Public Class Utility___Strings
         Explicit_Capture = False
 
         ' Extract All Matches
-        CodeStage_Extract_All_Matches(Regex_Pattern:=Regex_Pattern, Text_To_Perform_Search_On:=Text_To_Perform_Search_On, Singleline:=Singleline, Ignore_Case:=Ignore_Case, Explicit_Capture:=Explicit_Capture, Regex_Matches:=Regex_Matches, Success:=Success)
+        CodeStage_Extract_All_Matches(
+            Regex_Pattern:=Regex_Pattern, 
+            Text_To_Perform_Search_On:=Text_To_Perform_Search_On, 
+            Singleline:=Singleline, 
+            Ignore_Case:=Ignore_Case, 
+            Explicit_Capture:=Explicit_Capture, 
+            Regex_Matches:=Regex_Matches, 
+            Success:=Success)
 
     End Sub
 
@@ -210,7 +233,11 @@ Public Class Utility___Strings
         Target_String = "100-200"
 
         ' Extract Values
-        CodeStage_Extract_Values(Regex_Pattern:=Regex_Pattern, Target_String:=Target_String, Named_Values:=Named_Values, Named_Values_Out:=Named_Values)
+        CodeStage_Extract_Values(
+            Regex_Pattern:=Regex_Pattern, 
+            Target_String:=Target_String, 
+            Named_Values:=Named_Values, 
+            Named_Values_Out:=Named_Values)
 
     End Sub
 
@@ -228,7 +255,9 @@ Public Class Utility___Strings
         Input_Number = 987654123456.789
 
         ' Format
-        CodeStage_Format(Input:=Input_Number, Output:=Formatted_Currency_Value)
+        CodeStage_Format(
+            Input:=Input_Number, 
+            Output:=Formatted_Currency_Value)
 
         Formatted_Currency_Numbers = Formatted_Currency_Value
 
@@ -256,7 +285,10 @@ Public Class Utility___Strings
         Dim Output_CSV As String
 
         ' Get Collection as Delimited Text
-        Get_Collection_as_Delimited_Text(Input_Collection:=Input_Collection, Delimiter_Character:=",", Output_Delimited_Text:=Output_CSV)
+        Get_Collection_as_Delimited_Text(
+            Input_Collection:=Input_Collection, 
+            Delimiter_Character:=",", 
+            Output_Delimited_Text:=Output_CSV)
 
         Collection_CSV = Output_CSV
 
@@ -271,7 +303,10 @@ Public Class Utility___Strings
     Public Sub Get_Collection_as_Delimited_Text(Optional ByVal Input_Collection As DataTable = Nothing, Optional ByVal Delimiter_Character As String = Nothing, Optional ByRef Output_Delimited_Text As String = Nothing)
 
         ' Serialise to Delimited Text
-        CodeStage_Serialise_to_Delimited_Text(Input_Collection:=Input_Collection, Delimiter:=Delimiter_Character, Output_CSV:=Output_Delimited_Text)
+        CodeStage_Serialise_to_Delimited_Text(
+            Input_Collection:=Input_Collection, 
+            Delimiter:=Delimiter_Character, 
+            Output_CSV:=Output_Delimited_Text)
 
     End Sub
 
@@ -288,7 +323,12 @@ Public Class Utility___Strings
         First_Row_Is_Header = False
 
         ' Get Delimited Text As Collection
-        Get_Delimited_Text_As_Collection(First_Row_Is_Header:=First_Row_Is_Header, Schema:=Schema, Delimiter_Character:=",", Delimited_Text:=CSV, Output_Collection:=Output_Collection)
+        Get_Delimited_Text_As_Collection(
+            First_Row_Is_Header:=First_Row_Is_Header, 
+            Schema:=Schema, 
+            Delimiter_Character:=",", 
+            Delimited_Text:=CSV, 
+            Output_Collection:=Output_Collection)
 
     End Sub
 
@@ -306,7 +346,12 @@ Public Class Utility___Strings
         First_Row_Is_Header = False
 
         ' Parse Delimited String
-        CodeStage_Parse_Delimited_String(DelimitedText:=Delimited_Text, Schema:=Schema, FirstRowIsHeader:=First_Row_Is_Header, Delimiter:=Delimiter_Character, outputCollection:=Output_Collection)
+        CodeStage_Parse_Delimited_String(
+            DelimitedText:=Delimited_Text, 
+            Schema:=Schema, 
+            FirstRowIsHeader:=First_Row_Is_Header, 
+            Delimiter:=Delimiter_Character, 
+            outputCollection:=Output_Collection)
 
     End Sub
 
@@ -337,7 +382,10 @@ Public Class Utility___Strings
         Attribute_Name = "method"
 
         ' Get Attribute
-        CodeStage_Get_Attribute(XML:=XML, Attribute:=Attribute_Name, Value:=Attribute_Value)
+        CodeStage_Get_Attribute(
+            XML:=XML, 
+            Attribute:=Attribute_Name, 
+            Value:=Attribute_Value)
 
         Value = Attribute_Value
 
@@ -361,7 +409,10 @@ Public Class Utility___Strings
         End If
 
         ' Get Elements
-        CodeStage_Get_Elements(XML:=XML, Element:=Element_Name, Elements:=Elements)
+        CodeStage_Get_Elements(
+            XML:=XML, 
+            Element:=Element_Name, 
+            Elements:=Elements)
         
         End_Get_XML_Elements_Label:
 
@@ -382,7 +433,12 @@ Public Class Utility___Strings
         Compare_Method = 1
 
         ' InStr
-        CodeStage_InStr(InText:=Text, Search_String:=Search_String, Start_Byte:=Start_Byte, Compare_Method:=Compare_Method, Position:=Position)
+        CodeStage_InStr(
+            InText:=Text, 
+            Search_String:=Search_String, 
+            Start_Byte:=Start_Byte, 
+            Compare_Method:=Compare_Method, 
+            Position:=Position)
         GoTo End_InStr_Label
 
         ' Note1
@@ -410,7 +466,12 @@ Public Class Utility___Strings
         Compare_Method = 1
 
         ' InStrRev
-        CodeStage_InStrRev(InText:=Text, Search_String:=Search_String, Start_Byte:=Start_Byte, Compare_Method:=Compare_Method, Position:=Position)
+        CodeStage_InStrRev(
+            InText:=Text, 
+            Search_String:=Search_String, 
+            Start_Byte:=Start_Byte, 
+            Compare_Method:=Compare_Method, 
+            Position:=Position)
         GoTo End_InStrRev_Label
 
         ' Note1
@@ -438,7 +499,11 @@ Public Class Utility___Strings
         CodeStage_Get_Carriage_Return(Join_Character:=Join_Character)
 
         ' Join Text
-        Join_Text(Values:=Values, Join_Character:=Join_Character, Trim_Values:=Trim_Lines, Joined_Text:=Joined_Text)
+        Join_Text(
+            Values:=Values, 
+            Join_Character:=Join_Character, 
+            Trim_Values:=Trim_Lines, 
+            Joined_Text:=Joined_Text)
 
     End Sub
 
@@ -556,7 +621,13 @@ Public Class Utility___Strings
 
         ' Perform Replace
         Code_16_Label:
-        CodeStage_Perform_Replace(pattern:=Pattern, input:=Input_Data, replacement:=Replacement_Data, max:=Max_Count, start:=Start_Position, output:=Output_Data)
+        CodeStage_Perform_Replace(
+            pattern:=Pattern, 
+            input:=Input_Data, 
+            replacement:=Replacement_Data, 
+            max:=Max_Count, 
+            start:=Start_Position, 
+            output:=Output_Data)
 
     End Sub
 
@@ -571,7 +642,9 @@ Public Class Utility___Strings
         Text = "    qwerqwer    "
 
         ' Trim
-        CodeStage_Trim(Text:=Text, Trimmed_Text:=Trimmed_Text)
+        CodeStage_Trim(
+            Text:=Text, 
+            Trimmed_Text:=Trimmed_Text)
 
     End Sub
 
@@ -585,7 +658,11 @@ Public Class Utility___Strings
     Public Sub Replace_Characters(Optional ByVal Text_Sample As String = Nothing, Optional ByVal Characters_to_Replace As String = Nothing, Optional ByVal Replacement_Characters As String = Nothing, Optional ByRef Amended_Sample As String = Nothing)
 
         ' Replace
-        CodeStage_Replace(Text_Sample:=Text_Sample, Characters_to_Replace:=Characters_to_Replace, Replacement_Characters:=Replacement_Characters, Amended_Sample:=Amended_Sample)
+        CodeStage_Replace(
+            Text_Sample:=Text_Sample, 
+            Characters_to_Replace:=Characters_to_Replace, 
+            Replacement_Characters:=Replacement_Characters, 
+            Amended_Sample:=Amended_Sample)
 
     End Sub
 
@@ -597,7 +674,9 @@ Public Class Utility___Strings
     Public Sub Split_Lines(Optional ByVal Text_to_Split As String = Nothing, Optional ByRef Split_Values As DataTable = Nothing)
 
         ' Split
-        CodeStage_Split(Text_to_Split:=Text_to_Split, Split_Values:=Split_Values)
+        CodeStage_Split(
+            Text_to_Split:=Text_to_Split, 
+            Split_Values:=Split_Values)
 
     End Sub
 
@@ -615,7 +694,12 @@ Public Class Utility___Strings
         Split_Strictly_by_Length = False
 
         ' Split Lines By Length
-        CodeStage_Split_Lines_By_Length(Text_to_Split:=Text_to_Split, Maximum_Line_Length:=Maximum_Line_Length, Strict_Split:=Split_Strictly_by_Length, Split_Lines:=Split_Lines, Line_Count:=Line_Count)
+        CodeStage_Split_Lines_By_Length(
+            Text_to_Split:=Text_to_Split, 
+            Maximum_Line_Length:=Maximum_Line_Length, 
+            Strict_Split:=Split_Strictly_by_Length, 
+            Split_Lines:=Split_Lines, 
+            Line_Count:=Line_Count)
 
     End Sub
 
@@ -629,7 +713,11 @@ Public Class Utility___Strings
     Public Sub Split_Text(Optional ByVal Text_to_Split As String = Nothing, Optional ByVal Split_Char As String = Nothing, Optional ByVal Collection_Field_Name As String = Nothing, Optional ByRef Split_Values As DataTable = Nothing)
 
         ' Split Text
-        CodeStage_Split_Text(Text_to_Split:=Text_to_Split, Split_Char:=Split_Char, Collection_Field_Name:=Collection_Field_Name, Split_Values:=Split_Values)
+        CodeStage_Split_Text(
+            Text_to_Split:=Text_to_Split, 
+            Split_Char:=Split_Char, 
+            Collection_Field_Name:=Collection_Field_Name, 
+            Split_Values:=Split_Values)
 
     End Sub
 
@@ -645,7 +733,10 @@ Public Class Utility___Strings
         Dim Regex_Match As Boolean?
 
         ' Test Regex Match1
-        CodeStage_Test_Regex_Match1(Regex_Pattern:=Regex_Pattern, Target_String:=Target_String, Regex_Match:=Regex_Match)
+        CodeStage_Test_Regex_Match1(
+            Regex_Pattern:=Regex_Pattern, 
+            Target_String:=Target_String, 
+            Regex_Match:=Regex_Match)
 
         Matched_ = Regex_Match
 

@@ -227,7 +227,7 @@ public class BluePrismExporter
   /// </summary>
   private bool IsInternalObject(string objectName)
   {
-    return objectName.StartsWith("Blueprism.AutomateProcessCore.", StringComparison.OrdinalIgnoreCase);
+    return objectName.StartsWith("Blueprism.Automate", StringComparison.OrdinalIgnoreCase);
   }
 
   /// <summary>

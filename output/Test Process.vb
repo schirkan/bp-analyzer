@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: Test Process
 ' Version: 1.0
-' Generated: 2026-03-10 19:14:42
+' Generated: 2026-03-10 21:06:28
 
 Imports System
 Imports System.Collections.Generic
@@ -53,7 +53,11 @@ Public Class Test_Process
         End If
 
         ' Variable Test
-        Variable_Test(InData1:=MyText, InData2:=123, OutValue1:=OutValue1, OutValue2:=OutValue2)
+        Variable_Test(
+            InData1:=MyText, 
+            InData2:=123, 
+            OutValue1:=OutValue1, 
+            OutValue2:=OutValue2)
 
         ' Loop Test
         Loop_Test()
@@ -62,7 +66,9 @@ Public Class Test_Process
         Dummy()
 
         ' Call Process A
-        MP___Subprocess_A.Instance.Main(Name:=MyText, Char_Count:=Char_Count)
+        MP___Subprocess_A.Instance.Main(
+            Name:=MyText, 
+            Char_Count:=Char_Count)
 
     End Sub
 
@@ -81,10 +87,14 @@ Public Class Test_Process
         local_VNR = "AB123456"""
 
         ' MyPublicAction
-        bp_demo.Instance.MyPublicAction(VNR:=local_VNR, VerwSysSl:=local_VerwSysSl)
+        bp_demo.Instance.MyPublicAction(
+            VNR:=local_VNR, 
+            VerwSysSl:=local_VerwSysSl)
 
         ' bp demo::Get URL
-        bp_demo.Instance.Get_URL(URL:=URL, Window_Title:=Window_Title)
+        bp_demo.Instance.Get_URL(
+            URL:=URL, 
+            Window_Title:=Window_Title)
 
     End Sub
 
@@ -105,7 +115,12 @@ Public Class Test_Process
         
         ' Calculate Distance
         Action_3_Label:
-        Utility___Strings.Instance.Calculate_Distance(Source:=Values.GetCurrentRow("Name").Value, Target:=Name, Case_Sensitive:=False, Distance:=Values.GetCurrentRow("Distance").Value, Similarity:=Values.GetCurrentRow("Similarity").Value)
+        Utility___Strings.Instance.Calculate_Distance(
+            Source:=Values.GetCurrentRow("Name").Value, 
+            Target:=Name, 
+            Case_Sensitive:=False, 
+            Distance:=Values.GetCurrentRow("Distance").Value, 
+            Similarity:=Values.GetCurrentRow("Similarity").Value)
 
         ' Loop Values
         If Values.SelectNextRow() Then
@@ -183,7 +198,9 @@ Public Class Test_Process
 
         ' Collections::Count Rows
         Action_4_Label:
-        Blueprism_AutomateProcessCore_clsCollectionActions.Instance.Count_Rows(Collection_Name:="Coll2", Count:=Count)
+        Blueprism.AutomateProcessCore.clsCollectionActions.Instance.Count_Rows(
+            Collection_Name:="Coll2", 
+            Count:=Count)
         GoTo End_Variable_Test_Label
 
         ' Calc1

@@ -93,7 +93,7 @@ dotnet run --project BP-Analyzer.csproj -- --process="MyProcess" --overwrite=no
 dotnet run --project BP-Analyzer.csproj -- --process="MyProcess" --output="C:\Exports" --user=admin --password=secret --overwrite=no
 ```
 
-**Note:** Internal BluePrism objects (e.g., `Blueprism.AutomateProcessCore.*`) are automatically skipped.
+**Note:** Internal BluePrism objects (e.g., `Blueprism.Automate*`) are automatically skipped.
 
 ## Compiling Output
 

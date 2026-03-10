@@ -132,7 +132,7 @@ git log --oneline -n 20
 ## 9) Interne BluePrism-Objekte
 
 Bei Exports werden interne BluePrism-Objekte automatisch übersprungen:
-- Objekte mit Prefix `Blueprism.AutomateProcessCore.` werden nicht exportiert
+- Objekte mit Prefix `Blueprism.Automate*` werden nicht exportiert
 - Dies verhindert Fehler bei der Abhängigkeitsanalyse
 
 ## 7) Funktionaler Stand (aus TODO.md)

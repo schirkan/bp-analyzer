@@ -8,7 +8,6 @@ namespace BPAnalyzer.CodeGen.Stages;
 /// </summary>
 public abstract class StageGeneratorBase : IStageGenerator
 {
-
   /// <summary>
   /// Generates parameter code for Action and Process stages.
   /// This eliminates duplicate code between these two stage types.
@@ -47,8 +46,12 @@ public abstract class StageGeneratorBase : IStageGenerator
     }
 
     var allParams = inputParams.Concat(outputParams).ToList();
-    return string.Join(", ", allParams);
+
+    if (allParams.Count == 1) return allParams[0];
+    return (LinePrefix + string.Join(", " + LinePrefix, allParams)).TrimEnd();
   }
+
+  private const string LinePrefix = "\r\n            ";
 
   /// <inheritdoc/>
   public abstract void Generate(XElement stage, System.Text.StringBuilder sb);

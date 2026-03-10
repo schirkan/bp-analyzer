@@ -18,6 +18,7 @@ public class ActionStageGenerator : StageGeneratorBase
         if (!string.IsNullOrEmpty(objectName) && !string.IsNullOrEmpty(action))
         {
             var className = NameSanitizer.SanitizeClassName(objectName);
+            if (objectName.StartsWith("Blueprism.Automate", StringComparison.OrdinalIgnoreCase)) className = objectName;
             var sanitizedActionName = NameSanitizer.SanitizeMethodName(action);
 
             var inputs = stage.Element("inputs")?.Elements("input").ToList() ?? new List<XElement>();

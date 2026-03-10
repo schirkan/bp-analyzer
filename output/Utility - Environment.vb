@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-10 19:14:42
+' Generated: 2026-03-10 21:06:28
 
 Imports System
 Imports System.Collections.Generic
@@ -123,7 +123,9 @@ Public Class Utility___Environment
     Public Sub Get_Screen_Resolution(Optional ByRef Horizontal_Resolution As Decimal? = Nothing, Optional ByRef Vertical_Resolution As Decimal? = Nothing)
 
         ' GetResolution
-        CodeStage_GetResolution(Horizontal_Resolution:=Horizontal_Resolution, Vertical_Resolution:=Vertical_Resolution)
+        CodeStage_GetResolution(
+            Horizontal_Resolution:=Horizontal_Resolution, 
+            Vertical_Resolution:=Vertical_Resolution)
 
     End Sub
 
@@ -151,7 +153,9 @@ Public Class Utility___Environment
     Public Sub Kill_Process(Optional ByVal Process_Name As String = Nothing, Optional ByVal Process_ID As Decimal? = Nothing)
 
         ' Kill Process1
-        CodeStage_Kill_Process1(Process_Name:=Process_Name, Process_ID:=Process_ID)
+        CodeStage_Kill_Process1(
+            Process_Name:=Process_Name, 
+            Process_ID:=Process_ID)
 
     End Sub
 
@@ -171,7 +175,9 @@ Public Class Utility___Environment
         End If
 
         ' Get Stats
-        CodeStage_Get_Stats(Processes:=Processes, Process_Statistics:=Process_Statistics)
+        CodeStage_Get_Stats(
+            Processes:=Processes, 
+            Process_Statistics:=Process_Statistics)
 
     End Sub
 
@@ -186,7 +192,9 @@ Public Class Utility___Environment
         Working_Set = "0"
 
         ' Get Memory Set
-        CodeStage_Get_Memory_Set(Proc:=Process_Name, Working_Set:=Working_Set)
+        CodeStage_Get_Memory_Set(
+            Proc:=Process_Name, 
+            Working_Set:=Working_Set)
 
     End Sub
 
@@ -209,7 +217,13 @@ Public Class Utility___Environment
         Ignore_Timeout = False
 
         ' Run Process
-        CodeStage_Run_Process(appn:=Application, args:=Arguments, dir:=Working_Folder, timeout:=Timeout, ignoreTimeout:=Ignore_Timeout, timedOut:=Fail_Datetime_Reached_)
+        CodeStage_Run_Process(
+            appn:=Application, 
+            args:=Arguments, 
+            dir:=Working_Folder, 
+            timeout:=Timeout, 
+            ignoreTimeout:=Ignore_Timeout, 
+            timedOut:=Fail_Datetime_Reached_)
 
         ' Timed Out?
         If Fail_Datetime_Reached_ Then
@@ -268,7 +282,12 @@ Public Class Utility___Environment
         Use_Shell = True
 
         ' Start Process
-        CodeStage_Start_Process(Application:=Application, Arguments:=Arguments, Use_Shell:=Use_Shell, id:=Process_ID, name:=Process_Name)
+        CodeStage_Start_Process(
+            Application:=Application, 
+            Arguments:=Arguments, 
+            Use_Shell:=Use_Shell, 
+            id:=Process_ID, 
+            name:=Process_Name)
 
     End Sub
 
@@ -284,7 +303,12 @@ Public Class Utility___Environment
         Timeout = -1
 
         ' Run Process read Output
-        CodeStage_Run_Process_read_Output(Argument:=Arguments, Process_Name:=Process_Name, Timeout:=Timeout, Standard_Output:=Standard_Output, Standard_Error:=Standard_Error)
+        CodeStage_Run_Process_read_Output(
+            Argument:=Arguments, 
+            Process_Name:=Process_Name, 
+            Timeout:=Timeout, 
+            Standard_Output:=Standard_Output, 
+            Standard_Error:=Standard_Error)
 
     End Sub
 
@@ -304,7 +328,11 @@ Public Class Utility___Environment
         Timeout = TimeSpan.Parse("0.00:00:30")
 
         ' Set Screen Resolution
-        CodeStage_Set_Screen_Resolution(Horizontal:=Horizontal_Resolution, Vertical:=Vertical_Resolution, Success:=Success, Return_Code:=Return_Code)
+        CodeStage_Set_Screen_Resolution(
+            Horizontal:=Horizontal_Resolution, 
+            Vertical:=Vertical_Resolution, 
+            Success:=Success, 
+            Return_Code:=Return_Code)
 
         ' Success?
         If Success = True Then
@@ -336,7 +364,10 @@ Public Class Utility___Environment
         Found_ = False
 
         ' Wait for process
-        CodeStage_Wait_for_process(Process_Name:=Process_Name, Max_Wait:=Maximum_wait_time__seconds_, Found_:=Found_)
+        CodeStage_Wait_for_process(
+            Process_Name:=Process_Name, 
+            Max_Wait:=Maximum_wait_time__seconds_, 
+            Found_:=Found_)
 
     End Sub
 
@@ -355,7 +386,10 @@ Public Class Utility___Environment
         
         ' Find Process
         Code_14_Label:
-        CodeStage_Find_Process(Process_Name:=Process_Name, Window_Title:=Window_Title, Found:=Found)
+        CodeStage_Find_Process(
+            Process_Name:=Process_Name, 
+            Window_Title:=Window_Title, 
+            Found:=Found)
 
         ' Found?
         If Found Then
