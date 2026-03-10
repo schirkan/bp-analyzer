@@ -306,7 +306,7 @@ public static class MethodGenerator
             "main" => "Main process entry point",
             "new" => "Constructor (Initialize) - called when object is created",
             "finalize" => "Destructor (CleanUp) - called when object is disposed",
-            _ => $"BluePrism page: {methodName}"
+            _ => $"Page: {methodName}"
         };
     }
 }

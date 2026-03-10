@@ -47,7 +47,8 @@ public class NavigateStageGenerator : StageGeneratorBase
 
             var paramString = string.Join(", ", paramList);
 
-            sb.AppendLine($"        Application.Element(\"{elementName}\", \"{elementId}\").{sanitizedActionName}({paramString})");
+            sb.AppendLine($"        Application.Element(\"{elementName}\").{sanitizedActionName}({paramString})");
+            // sb.AppendLine($"        Application.Element(\"{elementName}\", \"{elementId}\").{sanitizedActionName}({paramString})");
         }
 
         StageNavigator.GenerateGoTo(sb, document, stage.Element("onsuccess")?.Value);

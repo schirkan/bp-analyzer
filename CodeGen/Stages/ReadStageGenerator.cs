@@ -33,7 +33,8 @@ public class ReadStageGenerator : StageGeneratorBase
 
             var sanitizedStageName = NameSanitizer.SanitizeVariableName(stageName);
 
-            sb.AppendLine($"        {sanitizedStageName} = Application.Element(\"{elementName}\", \"{elementId}\").{actionId}()");
+            sb.AppendLine($"        {sanitizedStageName} = Application.Element(\"{elementName}\").{actionId}()");
+            // sb.AppendLine($"        {sanitizedStageName} = Application.Element(\"{elementName}\", \"{elementId}\").{actionId}()");
         }
 
         StageNavigator.GenerateGoTo(sb, document, stage.Element("onsuccess")?.Value);

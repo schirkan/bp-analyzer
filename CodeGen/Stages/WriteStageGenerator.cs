@@ -32,7 +32,8 @@ public class WriteStageGenerator : StageGeneratorBase
 
             var formattedExpr = ExpressionParser.FormatExpression(expr);
 
-            sb.AppendLine($"        Application.Element(\"{elementName}\", \"{elementId}\").Write({formattedExpr})");
+            sb.AppendLine($"        Application.Element(\"{elementName}\").Write({formattedExpr})");
+            // sb.AppendLine($"        Application.Element(\"{elementName}\", \"{elementId}\").Write({formattedExpr})");
         }
 
         StageNavigator.GenerateGoTo(sb, document, stage.Element("onsuccess")?.Value);

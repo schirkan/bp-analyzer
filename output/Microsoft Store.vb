@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Microsoft Store
 ' Version: 1.0
-' Generated: 2026-03-10 15:43:20
+' Generated: 2026-03-10 19:14:42
 
 Imports System
 Imports System.Collections.Generic
@@ -50,7 +50,7 @@ Public Class Microsoft_Store
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Launch
+    ''' Page: Launch
     ''' </summary>
     Public Sub Launch()
 
@@ -69,7 +69,7 @@ Public Class Microsoft_Store
         ' Attach
         Navigate_Label:
         On Error GoTo Recover_Label
-        Application.Element("Microsoft Store", "330860ce-038b-499b-9a6c-c1e8140f72a2").AttachApplication()
+        Application.Element("Microsoft Store").AttachApplication()
 
         ' W5
         On Error GoTo Recover_Label
@@ -96,17 +96,17 @@ Public Class Microsoft_Store
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Terminate
+    ''' Page: Terminate
     ''' </summary>
     Public Sub Terminate()
 
         ' Terminate
-        Application.Element("Microsoft Store", "330860ce-038b-499b-9a6c-c1e8140f72a2").Terminate()
+        Application.Element("Microsoft Store").Terminate()
 
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Start_Updates
+    ''' Page: Start_Updates
     ''' </summary>
     Public Sub Start_Updates()
 
@@ -133,7 +133,7 @@ Public Class Microsoft_Store
 
         ' Click Nach Updates suchen
         Navigate_3_Label:
-        Application.Element("Button: Nach Updates suchen", "2a7db9d3-154c-404c-b610-5c3ae51ecb32").UIAButtonPress()
+        Application.Element("Button: Nach Updates suchen").UIAButtonPress()
 
         ' W120
         ' Wait 120 seconds for condition with 2 choice(s)
@@ -191,7 +191,7 @@ Public Class Microsoft_Store
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Wait_Updates_Finished
+    ''' Page: Wait_Updates_Finished
     ''' </summary>
     Public Sub Wait_Updates_Finished()
 

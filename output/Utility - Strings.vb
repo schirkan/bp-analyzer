@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Strings
 ' Version: 6.5.1.14401
-' Generated: 2026-03-10 15:43:20
+' Generated: 2026-03-10 19:14:42
 
 Imports System
 Imports System.Collections.Generic

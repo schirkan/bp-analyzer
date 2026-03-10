@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-10 15:43:20
+' Generated: 2026-03-10 19:14:42
 
 Imports System
 Imports System.Collections.Generic
@@ -105,7 +105,7 @@ Public Class Utility___Environment
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Get_Machine_Name
+    ''' Page: Get_Machine_Name
     ''' </summary>
     ''' <param name="Machine_Name">The hostname of the machine running this action</param>
     Public Sub Get_Machine_Name(Optional ByRef Machine_Name As String = Nothing)
@@ -128,7 +128,7 @@ Public Class Utility___Environment
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Get_User_Name
+    ''' Page: Get_User_Name
     ''' </summary>
     ''' <param name="User_Name">The name of the logged in user in the current system</param>
     Public Sub Get_User_Name(Optional ByRef User_Name As String = Nothing)

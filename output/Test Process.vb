@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: Test Process
 ' Version: 1.0
-' Generated: 2026-03-10 15:43:20
+' Generated: 2026-03-10 19:14:42
 
 Imports System
 Imports System.Collections.Generic
@@ -53,7 +53,6 @@ Public Class Test_Process
         End If
 
         ' Variable Test
-        Start_Label:
         Variable_Test(InData1:=MyText, InData2:=123, OutValue1:=OutValue1, OutValue2:=OutValue2)
 
         ' Loop Test
@@ -68,7 +67,7 @@ Public Class Test_Process
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Dummy
+    ''' Page: Dummy
     ''' </summary>
     Private Sub Dummy()
 
@@ -82,7 +81,6 @@ Public Class Test_Process
         local_VNR = "AB123456"""
 
         ' MyPublicAction
-        Start_Label:
         bp_demo.Instance.MyPublicAction(VNR:=local_VNR, VerwSysSl:=local_VerwSysSl)
 
         ' bp demo::Get URL
@@ -91,7 +89,7 @@ Public Class Test_Process
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Loop_Test
+    ''' Page: Loop_Test
     ''' </summary>
     Private Sub Loop_Test()
 

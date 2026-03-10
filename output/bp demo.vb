@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: bp demo
 ' Version: 1.0
-' Generated: 2026-03-10 15:43:20
+' Generated: 2026-03-10 19:14:42
 
 Imports System
 Imports System.Collections.Generic
@@ -79,7 +79,7 @@ Public Class bp_demo
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Get_URL
+    ''' Page: Get_URL
     ''' </summary>
     ''' <param name="URL">current URL</param>
     ''' <param name="Window_Title">current Window Title</param>
@@ -95,15 +95,15 @@ Public Class bp_demo
 
         ' Reader URL+Title
         Read_Label:
-        URL = Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").UIAGetValue()
-        Window_Title = Application.Element("Main Window", "2660caf7-78b8-4335-af2e-bcf547eaf9a8").GetWindowText()
+        URL = Application.Element("URL Bar").UIAGetValue()
+        Window_Title = Application.Element("Main Window").GetWindowText()
         
         End_Get_URL_Label:
 
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Set_URL
+    ''' Page: Set_URL
     ''' </summary>
     ''' <param name="URL">New URL</param>
     Public Sub Set_URL(Optional ByVal URL As String = Nothing)
@@ -121,11 +121,11 @@ Public Class bp_demo
 
         ' Writer URL
         Write_Label:
-        Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").Write(URL)
+        Application.Element("URL Bar").Write(URL)
 
         ' Send Enter
-        Application.Element("Main Window", "2660caf7-78b8-4335-af2e-bcf547eaf9a8").ActivateApp()
-        Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").UIASendKeys(newtext:="{ENTER}")
+        Application.Element("Main Window").ActivateApp()
+        Application.Element("URL Bar").UIASendKeys(newtext:="{ENTER}")
         
         End_Set_URL_Label:
 

@@ -114,7 +114,7 @@ public static class StageNavigator
             _labelCounter[key] = 1;
         }
 
-        if (stageType == "End")
+        if (stageType == "Start" || stageType == "End")
         {
             var stage = doc?.Root?.Elements("stage").FirstOrDefault(x => x.Attribute("stageid")?.Value == stageId);
             var subsheetId = stage?.Element("subsheetid")?.Value;

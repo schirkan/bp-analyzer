@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Windows Settings
 ' Version: 1.0
-' Generated: 2026-03-10 15:43:21
+' Generated: 2026-03-10 19:14:43
 
 Imports System
 Imports System.Collections.Generic
@@ -50,7 +50,7 @@ Public Class Windows_Settings
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Launch
+    ''' Page: Launch
     ''' </summary>
     Public Sub Launch()
 
@@ -69,7 +69,7 @@ Public Class Windows_Settings
         ' Attach
         Navigate_Label:
         On Error GoTo Recover_Label
-        Application.Element("Windows Settings", "90f3791d-64d2-4092-b521-c2d17a374f3c").AttachApplication()
+        Application.Element("Windows Settings").AttachApplication()
 
         ' W5
         On Error GoTo Recover_Label
@@ -96,17 +96,17 @@ Public Class Windows_Settings
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Terminate
+    ''' Page: Terminate
     ''' </summary>
     Public Sub Terminate()
 
         ' Terminate
-        Application.Element("Windows Settings", "90f3791d-64d2-4092-b521-c2d17a374f3c").Terminate()
+        Application.Element("Windows Settings").Terminate()
 
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Start_Updates
+    ''' Page: Start_Updates
     ''' </summary>
     Public Sub Start_Updates()
 
@@ -124,14 +124,14 @@ Public Class Windows_Settings
 
         ' Click Nach Updates suchen
         Navigate_3_Label:
-        Application.Element("Button: Nach Updates suchen", "b026cc78-c68f-4a73-b198-bba0c63c8ef2").UIAButtonPress()
+        Application.Element("Button: Nach Updates suchen").UIAButtonPress()
         
         End_Start_Updates_Label:
 
     End Sub
 
     ''' <summary>
-    ''' BluePrism page: Wait_Updates_Finished
+    ''' Page: Wait_Updates_Finished
     ''' </summary>
     Public Sub Wait_Updates_Finished()
 
