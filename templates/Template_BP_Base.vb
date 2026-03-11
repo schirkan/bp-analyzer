@@ -24,15 +24,6 @@ Public Class BP_Base
     Private Shared _lastException As System.Exception
 
     ''' <summary>
-    ''' Raises a BluePrism exception with type and message
-    ''' </summary>
-    ''' <param name="exceptionType">The type of exception (e.g., "System Exception")</param>
-    ''' <param name="ExceptionDetail">The exception message</param>
-    Protected Shared Sub RaiseException(exceptionType As String, ExceptionDetail As String)
-        Throw New BP_Exception(exceptionType, ExceptionDetail)
-    End Sub
-
-    ''' <summary>
     ''' Stores the current exception using Err.GetException()
     ''' Called in Recover stage to save the exception
     ''' Throws an exception if an exception is already stored
@@ -53,15 +44,13 @@ Public Class BP_Base
     End Sub
 
     ''' <summary>
-    ''' Re-throws the stored exception
-    ''' Called when usecurrent="yes" in Exception stage
-    ''' Throws an exception if no exception is stored
+    ''' Return last stored exception
     ''' </summary>
-    Protected Shared Sub RethrowException()
+    Protected Shared Sub GetLastException()
         If _lastException Is Nothing Then
-            Throw New Exception("No exception stored")
+            Return New Exception("No exception stored")
         End If
-        Throw _lastException
+        Return _lastException
     End Sub
 
     ''' <summary>
@@ -96,7 +85,7 @@ Public Class BP_Base
     ''' Returns the current exception
     ''' </summary>
     Protected Shared Function ExceptionStage() As String
-        Return "Exception Stage"
+        Return "TODO: Implement Exception Stage"
     End Function
 
     #End Region

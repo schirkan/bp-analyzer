@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Environment
 ' Version: 6.9.0.26970
-' Generated: 2026-03-10 21:06:28
+' Generated: 2026-03-11 14:08:27
 
 Imports System
 Imports System.Collections.Generic
@@ -19,14 +19,14 @@ Imports System.Threading.Tasks
 ''' <summary>
 ''' BluePrism object: Utility - Environment
 ''' </summary>
-Public Class Utility___Environment
+Public Class Utility_Environment
     Inherits BP_Base
 
     #Region "Singleton Instance"
 
-    Private Shared ReadOnly _lazyInstance As New Lazy(Of Utility___Environment)(Function() New Utility___Environment())
+    Private Shared ReadOnly _lazyInstance As New Lazy(Of Utility_Environment)(Function() New Utility_Environment())
 
-    Public Shared ReadOnly Property Instance As Utility___Environment
+    Public Shared ReadOnly Property Instance As Utility_Environment
         Get
             Return _lazyInstance.Value
         End Get
@@ -47,7 +47,7 @@ Public Class Utility___Environment
     ''' </summary>
     Public Sub New()
 
-        GoTo End__Label
+        GoTo End_Main
 
         ' new
         ' Initialise Page
@@ -63,7 +63,7 @@ Public Class Utility___Environment
         ' Version Info
         ' Version: 10.1.8
 
-        End__Label:
+        End_Main:
 
     End Sub
 
@@ -227,19 +227,19 @@ Public Class Utility___Environment
 
         ' Timed Out?
         If Fail_Datetime_Reached_ Then
-            GoTo Exception_Label
+            GoTo Run_Process_Until_Ended_System_Exception
         End If
-        GoTo End_Run_Process_Until_Ended_Label
+        GoTo End_Run_Process_Until_Ended
 
         ' System Exception
-        Exception_Label:
-        RaiseException("System Exception", "Application " & [Application] & " was still running after the maximum time period")
+        Run_Process_Until_Ended_System_Exception:
+        Throw New BP_Exception("System Exception", "Application " & [Application] & " was still running after the maximum time period")
 
         ' Note3
         ' 20201006
         ' The Ignore Timeout flag was added to addres an issue with using a TimeSpan to specify the timeout value. If the user wants the process to wait indefinitely for the process to complete the timeout value needs to be -1. However, you cannot create a TimeSpan with a millisecond value of -1 using the Blue Prism MakeTimeSpan() function. To address this, we added a flag that controls how to code stage handled the timeout value. By doing this we don't break existing deployments that actually make use of the TimeSpan data type for inputting the timeout.
 
-        End_Run_Process_Until_Ended_Label:
+        End_Run_Process_Until_Ended:
 
     End Sub
 
@@ -251,20 +251,20 @@ Public Class Utility___Environment
 
         ' Is Empty?
         If Len(Trim(Clipboard)) = 0 Then
-            GoTo Calculation_2_Label
+            GoTo Set_Clipboard_Set_Value
         End If
         
         ' Set
-        Code_9_Label:
+        Set_Clipboard_Set:
         CodeStage_Set(Clipboard:=Clipboard)
-        GoTo End_Set_Clipboard_Label
+        GoTo End_Set_Clipboard
 
         ' Set Value
-        Calculation_2_Label:
+        Set_Clipboard_Set_Value:
         Clipboard = Chr(0)
-        GoTo Code_9_Label
+        GoTo Set_Clipboard_Set
 
-        End_Set_Clipboard_Label:
+        End_Set_Clipboard:
 
     End Sub
 
@@ -281,6 +281,8 @@ Public Class Utility___Environment
         ' Initialize variables with initialvalue
         Use_Shell = True
 
+        Start_Start_Process:
+
         ' Start Process
         CodeStage_Start_Process(
             Application:=Application, 
@@ -288,6 +290,8 @@ Public Class Utility___Environment
             Use_Shell:=Use_Shell, 
             id:=Process_ID, 
             name:=Process_Name)
+        
+        End_Start_Process:
 
     End Sub
 
@@ -336,38 +340,42 @@ Public Class Utility___Environment
 
         ' Success?
         If Success = True Then
-            GoTo End_Set_Screen_Resolution_Label
+            GoTo End_Set_Screen_Resolution
         End If
 
         ' Clear Dimensions
         Horizontal_Resolution = 0
         Vertical_Resolution = 0
-        GoTo End_Set_Screen_Resolution_Label
+        GoTo End_Set_Screen_Resolution
 
         ' Note1
         ' Note: Make sure you only pass in the screen resolution that is supported
 
-        End_Set_Screen_Resolution_Label:
+        End_Set_Screen_Resolution:
 
     End Sub
 
     ''' <summary>
     ''' Attach to a process and wait for it to complete.
     ''' </summary>
-    ''' <param name="Maximum_wait_time__seconds_">The maximum time to wait for the process to complete</param>
+    ''' <param name="Maximum_wait_time_seconds_">The maximum time to wait for the process to complete</param>
     ''' <param name="Process_Name">The name of the process to attach to</param>
     ''' <param name="Found_">True=process found, false=process not found</param>
-    Public Sub Wait_for_Process(Optional ByVal Maximum_wait_time__seconds_ As Decimal? = Nothing, Optional ByVal Process_Name As String = Nothing, Optional ByRef Found_ As Boolean? = Nothing)
+    Public Sub Wait_for_Process(Optional ByVal Maximum_wait_time_seconds_ As Decimal? = Nothing, Optional ByVal Process_Name As String = Nothing, Optional ByRef Found_ As Boolean? = Nothing)
 
         ' Initialize variables with initialvalue
-        Maximum_wait_time__seconds_ = 0
+        Maximum_wait_time_seconds_ = 0
         Found_ = False
+
+        Start_Wait_for_Process:
 
         ' Wait for process
         CodeStage_Wait_for_process(
             Process_Name:=Process_Name, 
-            Max_Wait:=Maximum_wait_time__seconds_, 
+            Max_Wait:=Maximum_wait_time_seconds_, 
             Found_:=Found_)
+        
+        End_Wait_for_Process:
 
     End Sub
 
@@ -385,7 +393,7 @@ Public Class Utility___Environment
 
         
         ' Find Process
-        Code_14_Label:
+        Wait_for_Process_Window_Find_Process:
         CodeStage_Find_Process(
             Process_Name:=Process_Name, 
             Window_Title:=Window_Title, 
@@ -393,26 +401,27 @@ Public Class Utility___Environment
 
         ' Found?
         If Found Then
-            GoTo End_Wait_for_Process_Window_Label
+            GoTo End_Wait_for_Process_Window
         End If
 
         ' Wait?
         If Wait>0 Then
-            GoTo Calculation_3_Label
+            GoTo Wait_for_Process_Window_Count_Down
         End If
-        GoTo End_Wait_for_Process_Window_Label
+        GoTo End_Wait_for_Process_Window
 
         ' Count Down
-        Calculation_3_Label:
+        Wait_for_Process_Window_Count_Down:
         Wait = Wait-0.5
-
+        
         ' Wait
+        Wait_for_Process_Window_Wait:
         ' Wait 0.5 seconds for condition with 0 choice(s)
         Select Case True
         End Select
-        GoTo Code_14_Label
+        GoTo Wait_for_Process_Window_Find_Process
 
-        End_Wait_for_Process_Window_Label:
+        End_Wait_for_Process_Window:
 
     End Sub
 

@@ -88,8 +88,8 @@ public static class StageNavigator
         return GetLabel("Unknown", stageId, doc);
     }
 
-    private static Dictionary<string, string> _labelMapping = new Dictionary<string, string>();
-    private static Dictionary<string, int> _labelCounter = new Dictionary<string, int>();
+    private static Dictionary<string, string> _labelMapping = [];
+    private static List<Tuple<string, string>> _labelAndPage = [];
 
     /// <summary>
     /// Gets a formatted label for a stage.
@@ -101,33 +101,32 @@ public static class StageNavigator
             return label;
         }
 
-        var processId = doc?.Root?.Attribute("preferredid")?.Value;
-        var uniqueId = "_";
-        var key = processId + stageType;
-        if (_labelCounter.TryGetValue(key, out int counter))
+        var stage = doc?.Descendants().FirstOrDefault(e => e.Name.LocalName == "stage" && e.Attribute("stageid")?.Value == stageId);
+        var stageName = stage?.Attribute("name")?.Value!;
+        var subsheetId = stage?.Element("subsheetid")?.Value ?? "";
+
+        var subsheetName = SubsheetResolver.FindSubsheetName(doc, subsheetId);
+        if (string.IsNullOrWhiteSpace(subsheetName)) subsheetName = "Main";
+        var sanitizedSubsheetName = NameSanitizer.SanitizeMethodName(subsheetName);
+
+        var newLabel = "";
+        if (stageType == "Start" || stageType == "End")
         {
-            _labelCounter[key]++;
-            uniqueId = "_" + _labelCounter[key] + "_";
+            newLabel = stageType + "_" + sanitizedSubsheetName; // + "_Label";
         }
         else
         {
-            _labelCounter[key] = 1;
+            var key = sanitizedSubsheetName + "_" + NameSanitizer.SanitizeMethodName(stageName);
+            newLabel = key; // $"{key}_Label";
+            var counter = 1;
+            while (_labelAndPage.Any(x => x.Item1 == subsheetId && x.Item2 == newLabel))
+            {
+                newLabel = key + "_"+ (++counter); // + "_Label";
+            }
         }
 
-        if (stageType == "Start" || stageType == "End")
-        {
-            var stage = doc?.Root?.Elements("stage").FirstOrDefault(x => x.Attribute("stageid")?.Value == stageId);
-            var subsheetId = stage?.Element("subsheetid")?.Value;
-            var subsheetName = SubsheetResolver.FindSubsheetName(doc, subsheetId);
-            uniqueId = "_" + NameSanitizer.SanitizeMethodName(subsheetName) + "_";
-        }
-
-        // var sanitizedId = NameSanitizer.SanitizeId(stageId);
-        var newLabel = $"{stageType}{uniqueId}Label";
+        _labelAndPage.Add(new Tuple<string, string>(subsheetId, newLabel));
         _labelMapping.Add(stageId, newLabel);
         return newLabel;
-
-        // var sanitizedId = NameSanitizer.SanitizeId(stageId);
-        // return $"{stageType}_{sanitizedId}_Label";
     }
 }

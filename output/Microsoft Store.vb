@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Microsoft Store
 ' Version: 1.0
-' Generated: 2026-03-10 21:06:28
+' Generated: 2026-03-11 14:08:27
 
 Imports System
 Imports System.Collections.Generic
@@ -60,38 +60,38 @@ Public Class Microsoft_Store
         ' Initialize variables with initialvalue
         FilePath = "ms-windows-store://updates"
 
-        On Error GoTo Recover_Label
+        On Error GoTo Launch_Recover
 
         ' Start Process
-        On Error GoTo Recover_Label
-        Utility___Environment.Instance.Start_Process(Application:=FilePath)
+        On Error GoTo Launch_Recover
+        Utility_Environment.Instance.Start_Process(Application:=FilePath)
         
         ' Attach
-        Navigate_Label:
-        On Error GoTo Recover_Label
+        Launch_Attach:
+        On Error GoTo Launch_Recover
         Application.Element("Microsoft Store").AttachApplication()
 
         ' W5
-        On Error GoTo Recover_Label
+        On Error GoTo Launch_Recover
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Main Window", "b048ceed-93fb-48da-99af-7fafeec74d4e").CheckExists = True ' Main Window Check Exists
-                GoTo End_Launch_Label
+                GoTo End_Launch
         End Select
 
         ' SE
-        On Error GoTo Recover_Label
-        RaiseException("System Exception", "Main Window not found")
+        On Error GoTo Launch_Recover
+        Throw New BP_Exception("System Exception", "Main Window not found")
 
         ' Recover
-        Recover_Label:
+        Launch_Recover:
         StoreException()
 
         ' Resume
         ClearException()
-        Resume Navigate_Label
+        Resume Launch_Attach
 
-        End_Launch_Label:
+        End_Launch:
 
     End Sub
 
@@ -110,83 +110,87 @@ Public Class Microsoft_Store
     ''' </summary>
     Public Sub Start_Updates()
 
+        
         ' W5
+        Start_Updates_W5:
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Header: Updates und Downloads", "0340b82e-9c61-45bd-a50b-f5691247a070").CheckExists = True ' Header: Updates und Downloads Check Exists
-                GoTo WaitStart_3_Label
+                GoTo Start_Updates_W5_2
         End Select
-
+        
         ' SE
-        RaiseException("System Exception", "Download Header not found")
+        Start_Updates_SE:
+        Throw New BP_Exception("System Exception", "Download Header not found")
 
         ' W5
-        WaitStart_3_Label:
+        Start_Updates_W5_2:
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Button: Nach Updates suchen", "2a7db9d3-154c-404c-b610-5c3ae51ecb32").CheckExists = True ' Button: Nach Updates suchen Check Exists
-                GoTo Navigate_3_Label
+                GoTo Start_Updates_Click_Nach_Updates_suchen
         End Select
 
         ' SE
-        RaiseException("System Exception", "Nach Updates suchen Button not found")
+        Throw New BP_Exception("System Exception", "Nach Updates suchen Button not found")
 
         ' Click Nach Updates suchen
-        Navigate_3_Label:
+        Start_Updates_Click_Nach_Updates_suchen:
         Application.Element("Button: Nach Updates suchen").UIAButtonPress()
 
         ' W120
         ' Wait 120 seconds for condition with 2 choice(s)
         Select Case True
             Case Application.Element("Button: Die Überprüfung auf Updates wurde abgeschlossen.", "397fb78c-8c08-4dc0-987c-3ca33d3762a4").CheckExists = True ' Button: Die Überprüfung auf Updates wurde abgeschlossen. Check Exists
-                GoTo WaitStart_5_Label
+                GoTo Start_Updates_W2
             Case Application.Element("Button: Nach Updates suchen", "2a7db9d3-154c-404c-b610-5c3ae51ecb32").CheckExists = True ' Button: Nach Updates suchen Check Exists
-                GoTo WaitStart_5_Label
+                GoTo Start_Updates_W2
         End Select
 
         ' SE
-        RaiseException("System Exception", "Download Header not found")
+        Throw New BP_Exception("System Exception", "Download Header not found")
 
         ' W2
-        WaitStart_5_Label:
+        Start_Updates_W2:
         ' Wait 2 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Button: Nach Updates suchen", "2a7db9d3-154c-404c-b610-5c3ae51ecb32").CheckExists = True ' Button: Nach Updates suchen Check Exists
-                GoTo Navigate_4_Label
+                GoTo Start_Updates_Click_Update_All
         End Select
 
         ' Note1
         ' No Updates
-        GoTo End_Start_Updates_Label
+        GoTo End_Start_Updates
 
         ' Click Update All
-        Navigate_4_Label:
+        Start_Updates_Click_Update_All:
         ' Navigate: No steps defined
         
         ' W5
-        WaitStart_6_Label:
+        Start_Updates_W5_3:
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Button: Nach Updates suchen", "2a7db9d3-154c-404c-b610-5c3ae51ecb32").CheckExists = True ' Button: Nach Updates suchen Check Exists
-                GoTo End_Start_Updates_Label
+                GoTo End_Start_Updates
         End Select
 
         ' SE
-        RaiseException("System Exception", "Nach Updates suchen Button not found")
+        Throw New BP_Exception("System Exception", "Nach Updates suchen Button not found")
+
+        ' Note2
+        Start_Updates_Note2:
+        ' TODO
+        GoTo Start_Updates_W2
 
         ' Note2
         ' TODO
-        GoTo WaitStart_5_Label
+        GoTo Start_Updates_Click_Update_All
 
         ' Note2
         ' TODO
-        GoTo Navigate_4_Label
+        GoTo Start_Updates_W5_3
 
-        ' Note2
-        ' TODO
-        GoTo WaitStart_6_Label
-
-        End_Start_Updates_Label:
+        End_Start_Updates:
 
     End Sub
 

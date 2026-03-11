@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: bp demo
 ' Version: 1.0
-' Generated: 2026-03-10 21:06:28
+' Generated: 2026-03-11 14:08:26
 
 Imports System
 Imports System.Collections.Generic
@@ -59,22 +59,22 @@ Public Class bp_demo
     ''' <param name="VerwSysSl">Verwaltungssystem Schlüssel</param>
     Public Sub MyPublicAction(Optional ByVal VNR As String = Nothing, Optional ByRef VerwSysSl As String = Nothing)
 
-        On Error GoTo Recover_Label
+        On Error GoTo MyPublicAction_Recover
 
         ' Set VerwSysSl
-        On Error GoTo Recover_Label
+        On Error GoTo MyPublicAction_Recover
         VerwSysSl = Left(VNR, 2)
-        GoTo End_MyPublicAction_Label
+        GoTo End_MyPublicAction
 
         ' Recover
-        Recover_Label:
+        MyPublicAction_Recover:
         StoreException()
 
         ' Resume
         ClearException()
-        Resume End_MyPublicAction_Label
+        Resume End_MyPublicAction
 
-        End_MyPublicAction_Label:
+        End_MyPublicAction:
 
     End Sub
 
@@ -89,16 +89,16 @@ Public Class bp_demo
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").CheckExists = True ' URL Bar Check Exists
-                GoTo Read_Label
+                GoTo Get_URL_Reader_URL_Title
         End Select
-        GoTo End_Get_URL_Label
+        GoTo End_Get_URL
 
         ' Reader URL+Title
-        Read_Label:
+        Get_URL_Reader_URL_Title:
         URL = Application.Element("URL Bar").UIAGetValue()
         Window_Title = Application.Element("Main Window").GetWindowText()
         
-        End_Get_URL_Label:
+        End_Get_URL:
 
     End Sub
 
@@ -115,19 +115,19 @@ Public Class bp_demo
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("URL Bar", "ad4b93a6-97c7-4fa7-acde-f6a00d96ac32").CheckExists = True ' URL Bar Check Exists
-                GoTo Write_Label
+                GoTo Set_URL_Writer_URL
         End Select
-        GoTo End_Set_URL_Label
+        GoTo End_Set_URL
 
         ' Writer URL
-        Write_Label:
+        Set_URL_Writer_URL:
         Application.Element("URL Bar").Write(URL)
 
         ' Send Enter
         Application.Element("Main Window").ActivateApp()
         Application.Element("URL Bar").UIASendKeys(newtext:="{ENTER}")
         
-        End_Set_URL_Label:
+        End_Set_URL:
 
     End Sub
 
@@ -137,41 +137,41 @@ Public Class bp_demo
     ''' <param name="Value">Text</param>
     Private Sub InteralAction(Optional ByVal Value As String = Nothing)
 
-        On Error GoTo Recover_2_Label
+        On Error GoTo InteralAction_Global_Recover
 
         ' value empty?
-        On Error GoTo Recover_2_Label
+        On Error GoTo InteralAction_Global_Recover
         If Value = "" Then
-            GoTo Exception_Label
+            GoTo InteralAction_SE
         End If
 
         ' Set Value
-        On Error GoTo Recover_2_Label
+        On Error GoTo InteralAction_Global_Recover
         Value = Value & Environment.GetCurrentRow("Const Value1").Value
 
         ' Note1
         ' This is a note in BP
-        GoTo End_InteralAction_Label
+        GoTo End_InteralAction
 
         ' SE
-        Exception_Label:
-        On Error GoTo Recover_2_Label
-        RaiseException("System Exception", "Value is empty")
+        InteralAction_SE:
+        On Error GoTo InteralAction_Global_Recover
+        Throw New BP_Exception("System Exception", "Value is empty")
 
         ' Global Recover
-        Recover_2_Label:
+        InteralAction_Global_Recover:
         StoreException()
 
         ' Log Exception
-        On Error GoTo Recover_2_Label
+        On Error GoTo InteralAction_Global_Recover
         Value = "Type: " & ExceptionType() & NewLine() &
 "Details: " & ExceptionDetail()
 
         ' Re-Throw
-        On Error GoTo Recover_2_Label
-        RethrowException()
+        On Error GoTo InteralAction_Global_Recover
+        Throw GetLastException()
 
-        End_InteralAction_Label:
+        End_InteralAction:
 
     End Sub
 

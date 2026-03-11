@@ -198,13 +198,14 @@ public static class ClassGenerator
             {
                 code = System.Text.RegularExpressions.Regex.Replace(code, $" * {stageLabel}:", "");
             }
+
+            // switch label and comment
+            code = System.Text.RegularExpressions.Regex.Replace(code, $"({stageLabel}:)\\s+(' .*)", "$2\n        $1");
+
         }
 
         // Remove multiple newlines
         code = System.Text.RegularExpressions.Regex.Replace(code, "\\s*\r\n(\r\n)+", "\r\n\r\n");
-
-        // switch label and comment
-        code = System.Text.RegularExpressions.Regex.Replace(code, "(\\w*_Label:)\\s+(' .*)", "$2\n        $1");
 
         return code;
     }

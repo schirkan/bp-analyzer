@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: Test Process
 ' Version: 1.0
-' Generated: 2026-03-10 21:06:28
+' Generated: 2026-03-11 14:08:27
 
 Imports System
 Imports System.Collections.Generic
@@ -66,7 +66,7 @@ Public Class Test_Process
         Dummy()
 
         ' Call Process A
-        MP___Subprocess_A.Instance.Main(
+        MP_Subprocess_A.Instance.Main(
             Name:=MyText, 
             Char_Count:=Char_Count)
 
@@ -114,8 +114,8 @@ Public Class Test_Process
         Values.SelectFirstRow()
         
         ' Calculate Distance
-        Action_3_Label:
-        Utility___Strings.Instance.Calculate_Distance(
+        Loop_Test_Calculate_Distance:
+        Utility_Strings.Instance.Calculate_Distance(
             Source:=Values.GetCurrentRow("Name").Value, 
             Target:=Name, 
             Case_Sensitive:=False, 
@@ -124,7 +124,7 @@ Public Class Test_Process
 
         ' Loop Values
         If Values.SelectNextRow() Then
-            GoTo Action_3_Label
+            GoTo Loop_Test_Calculate_Distance
         End If
 
     End Sub
@@ -173,11 +173,11 @@ Public Class Test_Process
 
         ' MyToggle?
         If MyToggle Then
-            GoTo Calculation_Label
+            GoTo Variable_Test_Toggle_boolean_value
         End If
         
         ' Multi1
-        MultipleCalculation_Label:
+        Variable_Test_Multi1:
         Data5 = 1
         Data6 = 7.8
         Data8 = "tttt"
@@ -185,35 +185,35 @@ Public Class Test_Process
         ' Zahl?
         Select Case True
             Case Data5 = 1 ' Zahl ist 1
-                GoTo Action_4_Label
+                GoTo Variable_Test_Collections_Count_Rows
             Case Data5 = 2 ' Zahl ist 2
-                GoTo Calculation_2_Label
+                GoTo Variable_Test_Calc1
         End Select
 
         ' Alert1
         BP_Alert.Notify("Achtung Achtung")
 
         ' BE
-        RaiseException("Business Exception", "Zahl ist nicht 1 oder 2")
+        Throw New BP_Exception("Business Exception", "Zahl ist nicht 1 oder 2")
 
         ' Collections::Count Rows
-        Action_4_Label:
+        Variable_Test_Collections_Count_Rows:
         Blueprism.AutomateProcessCore.clsCollectionActions.Instance.Count_Rows(
             Collection_Name:="Coll2", 
             Count:=Count)
-        GoTo End_Variable_Test_Label
+        GoTo End_Variable_Test
 
         ' Calc1
-        Calculation_2_Label:
+        Variable_Test_Calc1:
         Data6 = Data5 + 6
-        GoTo Action_4_Label
+        GoTo Variable_Test_Collections_Count_Rows
 
         ' Toggle boolean value
-        Calculation_Label:
+        Variable_Test_Toggle_boolean_value:
         MyToggle = MyToggle = False
-        GoTo MultipleCalculation_Label
+        GoTo Variable_Test_Multi1
 
-        End_Variable_Test_Label:
+        End_Variable_Test:
         OutValue1 = Data1
         OutValue2 = MyToggle
 

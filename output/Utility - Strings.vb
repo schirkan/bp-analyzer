@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Utility - Strings
 ' Version: 6.5.1.14401
-' Generated: 2026-03-10 21:06:29
+' Generated: 2026-03-11 14:08:27
 
 Imports System
 Imports System.Collections.Generic
@@ -18,14 +18,14 @@ Imports Microsoft.VisualBasic.FileIO
 ''' <summary>
 ''' BluePrism object: Utility - Strings
 ''' </summary>
-Public Class Utility___Strings
+Public Class Utility_Strings
     Inherits BP_Base
 
     #Region "Singleton Instance"
 
-    Private Shared ReadOnly _lazyInstance As New Lazy(Of Utility___Strings)(Function() New Utility___Strings())
+    Private Shared ReadOnly _lazyInstance As New Lazy(Of Utility_Strings)(Function() New Utility_Strings())
 
-    Public Shared ReadOnly Property Instance As Utility___Strings
+    Public Shared ReadOnly Property Instance As Utility_Strings
         Get
             Return _lazyInstance.Value
         End Get
@@ -46,7 +46,7 @@ Public Class Utility___Strings
     ''' </summary>
     Public Sub New()
 
-        GoTo End__Label
+        GoTo End_Main
 
         ' new
         ' Initialise Page
@@ -62,7 +62,7 @@ Public Class Utility___Strings
         ' Note3
         ' Version 10.0
 
-        End__Label:
+        End_Main:
 
     End Sub
 
@@ -71,7 +71,7 @@ Public Class Utility___Strings
     ''' </summary>
     Protected Overrides Sub Finalize()
 
-        GoTo End_Clean_Up_Label
+        GoTo End_Clean_Up
 
         ' new
         ' Clean Up Page
@@ -79,7 +79,7 @@ Public Class Utility___Strings
         ' The cleanup action will be called automatically immediately after closing your business object at the end of a business process.
         ' You will not be able to call this action from a business process, nor will it be called at any other time than before the disposal of the business object.
 
-        End_Clean_Up_Label:
+        End_Clean_Up:
 
     End Sub
 
@@ -103,14 +103,14 @@ Public Class Utility___Strings
 
         ' Check Input
         If (Len(Trim(Source)) > 0) AND (Len(Trim(Target)) > 0) Then
-            GoTo Code_Label
+            GoTo Calculate_Distance_Calculate_Levenshtein_Distance
         End If
 
         ' Invalid Input
-        RaiseException("Invalid Input Parameter", "Please review and correct your input. Values must be provided for both Source and Target.")
+        Throw New BP_Exception("Invalid Input Parameter", "Please review and correct your input. Values must be provided for both Source and Target.")
 
         ' Calculate Levenshtein Distance
-        Code_Label:
+        Calculate_Distance_Calculate_Levenshtein_Distance:
         CodeStage_Calculate_Levenshtein_Distance(
             source:=Source, 
             target:=Target, 
@@ -135,7 +135,7 @@ Public Class Utility___Strings
         Conflicting_Characters.SelectFirstRow()
         
         ' Delete from Sample 1
-        SubSheet_Label:
+        Compare_Font_Text_Delete_from_Sample_1:
         Delete_Characters(
             Text_Sample:=Sample_1, 
             Characters_to_Delete:=Conflicting_Characters.GetCurrentRow("Character Group").Value, 
@@ -149,7 +149,7 @@ Public Class Utility___Strings
 
         ' Next Character Group
         If Conflicting_Characters.SelectNextRow() Then
-            GoTo SubSheet_Label
+            GoTo Compare_Font_Text_Delete_from_Sample_1
         End If
 
         ' Determine Equality
@@ -405,7 +405,7 @@ Public Class Utility___Strings
 
         ' Blank XML?
         If Len(Trim(XML)) = 0 Then
-            GoTo End_Get_XML_Elements_Label
+            GoTo End_Get_XML_Elements
         End If
 
         ' Get Elements
@@ -414,7 +414,7 @@ Public Class Utility___Strings
             Element:=Element_Name, 
             Elements:=Elements)
         
-        End_Get_XML_Elements_Label:
+        End_Get_XML_Elements:
 
     End Sub
 
@@ -439,15 +439,16 @@ Public Class Utility___Strings
             Start_Byte:=Start_Byte, 
             Compare_Method:=Compare_Method, 
             Position:=Position)
-        GoTo End_InStr_Label
+        GoTo End_InStr
 
         ' Note1
+        InStr_Note1:
         ' Inputs
 
         ' Note1
         ' Outputs
 
-        End_InStr_Label:
+        End_InStr:
 
     End Sub
 
@@ -472,15 +473,16 @@ Public Class Utility___Strings
             Start_Byte:=Start_Byte, 
             Compare_Method:=Compare_Method, 
             Position:=Position)
-        GoTo End_InStrRev_Label
+        GoTo End_InStrRev
 
         ' Note1
+        InStrRev_Note1:
         ' Inputs
 
         ' Note1
         ' Outputs
 
-        End_InStrRev_Label:
+        End_InStrRev:
 
     End Sub
 
@@ -526,27 +528,27 @@ Public Class Utility___Strings
         Values.SelectFirstRow()
         
         ' Trim?
-        Decision_3_Label:
+        Join_Text_Trim_:
         If Trim_Values Then
-            GoTo Calculation_3_Label
+            GoTo Join_Text_Do_Trim
         End If
         
         ' Append Value
-        Calculation_4_Label:
+        Join_Text_Append_Value:
         Joined_Text = Joined_Text & Values.GetCurrentRow("Item Value").Value & Join_Character
 
         ' Next Value
         If Values.SelectNextRow() Then
-            GoTo Decision_3_Label
+            GoTo Join_Text_Trim_
         End If
-        GoTo End_Join_Text_Label
+        GoTo End_Join_Text
 
         ' Do Trim
-        Calculation_3_Label:
+        Join_Text_Do_Trim:
         Values.GetCurrentRow("Item Value").Value = Trim(Values.GetCurrentRow("Item Value").Value)
-        GoTo Calculation_4_Label
+        GoTo Join_Text_Append_Value
 
-        End_Join_Text_Label:
+        End_Join_Text:
 
     End Sub
 
@@ -565,25 +567,25 @@ Public Class Utility___Strings
 
         ' Blank Padding Character?
         If Len(Padding_Character) = 0 Then
-            GoTo Calculation_5_Label
+            GoTo PadLeft_Use_Space_for_Padding
         End If
         
         ' Long Enough?
-        Decision_5_Label:
+        PadLeft_Long_Enough_:
         If Len(Input_String) >= Target_Width Then
-            GoTo End_PadLeft_Label
+            GoTo End_PadLeft
         End If
 
         ' Insert Padding
         Input_String = Padding_Character & Input_String
-        GoTo Decision_5_Label
+        GoTo PadLeft_Long_Enough_
 
         ' Use Space for Padding
-        Calculation_5_Label:
+        PadLeft_Use_Space_for_Padding:
         Padding_Character = " "
-        GoTo Decision_5_Label
+        GoTo PadLeft_Long_Enough_
 
-        End_PadLeft_Label:
+        End_PadLeft:
         Padded_String = Input_String
 
     End Sub
@@ -605,22 +607,22 @@ Public Class Utility___Strings
 
         ' Check Max Count
         If Max_Count >= -1 Then
-            GoTo Decision_7_Label
+            GoTo Regex_Replace_Check_Start_Pos
         End If
         
         ' Invalid Input Data
-        Exception_2_Label:
-        RaiseException("Invalid Input Parameter", "Please verify your input data.")
+        Regex_Replace_Invalid_Input_Data:
+        Throw New BP_Exception("Invalid Input Parameter", "Please verify your input data.")
 
         ' Check Start Pos
-        Decision_7_Label:
+        Regex_Replace_Check_Start_Pos:
         If Start_Position >= 0 Then
-            GoTo Code_16_Label
+            GoTo Regex_Replace_Perform_Replace
         End If
-        GoTo Exception_2_Label
+        GoTo Regex_Replace_Invalid_Input_Data
 
         ' Perform Replace
-        Code_16_Label:
+        Regex_Replace_Perform_Replace:
         CodeStage_Perform_Replace(
             pattern:=Pattern, 
             input:=Input_Data, 
@@ -673,10 +675,14 @@ Public Class Utility___Strings
     ''' <param name="Split_Values">The resulting collection containing the split values</param>
     Public Sub Split_Lines(Optional ByVal Text_to_Split As String = Nothing, Optional ByRef Split_Values As DataTable = Nothing)
 
+        Start_Split_Lines:
+
         ' Split
         CodeStage_Split(
             Text_to_Split:=Text_to_Split, 
             Split_Values:=Split_Values)
+        
+        End_Split_Lines:
 
     End Sub
 

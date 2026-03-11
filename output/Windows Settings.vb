@@ -1,6 +1,6 @@
 ' Generated from BluePrism object: Windows Settings
 ' Version: 1.0
-' Generated: 2026-03-10 21:06:30
+' Generated: 2026-03-11 14:08:30
 
 Imports System
 Imports System.Collections.Generic
@@ -60,38 +60,38 @@ Public Class Windows_Settings
         ' Initialize variables with initialvalue
         FilePath = "ms-settings:windowsupdate"
 
-        On Error GoTo Recover_Label
+        On Error GoTo Launch_Recover
 
         ' Start Process
-        On Error GoTo Recover_Label
-        Utility___Environment.Instance.Start_Process(Application:=FilePath)
+        On Error GoTo Launch_Recover
+        Utility_Environment.Instance.Start_Process(Application:=FilePath)
         
         ' Attach
-        Navigate_Label:
-        On Error GoTo Recover_Label
+        Launch_Attach:
+        On Error GoTo Launch_Recover
         Application.Element("Windows Settings").AttachApplication()
 
         ' W5
-        On Error GoTo Recover_Label
+        On Error GoTo Launch_Recover
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Main Window", "4e5490be-f4da-4f82-ace1-cbf647c8b4e6").CheckExists = True ' Main Window Check Exists
-                GoTo End_Launch_Label
+                GoTo End_Launch
         End Select
 
         ' SE
-        On Error GoTo Recover_Label
-        RaiseException("System Exception", "Main Window not found")
+        On Error GoTo Launch_Recover
+        Throw New BP_Exception("System Exception", "Main Window not found")
 
         ' Recover
-        Recover_Label:
+        Launch_Recover:
         StoreException()
 
         ' Resume
         ClearException()
-        Resume Navigate_Label
+        Resume Launch_Attach
 
-        End_Launch_Label:
+        End_Launch:
 
     End Sub
 
@@ -114,19 +114,19 @@ Public Class Windows_Settings
         ' Wait 5 seconds for condition with 2 choice(s)
         Select Case True
             Case Application.Element("Button: Nach Updates suchen", "b026cc78-c68f-4a73-b198-bba0c63c8ef2").CheckExists = True ' Button: Nach Updates suchen Check Exists
-                GoTo Navigate_3_Label
+                GoTo Start_Updates_Click_Nach_Updates_suchen
             Case Application.Element("Label: Es wird nach Updates gesucht...", "a98756de-6ac0-4a36-a601-a27ea429ac4f").CheckExists = True ' Label: Es wird nach Updates gesucht... Check Exists
-                GoTo End_Start_Updates_Label
+                GoTo End_Start_Updates
         End Select
 
         ' SE
-        RaiseException("System Exception", "Download Menu not found")
+        Throw New BP_Exception("System Exception", "Download Menu not found")
 
         ' Click Nach Updates suchen
-        Navigate_3_Label:
+        Start_Updates_Click_Nach_Updates_suchen:
         Application.Element("Button: Nach Updates suchen").UIAButtonPress()
         
-        End_Start_Updates_Label:
+        End_Start_Updates:
 
     End Sub
 
@@ -135,31 +135,34 @@ Public Class Windows_Settings
     ''' </summary>
     Public Sub Wait_Updates_Finished()
 
+        
         ' W120
+        Wait_Updates_Finished_W120:
         ' Wait 120 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Label: Es wird nach Updates gesucht...", "a98756de-6ac0-4a36-a601-a27ea429ac4f").CheckExists = False ' Label: Es wird nach Updates gesucht... Check Exists
-                GoTo WaitStart_4_Label
+                GoTo Wait_Updates_Finished_W120_2
         End Select
-
+        
         ' SE
-        RaiseException("System Exception", "Download Header not found")
+        Wait_Updates_Finished_SE:
+        Throw New BP_Exception("System Exception", "Download Header not found")
 
         ' W120
-        WaitStart_4_Label:
+        Wait_Updates_Finished_W120_2:
         ' Wait 120 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Label: Sie sind auf dem neuesten Stand.", "d4098baf-b2ed-491f-a65a-7dc1ece7b4cd").CheckExists = True ' Label: Sie sind auf dem neuesten Stand. Check Exists
-                GoTo End_Wait_Updates_Finished_Label
+                GoTo End_Wait_Updates_Finished
         End Select
 
         ' SE
-        RaiseException("System Exception", "Download Header not found")
+        Throw New BP_Exception("System Exception", "Download Header not found")
 
         ' Note1
         ' Todo
 
-        End_Wait_Updates_Finished_Label:
+        End_Wait_Updates_Finished:
 
     End Sub
 

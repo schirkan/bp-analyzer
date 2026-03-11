@@ -1,6 +1,6 @@
 ' Generated from BluePrism process: MP - Subprocess A
 ' Version: 1.0
-' Generated: 2026-03-10 21:06:28
+' Generated: 2026-03-11 14:08:27
 
 Imports System
 Imports System.Collections.Generic
@@ -11,14 +11,14 @@ Imports System.Data
 ''' <summary>
 ''' BluePrism process: MP - Subprocess A
 ''' </summary>
-Public Class MP___Subprocess_A
+Public Class MP_Subprocess_A
     Inherits BP_Base
 
     #Region "Singleton Instance"
 
-    Private Shared ReadOnly _lazyInstance As New Lazy(Of MP___Subprocess_A)(Function() New MP___Subprocess_A())
+    Private Shared ReadOnly _lazyInstance As New Lazy(Of MP_Subprocess_A)(Function() New MP_Subprocess_A())
 
-    Public Shared ReadOnly Property Instance As MP___Subprocess_A
+    Public Shared ReadOnly Property Instance As MP_Subprocess_A
         Get
             Return _lazyInstance.Value
         End Get

@@ -17,11 +17,11 @@ public class ExceptionStageGenerator : StageGeneratorBase
         // Check if usecurrent="yes" - then rethrow the stored exception
         if (useCurrent)
         {
-            sb.AppendLine($"        RethrowException()");
+            sb.AppendLine($"        Throw GetLastException()");
         }
         else
         {
-            sb.AppendLine($"        RaiseException(\"{exceptionType}\", {detail})");
+            sb.AppendLine($"        Throw New BP_Exception(\"{exceptionType}\", {detail})");
         }
     }
 }
