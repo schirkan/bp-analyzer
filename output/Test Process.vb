@@ -7,7 +7,7 @@ Imports System.Data
 ''' <summary>
 ''' BluePrism process: Test Process
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 21:50:19
+''' Generated: 2026-03-11 22:05:48
 ''' </summary>
 Public Class Test_Process
     Inherits BP_Base
@@ -27,7 +27,9 @@ Public Class Test_Process
     #Region "Global Data Items"
 
     ' MyText (text)
-    Public MyText As String
+    Protected MyText As String
+    ' Data4 (flag)
+    Protected Data4 As Boolean
 
     #End Region
 

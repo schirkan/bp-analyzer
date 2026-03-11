@@ -190,7 +190,7 @@
         ' Data6 = 7.8
         ' Data8 = "tttt"
 - [x] implement stage type LoopStart and LoopEnd
-- [ ] implement stage type Collection
+- [x] implement stage type Collection
 - [x] fix stage type block (on error)
 - [ ] generate method to evaluate expressions
   - MyToggle = DataBinder.Eval(Me, "[MyToggle] = False")

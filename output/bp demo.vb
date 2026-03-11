@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: bp demo
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 21:50:19
+''' Generated: 2026-03-11 22:05:48
 ''' </summary>
 Public Class bp_demo
     Inherits BP_Base
@@ -28,7 +28,7 @@ Public Class bp_demo
     #Region "Global Data Items"
 
     ' Environment (collection)
-    Public Environment As DataTable
+    Protected Environment As DataTable
 
     #End Region
 

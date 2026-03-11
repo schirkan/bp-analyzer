@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: Microsoft Store
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 21:50:19
+''' Generated: 2026-03-11 22:05:48
 ''' </summary>
 Public Class Microsoft_Store
     Inherits BP_Base

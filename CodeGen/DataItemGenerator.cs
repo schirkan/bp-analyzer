@@ -17,20 +17,13 @@ public static class DataItemGenerator
             .Where(e => e.Name.LocalName == "stage")
             .ToList();
 
-        // Global data items: Data and Collection stages that are not in a subsheet and not private
+        // Global data items: Data and Collection stages that are not private
         var globalDataStages = allStages
             .Where(e =>
             {
                 var stageType = e.Attribute("type")?.Value;
                 if (stageType != "Data" && stageType != "Collection") return false;
-
-                // Has no subsheetid means global
-                var hasNoSubsheet = string.IsNullOrEmpty(e.Element("subsheetid")?.Value);
-
-                // Is not private
-                var isPrivate = e.Element("private") != null;
-
-                return hasNoSubsheet && !isPrivate;
+                return e.Element("private") == null;
             })
             .ToList();
 
@@ -43,16 +36,13 @@ public static class DataItemGenerator
         foreach (var stage in globalDataStages)
         {
             var name = stage.Attribute("name")?.Value;
-            var datatype = stage.Element("datatype")?.Value ?? "text";
-            var isPrivate = stage.Element("private") != null;
-
             if (string.IsNullOrEmpty(name)) continue;
 
+            var datatype = stage.Element("datatype")?.Value ?? "text";
             var vbType = TypeMapper.MapDataType(datatype, stage);
-            var visibility = isPrivate ? "Private" : "Public";
 
             sb.AppendLine($"    ' {name} ({datatype})");
-            sb.AppendLine($"    {visibility} {NameSanitizer.SanitizeVariableName(name)} As {vbType}");
+            sb.AppendLine($"    Protected {NameSanitizer.SanitizeVariableName(name)} As {vbType}");
         }
     }
 
