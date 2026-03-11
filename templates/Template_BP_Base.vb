@@ -6,6 +6,29 @@ Imports System.Collections.Generic
 Imports System.Data
 
 ''' <summary>
+''' Custom exception for BluePrism errors (must be defined outside BP_Base for proper access)
+''' </summary>
+Public Class BP_Exception
+    Inherits System.Exception
+
+    ''' <summary>
+    ''' The type of exception (e.g., "System Exception")
+    ''' </summary>
+    Public ReadOnly Property ExceptionType As String
+
+    ''' <summary>
+    ''' Constructor
+    ''' </summary>
+    ''' <param name="exceptionType">The type of exception</param>
+    ''' <param name="ExceptionDetail">The exception message</param>
+    Public Sub New(exceptionType As String, ExceptionDetail As String)
+        MyBase.New(ExceptionDetail)
+        Me.ExceptionType = exceptionType
+    End Sub
+
+End Class
+
+''' <summary>
 ''' Base class for all generated BluePrism classes
 ''' </summary>
 Public Class BP_Base
@@ -46,12 +69,12 @@ Public Class BP_Base
     ''' <summary>
     ''' Return last stored exception
     ''' </summary>
-    Protected Shared Sub GetLastException()
+    Protected Shared Function GetLastException() As System.Exception
         If _lastException Is Nothing Then
             Return New Exception("No exception stored")
         End If
         Return _lastException
-    End Sub
+    End Function
 
     ''' <summary>
     ''' Gets the stored exception type
@@ -536,29 +559,6 @@ Public Class BP_Base
     End Function
 
     #End Region
-
-    ''' <summary>
-    ''' Custom exception for BluePrism errors
-    ''' </summary>
-    Protected Class BP_Exception
-        Inherits System.Exception
-
-        ''' <summary>
-        ''' The type of exception (e.g., "System Exception")
-        ''' </summary>
-        Public ReadOnly Property ExceptionType As String
-
-        ''' <summary>
-        ''' Constructor
-        ''' </summary>
-        ''' <param name="exceptionType">The type of exception</param>
-        ''' <param name="ExceptionDetail">The exception message</param>
-        Public Sub New(exceptionType As String, ExceptionDetail As String)
-            MyBase.New(ExceptionDetail)
-            Me.ExceptionType = exceptionType
-        End Sub
-
-    End Class
 
     ''' <summary>
     ''' Helper class for Alert stages

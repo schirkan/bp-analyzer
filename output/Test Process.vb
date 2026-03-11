@@ -1,7 +1,3 @@
-' Generated from BluePrism process: Test Process
-' Version: 1.0
-' Generated: 2026-03-11 14:08:27
-
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
@@ -10,6 +6,8 @@ Imports System.Data
 
 ''' <summary>
 ''' BluePrism process: Test Process
+''' Version: 7.5.0.17125
+''' Generated: 2026-03-11 19:41:51
 ''' </summary>
 Public Class Test_Process
     Inherits BP_Base
@@ -28,9 +26,7 @@ Public Class Test_Process
 
     #Region "Global Data Items"
 
-    ''' <summary>
-    ''' Global data item: MyText (text)
-    ''' </summary>
+    ' MyText (text)
     Public MyText As String
 
     #End Region

@@ -1,7 +1,3 @@
-' Generated from BluePrism object: Windows Settings
-' Version: 1.0
-' Generated: 2026-03-11 14:08:30
-
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
@@ -11,6 +7,8 @@ Imports System.Drawing
 
 ''' <summary>
 ''' BluePrism object: Windows Settings
+''' Version: 7.5.0.17125
+''' Generated: 2026-03-11 19:41:52
 ''' </summary>
 Public Class Windows_Settings
     Inherits BP_Base

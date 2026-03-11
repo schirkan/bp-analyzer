@@ -1,7 +1,3 @@
-' Generated from BluePrism object: Utility - Strings
-' Version: 6.5.1.14401
-' Generated: 2026-03-11 14:08:27
-
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
@@ -17,6 +13,8 @@ Imports Microsoft.VisualBasic.FileIO
 
 ''' <summary>
 ''' BluePrism object: Utility - Strings
+''' Version: 7.5.0.17125
+''' Generated: 2026-03-11 19:41:51
 ''' </summary>
 Public Class Utility_Strings
     Inherits BP_Base

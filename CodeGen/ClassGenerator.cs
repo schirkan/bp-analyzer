@@ -12,24 +12,17 @@ public static class ClassGenerator
     /// <summary>
     /// Generates the complete class code for a BluePrism process/object.
     /// </summary>
-    public static string GenerateClass(
-        string processName,
-        string version,
-        XElement process,
-        HashSet<string>? currentReferences)
+    public static string GenerateClass(XElement process, HashSet<string>? currentReferences)
     {
         var sb = new System.Text.StringBuilder();
 
-        var processType = process.Attribute("type")?.Value;
-        var isObject = processType == "object";
+        var processName = process.Attribute("name")?.Value ?? "UnnamedProcess";
+        var version = process.Attribute("bpversion")?.Value ?? process.Attribute("version")?.Value ?? "1.0";
+        var isObject = process.Attribute("type")?.Value == "object";
 
         // Get ProcessInfo for class documentation
         var processInfo = process.Descendants().First(e => e.Attribute("type")?.Value == "ProcessInfo");
 
-        // Class header with ProcessInfo as class comments
-        sb.AppendLine($"' Generated from BluePrism {(isObject ? "object" : "process")}: {processName}");
-        sb.AppendLine($"' Version: {version}");
-        sb.AppendLine($"' Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
 
         // Collect references and imports from ProcessInfo
         var allReferences = new HashSet<string>();
@@ -62,7 +55,6 @@ public static class ClassGenerator
         }
 
         // Add default imports
-        sb.AppendLine();
         sb.AppendLine("Imports System");
         sb.AppendLine("Imports System.Collections.Generic");
         sb.AppendLine("Imports System.Linq");
@@ -86,8 +78,11 @@ public static class ClassGenerator
         }
         sb.AppendLine();
 
+        // Generate class comment with ProcessInfo
         sb.AppendLine($"''' <summary>");
         sb.AppendLine($"''' BluePrism {(isObject ? "object" : "process")}: {processName}");
+        sb.AppendLine($"''' Version: {version}");
+        sb.AppendLine($"''' Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
         sb.AppendLine($"''' </summary>");
         sb.AppendLine($"Public Class {NameSanitizer.SanitizeClassName(processName)}");
         sb.AppendLine($"    Inherits BP_Base");

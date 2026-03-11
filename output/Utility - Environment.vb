@@ -1,7 +1,3 @@
-' Generated from BluePrism object: Utility - Environment
-' Version: 6.9.0.26970
-' Generated: 2026-03-11 14:08:27
-
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
@@ -18,6 +14,8 @@ Imports System.Threading.Tasks
 
 ''' <summary>
 ''' BluePrism object: Utility - Environment
+''' Version: 7.5.0.17125
+''' Generated: 2026-03-11 19:41:51
 ''' </summary>
 Public Class Utility_Environment
     Inherits BP_Base

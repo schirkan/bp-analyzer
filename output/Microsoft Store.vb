@@ -1,7 +1,3 @@
-' Generated from BluePrism object: Microsoft Store
-' Version: 1.0
-' Generated: 2026-03-11 14:08:27
-
 Imports System
 Imports System.Collections.Generic
 Imports System.Linq
@@ -11,6 +7,8 @@ Imports System.Drawing
 
 ''' <summary>
 ''' BluePrism object: Microsoft Store
+''' Version: 7.5.0.17125
+''' Generated: 2026-03-11 19:41:51
 ''' </summary>
 Public Class Microsoft_Store
     Inherits BP_Base

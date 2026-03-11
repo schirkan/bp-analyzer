@@ -51,9 +51,7 @@ public static class DataItemGenerator
             var vbType = TypeMapper.MapDataType(datatype, stage);
             var visibility = isPrivate ? "Private" : "Public";
 
-            sb.AppendLine($"    ''' <summary>");
-            sb.AppendLine($"    ''' Global data item: {name} ({datatype})");
-            sb.AppendLine($"    ''' </summary>");
+            sb.AppendLine($"    ' {name} ({datatype})");
             sb.AppendLine($"    {visibility} {NameSanitizer.SanitizeVariableName(name)} As {vbType}");
         }
     }

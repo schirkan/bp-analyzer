@@ -32,10 +32,7 @@ public class BluePrismCodeGen
             throw new ArgumentException("Invalid BluePrism XML file - root element must be 'process'");
         }
 
-        var processName = process.Attribute("name")?.Value ?? "UnnamedProcess";
-        var version = process.Attribute("version")?.Value ?? "1.0";
-
-        var code = ClassGenerator.GenerateClass(processName, version, process, _currentReferences);
+        var code = ClassGenerator.GenerateClass(process, _currentReferences);
         return code;
     }
 
