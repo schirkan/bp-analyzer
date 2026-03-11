@@ -14,7 +14,7 @@ Imports Microsoft.VisualBasic.FileIO
 ''' <summary>
 ''' BluePrism object: Utility - Strings
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 20:40:46
+''' Generated: 2026-03-11 21:50:19
 ''' </summary>
 Public Class Utility_Strings
     Inherits BP_Base
@@ -229,6 +229,13 @@ Public Class Utility_Strings
         ' Initialize variables with initialvalue
         Regex_Pattern = "(?<Lower>\d+)\s*(-|to)\s*(?<Upper>\d+)"
         Target_String = "100-200"
+
+        ' Initialize collections
+        Named_Values = New DataTable()
+        Named_Values.Columns.Add("Name", GetType(String))
+        Named_Values.Columns.Add("Value", GetType(String))
+        Named_Values.Rows.Add("Lower", "")
+        Named_Values.Rows.Add("Upper", "")
 
         ' Extract Values
         CodeStage_Extract_Values(

@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: bp demo
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 20:40:46
+''' Generated: 2026-03-11 21:50:19
 ''' </summary>
 Public Class bp_demo
     Inherits BP_Base
@@ -38,6 +38,11 @@ Public Class bp_demo
     ''' This page is like the class constructor
     ''' </summary>
     Public Sub New()
+
+        ' Initialize collections
+        Environment = New DataTable()
+        Environment.Columns.Add("Const Value1", GetType(String))
+        Environment.Rows.Add("ABC")
 
     End Sub
 

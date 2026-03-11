@@ -15,7 +15,7 @@ Imports System.Threading.Tasks
 ''' <summary>
 ''' BluePrism object: Utility - Environment
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 20:40:46
+''' Generated: 2026-03-11 21:50:19
 ''' </summary>
 Public Class Utility_Environment
     Inherits BP_Base
@@ -166,6 +166,13 @@ Public Class Utility_Environment
 
         ' Local variables
         Dim Processes As DataTable
+
+        ' Initialize collections
+        Processes = New DataTable()
+        Processes.Columns.Add("Process Name", GetType(String))
+        Processes.Columns.Add("PID", GetType(Decimal))
+        Processes.Rows.Add("Automate", -1)
+        Processes.Rows.Add("javaw", -1)
 
         ' Initialize local variables with input values
         If Process_Names IsNot Nothing Then

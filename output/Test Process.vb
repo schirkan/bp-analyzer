@@ -7,7 +7,7 @@ Imports System.Data
 ''' <summary>
 ''' BluePrism process: Test Process
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 20:40:46
+''' Generated: 2026-03-11 21:50:19
 ''' </summary>
 Public Class Test_Process
     Inherits BP_Base
@@ -106,6 +106,15 @@ Public Class Test_Process
         ' Initialize variables with initialvalue
         Name = "Martin"
 
+        ' Initialize collections
+        Values = New DataTable()
+        Values.Columns.Add("Name", GetType(String))
+        Values.Columns.Add("Distance", GetType(Decimal))
+        Values.Columns.Add("Similarity", GetType(Decimal))
+        Values.Rows.Add("Max", 0, 0)
+        Values.Rows.Add("John", 0, 0)
+        Values.Rows.Add("Lisa", 0, 0)
+
         ' Loop Values
         Values.SelectFirstRow()
 
@@ -158,6 +167,17 @@ Public Class Test_Process
         If MyToggle Is Nothing Then
             MyToggle = False
         End If
+
+        ' Initialize collections
+        Coll2 = New DataTable()
+        Coll2.Columns.Add("Text", GetType(String))
+        Coll2.Columns.Add("Zahl", GetType(Decimal))
+        Coll2.Rows.Add("aa", 2)
+        Coll2.Rows.Add("bb", 3)
+        Coll3 = New DataTable()
+        Coll3.Columns.Add("Text", GetType(String))
+        Coll3.Columns.Add("Zahl", GetType(Decimal))
+        Coll3.Rows.Add("aaa", 111)
 
         ' Initialize local variables with input values
         If InData1 IsNot Nothing Then

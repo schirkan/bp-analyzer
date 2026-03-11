@@ -191,7 +191,7 @@
         ' Data8 = "tttt"
 - [x] implement stage type LoopStart and LoopEnd
 - [ ] implement stage type Collection
-- [ ] fix stage type block (on error)
+- [x] fix stage type block (on error)
 - [ ] generate method to evaluate expressions
   - MyToggle = DataBinder.Eval(Me, "[MyToggle] = False")
 - [ ] implement app model xml

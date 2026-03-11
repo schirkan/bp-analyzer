@@ -98,6 +98,10 @@ public static class ClassGenerator
         sb.AppendLine();
         DataItemGenerator.GenerateGlobalDataItems(process, sb);
         sb.AppendLine();
+
+        // Generate global collection initialization
+        // DataItemGenerator.GenerateGlobalCollectionInitialization(process, sb);
+
         sb.AppendLine("    #End Region");
         sb.AppendLine();
 
