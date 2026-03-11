@@ -28,32 +28,29 @@ public static class StageNavigator
     /// </summary>
     public static string ResolveStageLabel(string stageId, XDocument doc)
     {
-        if (string.IsNullOrEmpty(stageId)) return GetLabel("Unknown", stageId, doc);
+        if (string.IsNullOrEmpty(stageId)) return "Unknown_" + stageId;
 
-        var stage = doc.Descendants()
-            .FirstOrDefault(e => e.Name.LocalName == "stage" && e.Attribute("stageid")?.Value == stageId);
-
-        if (stage == null) return GetLabel("Unknown", stageId, doc);
+        var stage = doc.Descendants().FirstOrDefault(e => e.Name.LocalName == "stage" && e.Attribute("stageid")?.Value == stageId);
+        if (stage == null) return "Unknown_" + stageId;
 
         var stageType = stage.Attribute("type")?.Value ?? "Unknown";
 
         if (stageType == "End")
         {
             var subsheetId = stage.Element("subsheetid")?.Value;
-            var endStage = doc.Descendants()
-                .FirstOrDefault(e => e.Name.LocalName == "stage"
-                    && e.Attribute("type")?.Value == "End"
-                    && e.Element("subsheetid")?.Value == subsheetId);
+            var endStage = doc.Descendants().FirstOrDefault(e =>
+                e.Name.LocalName == "stage" &&
+                e.Attribute("type")?.Value == "End" &&
+                e.Element("subsheetid")?.Value == subsheetId);
 
-            return GetLabel("End", endStage?.Attribute("stageid")?.Value ?? stageId, doc);
+            return GetLabel(endStage?.Attribute("stageid")?.Value ?? stageId, doc);
         }
-
-        if (stageType == "Anchor")
+        else if (stageType == "Anchor")
         {
             return ResolveAnchorChain(stageId, doc);
         }
 
-        return GetLabel(stageType, stageId, doc);
+        return GetLabel(stageId, doc);
     }
 
     /// <summary>
@@ -68,13 +65,8 @@ public static class StageNavigator
         {
             visited.Add(currentId);
 
-            var stage = doc.Descendants()
-                .FirstOrDefault(e => e.Name.LocalName == "stage" && e.Attribute("stageid")?.Value == currentId);
-
-            if (stage == null)
-            {
-                return GetLabel("Unknown", stageId, doc);
-            }
+            var stage = doc.Descendants().FirstOrDefault(e => e.Name.LocalName == "stage" && e.Attribute("stageid")?.Value == currentId);
+            if (stage == null) break;
 
             var stageType = stage.Attribute("type")?.Value;
             if (stageType != "Anchor")
@@ -85,7 +77,7 @@ public static class StageNavigator
             currentId = stage.Element("onsuccess")?.Value;
         }
 
-        return GetLabel("Unknown", stageId, doc);
+        return "Unknown_" + stageId;
     }
 
     private static Dictionary<string, string> _labelMapping = [];
@@ -94,7 +86,7 @@ public static class StageNavigator
     /// <summary>
     /// Gets a formatted label for a stage.
     /// </summary>
-    public static string GetLabel(string stageType, string stageId, XDocument? doc)
+    public static string GetLabel(string stageId, XDocument? doc)
     {
         if (_labelMapping.TryGetValue(stageId, out string? label))
         {
@@ -103,6 +95,7 @@ public static class StageNavigator
 
         var stage = doc?.Descendants().FirstOrDefault(e => e.Name.LocalName == "stage" && e.Attribute("stageid")?.Value == stageId);
         var stageName = stage?.Attribute("name")?.Value!;
+        var stageType = stage?.Attribute("type")?.Value;
         var subsheetId = stage?.Element("subsheetid")?.Value ?? "";
 
         var subsheetName = SubsheetResolver.FindSubsheetName(doc, subsheetId);
@@ -112,16 +105,16 @@ public static class StageNavigator
         var newLabel = "";
         if (stageType == "Start" || stageType == "End")
         {
-            newLabel = stageType + "_" + sanitizedSubsheetName; // + "_Label";
+            newLabel = stageType + "_" + sanitizedSubsheetName;
         }
         else
         {
             var key = sanitizedSubsheetName + "_" + NameSanitizer.SanitizeMethodName(stageName);
-            newLabel = key; // $"{key}_Label";
+            newLabel = key;
             var counter = 1;
             while (_labelAndPage.Any(x => x.Item1 == subsheetId && x.Item2 == newLabel))
             {
-                newLabel = key + "_"+ (++counter); // + "_Label";
+                newLabel = key + "_" + (++counter);
             }
         }
 

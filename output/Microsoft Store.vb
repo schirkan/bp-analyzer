@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: Microsoft Store
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 19:41:51
+''' Generated: 2026-03-11 20:28:04
 ''' </summary>
 Public Class Microsoft_Store
     Inherits BP_Base
@@ -58,19 +58,15 @@ Public Class Microsoft_Store
         ' Initialize variables with initialvalue
         FilePath = "ms-windows-store://updates"
 
-        On Error GoTo Launch_Recover
-
         ' Start Process
         On Error GoTo Launch_Recover
         Utility_Environment.Instance.Start_Process(Application:=FilePath)
         
         ' Attach
         Launch_Attach:
-        On Error GoTo Launch_Recover
         Application.Element("Microsoft Store").AttachApplication()
 
         ' W5
-        On Error GoTo Launch_Recover
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Main Window", "b048ceed-93fb-48da-99af-7fafeec74d4e").CheckExists = True ' Main Window Check Exists
@@ -78,7 +74,6 @@ Public Class Microsoft_Store
         End Select
 
         ' SE
-        On Error GoTo Launch_Recover
         Throw New BP_Exception("System Exception", "Main Window not found")
 
         ' Recover

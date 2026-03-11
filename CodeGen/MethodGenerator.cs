@@ -2,6 +2,7 @@ using System.Xml.Linq;
 using BPAnalyzer.CodeGen.Stages;
 using BPAnalyzer.CodeGen.Utilities;
 using BPAnalyzer.CodeGen.FlowControl;
+using Microsoft.VisualBasic;
 
 namespace BPAnalyzer.CodeGen;
 
@@ -223,6 +224,10 @@ public static class MethodGenerator
         DataItemGenerator.GenerateInitialValueInitialization(sb, stages);
 
         var sortedStages = FlowController.SortStagesByExecutionOrder(stages);
+        var recoverStages = stages.Where(s => s.Attribute("type")?.Value == "Recover");
+        var blockStages = stages.Where(s => s.Attribute("type")?.Value == "Block");
+        var recoverStagesPerBlock = blockStages.ToDictionary(x => x, block =>
+            recoverStages.FirstOrDefault(recover => FlowController.IsStageInBlock(recover, block)));
 
         foreach (var stage in sortedStages)
         {
@@ -234,7 +239,7 @@ public static class MethodGenerator
             if (FlowController.SkipStages.Contains(stageType)) continue;
 
             // Generate label
-            var labelName = StageNavigator.GetLabel(stageType, stageId, stage.Document);
+            var labelName = StageNavigator.GetLabel(stageId, stage.Document);
             sb.AppendLine($"        {labelName}:"); // will be switched in post processing
             if (stageType != "Start" && stageType != "End")
             {
@@ -242,14 +247,18 @@ public static class MethodGenerator
             }
 
             // Add error handling
-            var recoverStage = stages.FirstOrDefault(s => s.Attribute("type")?.Value == "Recover");
-            if (stageType != "Recover" && stageType != "Resume" && stageType != "Note" && recoverStage != null)
+            if (stageType != "Recover" && stageType != "Resume" && stageType != "Note")
             {
-                var recoverStageId = recoverStage.Attribute("stageid")?.Value;
-                if (!string.IsNullOrEmpty(recoverStageId))
+                var block = blockStages.FirstOrDefault(block => FlowController.IsStageInBlock(stage, block));
+                if (block != null)
                 {
-                    var recoverLabel = StageNavigator.GetLabel("Recover", recoverStageId, stage.Document);
-                    sb.AppendLine($"        On Error GoTo {recoverLabel}");
+                    var recoverStage = recoverStagesPerBlock[block];
+                    if (recoverStage != null)
+                    {
+                        var recoverStageId = recoverStage.Attribute("stageid")?.Value!;
+                        var recoverLabel = StageNavigator.GetLabel(recoverStageId, stage.Document);
+                        sb.AppendLine($"        On Error GoTo {recoverLabel}");
+                    }
                 }
             }
 
@@ -270,8 +279,8 @@ public static class MethodGenerator
         // Generate End label
         if (endStage != null)
         {
-            var endStageId = endStage.Attribute("stageid")?.Value ?? "";
-            var endLabelName = StageNavigator.GetLabel("End", endStageId, endStage.Document);
+            var endStageId = endStage.Attribute("stageid")?.Value!;
+            var endLabelName = StageNavigator.GetLabel(endStageId, endStage.Document);
             sb.AppendLine($"        {endLabelName}:");
 
             var endOutputs = endStage.Element("outputs")?.Elements("output");

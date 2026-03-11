@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: Windows Settings
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 19:41:52
+''' Generated: 2026-03-11 20:28:06
 ''' </summary>
 Public Class Windows_Settings
     Inherits BP_Base
@@ -58,19 +58,15 @@ Public Class Windows_Settings
         ' Initialize variables with initialvalue
         FilePath = "ms-settings:windowsupdate"
 
-        On Error GoTo Launch_Recover
-
         ' Start Process
         On Error GoTo Launch_Recover
         Utility_Environment.Instance.Start_Process(Application:=FilePath)
         
         ' Attach
         Launch_Attach:
-        On Error GoTo Launch_Recover
         Application.Element("Windows Settings").AttachApplication()
 
         ' W5
-        On Error GoTo Launch_Recover
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Main Window", "4e5490be-f4da-4f82-ace1-cbf647c8b4e6").CheckExists = True ' Main Window Check Exists
@@ -78,7 +74,6 @@ Public Class Windows_Settings
         End Select
 
         ' SE
-        On Error GoTo Launch_Recover
         Throw New BP_Exception("System Exception", "Main Window not found")
 
         ' Recover

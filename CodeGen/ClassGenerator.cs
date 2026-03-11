@@ -178,10 +178,9 @@ public static class ClassGenerator
         foreach (var stage in allStages)
         {
             var stageId = stage.Attribute("stageid")?.Value;
-            var stageType = stage.Attribute("type")?.Value;
-            if (stageId == null || stageType == null) continue;
+            if (stageId == null) continue;
 
-            var stageLabel = StageNavigator.GetLabel(stageType, stageId, stage.Document);
+            var stageLabel = StageNavigator.GetLabel(stageId, stage.Document);
 
             // Remove Goto directly before label
             code = System.Text.RegularExpressions.Regex.Replace(code, $"GoTo {stageLabel}\\s*?( *{stageLabel}:)", "\r\n$1");
@@ -196,7 +195,6 @@ public static class ClassGenerator
 
             // switch label and comment
             code = System.Text.RegularExpressions.Regex.Replace(code, $"({stageLabel}:)\\s+(' .*)", "$2\n        $1");
-
         }
 
         // Remove multiple newlines

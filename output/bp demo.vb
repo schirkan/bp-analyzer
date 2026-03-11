@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: bp demo
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 19:41:51
+''' Generated: 2026-03-11 20:28:04
 ''' </summary>
 Public Class bp_demo
     Inherits BP_Base
@@ -54,8 +54,6 @@ Public Class bp_demo
     ''' <param name="VNR">Vertragsnummer (LF123456789)</param>
     ''' <param name="VerwSysSl">Verwaltungssystem Schlüssel</param>
     Public Sub MyPublicAction(Optional ByVal VNR As String = Nothing, Optional ByRef VerwSysSl As String = Nothing)
-
-        On Error GoTo MyPublicAction_Recover
 
         ' Set VerwSysSl
         On Error GoTo MyPublicAction_Recover
@@ -133,16 +131,12 @@ Public Class bp_demo
     ''' <param name="Value">Text</param>
     Private Sub InteralAction(Optional ByVal Value As String = Nothing)
 
-        On Error GoTo InteralAction_Global_Recover
-
         ' value empty?
-        On Error GoTo InteralAction_Global_Recover
         If Value = "" Then
             GoTo InteralAction_SE
         End If
 
         ' Set Value
-        On Error GoTo InteralAction_Global_Recover
         Value = Value & Environment.GetCurrentRow("Const Value1").Value
 
         ' Note1
@@ -151,20 +145,16 @@ Public Class bp_demo
 
         ' SE
         InteralAction_SE:
-        On Error GoTo InteralAction_Global_Recover
         Throw New BP_Exception("System Exception", "Value is empty")
 
         ' Global Recover
-        InteralAction_Global_Recover:
         StoreException()
 
         ' Log Exception
-        On Error GoTo InteralAction_Global_Recover
         Value = "Type: " & ExceptionType() & NewLine() &
 "Details: " & ExceptionDetail()
 
         ' Re-Throw
-        On Error GoTo InteralAction_Global_Recover
         Throw GetLastException()
 
         End_InteralAction:

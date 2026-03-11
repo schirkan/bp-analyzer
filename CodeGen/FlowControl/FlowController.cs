@@ -83,14 +83,6 @@ public static class FlowController
     }
 
     /// <summary>
-    /// Checks if any stage in the method has a Recover stage (at page level).
-    /// </summary>
-    public static bool HasRecoverStage(List<XElement> stages)
-    {
-        return stages.Any(s => s.Attribute("type")?.Value == "Recover");
-    }
-
-    /// <summary>
     /// Checks if a stage is within a block by comparing coordinates.
     /// </summary>
     public static bool IsStageInBlock(XElement stage, XElement block)
