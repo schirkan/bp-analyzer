@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: bp demo
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 20:28:04
+''' Generated: 2026-03-11 20:40:46
 ''' </summary>
 Public Class bp_demo
     Inherits BP_Base
@@ -91,7 +91,7 @@ Public Class bp_demo
         Get_URL_Reader_URL_Title:
         URL = Application.Element("URL Bar").UIAGetValue()
         Window_Title = Application.Element("Main Window").GetWindowText()
-        
+
         End_Get_URL:
 
     End Sub
@@ -120,7 +120,7 @@ Public Class bp_demo
         ' Send Enter
         Application.Element("Main Window").ActivateApp()
         Application.Element("URL Bar").UIASendKeys(newtext:="{ENTER}")
-        
+
         End_Set_URL:
 
     End Sub

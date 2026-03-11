@@ -14,7 +14,7 @@ Imports Microsoft.VisualBasic.FileIO
 ''' <summary>
 ''' BluePrism object: Utility - Strings
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 20:28:05
+''' Generated: 2026-03-11 20:40:46
 ''' </summary>
 Public Class Utility_Strings
     Inherits BP_Base
@@ -131,7 +131,7 @@ Public Class Utility_Strings
 
         ' For Each Character Group
         Conflicting_Characters.SelectFirstRow()
-        
+
         ' Delete from Sample 1
         Compare_Font_Text_Delete_from_Sample_1:
         Delete_Characters(
@@ -411,7 +411,7 @@ Public Class Utility_Strings
             XML:=XML, 
             Element:=Element_Name, 
             Elements:=Elements)
-        
+
         End_Get_XML_Elements:
 
     End Sub
@@ -440,7 +440,6 @@ Public Class Utility_Strings
         GoTo End_InStr
 
         ' Note1
-        InStr_Note1:
         ' Inputs
 
         ' Note1
@@ -474,7 +473,6 @@ Public Class Utility_Strings
         GoTo End_InStrRev
 
         ' Note1
-        InStrRev_Note1:
         ' Inputs
 
         ' Note1
@@ -524,13 +522,13 @@ Public Class Utility_Strings
 
         ' For Each Value
         Values.SelectFirstRow()
-        
+
         ' Trim?
         Join_Text_Trim_:
         If Trim_Values Then
             GoTo Join_Text_Do_Trim
         End If
-        
+
         ' Append Value
         Join_Text_Append_Value:
         Joined_Text = Joined_Text & Values.GetCurrentRow("Item Value").Value & Join_Character
@@ -567,7 +565,7 @@ Public Class Utility_Strings
         If Len(Padding_Character) = 0 Then
             GoTo PadLeft_Use_Space_for_Padding
         End If
-        
+
         ' Long Enough?
         PadLeft_Long_Enough_:
         If Len(Input_String) >= Target_Width Then
@@ -607,7 +605,7 @@ Public Class Utility_Strings
         If Max_Count >= -1 Then
             GoTo Regex_Replace_Check_Start_Pos
         End If
-        
+
         ' Invalid Input Data
         Regex_Replace_Invalid_Input_Data:
         Throw New BP_Exception("Invalid Input Parameter", "Please verify your input data.")
@@ -673,14 +671,10 @@ Public Class Utility_Strings
     ''' <param name="Split_Values">The resulting collection containing the split values</param>
     Public Sub Split_Lines(Optional ByVal Text_to_Split As String = Nothing, Optional ByRef Split_Values As DataTable = Nothing)
 
-        Start_Split_Lines:
-
         ' Split
         CodeStage_Split(
             Text_to_Split:=Text_to_Split, 
             Split_Values:=Split_Values)
-        
-        End_Split_Lines:
 
     End Sub
 
@@ -757,12 +751,12 @@ Public Class Utility_Strings
     #Region "Global Code"
 
         Public Function GetDataTable(ByVal ColumnNamesCSV As String, ByVal ColumnTypesCSV As String) As DataTable
-        
+
         	Dim objTable As DataTable
         	Dim objColumn As DataColumn
         	Dim aColumnNames As String() = ColumnNamesCSV.Split(",")
         	Dim aColumnTypes As String() = ColumnTypesCSV.Split(",")
-        
+
         	Try
         		objTable = New DataTable
         		For i As Integer = 0 To aColumnNames.Length - 1
@@ -771,48 +765,47 @@ Public Class Utility_Strings
         			objColumn.ColumnName = aColumnNames(i).Trim
         			objTable.Columns.Add(objColumn)
         		Next
-        		
+
         	Catch e As Exception
         		objTable = nothing	
         	End Try
-        
+
         	Return objTable
-        
+
         End Function
-        
+
         Private Function SplitStringInto( _
          ByVal fldName As String, _
          ByVal txt As String, _
          ByVal ParamArray splitters() As String) As DataTable
         	Dim dt As New DataTable()
         	dt.Columns.Add(fldName, GetType(String))
-        
+
         	For Each s As String In txt.Split(splitters, StringSplitOptions.None)
         		dt.Rows.Add(New Object() {s})
         	Next
-        
+
         	Return dt
         End Function
-        
+
         Public Shared Function ParseCsvToList(ByVal csv As String, ByVal delimiter As String) As List(Of String())
         	Dim result = New List(Of String())()
-        
+
         	Using sr As New StringReader(csv)
         		Using lineParser As New TextFieldParser(sr)
         			lineParser.TextFieldType = FieldType.Delimited
         			lineParser.SetDelimiters(delimiter)
         			While Not lineParser.EndOfData
-        
+
         				Dim fields As String() = lineParser.ReadFields()
         				result.Add(fields)
         			End While
         		End Using
         	End Using
-        
+
         	Return result
         End Function
-        
-        
+
         ''' -----------------------------------------------------------------------------
         ''' <summary>
         ''' Serialises a datatable to the supplied stream.
@@ -827,7 +820,7 @@ Public Class Utility_Strings
         	If (delimiter.Trim().Length = 0)
         		delimiter = ","
         	End If
-        
+
         	If IncludeHeaderRow Then
         		For i As Integer = 0 To Table.Columns.Count - 1
         			WriteItem(Writer, Table.Columns(i).ColumnName)
@@ -838,7 +831,7 @@ Public Class Utility_Strings
         			End If
         		Next
         	End If
-        
+
         	For Each Row As DataRow In Table.Rows
         		For i As Integer = 0 To Table.Columns.Count - 1
         			WriteItem(Writer, Row(i).ToString)
@@ -850,9 +843,7 @@ Public Class Utility_Strings
         		Next
         	Next
         End Sub
-        
-        
-        
+
         ''' -----------------------------------------------------------------------------
         ''' <summary>
         ''' Writes a csv data cell, escaping quotes and new lines where necessary.
@@ -867,8 +858,7 @@ Public Class Utility_Strings
         		Writer.Append(Value)
         	End If
         End Sub
-        
-        
+
         'Splits text into lines of approximately equal length, looking for
         'gaps between words as splitting points in order to avoid ugly
         'line splitting in the middle of words. Useful for mainframe memos
@@ -878,13 +868,13 @@ Public Class Utility_Strings
         Private Shared Function SplitTextByLengthEngine(Texttosplit As String, MaxLineLength As Integer) As List(of String)
         	Dim RetVal as New List(Of String)
         	MaxLineLength =  Math.Min(MaxLineLength, TexttoSplit.Length)
-        
+
         	'We look for the last space within (MaxLineLength + 1) and then work backwards
         	'(always by at least one) to find the last non-space character. We can then
         	'chop at this point, assuming such exists. Otherwise we just chop at the
         	'requested line length accepting we will be splitting a word.
         	Dim LastIndex as integer = TexttoSplit.Substring(0, Math.Min(MaxLineLength + 1, TextToSplit.Length)).LastIndexOf(" ")
-        
+
         	If TextToSplit.Length <= MaxLineLength OrElse LastIndex = -1 Then
         		RetVal.Add(TexttoSplit.Substring(0, MaxLineLength))
         		Dim RemainingText As String = TexttoSplit.SubString(MaxLineLength,TextToSplit.Length - MaxLineLength).Trim()
@@ -903,39 +893,39 @@ Public Class Utility_Strings
         			'Must all be spaces. We assume this are to be ignored
         		End If
         	End If
-        
+
         	Return RetVal
         End Function
-        
+
         Private Shared Function CreateRegexOptions(Singleline As Boolean, IgnoreCase As Boolean, IgnoreWhitespace As Boolean, CultureInvariant As Boolean, ExplicitCapture As Boolean, RightToLeft As Boolean, ECMAScript As Boolean) As RegexOptions
                 If Singleline Then
                     CreateRegexOptions = CreateRegexOptions Or RegexOptions.Singleline
                 End If
-        
+
                 If IgnoreCase Then
                     CreateRegexOptions = CreateRegexOptions Or RegexOptions.IgnoreCase
                 End If
-        
+
                 If IgnoreWhitespace Then
                     CreateRegexOptions = CreateRegexOptions Or RegexOptions.IgnorePatternWhitespace
                 End If
-        
+
                 If CultureInvariant Then
                     CreateRegexOptions = CreateRegexOptions Or RegexOptions.CultureInvariant
                 End If
-        
+
                 If ExplicitCapture Then
                     CreateRegexOptions = CreateRegexOptions Or RegexOptions.ExplicitCapture
                 End If
-        
+
                 If RightToLeft Then
                     CreateRegexOptions = CreateRegexOptions Or RegexOptions.RightToLeft
                 End If
-        
+
                 If ECMAScript Then
                     CreateRegexOptions = CreateRegexOptions Or RegexOptions.ECMAScript
                 End If
-        
+
                 Return CreateRegexOptions
             End Function
 
@@ -958,7 +948,6 @@ Public Class Utility_Strings
     ''' </summary>
     Private Sub CodeStage_Trim(Optional ByVal Text As String = Nothing, Optional ByRef Trimmed_Text As String = Nothing)
 
-        
         dim r as new regex("^\W*|\W*$")
         Trimmed_Text = r.replace(text, "")
 
@@ -1008,21 +997,20 @@ Public Class Utility_Strings
     ''' </summary>
     Private Sub CodeStage_Get_Elements(Optional ByVal XML As String = Nothing, Optional ByVal Element As String = Nothing, Optional ByRef Elements As DataTable = Nothing)
 
-        
         dim table as datatable = GetDataTable("XML", "System.String")
         dim row as datarow
         dim doc as new xmldocument
         dim list as xmlnodelist
-        
+
         doc.loadxml(xml)
         list = doc.getelementsbytagname(element)
-        
+
         for each n as xmlnode in list
         	row = table.newrow()
         	row("XML") = n.outerxml
         	table.rows.Add(row)
         next
-        
+
         Elements = table
 
     End Sub
@@ -1032,9 +1020,8 @@ Public Class Utility_Strings
     ''' </summary>
     Private Sub CodeStage_Get_Attribute(Optional ByVal XML As String = Nothing, Optional ByVal Attribute As String = Nothing, Optional ByRef Value As String = Nothing)
 
-        
         dim i as integer = XML.indexof(Attribute)
-        
+
         if i > 0 then
         	i += Attribute.length + 2
         	value = XML.substring(i)
@@ -1057,7 +1044,7 @@ Public Class Utility_Strings
                     Dim NewLine As String = Text_to_Split.SubString(0, Math.Min(Maximum_Line_Length, Text_to_Split.Length))
                     NewLine = NewLine.Trim()
                     Values.Add(NewLine)
-        
+
                     If Text_to_Split.Length > NewLine.Length Then
                           Text_to_Split = Text_to_Split.SubString(NewLine.Length, Text_to_Split.Length - NewLine.Length)
                     Else
@@ -1068,13 +1055,13 @@ Public Class Utility_Strings
         Else
               Values = SplitTextByLengthEngine(Text_to_Split, Maximum_Line_length)
         End If
-        
+
         Split_Lines = New DataTable()
         Split_Lines.Columns.Add("Line Text", GetType(String))
         For Each s as String in Values
               Split_Lines.Rows.Add(New Object() {s})
         Next
-        
+
         Line_Count = Values.Count
 
     End Sub
@@ -1096,7 +1083,7 @@ Public Class Utility_Strings
         For Each C as Char in Characters_To_Delete.ToCharArray()
         	Text_Sample = Text_Sample.Replace(C, "")
         Next
-        
+
         Amended_Sample = Text_Sample
 
     End Sub
@@ -1118,7 +1105,7 @@ Public Class Utility_Strings
         For Each Row As DataRow in Named_Values.Rows
         	Row("Value") = ""
         Next
-        
+
         Dim R as New Regex(Regex_Pattern, RegexOptions.SingleLine)
         Dim M as Match = R.Match(Target_String)
         If M IsNot Nothing AndAlso M.Success Then
@@ -1132,7 +1119,7 @@ Public Class Utility_Strings
         		Next
         	End If
         End If
-        
+
         Named_Values_Out = Named_Values
 
     End Sub
@@ -1160,7 +1147,6 @@ Public Class Utility_Strings
     ''' </summary>
     Private Sub CodeStage_Test_Regex_Match1(Optional ByVal Regex_Pattern As String = Nothing, Optional ByVal Target_String As String = Nothing, Optional ByRef Regex_Match As Boolean? = Nothing)
 
-        
         Dim R as New Regex(Regex_Pattern, RegexOptions.SingleLine)
         Dim M as Match = R.Match(Target_String)
         Regex_Match =  M IsNot Nothing AndAlso M.Success
@@ -1172,7 +1158,6 @@ Public Class Utility_Strings
     ''' </summary>
     Private Sub CodeStage_Serialise_to_Delimited_Text(Optional ByVal Input_Collection As DataTable = Nothing, Optional ByVal Delimiter As String = Nothing, Optional ByRef Output_CSV As String = Nothing)
 
-        
         Dim SB As New StringBuilder
         WriteDataTable(SB, Input_Collection, True, Delimiter)
         Output_CSV = SB.ToString()
@@ -1187,15 +1172,15 @@ Public Class Utility_Strings
         Const SchemaColumnName As String = "Column Name"
         Const DefaultColumnName As String = "Column "
         Const nonSchemaHeadingIndex As Integer = 0
-        
+
         Dim emptySchema As Boolean = Schema Is Nothing OrElse Schema.Rows.Count = 0
-        
+
         Dim csvValuesList = ParseCsvToList(DelimitedText, Delimiter)
-        
+
         ' If we want to parse with no schema and want the first row be used as headings 
         ' we need to know what the headings will be.
         Dim nonSchemaHeadings = csvValuesList(nonSchemaHeadingIndex)
-        
+
         ' Arrange the column headings into the table first.
         If emptySchema Then
         	For Each columnHeader As String In nonSchemaHeadings
@@ -1209,15 +1194,15 @@ Public Class Utility_Strings
         		outputCollection.Columns.Add(colName, GetType(String))
         	Next
         End If
-        
+
         ' If the first row is being used for headings then skip those headings / values in csvValuesList.
         Dim startListIndex As Integer = If(FirstRowIsHeader, nonSchemaHeadingIndex + 1, nonSchemaHeadingIndex)
-        
+
         ' Insert the csv values into the table row by row.
         For i As Integer = startListIndex To csvValuesList.Count - 1
         	Dim currentRow As Datarow = outputCollection.NewRow
         	outputCollection.Rows.Add(currentRow)
-        
+
         	Dim csvArray = csvValuesList(i)
         	For columnIndex As Integer = 0 To csvArray.Length - 1
         		currentRow.Item(columnIndex) = csvArray(columnIndex)
@@ -1234,7 +1219,7 @@ Public Class Utility_Strings
         For Each C as Char in Characters_To_Replace.ToCharArray()
         	Text_Sample = Text_Sample.Replace(C, Replacement_Characters)
         Next
-        
+
         Amended_Sample = Text_Sample
 
     End Sub
@@ -1245,29 +1230,29 @@ Public Class Utility_Strings
     Private Sub CodeStage_Extract_All_Matches(Optional ByVal Regex_Pattern As String = Nothing, Optional ByVal Text_To_Perform_Search_On As String = Nothing, Optional ByVal Singleline As Boolean? = Nothing, Optional ByVal Ignore_Case As Boolean? = Nothing, Optional ByVal Explicit_Capture As Boolean? = Nothing, Optional ByRef Regex_Matches As DataTable = Nothing, Optional ByRef Success As Boolean? = Nothing)
 
         Dim fullMatchColumnName As String = "Full Match"
-        
+
         Regex_Matches = New DataTable()
         Regex_Matches.Columns.Add(fullMatchColumnName, GetType(String))
-        
+
         Dim regexOptionConfiguration As RegexOptions = CreateRegexOptions(Singleline, Ignore_Case, False, False, Explicit_Capture, False, False)
         Dim regexObject As New Regex(Regex_Pattern, regexOptionConfiguration)
         Dim regexMatches As MatchCollection = regexObject.Matches(Text_To_Perform_Search_On)
-        
+
         Success = regexMatches IsNot Nothing AndAlso regexMatches.Count > 0
         If Success Then
-        
+
         	Dim groupNames() As String = regexObject.GetGroupNames()
         	groupNames(0) = fullMatchColumnName
-        
+
         	For groupIndex As Integer = 1 To groupNames.GetUpperBound(0)
         		Regex_Matches.Columns.Add(groupNames(groupIndex), GetType(String))
         	Next
-        
+
         	For Each regexMatch As Match In regexMatches
-        
+
         		Dim resultRow As DataRow = Regex_Matches.NewRow()
         		Dim groupIndex As Integer = 0
-        
+
         		For Each regexGroup As Group In regexMatch.Groups
         				resultRow(groupNames(groupIndex)) = regexGroup.Value			
         			groupIndex += 1
@@ -1284,7 +1269,7 @@ Public Class Utility_Strings
     Private Sub CodeStage_Perform_Replace(Optional ByVal pattern As String = Nothing, Optional ByVal input As String = Nothing, Optional ByVal replacement As String = Nothing, Optional ByVal max As Decimal? = Nothing, Optional ByVal start As Decimal? = Nothing, Optional ByRef output As String = Nothing)
 
         Dim rgx As New Regex(pattern)
-        
+
         If (max > 0) And (start > 0) Then
         	output = rgx.Replace(input, replacement, CInt(max), CInt(start))
         ElseIf (max > 0) Then
@@ -1309,12 +1294,12 @@ Public Class Utility_Strings
         Dim numOfEdits As Integer(,) = New Integer(sourceCharCount + 1 - 1, targetCharCount + 1 - 1) {}
         Dim i As Integer = 0
         Dim j As Integer = 0
-        
+
         If (caseSensitive = False) Then
         	source = source.ToLower()
         	target = target.ToLower()
         End If
-        
+
         ' There are various checks that we would normally perform on the input strings, but which aren't required here because
         ' of the Decision stage check to ensure input was actually provied.
         '
@@ -1323,26 +1308,26 @@ Public Class Utility_Strings
         	distance = 0
         	Goto JumpPoint
         End If
-        
+
         While i <= sourceCharCount
         	numOfEdits(i, 0) = Math.Min(System.Threading.Interlocked.Increment(i), i - 1)
         End While
-        
+
         While j <= targetCharCount
         	numOfEdits(0, j) = Math.Min(System.Threading.Interlocked.Increment(j), j - 1)
         End While
-        
+
         For i = 1 To sourceCharCount
         	For j = 1 To targetCharCount
         		Dim cost As Integer = If((target(j - 1) = source(i - 1)), 0, 1)
         		numOfEdits(i, j) = Math.Min(Math.Min(numOfEdits(i - 1, j) + 1, numOfEdits(i, j - 1) + 1), numOfEdits(i - 1, j - 1) + cost)
         	Next
         Next
-        
+
         distance = numOfEdits(sourceCharCount, targetCharCount)
-        
+
         JumpPoint:
-        
+
         similarity = Math.Round(1.0 - (distance / CDec(Math.Max(source.Length, target.Length))),4)
 
     End Sub

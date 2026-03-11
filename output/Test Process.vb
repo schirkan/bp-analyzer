@@ -7,7 +7,7 @@ Imports System.Data
 ''' <summary>
 ''' BluePrism process: Test Process
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 20:28:04
+''' Generated: 2026-03-11 20:40:46
 ''' </summary>
 Public Class Test_Process
     Inherits BP_Base
@@ -108,7 +108,7 @@ Public Class Test_Process
 
         ' Loop Values
         Values.SelectFirstRow()
-        
+
         ' Calculate Distance
         Loop_Test_Calculate_Distance:
         Utility_Strings.Instance.Calculate_Distance(
@@ -171,7 +171,7 @@ Public Class Test_Process
         If MyToggle Then
             GoTo Variable_Test_Toggle_boolean_value
         End If
-        
+
         ' Multi1
         Variable_Test_Multi1:
         Data5 = 1

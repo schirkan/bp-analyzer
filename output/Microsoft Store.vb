@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: Microsoft Store
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 20:28:04
+''' Generated: 2026-03-11 20:40:46
 ''' </summary>
 Public Class Microsoft_Store
     Inherits BP_Base
@@ -61,7 +61,7 @@ Public Class Microsoft_Store
         ' Start Process
         On Error GoTo Launch_Recover
         Utility_Environment.Instance.Start_Process(Application:=FilePath)
-        
+
         ' Attach
         Launch_Attach:
         Application.Element("Microsoft Store").AttachApplication()
@@ -103,17 +103,14 @@ Public Class Microsoft_Store
     ''' </summary>
     Public Sub Start_Updates()
 
-        
         ' W5
-        Start_Updates_W5:
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Header: Updates und Downloads", "0340b82e-9c61-45bd-a50b-f5691247a070").CheckExists = True ' Header: Updates und Downloads Check Exists
                 GoTo Start_Updates_W5_2
         End Select
-        
+
         ' SE
-        Start_Updates_SE:
         Throw New BP_Exception("System Exception", "Download Header not found")
 
         ' W5
@@ -158,7 +155,7 @@ Public Class Microsoft_Store
         ' Click Update All
         Start_Updates_Click_Update_All:
         ' Navigate: No steps defined
-        
+
         ' W5
         Start_Updates_W5_3:
         ' Wait 5 seconds for condition with 1 choice(s)
@@ -171,7 +168,6 @@ Public Class Microsoft_Store
         Throw New BP_Exception("System Exception", "Nach Updates suchen Button not found")
 
         ' Note2
-        Start_Updates_Note2:
         ' TODO
         GoTo Start_Updates_W2
 

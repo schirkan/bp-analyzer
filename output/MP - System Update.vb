@@ -7,7 +7,7 @@ Imports System.Data
 ''' <summary>
 ''' BluePrism process: MP - System Update
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 20:28:04
+''' Generated: 2026-03-11 20:40:46
 ''' </summary>
 Public Class MP_System_Update
     Inherits BP_Base
@@ -37,13 +37,10 @@ Public Class MP_System_Update
     ''' </summary>
     Public Sub Main()
 
-        
         ' Launch
-        Main_Launch:
         Microsoft_Store.Instance.Launch()
-        
+
         ' Start Updates
-        Main_Start_Updates:
         Microsoft_Store.Instance.Start_Updates()
 
         ' Launch
@@ -51,13 +48,11 @@ Public Class MP_System_Update
 
         ' Start Updates
         Windows_Settings.Instance.Start_Updates()
-        
+
         ' Wait Updates Finished
-        Main_Wait_Updates_Finished:
         Microsoft_Store.Instance.Wait_Updates_Finished()
-        
+
         ' Terminate
-        Main_Terminate:
         Microsoft_Store.Instance.Terminate()
 
         ' Wait Updates Finished
