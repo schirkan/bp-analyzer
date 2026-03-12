@@ -570,6 +570,146 @@ Public Class BP_Base
 
     #End Region
 
+    #Region "Environment Functions"
+
+    ''' <summary>
+    ''' Determines if a Blue Prism Server is being used, rather than a direct database connection.
+    ''' </summary>
+    ''' <returns>True if so.</returns>
+    Protected Shared Function BPServer() As Boolean
+        Return False ' Dummy implementation
+    End Function
+
+    ''' <summary>
+    ''' Gets the major version number of the running Blue Prism software.
+    ''' </summary>
+    ''' <returns>e.g. 3 for version 3.5</returns>
+    Protected Shared Function BPVersionMajor() As Integer
+        Return 7 ' Dummy implementation
+    End Function
+
+    ''' <summary>
+    ''' Gets the minor version number of the running Blue Prism software.
+    ''' </summary>
+    ''' <returns>e.g. 5 for version 3.5</returns>
+    Protected Shared Function BPVersionMinor() As Integer
+        Return 5 ' Dummy implementation
+    End Function
+
+    ''' <summary>
+    ''' Returns the time remaining on the current Blue Prism Desktop session in seconds.
+    ''' </summary>
+    ''' <returns>Integer representing seconds remaining</returns>
+    Protected Shared Function DesktopSessionTimeRemaining() As Integer
+        Return 60 ' Dummy implementation
+    End Function
+
+    ''' <summary>
+    ''' Gets text from the Clipboard.
+    ''' </summary>
+    ''' <returns>The clipboard text</returns>
+    Protected Shared Function GetClipboard() As String
+        Return String.Empty ' Dummy implementation
+    End Function
+
+    ''' <summary>
+    ''' Gets the name of the current Blue Prism database connection.
+    ''' </summary>
+    ''' <returns>The connection name</returns>
+    Protected Shared Function GetConnection() As String
+        Return "Default" ' Dummy implementation
+    End Function
+
+    ''' <summary>
+    ''' Gets the Internet Explorer major version number.
+    ''' </summary>
+    ''' <returns>The IE major version</returns>
+    Protected Shared Function GetIEVersionMajor() As Integer
+        Return 0 ' Dummy implementation
+    End Function
+
+    ''' <summary>
+    ''' Gets the operating system architecture.
+    ''' </summary>
+    ''' <returns>e.g. "64-bit"</returns>
+    Protected Shared Function GetOSArchitecture() As String
+        Return Environment.Is64BitOperatingSystem.ToString().Replace("True", "64-bit").Replace("False", "32-bit")
+    End Function
+
+    ''' <summary>
+    ''' Gets the operating system version.
+    ''' </summary>
+    ''' <returns>e.g. "Windows 10"</returns>
+    Protected Shared Function GetOSVersion() As String
+        Return Environment.OSVersion.ToString()
+    End Function
+
+    ''' <summary>
+    ''' Gets the operating system major version number.
+    ''' </summary>
+    ''' <returns>The OS major version</returns>
+    Protected Shared Function GetOSVersionMajor() As Integer
+        Return Environment.OSVersion.Version.Major
+    End Function
+
+    ''' <summary>
+    ''' Gets the operating system minor version number.
+    ''' </summary>
+    ''' <returns>The OS minor version</returns>
+    Protected Shared Function GetOSVersionMinor() As Integer
+        Return Environment.OSVersion.Version.Minor
+    End Function
+
+    ''' <summary>
+    ''' Gets the name of the Resource running the current process.
+    ''' </summary>
+    ''' <returns>The resource name</returns>
+    Protected Shared Function GetResourceName() As String
+        Return Environment.MachineName
+    End Function
+
+    ''' <summary>
+    ''' Gets the ID of the session running the current process, or empty text if no session is currently running.
+    ''' </summary>
+    ''' <returns>The session ID</returns>
+    Protected Shared Function GetSessionId() As String
+        Return String.Empty ' Dummy implementation
+    End Function
+
+    ''' <summary>
+    ''' Gets the start time of this process instance.
+    ''' </summary>
+    ''' <returns>The start time</returns>
+    Protected Shared Function GetStartTime() As DateTime
+        Return DateTime.Now ' Dummy implementation
+    End Function
+
+    ''' <summary>
+    ''' Gets the name of the user responsible for starting the current session, or empty text if no session is currently running.
+    ''' </summary>
+    ''' <returns>The user name</returns>
+    Protected Shared Function GetUserName() As String
+        Return Environment.UserName
+    End Function
+
+    ''' <summary>
+    ''' Checks if a process is being executed by a Blue Prism Desktop digital worker.
+    ''' </summary>
+    ''' <returns>True if in BPD environment</returns>
+    Protected Shared Function IsBPDEnvironment() As Boolean
+        Return False ' Dummy implementation
+    End Function
+
+    ''' <summary>
+    ''' Checks if a safe stop has been requested in the current session.
+    ''' </summary>
+    ''' <returns>True if stop requested</returns>
+    Protected Shared Function IsStopRequested() As Boolean
+        Return False ' Dummy implementation
+    End Function
+
+    #End Region
+
     ''' <summary>
     ''' Helper class for Alert stages
     ''' </summary>

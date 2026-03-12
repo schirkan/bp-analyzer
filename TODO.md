@@ -196,6 +196,58 @@
   - MyToggle = DataBinder.Eval(Me, "[MyToggle] = False")
 - [ ] implement app model xml
 - [ ] implement internal "Blueprism" classes
-- [ ] add missing system methods to Template_BP_Base.vb
-  - ...
+- [x] add missing environment methods to Template_BP_Base.vb
+  - create dummy implementation (just return static values) for the following methods:
+    ```
+    Determine if a Blue Prism Server is being used, rather than a direct database connection. True if so.
+    BPServer()
+
+    Get the major version number of the running Blue Prism software - e.g. 3 for version 3.5
+    BPVersionMajor()
+
+    Get the minor version number of the running Blue Prism software - e.g. 5 for version 3.5
+    BPVersionMinor()
+
+    Returns the time remaining on the current Blue Prism Desktop session in seconds as a integer.
+    DesktopSessionTimeRemaining()
+
+    Gets text from the Clipboard
+    GetClipboard()
+
+    Gets the name of the current Blue Prism database connection
+    GetConnection()
+
+    Get Internet Explorer major version number
+    GetIEVersionMajor()
+
+    Get the operating system arcitecture
+    GetOSArchitecture()
+
+    Get the operating system version - for example 'Windows 2000' or 'Windows XP'
+    GetOSVersion()
+
+    Get the operating system major version number
+    GetOSVersionMajor()
+
+    Get the operating system minor version number
+    GetOSVersionMinor()
+
+    Get the name of the Resource running the current process
+    GetResourceName()
+
+    Get the ID of the session running the current process, or empty text if no session is currently running.
+    GetSessionId()
+
+    Gets the start time of this process instance
+    GetStartTime()
+
+    Get the name of the user responsible for starting the current session, or empty text if no session is currently running.
+    GetUserName()
+
+    Checks if a process is being executed by a Blue Prism Desktop digital worker
+    IsBPDEnvironment()
+
+    Checks if a safe stop has been requested in the current session
+    IsStopRequested()
+    ```
 - [ ] fix issue with duplicate method names (internal + page name)

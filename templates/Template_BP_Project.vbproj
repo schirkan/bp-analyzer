@@ -9,7 +9,7 @@
     <OptionCompare>Binary</OptionCompare>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <NoWarn>42016,41999,41024,42124,42020</NoWarn>
+    <NoWarn>42016,41999,41024,42124,42020,42017</NoWarn>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 

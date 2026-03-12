@@ -14,7 +14,7 @@ Imports Microsoft.VisualBasic.FileIO
 ''' <summary>
 ''' BluePrism object: Utility - Strings
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-12 20:19:40
+''' Generated: 2026-03-12 22:02:59
 ''' </summary>
 Public Class Utility_Strings
     Inherits BP_Base
