@@ -12,9 +12,7 @@ public abstract class StageGeneratorBase : IStageGenerator
   /// Generates parameter code for Action and Process stages.
   /// This eliminates duplicate code between these two stage types.
   /// </summary>
-  protected string GenerateParameterCode(
-      IEnumerable<XElement> inputs,
-      IEnumerable<XElement> outputs)
+  protected string GenerateParameterCode(IEnumerable<XElement> inputs, IEnumerable<XElement> outputs)
   {
     var inputParams = new List<string>();
 

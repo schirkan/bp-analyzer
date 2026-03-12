@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: Windows Settings
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-12 13:18:47
+''' Generated: 2026-03-12 20:19:40
 ''' </summary>
 Public Class Windows_Settings
     Inherits BP_Base
@@ -64,9 +64,11 @@ Public Class Windows_Settings
 
         ' Attach
         Launch_Attach:
+        On Error Goto 0
         Application.Element("Windows Settings").AttachApplication()
 
         ' W5
+        On Error Goto 0
         ' Wait 5 seconds for condition with 1 choice(s)
         Select Case True
             Case Application.Element("Main Window", "4e5490be-f4da-4f82-ace1-cbf647c8b4e6").CheckExists = True ' Main Window Check Exists
@@ -74,6 +76,7 @@ Public Class Windows_Settings
         End Select
 
         ' SE
+        On Error Goto 0
         Throw New BP_Exception("System Exception", "Main Window not found")
 
         ' Recover

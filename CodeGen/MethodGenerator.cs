@@ -159,7 +159,7 @@ public static class MethodGenerator
             var vbType = TypeMapper.MapDataType(inputType);
             var sanitizedName = NameSanitizer.SanitizeVariableName(inputName);
             var defaultValue = TypeMapper.GetOptionalDefaultValue(inputType);
-            var nullableMarker = TypeMapper.IsValueType(inputType) ? "?" : "";
+            var nullableMarker = codeStage == null && TypeMapper.IsValueType(inputType) ? "?" : "";
 
             // Skip if this input name exists in outputs (case-insensitive)
             if (outputParamNames.Contains(inputName.ToLower())) continue;
@@ -173,7 +173,7 @@ public static class MethodGenerator
             var vbType = TypeMapper.MapDataType(outputType);
             var sanitizedName = NameSanitizer.SanitizeVariableName(outputName);
             var defaultValue = TypeMapper.GetOptionalDefaultValue(outputType);
-            var nullableMarker = TypeMapper.IsValueType(outputType) ? "?" : "";
+            var nullableMarker = codeStage == null && TypeMapper.IsValueType(outputType) ? "?" : "";
 
             paramList.Add($"Optional ByRef {sanitizedName} As {vbType}{nullableMarker} = {defaultValue}");
         }
@@ -226,8 +226,10 @@ public static class MethodGenerator
         var sortedStages = FlowController.SortStagesByExecutionOrder(stages);
         var recoverStages = stages.Where(s => s.Attribute("type")?.Value == "Recover");
         var blockStages = stages.Where(s => s.Attribute("type")?.Value == "Block");
+
         var recoverStagesPerBlock = blockStages.ToDictionary(x => x, block =>
             recoverStages.FirstOrDefault(recover => FlowController.IsStageInBlock(recover, block)));
+        var globalRecover = recoverStages.Except(recoverStagesPerBlock.Values).FirstOrDefault();
 
         foreach (var stage in sortedStages)
         {
@@ -247,18 +249,19 @@ public static class MethodGenerator
             }
 
             // Add error handling
-            if (stageType != "Recover" && stageType != "Resume" && stageType != "Note")
+            if (recoverStages.Any() && stageType != "Recover" && stageType != "Resume" && stageType != "Note" && stageType != "Start")
             {
                 var block = blockStages.FirstOrDefault(block => FlowController.IsStageInBlock(stage, block));
-                if (block != null)
+                var recoverStage = (block != null) ? recoverStagesPerBlock[block] : globalRecover;
+                if (recoverStage != null)
                 {
-                    var recoverStage = recoverStagesPerBlock[block];
-                    if (recoverStage != null)
-                    {
-                        var recoverStageId = recoverStage.Attribute("stageid")?.Value!;
-                        var recoverLabel = StageNavigator.GetLabel(recoverStageId, stage.Document);
-                        sb.AppendLine($"        On Error GoTo {recoverLabel}");
-                    }
+                    var recoverStageId = recoverStage.Attribute("stageid")?.Value!;
+                    var recoverLabel = StageNavigator.GetLabel(recoverStageId, stage.Document);
+                    sb.AppendLine($"        On Error GoTo {recoverLabel}");
+                }
+                else
+                {
+                    sb.AppendLine("        On Error Goto 0");
                 }
             }
 

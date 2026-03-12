@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: bp demo
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-12 13:18:45
+''' Generated: 2026-03-12 20:19:40
 ''' </summary>
 Public Class bp_demo
     Inherits BP_Base
@@ -27,7 +27,6 @@ Public Class bp_demo
 
     #Region "Global Data Items"
 
-    ' Environment (collection)
     Protected Environment As DataTable
 
     #End Region
@@ -40,9 +39,11 @@ Public Class bp_demo
     Public Sub New()
 
         ' Initialize collections
-        Environment = New DataTable()
-        Environment.Columns.Add("Const Value1", GetType(String))
-        Environment.Rows.Add("ABC")
+        If Environment Is Nothing Then
+            Environment = New DataTable()
+            Environment.Columns.Add("Const Value1", GetType(String))
+            Environment.Rows.Add("ABC")
+        End If
 
     End Sub
 
@@ -137,11 +138,13 @@ Public Class bp_demo
     Private Sub InteralAction(Optional ByVal Value As String = Nothing)
 
         ' value empty?
+        On Error GoTo InteralAction_Global_Recover
         If Value = "" Then
             GoTo InteralAction_SE
         End If
 
         ' Set Value
+        On Error GoTo InteralAction_Global_Recover
         Value = Value & Environment.GetCurrentRow("Const Value1").Value
 
         ' Note1
@@ -150,16 +153,20 @@ Public Class bp_demo
 
         ' SE
         InteralAction_SE:
+        On Error GoTo InteralAction_Global_Recover
         Throw New BP_Exception("System Exception", "Value is empty")
 
         ' Global Recover
+        InteralAction_Global_Recover:
         StoreException()
 
         ' Log Exception
+        On Error GoTo InteralAction_Global_Recover
         Value = "Type: " & ExceptionType() & NewLine() &
 "Details: " & ExceptionDetail()
 
         ' Re-Throw
+        On Error GoTo InteralAction_Global_Recover
         Throw GetLastException()
 
         End_InteralAction:

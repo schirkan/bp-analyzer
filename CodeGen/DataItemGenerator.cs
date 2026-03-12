@@ -38,11 +38,11 @@ public static class DataItemGenerator
             var name = stage.Attribute("name")?.Value;
             if (string.IsNullOrEmpty(name)) continue;
 
-            var datatype = stage.Element("datatype")?.Value ?? "text";
-            var vbType = TypeMapper.MapDataType(datatype, stage);
+            var dataType = stage.Element("datatype")?.Value ?? "text";
+            var vbType = TypeMapper.MapDataType(dataType, stage);
+            var nullableMarker = TypeMapper.IsValueType(dataType) ? "?" : "";
 
-            sb.AppendLine($"    ' {name} ({datatype})");
-            sb.AppendLine($"    Protected {NameSanitizer.SanitizeVariableName(name)} As {vbType}");
+            sb.AppendLine($"    Protected {NameSanitizer.SanitizeVariableName(name)} As {vbType}{nullableMarker}");
         }
     }
 
@@ -144,19 +144,17 @@ public static class DataItemGenerator
             foreach (var collectionStage in collectionStages)
             {
                 var collectionName = collectionStage.Attribute("name")?.Value!;
-                var alwaysinit = collectionStage.Element("alwaysinit") != null;
                 var collectionInit = GenerateCollectionInitialization(collectionStage);
 
-                if (!string.IsNullOrEmpty(collectionInit) && alwaysinit)
+                if (!string.IsNullOrEmpty(collectionInit))
                 {
-                    if (!alwaysinit) sb.AppendLine($"        If {NameSanitizer.SanitizeVariableName(collectionName)} Is Nothing Then");
-                    if (!alwaysinit) sb.Append("    ");
+                    sb.AppendLine($"        If {NameSanitizer.SanitizeVariableName(collectionName)} Is Nothing Then");
                     // Split by newlines and indent each line
                     foreach (var line in collectionInit.Split('\n'))
                     {
-                        sb.AppendLine($"        {line.TrimEnd()}");
+                        sb.AppendLine($"            {line.TrimEnd()}");
                     }
-                    if (!alwaysinit) sb.AppendLine($"        End If");
+                    sb.AppendLine($"        End If");
                 }
             }
         }

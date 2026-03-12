@@ -7,7 +7,7 @@ Imports System.Data
 ''' <summary>
 ''' BluePrism process: Test Process
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-12 13:18:45
+''' Generated: 2026-03-12 20:19:40
 ''' </summary>
 Public Class Test_Process
     Inherits BP_Base
@@ -26,10 +26,8 @@ Public Class Test_Process
 
     #Region "Global Data Items"
 
-    ' MyText (text)
     Protected MyText As String
-    ' Data4 (flag)
-    Protected Data4 As Boolean
+    Protected Data4 As Boolean?
 
     #End Region
 
@@ -109,13 +107,15 @@ Public Class Test_Process
         Name = "Martin"
 
         ' Initialize collections
-        Values = New DataTable()
-        Values.Columns.Add("Name", GetType(String))
-        Values.Columns.Add("Distance", GetType(Decimal))
-        Values.Columns.Add("Similarity", GetType(Decimal))
-        Values.Rows.Add("Max", 0, 0)
-        Values.Rows.Add("John", 0, 0)
-        Values.Rows.Add("Lisa", 0, 0)
+        If Values Is Nothing Then
+            Values = New DataTable()
+            Values.Columns.Add("Name", GetType(String))
+            Values.Columns.Add("Distance", GetType(Decimal))
+            Values.Columns.Add("Similarity", GetType(Decimal))
+            Values.Rows.Add("Max", 0, 0)
+            Values.Rows.Add("John", 0, 0)
+            Values.Rows.Add("Lisa", 0, 0)
+        End If
 
         ' Loop Values
         Values.SelectFirstRow()
@@ -171,16 +171,22 @@ Public Class Test_Process
         End If
 
         ' Initialize collections
-        Coll1 = New DataTable()
-        Coll2 = New DataTable()
-        Coll2.Columns.Add("Text", GetType(String))
-        Coll2.Columns.Add("Zahl", GetType(Decimal))
-        Coll2.Rows.Add("aa", 2)
-        Coll2.Rows.Add("bb", 3)
-        Coll3 = New DataTable()
-        Coll3.Columns.Add("Text", GetType(String))
-        Coll3.Columns.Add("Zahl", GetType(Decimal))
-        Coll3.Rows.Add("aaa", 111)
+        If Coll1 Is Nothing Then
+            Coll1 = New DataTable()
+        End If
+        If Coll2 Is Nothing Then
+            Coll2 = New DataTable()
+            Coll2.Columns.Add("Text", GetType(String))
+            Coll2.Columns.Add("Zahl", GetType(Decimal))
+            Coll2.Rows.Add("aa", 2)
+            Coll2.Rows.Add("bb", 3)
+        End If
+        If Coll3 Is Nothing Then
+            Coll3 = New DataTable()
+            Coll3.Columns.Add("Text", GetType(String))
+            Coll3.Columns.Add("Zahl", GetType(Decimal))
+            Coll3.Rows.Add("aaa", 111)
+        End If
 
         ' Initialize local variables with input values
         If InData1 IsNot Nothing Then

@@ -34,6 +34,9 @@ dotnet build BP-Analyzer.csproj
 
 # Or run directly
 dotnet run --project BP-Analyzer.csproj
+
+# run codegen and build output
+dotnet run --project BP-Analyzer.csproj -- --codegen && dotnet build output/BluePrism_Generated.vbproj 2>&1
 ```
 
 ## CLI Commands
@@ -164,21 +167,25 @@ Utility___Environment.Instance.Start_Process(Application:=FilePath)
 
 ### Exception Handling
 
-The BP_Base template provides exception handling methods:
+The BP_Base template provides exception handling methods. Exceptions are raised using `Throw`:
 
 ```vb
-' Raise exception
-RaiseException("System Exception", "Error message")
+' Raise exception (in Exception stage)
+Throw New BP_Exception("System Exception", "Error message")
 
 ' Store exception (in Recover stage)
 StoreException()
 
-' Rethrow stored exception
-RethrowException()
+' Clear stored exception (in Resume stage)
+ClearException()
 
 ' Get exception information
 Dim exType As String = ExceptionType()
-Dim exText As String = ExceptionText()
+Dim exText As String = ExceptionDetail()
+Dim exStage As String = ExceptionStage()
+
+' Rethrow the stored exception
+Throw GetLastException()
 ```
 
 ### Process Flow

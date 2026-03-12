@@ -14,7 +14,7 @@ Imports Microsoft.VisualBasic.FileIO
 ''' <summary>
 ''' BluePrism object: Utility - Strings
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-12 13:18:46
+''' Generated: 2026-03-12 20:19:40
 ''' </summary>
 Public Class Utility_Strings
     Inherits BP_Base
@@ -130,7 +130,9 @@ Public Class Utility_Strings
     Public Sub Compare_Font_Text(Optional ByVal Sample_1 As String = Nothing, Optional ByVal Sample_2 As String = Nothing, Optional ByVal Conflicting_Characters As DataTable = Nothing, Optional ByRef Samples_Equal As Boolean? = Nothing, Optional ByRef Amended_Sample_1 As String = Nothing, Optional ByRef Amended_Sample_2 As String = Nothing)
 
         ' Initialize collections
-        Conflicting_Characters = New DataTable()
+        If Conflicting_Characters Is Nothing Then
+            Conflicting_Characters = New DataTable()
+        End If
 
         ' For Each Character Group
         Conflicting_Characters.SelectFirstRow()
@@ -209,7 +211,9 @@ Public Class Utility_Strings
         Explicit_Capture = False
 
         ' Initialize collections
-        Regex_Matches = New DataTable()
+        If Regex_Matches Is Nothing Then
+            Regex_Matches = New DataTable()
+        End If
 
         ' Extract All Matches
         CodeStage_Extract_All_Matches(
@@ -237,11 +241,13 @@ Public Class Utility_Strings
         Target_String = "100-200"
 
         ' Initialize collections
-        Named_Values = New DataTable()
-        Named_Values.Columns.Add("Name", GetType(String))
-        Named_Values.Columns.Add("Value", GetType(String))
-        Named_Values.Rows.Add("Lower", "")
-        Named_Values.Rows.Add("Upper", "")
+        If Named_Values Is Nothing Then
+            Named_Values = New DataTable()
+            Named_Values.Columns.Add("Name", GetType(String))
+            Named_Values.Columns.Add("Value", GetType(String))
+            Named_Values.Rows.Add("Lower", "")
+            Named_Values.Rows.Add("Upper", "")
+        End If
 
         ' Extract Values
         CodeStage_Extract_Values(
@@ -296,7 +302,9 @@ Public Class Utility_Strings
         Dim Output_CSV As String
 
         ' Initialize collections
-        Input_Collection = New DataTable()
+        If Input_Collection Is Nothing Then
+            Input_Collection = New DataTable()
+        End If
 
         ' Get Collection as Delimited Text
         Get_Collection_as_Delimited_Text(
@@ -317,7 +325,9 @@ Public Class Utility_Strings
     Public Sub Get_Collection_as_Delimited_Text(Optional ByVal Input_Collection As DataTable = Nothing, Optional ByVal Delimiter_Character As String = Nothing, Optional ByRef Output_Delimited_Text As String = Nothing)
 
         ' Initialize collections
-        Input_Collection = New DataTable()
+        If Input_Collection Is Nothing Then
+            Input_Collection = New DataTable()
+        End If
 
         ' Serialise to Delimited Text
         CodeStage_Serialise_to_Delimited_Text(
@@ -340,9 +350,13 @@ Public Class Utility_Strings
         First_Row_Is_Header = False
 
         ' Initialize collections
-        Output_Collection = New DataTable()
-        Schema = New DataTable()
-        Schema.Columns.Add("Column Name", GetType(String))
+        If Output_Collection Is Nothing Then
+            Output_Collection = New DataTable()
+        End If
+        If Schema Is Nothing Then
+            Schema = New DataTable()
+            Schema.Columns.Add("Column Name", GetType(String))
+        End If
 
         ' Get Delimited Text As Collection
         Get_Delimited_Text_As_Collection(
@@ -368,9 +382,13 @@ Public Class Utility_Strings
         First_Row_Is_Header = False
 
         ' Initialize collections
-        Output_Collection = New DataTable()
-        Schema = New DataTable()
-        Schema.Columns.Add("Column Name", GetType(String))
+        If Output_Collection Is Nothing Then
+            Output_Collection = New DataTable()
+        End If
+        If Schema Is Nothing Then
+            Schema = New DataTable()
+            Schema.Columns.Add("Column Name", GetType(String))
+        End If
 
         ' Parse Delimited String
         CodeStage_Parse_Delimited_String(
@@ -431,7 +449,9 @@ Public Class Utility_Strings
         Element_Name = "Image"
 
         ' Initialize collections
-        Elements = New DataTable()
+        If Elements Is Nothing Then
+            Elements = New DataTable()
+        End If
 
         ' Blank XML?
         If Len(Trim(XML)) = 0 Then
@@ -526,7 +546,9 @@ Public Class Utility_Strings
         Dim Join_Character As String
 
         ' Initialize collections
-        Values = New DataTable()
+        If Values Is Nothing Then
+            Values = New DataTable()
+        End If
 
         ' Get Carriage Return
         CodeStage_Get_Carriage_Return(Join_Character:=Join_Character)
@@ -553,8 +575,10 @@ Public Class Utility_Strings
         Trim_Values = False
 
         ' Initialize collections
-        Values = New DataTable()
-        Values.Columns.Add("Item Value", GetType(String))
+        If Values Is Nothing Then
+            Values = New DataTable()
+            Values.Columns.Add("Item Value", GetType(String))
+        End If
 
         ' Reset Output
         Joined_Text = ""
@@ -711,8 +735,10 @@ Public Class Utility_Strings
     Public Sub Split_Lines(Optional ByVal Text_to_Split As String = Nothing, Optional ByRef Split_Values As DataTable = Nothing)
 
         ' Initialize collections
-        Split_Values = New DataTable()
-        Split_Values.Columns.Add("Value", GetType(String))
+        If Split_Values Is Nothing Then
+            Split_Values = New DataTable()
+            Split_Values.Columns.Add("Value", GetType(String))
+        End If
 
         ' Split
         CodeStage_Split(
@@ -735,8 +761,10 @@ Public Class Utility_Strings
         Split_Strictly_by_Length = False
 
         ' Initialize collections
-        Split_Lines = New DataTable()
-        Split_Lines.Columns.Add("Line Text", GetType(String))
+        If Split_Lines Is Nothing Then
+            Split_Lines = New DataTable()
+            Split_Lines.Columns.Add("Line Text", GetType(String))
+        End If
 
         ' Split Lines By Length
         CodeStage_Split_Lines_By_Length(
@@ -758,7 +786,9 @@ Public Class Utility_Strings
     Public Sub Split_Text(Optional ByVal Text_to_Split As String = Nothing, Optional ByVal Split_Char As String = Nothing, Optional ByVal Collection_Field_Name As String = Nothing, Optional ByRef Split_Values As DataTable = Nothing)
 
         ' Initialize collections
-        Split_Values = New DataTable()
+        If Split_Values Is Nothing Then
+            Split_Values = New DataTable()
+        End If
 
         ' Split Text
         CodeStage_Split_Text(
@@ -1036,7 +1066,7 @@ Public Class Utility_Strings
     ''' <summary>
     ''' Format
     ''' </summary>
-    Private Sub CodeStage_Format(Optional ByVal Input As Decimal? = Nothing, Optional ByRef Output As String = Nothing)
+    Private Sub CodeStage_Format(Optional ByVal Input As Decimal = Nothing, Optional ByRef Output As String = Nothing)
 
         Output = Input.ToString("N")
 
@@ -1085,7 +1115,7 @@ Public Class Utility_Strings
     ''' <summary>
     ''' Split Lines By Length
     ''' </summary>
-    Private Sub CodeStage_Split_Lines_By_Length(Optional ByVal Text_to_Split As String = Nothing, Optional ByVal Maximum_Line_Length As Decimal? = Nothing, Optional ByVal Strict_Split As Boolean? = Nothing, Optional ByRef Split_Lines As DataTable = Nothing, Optional ByRef Line_Count As Decimal? = Nothing)
+    Private Sub CodeStage_Split_Lines_By_Length(Optional ByVal Text_to_Split As String = Nothing, Optional ByVal Maximum_Line_Length As Decimal = Nothing, Optional ByVal Strict_Split As Boolean = Nothing, Optional ByRef Split_Lines As DataTable = Nothing, Optional ByRef Line_Count As Decimal = Nothing)
 
         Dim Values as List(Of String) = Nothing
         If Strict_Split Then
@@ -1177,7 +1207,7 @@ Public Class Utility_Strings
     ''' <summary>
     ''' InStr
     ''' </summary>
-    Private Sub CodeStage_InStr(Optional ByVal InText As String = Nothing, Optional ByVal Search_String As String = Nothing, Optional ByVal Start_Byte As Decimal? = Nothing, Optional ByVal Compare_Method As Decimal? = Nothing, Optional ByRef Position As Decimal? = Nothing)
+    Private Sub CodeStage_InStr(Optional ByVal InText As String = Nothing, Optional ByVal Search_String As String = Nothing, Optional ByVal Start_Byte As Decimal = Nothing, Optional ByVal Compare_Method As Decimal = Nothing, Optional ByRef Position As Decimal = Nothing)
 
           Position = Microsoft.VisualBasic.InStr(Start_Byte,InText, Search_String, 1)
 
@@ -1186,7 +1216,7 @@ Public Class Utility_Strings
     ''' <summary>
     ''' InStrRev
     ''' </summary>
-    Private Sub CodeStage_InStrRev(Optional ByVal InText As String = Nothing, Optional ByVal Search_String As String = Nothing, Optional ByVal Start_Byte As Decimal? = Nothing, Optional ByVal Compare_Method As Decimal? = Nothing, Optional ByRef Position As Decimal? = Nothing)
+    Private Sub CodeStage_InStrRev(Optional ByVal InText As String = Nothing, Optional ByVal Search_String As String = Nothing, Optional ByVal Start_Byte As Decimal = Nothing, Optional ByVal Compare_Method As Decimal = Nothing, Optional ByRef Position As Decimal = Nothing)
 
           Position = Microsoft.VisualBasic.InStrRev(InText, Search_String, Start_Byte, 1)
 
@@ -1195,7 +1225,7 @@ Public Class Utility_Strings
     ''' <summary>
     ''' Test Regex Match1
     ''' </summary>
-    Private Sub CodeStage_Test_Regex_Match1(Optional ByVal Regex_Pattern As String = Nothing, Optional ByVal Target_String As String = Nothing, Optional ByRef Regex_Match As Boolean? = Nothing)
+    Private Sub CodeStage_Test_Regex_Match1(Optional ByVal Regex_Pattern As String = Nothing, Optional ByVal Target_String As String = Nothing, Optional ByRef Regex_Match As Boolean = Nothing)
 
         Dim R as New Regex(Regex_Pattern, RegexOptions.SingleLine)
         Dim M as Match = R.Match(Target_String)
@@ -1217,7 +1247,7 @@ Public Class Utility_Strings
     ''' <summary>
     ''' Parse Delimited String
     ''' </summary>
-    Private Sub CodeStage_Parse_Delimited_String(Optional ByVal DelimitedText As String = Nothing, Optional ByVal Schema As DataTable = Nothing, Optional ByVal FirstRowIsHeader As Boolean? = Nothing, Optional ByVal Delimiter As String = Nothing, Optional ByRef outputCollection As DataTable = Nothing)
+    Private Sub CodeStage_Parse_Delimited_String(Optional ByVal DelimitedText As String = Nothing, Optional ByVal Schema As DataTable = Nothing, Optional ByVal FirstRowIsHeader As Boolean = Nothing, Optional ByVal Delimiter As String = Nothing, Optional ByRef outputCollection As DataTable = Nothing)
 
         Const SchemaColumnName As String = "Column Name"
         Const DefaultColumnName As String = "Column "
@@ -1277,7 +1307,7 @@ Public Class Utility_Strings
     ''' <summary>
     ''' Extract All Matches
     ''' </summary>
-    Private Sub CodeStage_Extract_All_Matches(Optional ByVal Regex_Pattern As String = Nothing, Optional ByVal Text_To_Perform_Search_On As String = Nothing, Optional ByVal Singleline As Boolean? = Nothing, Optional ByVal Ignore_Case As Boolean? = Nothing, Optional ByVal Explicit_Capture As Boolean? = Nothing, Optional ByRef Regex_Matches As DataTable = Nothing, Optional ByRef Success As Boolean? = Nothing)
+    Private Sub CodeStage_Extract_All_Matches(Optional ByVal Regex_Pattern As String = Nothing, Optional ByVal Text_To_Perform_Search_On As String = Nothing, Optional ByVal Singleline As Boolean = Nothing, Optional ByVal Ignore_Case As Boolean = Nothing, Optional ByVal Explicit_Capture As Boolean = Nothing, Optional ByRef Regex_Matches As DataTable = Nothing, Optional ByRef Success As Boolean = Nothing)
 
         Dim fullMatchColumnName As String = "Full Match"
 
@@ -1316,7 +1346,7 @@ Public Class Utility_Strings
     ''' <summary>
     ''' Perform Replace
     ''' </summary>
-    Private Sub CodeStage_Perform_Replace(Optional ByVal pattern As String = Nothing, Optional ByVal input As String = Nothing, Optional ByVal replacement As String = Nothing, Optional ByVal max As Decimal? = Nothing, Optional ByVal start As Decimal? = Nothing, Optional ByRef output As String = Nothing)
+    Private Sub CodeStage_Perform_Replace(Optional ByVal pattern As String = Nothing, Optional ByVal input As String = Nothing, Optional ByVal replacement As String = Nothing, Optional ByVal max As Decimal = Nothing, Optional ByVal start As Decimal = Nothing, Optional ByRef output As String = Nothing)
 
         Dim rgx As New Regex(pattern)
 
@@ -1333,7 +1363,7 @@ Public Class Utility_Strings
     ''' <summary>
     ''' Calculate Levenshtein Distance
     ''' </summary>
-    Private Sub CodeStage_Calculate_Levenshtein_Distance(Optional ByVal source As String = Nothing, Optional ByVal target As String = Nothing, Optional ByVal caseSensitive As Boolean? = Nothing, Optional ByRef distance As Decimal? = Nothing, Optional ByRef similarity As Decimal? = Nothing)
+    Private Sub CodeStage_Calculate_Levenshtein_Distance(Optional ByVal source As String = Nothing, Optional ByVal target As String = Nothing, Optional ByVal caseSensitive As Boolean = Nothing, Optional ByRef distance As Decimal = Nothing, Optional ByRef similarity As Decimal = Nothing)
 
         '*****************************************************
         ' Yes, GoTo statements are generally frowned upon, but

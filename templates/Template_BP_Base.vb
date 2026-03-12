@@ -29,6 +29,16 @@ Public Class BP_Exception
 End Class
 
 ''' <summary>
+''' Dummy Implementation
+''' </summary>
+Public Class Blueprism
+
+    Public Shared Property Automate As Object
+    Public Shared Property AutomateProcessCore As Object
+
+End Class
+
+''' <summary>
 ''' Base class for all generated BluePrism classes
 ''' </summary>
 Public Class BP_Base

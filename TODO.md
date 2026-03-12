@@ -195,5 +195,7 @@
 - [ ] generate method to evaluate expressions
   - MyToggle = DataBinder.Eval(Me, "[MyToggle] = False")
 - [ ] implement app model xml
+- [ ] implement internal "Blueprism" classes
 - [ ] add missing system methods to Template_BP_Base.vb
   - ...
+- [ ] fix issue with duplicate method names (internal + page name)
