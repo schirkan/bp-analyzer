@@ -15,7 +15,7 @@ Imports System.Threading.Tasks
 ''' <summary>
 ''' BluePrism object: Utility - Environment
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-12 22:02:59
+''' Generated: 2026-03-12 22:17:06
 ''' </summary>
 Public Class Utility_Environment
     Inherits BP_Base
@@ -440,7 +440,7 @@ Public Class Utility_Environment
 
     #Region "App Model"
 
-    Protected Application As Object
+    Protected Application As BP_Application
 
     #End Region
 

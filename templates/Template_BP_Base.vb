@@ -728,6 +728,139 @@ Public Class BP_Base
 
 End Class
 
+#Region "BluePrism Application Wrapper Classes"
+
+    ''' <summary>
+    ''' Wrapper class for BluePrism UI elements
+    ''' Provides type-safe access to element properties and methods
+    ''' </summary>
+    Public Class BP_Element
+
+        ''' <summary>
+        ''' The element name
+        ''' </summary>
+        Public Property Name As String
+
+        ''' <summary>
+        ''' The element ID (optional)
+        ''' </summary>
+        Public Property ID As String
+
+        ''' <summary>
+        ''' Reference to the parent application (for application-level methods)
+        ''' </summary>
+        Private _application As BP_Application
+
+        ''' <summary>
+        ''' Constructor
+        ''' </summary>
+        Public Sub New(name As String, Optional id As String = "", Optional application As BP_Application = Nothing)
+            Me.Name = name
+            Me.ID = id
+            Me._application = application
+        End Sub
+
+        ''' <summary>
+        ''' Checks if the element exists
+        ''' </summary>
+        Public ReadOnly Property CheckExists As Boolean
+            Get
+                ' Dummy implementation - replace with actual BluePrism call
+                Console.WriteLine("[BP_Element.CheckExists] " & Name)
+                Return True
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets the window text of the element
+        ''' </summary>
+        Public Function GetWindowText() As String
+            ' Dummy implementation - replace with actual BluePrism call
+            Console.WriteLine("[BP_Element.GetWindowText] " & Name)
+            Return String.Empty
+        End Function
+
+        ''' <summary>
+        ''' Gets the UI Automation value
+        ''' </summary>
+        Public Function UIAGetValue() As String
+            ' Dummy implementation - replace with actual BluePrism call
+            Console.WriteLine("[BP_Element.UIAGetValue] " & Name)
+            Return String.Empty
+        End Function
+
+        ''' <summary>
+        ''' Writes a value to the element
+        ''' </summary>
+        Public Sub Write(Value As String)
+            ' Dummy implementation - replace with actual BluePrism call
+            Console.WriteLine("[BP_Element.Write] " & Name & " = " & Value)
+        End Sub
+
+        ''' <summary>
+        ''' Presses the UI Automation button
+        ''' </summary>
+        Public Sub UIAButtonPress()
+            ' Dummy implementation - replace with actual BluePrism call
+            Console.WriteLine("[BP_Element.UIAButtonPress] " & Name)
+        End Sub
+
+        ''' <summary>
+        ''' Sends keys to the element via UI Automation
+        ''' </summary>
+        Public Sub UIASendKeys(Optional keys As String = "", Optional newtext As String = "")
+            ' Support both positional and named argument calls
+            Dim actualKeys As String = If(String.IsNullOrEmpty(keys), newtext, keys)
+            ' Dummy implementation - replace with actual BluePrism call
+            Console.WriteLine("[BP_Element.UIASendKeys] " & Name & " = " & actualKeys)
+        End Sub
+
+        ''' <summary>
+        ''' Activates the application
+        ''' </summary>
+        Public Sub ActivateApp()
+            ' Dummy implementation - replace with actual BluePrism call
+            Console.WriteLine("[BP_Element.ActivateApp] " & Name)
+        End Sub
+
+        ''' <summary>
+        ''' Attaches to the application
+        ''' </summary>
+        Public Sub AttachApplication()
+            ' Dummy implementation - replace with actual BluePrism call
+            Console.WriteLine("[BP_Element.AttachApplication] " & Name)
+        End Sub
+
+        ''' <summary>
+        ''' Terminates the application
+        ''' </summary>
+        Public Sub Terminate()
+            ' Dummy implementation - replace with actual BluePrism call
+            Console.WriteLine("[BP_Element.Terminate] " & Name)
+        End Sub
+
+    End Class
+
+''' <summary>
+''' Wrapper class for BluePrism Application object
+''' Provides type-safe access to application methods
+''' </summary>
+Public Class BP_Application
+
+    ''' <summary>
+    ''' Gets a BP_Element by name
+    ''' </summary>
+    ''' <param name="name">The element name</param>
+    ''' <param name="id">Optional element ID</param>
+    ''' <returns>A BP_Element instance</returns>
+    Public Function Element(name As String, Optional id As String = "") As BP_Element
+        Return New BP_Element(name, id)
+    End Function
+
+End Class
+
+#End Region
+
 ''' <summary>
 ''' Module containing extension methods for DataTable
 ''' Provides BluePrism-compatible row iteration functionality

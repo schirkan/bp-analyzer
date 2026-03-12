@@ -118,7 +118,7 @@ public static class ClassGenerator
             // App Model
             sb.AppendLine("    #Region \"App Model\"");
             sb.AppendLine();
-            sb.AppendLine("    Protected Application As Object"); // TODO
+            sb.AppendLine("    Protected Application As BP_Application");
             sb.AppendLine();
             sb.AppendLine("    #End Region");
             sb.AppendLine();
