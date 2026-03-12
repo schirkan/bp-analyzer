@@ -104,74 +104,151 @@ public static class DataItemGenerator
         System.Text.StringBuilder sb,
         List<XElement> stages)
     {
-        var allDataStages = stages
-            .Where(e =>
-            {
-                var stageType = e.Attribute("type")?.Value;
-                return stageType == "Data" || stageType == "Collection";
-            })
-            .ToList();
-
-        var stagesWithInitialValue = allDataStages.Where(e => e.Element("initialvalue") != null).ToList();
-
-        // Separate regular data stages from collection stages
-        var regularDataStages = stagesWithInitialValue.Where(e => e.Attribute("type")?.Value == "Data").ToList();
-        var collectionStages = stagesWithInitialValue.Where(e => e.Attribute("type")?.Value == "Collection").ToList();
-
         // Generate initialization for regular data stages
-        if (regularDataStages.Any())
+        var dataStages = stages.Where(e => e.Attribute("type")?.Value == "Data").ToList();
+        if (dataStages.Any())
         {
             var commentWritten = false;
-            foreach (var dataStage in regularDataStages)
+
+            foreach (var dataStage in dataStages)
             {
                 var dataName = dataStage.Attribute("name")?.Value!;
                 var dataType = dataStage.Element("datatype")?.Value ?? "text";
                 var initialValue = dataStage.Element("initialvalue")?.Value;
-                var alwaysinit = dataStage.Element("alwaysinit");
+                var alwaysinit = dataStage.Element("alwaysinit") != null;
 
+                // TODO: value of input parameters will be overwritten
                 if (!string.IsNullOrEmpty(initialValue))
                 {
                     if (!commentWritten)
                     {
-                        sb.AppendLine("        ' Initialize variables with initialvalue");
+                        sb.AppendLine("        ' Initialize variables");
                         commentWritten = true;
                     }
 
                     var formattedValue = TypeMapper.FormatInitialValue(dataType, initialValue, dataStage);
-                    if (alwaysinit == null)
-                    {
-                        sb.AppendLine($"        If {NameSanitizer.SanitizeVariableName(dataName)} Is Nothing Then");
-                        sb.AppendLine($"            {NameSanitizer.SanitizeVariableName(dataName)} = {formattedValue}");
-                        sb.AppendLine($"        End If");
-                    }
-                    else
-                    {
-                        sb.AppendLine($"        {NameSanitizer.SanitizeVariableName(dataName)} = {formattedValue}");
-                    }
+                    if (!alwaysinit) sb.AppendLine($"        If {NameSanitizer.SanitizeVariableName(dataName)} Is Nothing Then");
+                    if (!alwaysinit) sb.Append("    ");
+                    sb.AppendLine($"        {NameSanitizer.SanitizeVariableName(dataName)} = {formattedValue}");
+                    if (!alwaysinit) sb.AppendLine($"        End If");
                 }
             }
         }
 
         // Generate initialization for collection stages
+        var collectionStages = stages.Where(e => e.Attribute("type")?.Value == "Collection").ToList();
         if (collectionStages.Any())
         {
             sb.AppendLine();
             sb.AppendLine("        ' Initialize collections");
             foreach (var collectionStage in collectionStages)
             {
-                var collectionInit = TypeMapper.GenerateCollectionInitialization(collectionStage);
-                if (!string.IsNullOrEmpty(collectionInit))
+                var collectionName = collectionStage.Attribute("name")?.Value!;
+                var alwaysinit = collectionStage.Element("alwaysinit") != null;
+                var collectionInit = GenerateCollectionInitialization(collectionStage);
+
+                if (!string.IsNullOrEmpty(collectionInit) && alwaysinit)
                 {
+                    if (!alwaysinit) sb.AppendLine($"        If {NameSanitizer.SanitizeVariableName(collectionName)} Is Nothing Then");
+                    if (!alwaysinit) sb.Append("    ");
                     // Split by newlines and indent each line
                     foreach (var line in collectionInit.Split('\n'))
                     {
                         sb.AppendLine($"        {line.TrimEnd()}");
                     }
+                    if (!alwaysinit) sb.AppendLine($"        End If");
                 }
             }
         }
 
         sb.AppendLine();
+    }
+
+    /// <summary>
+    /// Generates VB.NET code for initializing a Collection (DataTable) with columns and initial rows.
+    /// </summary>
+    public static string GenerateCollectionInitialization(XElement collectionStage)
+    {
+        var sb = new System.Text.StringBuilder();
+        var collectionName = collectionStage.Attribute("name")?.Value;
+
+        if (string.IsNullOrEmpty(collectionName)) return string.Empty;
+
+        var sanitizedName = NameSanitizer.SanitizeVariableName(collectionName);
+        var collectionInfo = collectionStage.Element("collectioninfo");
+        var initialValue = collectionStage.Element("initialvalue");
+
+        // Check if collection has columns defined
+        var fields = collectionInfo?.Elements("field").ToList();
+
+        if (fields == null || !fields.Any())
+        {
+            // No columns defined, just initialize empty DataTable
+            return $"{sanitizedName} = New DataTable()";
+        }
+
+        // Start DataTable initialization
+        sb.AppendLine($"{sanitizedName} = New DataTable()");
+
+        // Add columns
+        foreach (var field in fields)
+        {
+            var fieldName = field.Attribute("name")?.Value;
+            var fieldType = field.Attribute("type")?.Value ?? "text";
+            var vbType = TypeMapper.MapDataType(fieldType);
+
+            // Map BluePrism types to VB.NET GetType
+            var getTypeArg = fieldType.ToLower() switch
+            {
+                "text" or "password" => "String",
+                "number" => "Decimal",
+                "flag" or "boolean" => "Boolean",
+                "date" or "datetime" => "DateTime",
+                "time" or "timespan" => "TimeSpan",
+                "binary" => "Byte()",
+                _ => "String"
+            };
+
+            sb.AppendLine($"{sanitizedName}.Columns.Add(\"{fieldName}\", GetType({getTypeArg}))");
+        }
+
+        // Add initial rows
+        if (initialValue != null)
+        {
+            var rows = initialValue.Elements("row").ToList();
+            foreach (var row in rows)
+            {
+                var fieldsInRow = row.Elements("field").ToList();
+                if (fieldsInRow.Any())
+                {
+                    var values = new List<string>();
+                    foreach (var fieldDef in fields)
+                    {
+                        var fieldName = fieldDef.Attribute("name")?.Value;
+                        var fieldType = fieldDef.Attribute("type")?.Value ?? "text";
+
+                        var fieldInRow = fieldsInRow.FirstOrDefault(f => f.Attribute("name")?.Value == fieldName);
+                        var fieldValue = fieldInRow?.Attribute("value")?.Value;
+
+                        if (fieldValue != null)
+                        {
+                            values.Add(TypeMapper.FormatInitialValue(fieldType, fieldValue));
+                        }
+                        else
+                        {
+                            values.Add(TypeMapper.FormatInitialValue(fieldType, ""));
+                        }
+                    }
+
+                    if (values.Any())
+                    {
+                        sb.AppendLine($"{sanitizedName}.Rows.Add({string.Join(", ", values)})");
+                    }
+                }
+            }
+        }
+
+        return sb.ToString().TrimEnd();
     }
 
     /// <summary>
@@ -209,7 +286,7 @@ public static class DataItemGenerator
         sb.AppendLine("    ' Initialize global collections");
         foreach (var collectionStage in globalCollectionStages)
         {
-            var collectionInit = TypeMapper.GenerateCollectionInitialization(collectionStage);
+            var collectionInit = GenerateCollectionInitialization(collectionStage);
             if (!string.IsNullOrEmpty(collectionInit))
             {
                 // Indent for class level

@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: Microsoft Store
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 22:05:48
+''' Generated: 2026-03-12 13:18:45
 ''' </summary>
 Public Class Microsoft_Store
     Inherits BP_Base
@@ -55,7 +55,7 @@ Public Class Microsoft_Store
         ' Local variables
         Dim FilePath As String
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         FilePath = "ms-windows-store://updates"
 
         ' Start Process

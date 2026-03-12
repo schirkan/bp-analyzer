@@ -7,7 +7,7 @@ Imports System.Data
 ''' <summary>
 ''' BluePrism process: Test Process
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 22:05:48
+''' Generated: 2026-03-12 13:18:45
 ''' </summary>
 Public Class Test_Process
     Inherits BP_Base
@@ -45,7 +45,7 @@ Public Class Test_Process
         Dim OutValue1 As DateTime?
         Dim OutValue2 As Boolean?
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         If MyText Is Nothing Then
             MyText = "Hallo Welt"
         End If
@@ -81,7 +81,7 @@ Public Class Test_Process
         Dim URL As String
         Dim Window_Title As String
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         local_VNR = "AB123456"""
 
         ' MyPublicAction
@@ -105,7 +105,7 @@ Public Class Test_Process
         Dim Values As DataTable
         Dim Name As String
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Name = "Martin"
 
         ' Initialize collections
@@ -158,7 +158,7 @@ Public Class Test_Process
         Dim Coll3 As DataTable
         Dim Count As Decimal?
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Data1 = DateTime.Parse("2026/02/01")
         Data2 = DateTime.Parse("2026-02-11 15:37:42Z")
         Data3 = False
@@ -171,6 +171,7 @@ Public Class Test_Process
         End If
 
         ' Initialize collections
+        Coll1 = New DataTable()
         Coll2 = New DataTable()
         Coll2.Columns.Add("Text", GetType(String))
         Coll2.Columns.Add("Zahl", GetType(Decimal))

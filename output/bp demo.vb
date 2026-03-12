@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: bp demo
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 22:05:48
+''' Generated: 2026-03-12 13:18:45
 ''' </summary>
 Public Class bp_demo
     Inherits BP_Base
@@ -107,7 +107,7 @@ Public Class bp_demo
     ''' <param name="URL">New URL</param>
     Public Sub Set_URL(Optional ByVal URL As String = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         URL = "http://google.de"
 
         ' Wait1

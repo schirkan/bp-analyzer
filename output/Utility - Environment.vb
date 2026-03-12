@@ -15,7 +15,7 @@ Imports System.Threading.Tasks
 ''' <summary>
 ''' BluePrism object: Utility - Environment
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 22:05:48
+''' Generated: 2026-03-12 13:18:46
 ''' </summary>
 Public Class Utility_Environment
     Inherits BP_Base
@@ -173,6 +173,11 @@ Public Class Utility_Environment
         Processes.Columns.Add("PID", GetType(Decimal))
         Processes.Rows.Add("Automate", -1)
         Processes.Rows.Add("javaw", -1)
+        Process_Statistics = New DataTable()
+        Process_Statistics.Columns.Add("Process Name", GetType(String))
+        Process_Statistics.Columns.Add("PID", GetType(Decimal))
+        Process_Statistics.Columns.Add("Working Set", GetType(Decimal))
+        Process_Statistics.Columns.Add("Virtual Memory", GetType(Decimal))
 
         ' Initialize local variables with input values
         If Process_Names IsNot Nothing Then
@@ -193,7 +198,7 @@ Public Class Utility_Environment
     ''' <param name="Working_Set">The working set number holding memory stats for your process</param>
     Public Sub Read_Process_Working_Set(Optional ByVal Process_Name As String = Nothing, Optional ByRef Working_Set As Decimal? = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Working_Set = "0"
 
         ' Get Memory Set
@@ -216,7 +221,7 @@ Public Class Utility_Environment
         ' Local variables
         Dim Fail_Datetime_Reached_ As Boolean?
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Timeout = TimeSpan.Parse("0.00:00:10")
         Fail_Datetime_Reached_ = False
         Ignore_Timeout = False
@@ -283,7 +288,7 @@ Public Class Utility_Environment
     ''' <param name="Process_Name">The the name of the process.</param>
     Public Sub Start_Process(Optional ByVal Application As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Use_Shell As Boolean? = Nothing, Optional ByRef Process_ID As Decimal? = Nothing, Optional ByRef Process_Name As String = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Use_Shell = True
 
         ' Start Process
@@ -304,7 +309,7 @@ Public Class Utility_Environment
     ''' <param name="Timeout">Optional: The number of milliseconds to wait for the process to exit. Default value is -1 which waits indefinitely.</param>
     Public Sub Start_Process_Read_Stderr_and_Stdout(Optional ByVal Process_Name As String = Nothing, Optional ByVal Arguments As String = Nothing, Optional ByVal Timeout As Decimal? = Nothing, Optional ByRef Standard_Output As String = Nothing, Optional ByRef Standard_Error As String = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Timeout = -1
 
         ' Run Process read Output
@@ -329,7 +334,7 @@ Public Class Utility_Environment
         ' Local variables
         Dim Timeout As TimeSpan?
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Timeout = TimeSpan.Parse("0.00:00:30")
 
         ' Set Screen Resolution
@@ -364,7 +369,7 @@ Public Class Utility_Environment
     ''' <param name="Found_">True=process found, false=process not found</param>
     Public Sub Wait_for_Process(Optional ByVal Maximum_wait_time_seconds_ As Decimal? = Nothing, Optional ByVal Process_Name As String = Nothing, Optional ByRef Found_ As Boolean? = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Maximum_wait_time_seconds_ = 0
         Found_ = False
 
@@ -384,7 +389,7 @@ Public Class Utility_Environment
     ''' <param name="Wait">The maximum amount of time to wait for</param>
     Public Sub Wait_for_Process_Window(Optional ByVal Process_Name As String = Nothing, Optional ByVal Window_Title As String = Nothing, Optional ByVal Wait As Decimal? = Nothing, Optional ByRef Found As Boolean? = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Found = False
         Wait = 0
 

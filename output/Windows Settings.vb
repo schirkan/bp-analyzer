@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: Windows Settings
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 22:05:48
+''' Generated: 2026-03-12 13:18:47
 ''' </summary>
 Public Class Windows_Settings
     Inherits BP_Base
@@ -55,7 +55,7 @@ Public Class Windows_Settings
         ' Local variables
         Dim FilePath As String
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         FilePath = "ms-settings:windowsupdate"
 
         ' Start Process

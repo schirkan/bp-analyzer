@@ -14,7 +14,7 @@ Imports Microsoft.VisualBasic.FileIO
 ''' <summary>
 ''' BluePrism object: Utility - Strings
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-11 22:05:48
+''' Generated: 2026-03-12 13:18:46
 ''' </summary>
 Public Class Utility_Strings
     Inherits BP_Base
@@ -95,7 +95,7 @@ Public Class Utility_Strings
     ''' <param name="Similarity">The percentage similarity of the two input strings.</param>
     Public Sub Calculate_Distance(Optional ByVal Source As String = Nothing, Optional ByVal Target As String = Nothing, Optional ByVal Case_Sensitive As Boolean? = Nothing, Optional ByRef Distance As Decimal? = Nothing, Optional ByRef Similarity As Decimal? = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Similarity = 0
         Case_Sensitive = True
 
@@ -128,6 +128,9 @@ Public Class Utility_Strings
     ''' <param name="Amended_Sample_1">The first sample, with conflicting characters removed</param>
     ''' <param name="Amended_Sample_2">The second sample, with conflicting characters removed</param>
     Public Sub Compare_Font_Text(Optional ByVal Sample_1 As String = Nothing, Optional ByVal Sample_2 As String = Nothing, Optional ByVal Conflicting_Characters As DataTable = Nothing, Optional ByRef Samples_Equal As Boolean? = Nothing, Optional ByRef Amended_Sample_1 As String = Nothing, Optional ByRef Amended_Sample_2 As String = Nothing)
+
+        ' Initialize collections
+        Conflicting_Characters = New DataTable()
 
         ' For Each Character Group
         Conflicting_Characters.SelectFirstRow()
@@ -200,10 +203,13 @@ Public Class Utility_Strings
     ''' <param name="Success">True if there was a match. False if not.</param>
     Public Sub Extract_Regex_All_Matches(Optional ByVal Regex_Pattern As String = Nothing, Optional ByVal Text_To_Perform_Search_On As String = Nothing, Optional ByVal Singleline As Boolean? = Nothing, Optional ByVal Ignore_Case As Boolean? = Nothing, Optional ByVal Explicit_Capture As Boolean? = Nothing, Optional ByRef Regex_Matches As DataTable = Nothing, Optional ByRef Success As Boolean? = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Singleline = False
         Ignore_Case = False
         Explicit_Capture = False
+
+        ' Initialize collections
+        Regex_Matches = New DataTable()
 
         ' Extract All Matches
         CodeStage_Extract_All_Matches(
@@ -226,7 +232,7 @@ Public Class Utility_Strings
     ''' <param name="Named_Values">Results of the named values extracted from the regex</param>
     Public Sub Extract_Regex_Values(Optional ByVal Regex_Pattern As String = Nothing, Optional ByVal Target_String As String = Nothing, Optional ByRef Named_Values As DataTable = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Regex_Pattern = "(?<Lower>\d+)\s*(-|to)\s*(?<Upper>\d+)"
         Target_String = "100-200"
 
@@ -256,7 +262,7 @@ Public Class Utility_Strings
         ' Local variables
         Dim Formatted_Currency_Value As String
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Input_Number = 987654123456.789
 
         ' Format
@@ -289,6 +295,9 @@ Public Class Utility_Strings
         ' Local variables
         Dim Output_CSV As String
 
+        ' Initialize collections
+        Input_Collection = New DataTable()
+
         ' Get Collection as Delimited Text
         Get_Collection_as_Delimited_Text(
             Input_Collection:=Input_Collection, 
@@ -307,6 +316,9 @@ Public Class Utility_Strings
     ''' <param name="Output_Delimited_Text">The delimited text representation of the Input Collection</param>
     Public Sub Get_Collection_as_Delimited_Text(Optional ByVal Input_Collection As DataTable = Nothing, Optional ByVal Delimiter_Character As String = Nothing, Optional ByRef Output_Delimited_Text As String = Nothing)
 
+        ' Initialize collections
+        Input_Collection = New DataTable()
+
         ' Serialise to Delimited Text
         CodeStage_Serialise_to_Delimited_Text(
             Input_Collection:=Input_Collection, 
@@ -324,8 +336,13 @@ Public Class Utility_Strings
     ''' <param name="Output_Collection">The collection converted from CSV</param>
     Public Sub Get_CSV_As_Collection(Optional ByVal CSV As String = Nothing, Optional ByVal First_Row_Is_Header As Boolean? = Nothing, Optional ByVal Schema As DataTable = Nothing, Optional ByRef Output_Collection As DataTable = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         First_Row_Is_Header = False
+
+        ' Initialize collections
+        Output_Collection = New DataTable()
+        Schema = New DataTable()
+        Schema.Columns.Add("Column Name", GetType(String))
 
         ' Get Delimited Text As Collection
         Get_Delimited_Text_As_Collection(
@@ -347,8 +364,13 @@ Public Class Utility_Strings
     ''' <param name="Output_Collection">The collection converted from CSV</param>
     Public Sub Get_Delimited_Text_As_Collection(Optional ByVal Delimited_Text As String = Nothing, Optional ByVal First_Row_Is_Header As Boolean? = Nothing, Optional ByVal Schema As DataTable = Nothing, Optional ByVal Delimiter_Character As String = Nothing, Optional ByRef Output_Collection As DataTable = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         First_Row_Is_Header = False
+
+        ' Initialize collections
+        Output_Collection = New DataTable()
+        Schema = New DataTable()
+        Schema.Columns.Add("Column Name", GetType(String))
 
         ' Parse Delimited String
         CodeStage_Parse_Delimited_String(
@@ -382,7 +404,7 @@ Public Class Utility_Strings
         ' Local variables
         Dim Attribute_Value As String
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         XML = "<iGrading><Response transactionID=""de3dc0b1-6b22-4b67-a13a-d42fff6188b9"" status=""Success"" method=""SubmitPotentialGradingWithImages"" description="""" /></iGrading>"
         Attribute_Name = "method"
 
@@ -404,9 +426,12 @@ Public Class Utility_Strings
     ''' <param name="Elements">The collection of xml elements that match the given name and for each element its outer xml</param>
     Public Sub Get_XML_Elements(Optional ByVal XML As String = Nothing, Optional ByVal Element_Name As String = Nothing, Optional ByRef Elements As DataTable = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         XML = "<?xml version=""1.0"" encoding=""utf-8"" ?> <PotentialGrading>  <ServiceIdentifier>ABC</ServiceIdentifier>  <Episode ID=""a97fe424-0d1f-4e7c-9e9a-9b3c9e03d594"">   <Patient DateOfBirth=""18/02/1970"" Gender=""M"" PartPostcode=""YO51"" EthnicOrigin=""W"" Country=""United Kingdom""    Region=""North Yorkshire"" RegisteredBlind=""0"" RegisteredPartiallySighted=""1"" HealthProvider=""PCT""    Insurance=""Cheap as Chips Insurance"">The patient ID goes here</Patient>   <Screening Date=""2007/09/06"" GradingCodeSet=""NGC"" ImageCount=""4"">    <Item Code=""Examiner Classification"" Value=""1"" />    <Item Code=""Eye Screening Urgency"" Value=""2"" />    <Item Code=""Opthalmologist Care"" Value=""2"" />    <Item Code=""Technical Gradability Code"" Value=""1"" />    <Item Code=""01 Visual Acuity Pinhole"" Value=""0"" Laterality=""right"" />    <Item Code=""01 Visual Acuity Pinhole"" Value=""0"" Laterality=""left"" />    <Item Code=""02 Visual Acuity Spectacles"" Value=""0"" Laterality=""right"" />    <Item Code=""02 Visual Acuity Spectacles"" Value=""0"" Laterality=""left"" />    <Item Code=""03 Visual Acuity Standard"" Value=""1"" Laterality=""right"" />    <Item Code=""03 Visual Acuity Standard"" Value=""1"" Laterality=""left"" />    <Item Code=""04 Visual Acuity"" Value="""" Laterality=""right"">Free text entry</Item>    <Item Code=""04 Visual Acuity"" Value="""" Laterality=""left"">Free text entry</Item>    <Item Code=""06 Dilation"" Value=""1"" Laterality=""right"" />    <Item Code=""06 Dilation"" Value=""1"" Laterality=""left"" />    <Image Length=""104644"" CameraID=""Camera1"" CameraModelID=""CameraModel1"" CaptureDateTime=""2007/09/06T01:54:59""     Eye=""L"">1121017(5)L.jpg</Image>    <Image Length=""107565"" CameraID=""Camera2"" CameraModelID=""CameraModel2"" CaptureDateTime=""2007/09/06T01:54:59""     Eye=""L"">1121017(6)L.jpg</Image>    <Image Length=""107441"" CameraID=""Camera3"" CameraModelID=""CameraModel3"" CaptureDateTime=""2007/09/06T01:54:59""     Eye=""R"">1121017(5)R.jpg</Image>    <Image Length=""112472"" CameraID=""Camera4"" CameraModelID=""CameraModel4"" CaptureDateTime=""2007/09/06T01:54:59""     Eye=""R"">1121017(6)R.jpg</Image>   </Screening>   <Notes>Free text notes go here</Notes>  </Episode> </PotentialGrading> "
         Element_Name = "Image"
+
+        ' Initialize collections
+        Elements = New DataTable()
 
         ' Blank XML?
         If Len(Trim(XML)) = 0 Then
@@ -433,7 +458,7 @@ Public Class Utility_Strings
     ''' <param name="Position">The index of the sub text within the text or -1 if not found</param>
     Public Sub InStr(Optional ByVal Text As String = Nothing, Optional ByVal Search_String As String = Nothing, Optional ByVal Start_Byte As Decimal? = Nothing, Optional ByVal Compare_Method As Decimal? = Nothing, Optional ByRef Position As Decimal? = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Start_Byte = 0
         Compare_Method = 1
 
@@ -466,7 +491,7 @@ Public Class Utility_Strings
     ''' <param name="Position">The index of the sub text within the text from the end or -1 if not found</param>
     Public Sub InStrRev(Optional ByVal Text As String = Nothing, Optional ByVal Search_String As String = Nothing, Optional ByVal Start_Byte As Decimal? = Nothing, Optional ByVal Compare_Method As Decimal? = Nothing, Optional ByRef Position As Decimal? = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Start_Byte = -1
         Compare_Method = 1
 
@@ -500,6 +525,9 @@ Public Class Utility_Strings
         ' Local variables
         Dim Join_Character As String
 
+        ' Initialize collections
+        Values = New DataTable()
+
         ' Get Carriage Return
         CodeStage_Get_Carriage_Return(Join_Character:=Join_Character)
 
@@ -521,8 +549,12 @@ Public Class Utility_Strings
     ''' <param name="Joined_Text">The resulting joined text</param>
     Public Sub Join_Text(Optional ByVal Values As DataTable = Nothing, Optional ByVal Join_Character As String = Nothing, Optional ByVal Trim_Values As Boolean? = Nothing, Optional ByRef Joined_Text As String = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Trim_Values = False
+
+        ' Initialize collections
+        Values = New DataTable()
+        Values.Columns.Add("Item Value", GetType(String))
 
         ' Reset Output
         Joined_Text = ""
@@ -564,7 +596,7 @@ Public Class Utility_Strings
     ''' <param name="Padded_String">The resultant padded string</param>
     Public Sub PadLeft(Optional ByVal Input_String As String = Nothing, Optional ByVal Target_Width As Decimal? = Nothing, Optional ByVal Padding_Character As String = Nothing, Optional ByRef Padded_String As String = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Input_String = "123"
         Target_Width = 5
 
@@ -604,7 +636,7 @@ Public Class Utility_Strings
     ''' <param name="Output_Data">The new string data after the replacement has been performed.</param>
     Public Sub Regex_Replace(Optional ByVal Pattern As String = Nothing, Optional ByVal Input_Data As String = Nothing, Optional ByVal Replacement_Data As String = Nothing, Optional ByVal Max_Count As Decimal? = Nothing, Optional ByVal Start_Position As Decimal? = Nothing, Optional ByRef Output_Data As String = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Max_Count = -1
         Start_Position = 0
 
@@ -643,7 +675,7 @@ Public Class Utility_Strings
     ''' <param name="Trimmed_Text">The text with the non word characters removed</param>
     Public Sub Remove_Non_word_Characters(Optional ByVal Text As String = Nothing, Optional ByRef Trimmed_Text As String = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Text = "    qwerqwer    "
 
         ' Trim
@@ -678,6 +710,10 @@ Public Class Utility_Strings
     ''' <param name="Split_Values">The resulting collection containing the split values</param>
     Public Sub Split_Lines(Optional ByVal Text_to_Split As String = Nothing, Optional ByRef Split_Values As DataTable = Nothing)
 
+        ' Initialize collections
+        Split_Values = New DataTable()
+        Split_Values.Columns.Add("Value", GetType(String))
+
         ' Split
         CodeStage_Split(
             Text_to_Split:=Text_to_Split, 
@@ -693,10 +729,14 @@ Public Class Utility_Strings
     ''' <param name="Split_Strictly_by_Length">Set true if the line should be split at character boundries instead of words</param>
     Public Sub Split_Lines_by_Length(Optional ByVal Text_to_Split As String = Nothing, Optional ByVal Maximum_Line_Length As Decimal? = Nothing, Optional ByVal Split_Strictly_by_Length As Boolean? = Nothing, Optional ByRef Line_Count As Decimal? = Nothing, Optional ByRef Split_Lines As DataTable = Nothing)
 
-        ' Initialize variables with initialvalue
+        ' Initialize variables
         Text_to_Split = "aaaa bbbb cccc dddd eeee ffff gggg hhhh iiii jjjj kkkk llll mmmm nnnn oooo pppp"
         Maximum_Line_Length = 6
         Split_Strictly_by_Length = False
+
+        ' Initialize collections
+        Split_Lines = New DataTable()
+        Split_Lines.Columns.Add("Line Text", GetType(String))
 
         ' Split Lines By Length
         CodeStage_Split_Lines_By_Length(
@@ -716,6 +756,9 @@ Public Class Utility_Strings
     ''' <param name="Collection_Field_Name">The name of the field for the resulting collection</param>
     ''' <param name="Split_Values">The resulting collection containing the split values</param>
     Public Sub Split_Text(Optional ByVal Text_to_Split As String = Nothing, Optional ByVal Split_Char As String = Nothing, Optional ByVal Collection_Field_Name As String = Nothing, Optional ByRef Split_Values As DataTable = Nothing)
+
+        ' Initialize collections
+        Split_Values = New DataTable()
 
         ' Split Text
         CodeStage_Split_Text(
