@@ -18,15 +18,13 @@ public static class FlowController
         if (startStage == null) return stages;
 
         var sorted = new List<XElement>();
-        var visited = new HashSet<string>();
+        var visited = new HashSet<XElement>();
 
         void Visit(XElement? stage)
         {
             if (stage == null) return;
-            var stageId = stage.Attribute("stageid")?.Value;
-            if (string.IsNullOrEmpty(stageId)) return;
-            if (visited.Contains(stageId)) return;
-            visited.Add(stageId);
+            if (visited.Contains(stage)) return;
+            visited.Add(stage);
 
             var stageType = stage.Attribute("type")?.Value;
 
@@ -73,10 +71,17 @@ public static class FlowController
 
         Visit(startStage);
 
+        // visit recover stages for exception handling flows
+        var recoverStages = stages.Where(stage => stage.Attribute("type")?.Value == "Recover");
+        foreach (var stage in recoverStages)
+        {
+            Visit(stage);
+        }
+
+        // visit all stages to find unconnected elements
         foreach (var stage in stages)
         {
-            var stageId = stage.Attribute("stageid")?.Value!;
-            if (!visited.Contains(stageId)) Visit(stage); //sorted.Add(stage);
+            Visit(stage);
         }
 
         return sorted;

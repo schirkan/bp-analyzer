@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: Windows Settings
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-12 22:17:07
+''' Generated: 2026-03-13 12:25:01
 ''' </summary>
 Public Class Windows_Settings
     Inherits BP_Base
