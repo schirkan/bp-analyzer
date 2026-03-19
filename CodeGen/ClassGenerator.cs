@@ -19,10 +19,13 @@ public static class ClassGenerator
         var processName = process.Attribute("name")?.Value ?? "UnnamedProcess";
         var version = process.Attribute("bpversion")?.Value ?? process.Attribute("version")?.Value ?? "1.0";
         var isObject = process.Attribute("type")?.Value == "object";
+        var className = NameSanitizer.SanitizeClassName(processName);
+
+        // register class in dependency registry
+        DependencyRegistry.SetCurrentClass(className);
 
         // Get ProcessInfo for class documentation
         var processInfo = process.Descendants().First(e => e.Attribute("type")?.Value == "ProcessInfo");
-
 
         // Collect references and imports from ProcessInfo
         var allReferences = new HashSet<string>();
@@ -84,12 +87,11 @@ public static class ClassGenerator
         sb.AppendLine($"''' Version: {version}");
         sb.AppendLine($"''' Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
         sb.AppendLine($"''' </summary>");
-        sb.AppendLine($"Public Class {NameSanitizer.SanitizeClassName(processName)}");
+        sb.AppendLine($"Public Class {className}");
         sb.AppendLine($"    Inherits BP_Base");
         sb.AppendLine();
 
         // Generate Singleton Instance property
-        var className = NameSanitizer.SanitizeClassName(processName);
         GenerateSingletonInstance(sb, className);
         sb.AppendLine();
 
@@ -98,10 +100,6 @@ public static class ClassGenerator
         sb.AppendLine();
         DataItemGenerator.GenerateGlobalDataItems(process, sb);
         sb.AppendLine();
-
-        // Generate global collection initialization
-        // DataItemGenerator.GenerateGlobalCollectionInitialization(process, sb);
-
         sb.AppendLine("    #End Region");
         sb.AppendLine();
 

@@ -1,0 +1,31 @@
+{
+  "Microsoft_Store.Launch": [
+    "Utility_Environment.Start_Process"
+  ],
+  "MP_System_Update.Main": [
+    "Microsoft_Store.Launch",
+    "Microsoft_Store.Start_Updates",
+    "Windows_Settings.Launch",
+    "Windows_Settings.Start_Updates",
+    "Microsoft_Store.Wait_Updates_Finished",
+    "Microsoft_Store.Terminate",
+    "Windows_Settings.Wait_Updates_Finished",
+    "Windows_Settings.Terminate"
+  ],
+  "Test_Process.Main": [
+    "MP_Subprocess_A.Main"
+  ],
+  "Test_Process.Dummy": [
+    "bp_demo.MyPublicAction",
+    "bp_demo.Get_URL"
+  ],
+  "Test_Process.Loop_Test": [
+    "Utility_Strings.Calculate_Distance"
+  ],
+  "Test_Process.Variable_Test": [
+    "Blueprism.AutomateProcessCore.clsCollectionActions.Count_Rows"
+  ],
+  "Windows_Settings.Launch": [
+    "Utility_Environment.Start_Process"
+  ]
+}

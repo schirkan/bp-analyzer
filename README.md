@@ -227,7 +227,7 @@ bp-analyzer/
 │   ├── Microsoft Store.xml
 │   └── ...
 ├── output/                        # Generated VB.NET files
-│   ├── _BP_Base.vb                # Base class template
+│   ├── BP_Base.vb                # Base class template
 │   ├── Test Process.vb
 │   ├── Microsoft Store.vb
 │   └── BluePrism_Generated.vbproj

@@ -18,7 +18,7 @@ public class TemplateManager
     public void CopyTemplateFile()
     {
         var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "templates", "Template_BP_Base.vb");
-        var outputPath = Path.Combine(_outputDirectory, "_BP_Base.vb");
+        var outputPath = Path.Combine(_outputDirectory, "BP_Base.vb");
 
         // Try different relative paths
         if (!File.Exists(templatePath))
@@ -70,9 +70,7 @@ public class TemplateManager
             // Get all .vb files in output directory
             var vbFiles = Directory.GetFiles(_outputDirectory, "*.vb")
                 .Select(f => Path.GetFileName(f))
-                .Where(f => f != "BluePrism_Generated.vbproj")
-                .OrderBy(f => f == "_BP_Base.vb" ? 0 : 1)
-                .ThenBy(f => f)
+                .OrderBy(f => f)
                 .ToList();
 
             // Generate Compile Include lines

@@ -26,10 +26,10 @@ public class ProcessStageGenerator : StageGeneratorBase
 
             var paramString = GenerateParameterCode(inputs, outputs);
 
-            if (!string.IsNullOrEmpty(paramString))
-                sb.AppendLine($"        {className}.Instance.Main({paramString})");
-            else
-                sb.AppendLine($"        {className}.Instance.Main()");
+            sb.AppendLine($"        {className}.Instance.Main({paramString})");
+
+            // register dependency
+            DependencyRegistry.RegisterDependency(className, "Main");
         }
         else
         {

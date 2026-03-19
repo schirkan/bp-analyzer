@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: bp demo
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-13 12:24:58
+''' Generated: 2026-03-19 21:36:28
 ''' </summary>
 Public Class bp_demo
     Inherits BP_Base

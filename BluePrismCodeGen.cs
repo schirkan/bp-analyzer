@@ -1,5 +1,6 @@
 using System.Xml.Linq;
 using BPAnalyzer.CodeGen;
+using BPAnalyzer.CodeGen.Utilities;
 
 namespace BPAnalyzer;
 
@@ -59,7 +60,8 @@ public class BluePrismCodeGen
             try
             {
                 var code = GenerateCode(xmlFile);
-                var fileName = Path.GetFileNameWithoutExtension(xmlFile) + ".vb";
+                var fileName = Path.GetFileNameWithoutExtension(xmlFile);
+                fileName = NameSanitizer.SanitizeClassName(fileName) + ".vb";
                 var outputPath = Path.Combine(_outputDirectory, fileName);
 
                 File.WriteAllText(outputPath, code);
@@ -71,6 +73,14 @@ public class BluePrismCodeGen
                 Console.WriteLine(ex.StackTrace);
             }
         }
+
+        // write dependecies to json
+        var dependenciesPath = Path.Combine(_outputDirectory, "dependencies.json");
+        DependencyRegistry.WriteDependenciesToJson(dependenciesPath);
+
+        // write exception to json
+        var exceptionsPath = Path.Combine(_outputDirectory, "exceptions.json");
+        DependencyRegistry.WriteExceptionsToJson(exceptionsPath);
 
         // Copy project file last (after all .vb files are generated)
         _templateManager.CopyProjectFile(_currentReferences);

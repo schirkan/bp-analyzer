@@ -10,8 +10,8 @@ public class ExceptionStageGenerator : StageGeneratorBase
     public override void Generate(XElement stage, System.Text.StringBuilder sb)
     {
         var exceptionElement = stage.Element("exception");
-        var detail = exceptionElement?.Attribute("detail")?.Value;
-        var exceptionType = exceptionElement?.Attribute("type")?.Value;
+        var detail = exceptionElement?.Attribute("detail")?.Value ?? "";
+        var exceptionType = exceptionElement?.Attribute("type")?.Value ?? "";
         var useCurrent = exceptionElement?.Attribute("usecurrent")?.Value?.ToLower() == "yes";
 
         // Check if usecurrent="yes" - then rethrow the stored exception
@@ -22,6 +22,9 @@ public class ExceptionStageGenerator : StageGeneratorBase
         else
         {
             sb.AppendLine($"        Throw New BP_Exception(\"{exceptionType}\", {detail})");
+
+            // register exception
+            DependencyRegistry.RegisterException(exceptionType, detail);
         }
     }
 }

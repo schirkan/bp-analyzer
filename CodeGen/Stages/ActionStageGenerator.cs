@@ -27,6 +27,9 @@ public class ActionStageGenerator : StageGeneratorBase
             var paramString = GenerateParameterCode(inputs, outputs);
 
             sb.AppendLine($"        {className}.Instance.{sanitizedActionName}({paramString})");
+
+            // register dependency
+            DependencyRegistry.RegisterDependency(className, sanitizedActionName);
         }
 
         StageNavigator.GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);

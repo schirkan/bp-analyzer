@@ -24,15 +24,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="_BP_Base.vb" />
-    <Compile Include="bp demo.vb" />
-    <Compile Include="Microsoft Store.vb" />
-    <Compile Include="MP - Subprocess A.vb" />
-    <Compile Include="MP - System Update.vb" />
-    <Compile Include="Test Process.vb" />
-    <Compile Include="Utility - Environment.vb" />
-    <Compile Include="Utility - Strings.vb" />
-    <Compile Include="Windows Settings.vb" />
+    <Compile Include="BP_Base.vb" />
+    <Compile Include="bp_demo.vb" />
+    <Compile Include="Microsoft_Store.vb" />
+    <Compile Include="MP_Subprocess_A.vb" />
+    <Compile Include="MP_System_Update.vb" />
+    <Compile Include="Test_Process.vb" />
+    <Compile Include="Utility_Environment.vb" />
+    <Compile Include="Utility_Strings.vb" />
+    <Compile Include="Windows_Settings.vb" />
   </ItemGroup>
 
 </Project>

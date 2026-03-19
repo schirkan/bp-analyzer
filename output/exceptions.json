@@ -1,0 +1,66 @@
+{
+  "bp_demo.InteralAction": [
+    [
+      "System Exception",
+      "\u0022Value is empty\u0022"
+    ]
+  ],
+  "Microsoft_Store.Launch": [
+    [
+      "System Exception",
+      "\u0022Main Window not found\u0022"
+    ]
+  ],
+  "Microsoft_Store.Start_Updates": [
+    [
+      "System Exception",
+      "\u0022Download Header not found\u0022"
+    ],
+    [
+      "System Exception",
+      "\u0022Nach Updates suchen Button not found\u0022"
+    ]
+  ],
+  "Test_Process.Variable_Test": [
+    [
+      "Business Exception",
+      "\u0022Zahl ist nicht 1 oder 2\u0022"
+    ]
+  ],
+  "Utility_Environment.Run_Process_Until_Ended": [
+    [
+      "System Exception",
+      "\u0022Application \u0022 \u0026 [Application] \u0026 \u0022 was still running after the maximum time period\u0022"
+    ]
+  ],
+  "Utility_Strings.Calculate_Distance": [
+    [
+      "Invalid Input Parameter",
+      "\u0022Please review and correct your input. Values must be provided for both Source and Target.\u0022"
+    ]
+  ],
+  "Utility_Strings.Regex_Replace": [
+    [
+      "Invalid Input Parameter",
+      "\u0022Please verify your input data.\u0022"
+    ]
+  ],
+  "Windows_Settings.Launch": [
+    [
+      "System Exception",
+      "\u0022Main Window not found\u0022"
+    ]
+  ],
+  "Windows_Settings.Start_Updates": [
+    [
+      "System Exception",
+      "\u0022Download Menu not found\u0022"
+    ]
+  ],
+  "Windows_Settings.Wait_Updates_Finished": [
+    [
+      "System Exception",
+      "\u0022Download Header not found\u0022"
+    ]
+  ]
+}

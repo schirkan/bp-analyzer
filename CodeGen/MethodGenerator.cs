@@ -2,7 +2,6 @@ using System.Xml.Linq;
 using BPAnalyzer.CodeGen.Stages;
 using BPAnalyzer.CodeGen.Utilities;
 using BPAnalyzer.CodeGen.FlowControl;
-using Microsoft.VisualBasic;
 
 namespace BPAnalyzer.CodeGen;
 
@@ -121,6 +120,9 @@ public static class MethodGenerator
             sb.AppendLine($"    ''' {line}");
         }
         sb.AppendLine($"    ''' </summary>");
+
+        // register method in dependency registry
+        DependencyRegistry.SetCurrentMethod(methodName);
 
         // Parameter descriptions        
         foreach (var input in inputs)
