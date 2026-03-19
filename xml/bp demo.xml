@@ -622,4 +622,13 @@
       </action>
     </step>
   </stage>
+  <stage stageid="160b7f55-a1bb-4fd3-a7ae-efb1053bf12e" name="MyEnv1" type="Data">
+    <loginhibit />
+    <display x="-195" y="30" w="120" h="30" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <exposure>Environment</exposure>
+    <private />
+    <alwaysinit />
+  </stage>
 </process>

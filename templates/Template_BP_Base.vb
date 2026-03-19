@@ -6,6 +6,16 @@ Imports System.Collections.Generic
 Imports System.Data
 
 ''' <summary>
+''' Dummy Implementation
+''' </summary>
+Public Class Blueprism
+
+    Public Shared Property Automate As Object
+    Public Shared Property AutomateProcessCore As Object
+
+End Class
+
+''' <summary>
 ''' Custom exception for BluePrism errors (must be defined outside BP_Base for proper access)
 ''' </summary>
 Public Class BP_Exception
@@ -29,14 +39,36 @@ Public Class BP_Exception
 End Class
 
 ''' <summary>
-''' Dummy Implementation
+''' Helper class for Alert stages
 ''' </summary>
-Public Class Blueprism
+Public Class BP_Alert
 
-    Public Shared Property Automate As Object
-    Public Shared Property AutomateProcessCore As Object
+    ''' <summary>
+    ''' Shows an alert message (dummy implementation)
+    ''' </summary>
+    ''' <param name="message">The alert message</param>
+    Public Shared Sub Notify(message As String)
+        ' TODO: Implement actual alert functionality (e.g., MessageBox.Show)
+        Console.WriteLine("[ALERT] " & message)
+    End Sub
 
 End Class
+
+''' <summary>
+''' Helper class for Environment variables
+''' </summary>
+Public Class BP_EnvironmentVariable
+
+    ''' <summary>
+    ''' Return value of environment variable (dummy implementation)
+    ''' </summary>
+    ''' <param name="message">name of environment variable</param>
+    Public Shared Function GetValue(name As String) As Object
+        Return name
+    End Function
+
+End Class
+
 
 ''' <summary>
 ''' Base class for all generated BluePrism classes
@@ -710,23 +742,8 @@ Public Class BP_Base
 
     #End Region
 
-    ''' <summary>
-    ''' Helper class for Alert stages
-    ''' </summary>
-    Protected Class BP_Alert
-
-        ''' <summary>
-        ''' Shows an alert message (dummy implementation)
-        ''' </summary>
-        ''' <param name="message">The alert message</param>
-        Public Shared Sub Notify(message As String)
-            ' TODO: Implement actual alert functionality (e.g., MessageBox.Show)
-            Console.WriteLine("[ALERT] " & message)
-        End Sub
-
-    End Class
-
 End Class
+
 
 #Region "BluePrism Application Wrapper Classes"
 

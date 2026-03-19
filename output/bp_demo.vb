@@ -8,7 +8,7 @@ Imports System.Drawing
 ''' <summary>
 ''' BluePrism object: bp demo
 ''' Version: 7.5.0.17125
-''' Generated: 2026-03-19 21:36:28
+''' Generated: 2026-03-19 22:04:50
 ''' </summary>
 Public Class bp_demo
     Inherits BP_Base
@@ -37,6 +37,12 @@ Public Class bp_demo
     ''' This page is like the class constructor
     ''' </summary>
     Public Sub New()
+
+        ' Local variables
+        Dim MyEnv1 As String
+
+        ' Initialize variables
+        MyEnv1 = BP_EnvironmentVariable.GetValue("MyEnv1")
 
         ' Initialize collections
         If Environment Is Nothing Then

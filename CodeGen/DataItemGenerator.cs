@@ -115,10 +115,11 @@ public static class DataItemGenerator
                 var dataName = dataStage.Attribute("name")?.Value!;
                 var dataType = dataStage.Element("datatype")?.Value ?? "text";
                 var initialValue = dataStage.Element("initialvalue")?.Value;
+                var isEnvironment = dataStage.Element("exposure")?.Value == "Environment";
                 var alwaysinit = dataStage.Element("alwaysinit") != null;
 
                 // TODO: value of input parameters will be overwritten
-                if (!string.IsNullOrEmpty(initialValue))
+                if (!string.IsNullOrEmpty(initialValue) || isEnvironment)
                 {
                     if (!commentWritten)
                     {
@@ -126,7 +127,15 @@ public static class DataItemGenerator
                         commentWritten = true;
                     }
 
-                    var formattedValue = TypeMapper.FormatInitialValue(dataType, initialValue, dataStage);
+                    var formattedValue = "";
+                    if (!string.IsNullOrEmpty(initialValue))
+                    {
+                        formattedValue = TypeMapper.FormatInitialValue(dataType, initialValue, dataStage);
+                    }
+                    else
+                    {
+                        formattedValue = $"BP_EnvironmentVariable.GetValue(\"{dataName}\")";
+                    }
                     if (!alwaysinit) sb.AppendLine($"        If {NameSanitizer.SanitizeVariableName(dataName)} Is Nothing Then");
                     if (!alwaysinit) sb.Append("    ");
                     sb.AppendLine($"        {NameSanitizer.SanitizeVariableName(dataName)} = {formattedValue}");
