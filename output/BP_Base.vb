@@ -97,7 +97,7 @@ Public Class BP_Base
         If _lastException IsNot Nothing Then
             Throw New Exception("Exception already stored")
         End If
-        _lastException = Err.GetException()
+        _lastException = Microsoft.VisualBasic.Err.GetException()
     End Sub
 
     ''' <summary>
@@ -423,7 +423,7 @@ Public Class BP_Base
     ''' Returns character from ASCII code
     ''' </summary>
     Protected Shared Function Chr(Code As Integer) As String
-        Return ChrW(Code)
+        Return Microsoft.VisualBasic.ChrW(Code)
     End Function
 
     ''' <summary>
