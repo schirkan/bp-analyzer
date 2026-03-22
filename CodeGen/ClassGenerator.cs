@@ -22,7 +22,7 @@ public static class ClassGenerator
         var className = NameSanitizer.SanitizeClassName(processName);
 
         // register class in dependency registry
-        DependencyRegistry.SetCurrentClass(className);
+        CodeGenRegistry.SetCurrentClass(className, processName, isObject ? "object" : "process");
 
         // Get ProcessInfo for class documentation
         var processInfo = process.Descendants().First(e => e.Attribute("type")?.Value == "ProcessInfo");

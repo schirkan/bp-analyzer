@@ -76,11 +76,15 @@ public class BluePrismCodeGen
 
         // write dependecies to json
         var dependenciesPath = Path.Combine(_outputDirectory, "dependencies.json");
-        DependencyRegistry.WriteDependenciesToJson(dependenciesPath);
+        CodeGenRegistry.WriteDependenciesToJson(dependenciesPath);
 
         // write exception to json
         var exceptionsPath = Path.Combine(_outputDirectory, "exceptions.json");
-        DependencyRegistry.WriteExceptionsToJson(exceptionsPath);
+        CodeGenRegistry.WriteExceptionsToJson(exceptionsPath);
+
+        // write classes to json
+        var classesPath = Path.Combine(_outputDirectory, "classes.json");
+        CodeGenRegistry.WriteClassesToJson(classesPath);
 
         // Copy project file last (after all .vb files are generated)
         _templateManager.CopyProjectFile(_currentReferences);

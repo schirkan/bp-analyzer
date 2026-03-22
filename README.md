@@ -9,11 +9,11 @@ This tool converts BluePrism XML export files into VB.NET classes with GoTo-base
 - [BP-Analyzer](#bp-analyzer)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
-  - [CLI Commands](#cli-commands)
-    - [Code Generation](#code-generation)
-      - [Basic Commands](#basic-commands)
-      - [All CLI Variants](#all-cli-variants)
-    - [Process Export](#process-export)
+  - [CLI Usage](#cli-usage)
+    - [Export Mode](#export-mode)
+    - [Codegen Mode](#codegen-mode)
+    - [Analyze Mode](#analyze-mode)
+    - [Notes](#notes)
   - [Compiling Output](#compiling-output)
     - [Using dotnet MSBuild](#using-dotnet-msbuild)
     - [Using MSBuild (Visual Studio)](#using-msbuild-visual-studio)
@@ -36,67 +36,68 @@ dotnet build BP-Analyzer.csproj
 dotnet run --project BP-Analyzer.csproj
 
 # run codegen and build output
-dotnet run --project BP-Analyzer.csproj -- --codegen && dotnet build output/BluePrism_Generated.vbproj 2>&1
+dotnet run --project BP-Analyzer.csproj -- codegen && dotnet build output/BluePrism_Generated.vbproj 2>&1
 ```
 
-## CLI Commands
 
-### Code Generation
+## CLI Usage
 
-Converts BluePrism XML files to VB.NET classes.
+The CLI supports three main modes:
 
-#### Basic Commands
+- **export**   – Exports Blue Prism processes as XML
+- **codegen**  – Generates VB.NET code from Blue Prism XML
+- **analyze**  – Analyzes Blue Prism processes (in development)
 
-```bash
-# Default (uses "xml" and "output" directories)
-dotnet run --project BP-Analyzer.csproj -- --codegen
+If started without parameters, an interactive menu is shown. All required parameters for the selected mode will be prompted interactively.
 
-# With explicit directories
-dotnet run --project BP-Analyzer.csproj -- --codegen --xml=xml --output=output
+---
 
-# Short syntax
-dotnet run --project BP-Analyzer.csproj -- --codegen xml output
+### Export Mode
+Exports a Blue Prism process as an XML file.
 
-# Single directory (only xml, output = "output")
-dotnet run --project BP-Analyzer.csproj -- --codegen xml
+```
+dotnet run --project BP-Analyzer.csproj -- export --process=<name> [--output=<path>] [--user=<username>] [--password=<password>] [--overwrite=<yes|no>]
 ```
 
-#### All CLI Variants
+- `--process=<name>`        Name of the process to export (**required**)
+- `--output=<path>`         Output directory (default: xml/)
+- `--user=<username>`       Blue Prism username
+- `--password=<password>`   Blue Prism password
+- `--overwrite=<yes|no>`    Overwrite existing files (default: yes)
 
-| Command                                          | Description                           |
-| ------------------------------------------------ | ------------------------------------- |
-| `dotnet run -- --codegen`                        | Default: `xml/` → `output/`           |
-| `dotnet run -- --codegen --xml=mydirectory`      | Custom XML directory                  |
-| `dotnet run -- --codegen --output=mydirectory`   | Custom output directory               |
-| `dotnet run -- --codegen --xml=xml --output=out` | Both directories                      |
-| `dotnet run -- --codegen xml`                    | XML directory as positional parameter |
-| `dotnet run -- --codegen xml out`                | Both as positional parameters         |
-
-### Process Export
-
-Exports BluePrism processes directly from Runtime Resource (requires AutomateC.exe).
-
-**Default output directory:** `xml/`
-**Default overwrite:** `yes` (files are automatically overwritten)
-
-```bash
-# Basic export (to xml/ with overwrite)
-dotnet run --project BP-Analyzer.csproj -- --process="MyProcess"
-
-# With output directory
-dotnet run --project BP-Analyzer.csproj -- --process="MyProcess" --output="C:\Exports"
-
-# With credentials
-dotnet run --project BP-Analyzer.csproj -- --process="MyProcess" --user=admin --password=secret
-
-# Disable overwrite (if needed)
-dotnet run --project BP-Analyzer.csproj -- --process="MyProcess" --overwrite=no
-
-# All together
-dotnet run --project BP-Analyzer.csproj -- --process="MyProcess" --output="C:\Exports" --user=admin --password=secret --overwrite=no
+**Example:**
+```
+dotnet run --project BP-Analyzer.csproj -- export --process "MyProcess" --output "C:\Exports"
 ```
 
-**Note:** Internal BluePrism objects (e.g., `Blueprism.Automate*`) are automatically skipped.
+### Codegen Mode
+Generates VB.NET code from Blue Prism XML files.
+
+```
+dotnet run --project BP-Analyzer.csproj -- codegen [--xml=<directory>] [--output=<directory>]
+```
+
+- `--xml=<directory>`     Directory with BluePrism XML files (default: xml/)
+- `--output=<directory>`  Output directory (default: output/)
+
+**Example:**
+```
+dotnet run --project BP-Analyzer.csproj -- codegen --xml=xml --output=output
+```
+
+### Analyze Mode
+Analyzes Blue Prism processes (placeholder, feature in development).
+
+```
+dotnet run --project BP-Analyzer.csproj -- analyze
+```
+
+---
+
+### Notes
+- Internal BluePrism objects (e.g., `Blueprism.Automate*`) are automatically skipped during export.
+- There are no short forms or backwards compatibility with old calls.
+- For help on a mode: `BP-Analyzer <mode> --help`
 
 ## Compiling Output
 
@@ -135,6 +136,8 @@ output/bin/Debug/BluePrism_Generated.dll
 output/bin/Release/BluePrism_Generated.dll
 ```
 
+> **Note:** The generated code is syntactically valid and can be compiled, but cannot be executed as a real Blue Prism process. Many functionalities (especially UI automation, object calls, and some stage types) are implemented as placeholders or stubs only.
+
 ## Generated Code
 
 ### Singleton Pattern
@@ -160,9 +163,7 @@ End Class
 
 **Usage:**
 ```vb
-' Instead of: _utility.Start_Process(...)
-' Now:
-Utility___Environment.Instance.Start_Process(Application:=FilePath)
+Utility_Environment.Instance.Start_Process(Application:=FilePath)
 ```
 
 ### Exception Handling
@@ -266,28 +267,28 @@ bp-analyzer/
 
 ## Supported BluePrism Stages
 
-| Stage Type        | Description         | Supported | Notes                                      |
-| ----------------- | ------------------- | --------- | ------------------------------------------ |
-| Start             | Method entry        | ✓         |                                            |
-| End               | Method exit         | ✓         |                                            |
-| Data              | Variables           | ✓         |                                            |
-| Collection        | DataTables          | partial   | column definition + initialization missing |
-| Action            | Object calls        | ✓         |                                            |
-| Decision          | If/Else branch      | ✓         |                                            |
-| Calculation       | Variable assignment | ✓         |                                            |
-| Code              | Code stages         | ✓         | Only VB code generates valid output        |
-| Note              | Comments            | ✓         |                                            |
-| Exception         | Raise exception     | ✓         |                                            |
-| Recover           | Store exception     | ✓         |                                            |
-| Resume            | Resume exception    | ✓         |                                            |
-| Navigate          | UI automation       | ✓         | Dummy implementation                       |
-| Write             | UI automation       | ✓         | Dummy implementation                       |
-| Read              | UI automation       | ✓         | Dummy implementation                       |
-| WaitStart/WaitEnd | Wait stages         | ✓         | Dummy implementation                       |
-| Process           | Subprocess call     | ✓         |                                            |
-| Anchor            | Jump marker         | ✓         | Will be skipped in output                  |
-| Block             | Block container     | ✓         | Only used in exception handling            |
-| LoopStart/LoopEnd | Loops               | ✓         | Uses goto statement                        |
+| Stage Type        | Description         | Supported | Notes                               |
+| ----------------- | ------------------- | --------- | ----------------------------------- |
+| Start             | Method entry        | ✓         |                                     |
+| End               | Method exit         | ✓         |                                     |
+| Data              | Variables           | ✓         | Only env exposure                   |
+| Collection        | DataTables          | ✓         |                                     |
+| Action            | Object calls        | ✓         |                                     |
+| Decision          | If/Else branch      | ✓         |                                     |
+| Calculation       | Variable assignment | ✓         |                                     |
+| Code              | Code stages         | partial   | Only VB code generates valid output |
+| Note              | Comments            | ✓         |                                     |
+| Exception         | Raise exception     | ✓         |                                     |
+| Recover           | Store exception     | ✓         | No counter                          |
+| Resume            | Resume exception    | ✓         |                                     |
+| Navigate          | UI automation       | ✓         | Dummy implementation                |
+| Write             | UI automation       | ✓         | Dummy implementation                |
+| Read              | UI automation       | ✓         | Dummy implementation                |
+| WaitStart/WaitEnd | Wait stages         | ✓         | Dummy implementation                |
+| Process           | Subprocess call     | ✓         |                                     |
+| Anchor            | Jump marker         | ✓         | Will be skipped in output           |
+| Block             | Block container     | ✓         | Only used in exception handling     |
+| LoopStart/LoopEnd | Loops               | ✓         | Uses goto statement                 |
 
 ## License
 

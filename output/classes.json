@@ -1,0 +1,14 @@
+{
+  "object": {
+    "bp_demo": "bp demo",
+    "Microsoft_Store": "Microsoft Store",
+    "Utility_Environment": "Utility - Environment",
+    "Utility_Strings": "Utility - Strings",
+    "Windows_Settings": "Windows Settings"
+  },
+  "process": {
+    "MP_Subprocess_A": "MP - Subprocess A",
+    "MP_System_Update": "MP - System Update",
+    "Test_Process": "Test Process"
+  }
+}

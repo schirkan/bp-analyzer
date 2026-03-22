@@ -1,22 +1,22 @@
-
 using System.Text.Json;
 
 /// <summary>
 /// Registry zur Aufzeichnung von Abhängigkeiten zwischen Methoden/Klassen während der Codegenerierung.
 /// </summary>
-public static class DependencyRegistry
+public static class CodeGenRegistry
 {
   // Thread-lokaler Kontext für parallele Codegenerierung
   private static readonly AsyncLocal<string> currentSourceClass = new AsyncLocal<string>();
   private static readonly AsyncLocal<string> currentSourceMethod = new AsyncLocal<string>();
 
+  // Klassen: (Class, DisplayName, Type)
+  private static readonly HashSet<(string Class, string DisplayName, string Type)> classes = [];
+
   // Abhängigkeiten: (SourceClass, SourceMethod, TargetClass, TargetMethod)
-  private static readonly HashSet<(string SourceClass, string SourceMethod, string TargetClass, string TargetMethod)> dependencies
-    = new HashSet<(string, string, string, string)>();
+  private static readonly HashSet<(string SourceClass, string SourceMethod, string TargetClass, string TargetMethod)> dependencies = [];
 
   // Exceptions: (SourceClass, SourceMethod, ExceptionType, ExceptionText)
-  private static readonly HashSet<(string SourceClass, string SourceMethod, string ExceptionType, string ExceptionText)> exceptions
-    = new HashSet<(string, string, string, string)>();
+  private static readonly HashSet<(string SourceClass, string SourceMethod, string ExceptionType, string ExceptionText)> exceptions = [];
 
   /// <summary>
   /// Registriert eine Exception mit Typ und Text.
@@ -66,10 +66,12 @@ public static class DependencyRegistry
   /// <summary>
   /// Setzt den aktuellen Quell-Kontext (Klasse), von dem aus Abhängigkeiten registriert werden.
   /// </summary>
-  public static void SetCurrentClass(string className)
+  public static void SetCurrentClass(string className, string displayName, string type)
   {
     currentSourceClass.Value = className;
     currentSourceMethod.Value = "";
+
+    classes.Add((className, displayName, type));
   }
 
   /// <summary>
@@ -117,4 +119,28 @@ public static class DependencyRegistry
     var options = new JsonSerializerOptions { WriteIndented = true };
     File.WriteAllText(filePath, JsonSerializer.Serialize(depDict, options));
   }
+
+  /// <summary>
+  /// Schreibt alle registrierten Klassen als codegen.json im gewünschten Format.
+  /// </summary>
+  /// <param name="filePath">Pfad zur Ausgabedatei (z.B. classes.json)</param>
+  public static void WriteClassesToJson(string filePath)
+  {
+    // Dictionary<Type, Dictionary<ClassName, DisplayName>>
+    var typeDict = new Dictionary<string, Dictionary<string, string>>();
+
+    foreach (var cls in classes)
+    {
+      if (!typeDict.TryGetValue(cls.Type, out var classDict))
+      {
+        classDict = new Dictionary<string, string>();
+        typeDict[cls.Type] = classDict;
+      }
+      classDict[cls.Class] = cls.DisplayName;
+    }
+
+    var options = new JsonSerializerOptions { WriteIndented = true };
+    File.WriteAllText(filePath, JsonSerializer.Serialize(typeDict, options));
+  }
+
 }

@@ -122,7 +122,7 @@ public static class MethodGenerator
         sb.AppendLine($"    ''' </summary>");
 
         // register method in dependency registry
-        DependencyRegistry.SetCurrentMethod(methodName);
+        CodeGenRegistry.SetCurrentMethod(methodName);
 
         // Parameter descriptions        
         foreach (var input in inputs)

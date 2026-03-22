@@ -29,7 +29,7 @@ public class ActionStageGenerator : StageGeneratorBase
             sb.AppendLine($"        {className}.Instance.{sanitizedActionName}({paramString})");
 
             // register dependency
-            DependencyRegistry.RegisterDependency(className, sanitizedActionName);
+            CodeGenRegistry.RegisterDependency(className, sanitizedActionName);
         }
 
         StageNavigator.GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);

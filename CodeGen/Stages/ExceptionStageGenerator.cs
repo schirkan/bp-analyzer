@@ -24,7 +24,7 @@ public class ExceptionStageGenerator : StageGeneratorBase
             sb.AppendLine($"        Throw New BP_Exception(\"{exceptionType}\", {detail})");
 
             // register exception
-            DependencyRegistry.RegisterException(exceptionType, detail);
+            CodeGenRegistry.RegisterException(exceptionType, detail);
         }
     }
 }

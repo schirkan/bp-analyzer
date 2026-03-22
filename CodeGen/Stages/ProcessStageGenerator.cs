@@ -29,7 +29,7 @@ public class ProcessStageGenerator : StageGeneratorBase
             sb.AppendLine($"        {className}.Instance.Main({paramString})");
 
             // register dependency
-            DependencyRegistry.RegisterDependency(className, "Main");
+            CodeGenRegistry.RegisterDependency(className, "Main");
         }
         else
         {

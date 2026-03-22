@@ -46,6 +46,10 @@ bld/
 # Visual Studio code
 .vs/
 
+# mcp
+.github/
+.mcp_data/
+
 # NuGet packages
 *.nupkg
 # The packages folder should be ignored because of the Restore operation
