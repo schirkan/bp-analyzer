@@ -24,7 +24,7 @@ public static class ExpressionParser
         // Handle Collection column access with multiple levels: [Collection.Column1.Column2.Column3]
         // Becomes: Collection.CurrentRow("Column1").CurrentRow("Column2").CurrentRow("Column3")
         // Note: Column names can have spaces, collection names cannot
-        result = Regex.Replace(result ?? "", @"\[(\w[\wäöüÄÖÜßẞ ]*)(\.\w[\wäöüÄÖÜßẞ ]+)*\]", match =>
+        result = Regex.Replace(result ?? "", @"\[(\w[\wäöüÄÖÜßẞ\-_?!:;\(\) ]*)(\.\w[\wäöüÄÖÜßẞ\-_?!:;\(\) ]+)*\]", match =>
         {
             var fullMatch = match.Groups[0].Value;
             // Remove the outer brackets and split by dots
@@ -45,15 +45,6 @@ public static class ExpressionParser
 
             return vbCode;
         });
-
-        // Then, handle simple variables: [Variable] -> Variable
-        // result = Regex.Replace(result ?? "", @"\[([^\]]+)\]", match =>
-        // {
-        //     var varName = match.Groups[1].Value;
-        //     // Check if it contains a dot (already handled above)
-        //     if (varName.Contains('.')) return match.Value; // Keep original if not handled
-        //     return NameSanitizer.SanitizeVariableName(varName);
-        // });
 
         return result;
     }

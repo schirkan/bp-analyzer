@@ -29,6 +29,9 @@ public class SubSheetStageGenerator : StageGeneratorBase
 
             // SubSheet calls are internal method calls within the same class
             sb.AppendLine($"        {methodName}({paramString})");
+
+            // register dependency
+            CodeGenRegistry.RegisterDependency(null, methodName);
         }
 
         StageNavigator.GenerateGoTo(sb, stage.Document, stage.Element("onsuccess")?.Value);

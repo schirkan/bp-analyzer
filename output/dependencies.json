@@ -13,6 +13,9 @@
     "Windows_Settings.Terminate"
   ],
   "Test_Process.Main": [
+    "Test_Process.Variable_Test",
+    "Test_Process.Loop_Test",
+    "Test_Process.Dummy",
     "MP_Subprocess_A.Main"
   ],
   "Test_Process.Dummy": [
@@ -24,6 +27,21 @@
   ],
   "Test_Process.Variable_Test": [
     "Blueprism.AutomateProcessCore.clsCollectionActions.Count_Rows"
+  ],
+  "Utility_Environment.Clear_Clipboard": [
+    "Utility_Environment.Set_Clipboard"
+  ],
+  "Utility_Strings.Compare_Font_Text": [
+    "Utility_Strings.Delete_Characters"
+  ],
+  "Utility_Strings.Get_Collection_as_CSV": [
+    "Utility_Strings.Get_Collection_as_Delimited_Text"
+  ],
+  "Utility_Strings.Get_CSV_As_Collection": [
+    "Utility_Strings.Get_Delimited_Text_As_Collection"
+  ],
+  "Utility_Strings.Join_Lines": [
+    "Utility_Strings.Join_Text"
   ],
   "Windows_Settings.Launch": [
     "Utility_Environment.Start_Process"

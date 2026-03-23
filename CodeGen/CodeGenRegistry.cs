@@ -77,12 +77,12 @@ public static class CodeGenRegistry
   /// <summary>
   /// Registriert eine Abhängigkeit von der aktuellen Source (Klasse+Methode) zu Target (Klasse+Methode).
   /// </summary>
-  public static void RegisterDependency(string targetClass, string targetMethod)
+  public static void RegisterDependency(string? targetClass, string targetMethod)
   {
     if (string.IsNullOrEmpty(currentSourceClass.Value) || string.IsNullOrEmpty(currentSourceMethod.Value))
       throw new InvalidOperationException("SetCurrentClass und SetCurrentMethod muss vor RegisterDependency aufgerufen werden.");
 
-    dependencies.Add((currentSourceClass.Value ?? "", currentSourceMethod.Value ?? "", targetClass, targetMethod));
+    dependencies.Add((currentSourceClass.Value!, currentSourceMethod.Value!, targetClass ?? currentSourceClass.Value!, targetMethod));
   }
 
   /// <summary>
