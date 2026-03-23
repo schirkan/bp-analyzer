@@ -24,7 +24,7 @@ public static class ExpressionParser
         // Handle Collection column access with multiple levels: [Collection.Column1.Column2.Column3]
         // Becomes: Collection.CurrentRow("Column1").CurrentRow("Column2").CurrentRow("Column3")
         // Note: Column names can have spaces, collection names cannot
-        result = Regex.Replace(result ?? "", @"\[([a-zA-Z_][a-zA-Z0-9_ ]*)(\.[^\]]+)+\]", match =>
+        result = Regex.Replace(result ?? "", @"\[(\w[\wäöüÄÖÜßẞ ]*)(\.\w[\wäöüÄÖÜßẞ ]+)*\]", match =>
         {
             var fullMatch = match.Groups[0].Value;
             // Remove the outer brackets and split by dots
@@ -33,8 +33,8 @@ public static class ExpressionParser
 
             if (parts.Length == 0) return match.Value;
 
-            var collectionName = NameSanitizer.SanitizeVariableName(parts[0]);
-            var vbCode = collectionName;
+            var varName = NameSanitizer.SanitizeVariableName(parts[0]);
+            var vbCode = varName;
 
             // Add CurrentRow for each subsequent part (column name)
             for (int i = 1; i < parts.Length; i++)
@@ -47,13 +47,13 @@ public static class ExpressionParser
         });
 
         // Then, handle simple variables: [Variable] -> Variable
-        result = Regex.Replace(result ?? "", @"\[([^\]]+)\]", match =>
-        {
-            var varName = match.Groups[1].Value;
-            // Check if it contains a dot (already handled above)
-            if (varName.Contains('.')) return match.Value; // Keep original if not handled
-            return NameSanitizer.SanitizeVariableName(varName);
-        });
+        // result = Regex.Replace(result ?? "", @"\[([^\]]+)\]", match =>
+        // {
+        //     var varName = match.Groups[1].Value;
+        //     // Check if it contains a dot (already handled above)
+        //     if (varName.Contains('.')) return match.Value; // Keep original if not handled
+        //     return NameSanitizer.SanitizeVariableName(varName);
+        // });
 
         return result;
     }
