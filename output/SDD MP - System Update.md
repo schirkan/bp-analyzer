@@ -5,15 +5,9 @@ This document was generated automatically by BP-Analyzer.
 ## Dependencies
 | Process / Object | Page |
 | ---------------- | ---- |
-|Microsoft_Store|Launch|
-|Microsoft_Store|Start_Updates|
-|Microsoft_Store|Terminate|
-|Microsoft_Store|Wait_Updates_Finished|
+|Microsoft_Store|Launch, Start_Updates, Terminate, Wait_Updates_Finished|
 |Utility_Environment|Start_Process|
-|Windows_Settings|Launch|
-|Windows_Settings|Start_Updates|
-|Windows_Settings|Terminate|
-|Windows_Settings|Wait_Updates_Finished|
+|Windows_Settings|Launch, Start_Updates, Terminate, Wait_Updates_Finished|
 
 ## Exceptions
 | Type | Process / Object | Page | Text | Reason |

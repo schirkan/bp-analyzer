@@ -71,7 +71,7 @@ namespace BPAnalyzer
 
       if (string.IsNullOrWhiteSpace(username))
       {
-        Console.Write("Username (empty for none): ");
+        Console.Write("Username (empty for SSO): ");
         username = Console.ReadLine();
       }
       if (string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(username))
