@@ -78,7 +78,7 @@ namespace BPAnalyzer
             Console.WriteLine("Modes:");
             Console.WriteLine("  export    Export Blue Prism processes as XML");
             Console.WriteLine("  codegen   Generate VB.NET code from Blue Prism XML");
-            Console.WriteLine("  analyze   Analyze Blue Prism processes (in development)");
+            Console.WriteLine("  analyze   Analyze Blue Prism processes and create SDD document");
             Console.WriteLine();
             Console.WriteLine("For details on the options of a mode:");
             Console.WriteLine("  BP-Analyzer <mode> --help");

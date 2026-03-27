@@ -17,7 +17,7 @@ public class BluePrismCodeGen
 
     public BluePrismCodeGen(string outputDirectory)
     {
-        _outputDirectory = outputDirectory;
+        _outputDirectory = string.IsNullOrWhiteSpace(outputDirectory) ? "code" : outputDirectory;
     }
 
     /// <summary>

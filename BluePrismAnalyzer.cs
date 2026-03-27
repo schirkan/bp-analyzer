@@ -10,15 +10,17 @@ namespace BPAnalyzer
     /// <summary>
     /// Generates Software Design Documents (SDDs) for all processes based on JSON data and a template.
     /// </summary>
-    /// <param name="outputDir">The directory containing the JSON files and where SDDs will be output.</param>
+    /// <param name="codeDir">Directory containing the JSON files (classes.json, dependencies.json, exceptions.json).</param>
+    /// <param name="outputDir">Directory where SDD files will be written.</param>
     /// <param name="templatePath">The path to the SDD template file.</param>
     /// <returns>A list of SddResult objects containing the generated SDDs.</returns>
     public static List<SddResult> GenerateSdds(
-        string outputDir = "output",
-        string templatePath = "templates/SDD_Process_Template.md")
+      string codeDir = "code",
+      string outputDir = "sdd",
+      string templatePath = "templates/SDD_Process_Template.md")
     {
       // Load and parse JSON data and template
-      var (classes, dependencies, exceptions, template) = LoadData(outputDir, templatePath);
+      var (classes, dependencies, exceptions, template) = LoadData(codeDir, templatePath);
 
       var processDict = classes.GetProperty("process");
       // var objectDict = classes.GetProperty("object");
@@ -54,7 +56,7 @@ namespace BPAnalyzer
         // Render the SDD using the template
         string sdd = RenderTemplate(template, displayName, deps, allEx);
 
-        string outPath = Path.Combine(outputDir, $"SDD {displayName}.md");
+        string outPath = Path.Combine(outputDir, $"SDD Template {displayName}.md");
         results.Add(new SddResult(displayName, internalName, sdd, outPath));
       }
       return results;
@@ -102,8 +104,9 @@ namespace BPAnalyzer
     /// </summary>
     private static void CollectExceptions(string method, Dictionary<string, List<JsonElement>> exDict, HashSet<(string Source, string Stage, string Type, string Message)> result)
     {
-      List<JsonElement> exceptions;
-      if (!exDict.TryGetValue(method, out exceptions)) return;
+
+      if (!exDict.TryGetValue(method, out var exceptions) || exceptions == null)
+        return;
 
       var separatorPosition = method.LastIndexOf('.');
       var className = method.Substring(0, separatorPosition);

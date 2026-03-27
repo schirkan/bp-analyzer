@@ -7,29 +7,66 @@ namespace BPAnalyzer
     /// </summary>
     public static void Run(string[] args)
     {
-      string outputDir = "output";
+
+      string? codeDir = null;
+      string? outputDir = null;
       string templatePath = "templates/SDD_Process_Template.md";
-      string classesPath = Path.Combine(outputDir, "classes.json");
-      string dependenciesPath = Path.Combine(outputDir, "dependencies.json");
-      string exceptionsPath = Path.Combine(outputDir, "exceptions.json");
+
+      // Argument Parsing
+      for (int i = 1; i < args.Length; i++)
+      {
+        string arg = args[i];
+        if (arg.StartsWith("--code=", StringComparison.OrdinalIgnoreCase))
+          codeDir = arg.Substring("--code=".Length);
+        else if (arg.StartsWith("--output=", StringComparison.OrdinalIgnoreCase))
+          outputDir = arg.Substring("--output=".Length);
+        else if (!arg.StartsWith("-"))
+        {
+          if (codeDir == null) codeDir = arg;
+          else if (outputDir == null) outputDir = arg;
+        }
+      }
+
+      // Interactive prompt if codeDir is missing
+      if (string.IsNullOrWhiteSpace(codeDir))
+      {
+        Console.Write("Code directory with JSON files (empty for ./code): ");
+        codeDir = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(codeDir))
+          codeDir = "code";
+      }
+      // Interactive prompt if outputDir is missing
+      if (string.IsNullOrWhiteSpace(outputDir))
+      {
+        Console.Write("Output directory for SDDs (empty for ./sdd): ");
+        outputDir = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(outputDir))
+          outputDir = "sdd";
+      }
+
+      // JSON files are read from codeDir
+      string classesPath = Path.Combine(codeDir, "classes.json");
+      string dependenciesPath = Path.Combine(codeDir, "dependencies.json");
+      string exceptionsPath = Path.Combine(codeDir, "exceptions.json");
 
       // Load JSON files
+
       if (!File.Exists(classesPath) || !File.Exists(dependenciesPath) || !File.Exists(exceptionsPath))
       {
-        Console.WriteLine("Required JSON files not found in output directory.");
+        Console.WriteLine("Required JSON files (classes.json, dependencies.json, exceptions.json) not found in code directory.");
         Environment.ExitCode = 1;
         return;
       }
 
       try
       {
-        var results = BluePrismAnalyzer.GenerateSdds(outputDir, templatePath);
+        var results = BluePrismAnalyzer.GenerateSdds(codeDir, outputDir, templatePath);
         foreach (var sdd in results)
         {
           File.WriteAllText(sdd.OutputPath, sdd.Content);
           Console.WriteLine($"Generated: {sdd.OutputPath}");
         }
-        Console.WriteLine("Analyze completed. SDD files generated for all processes.");
+        Console.WriteLine("Analyze completed. SDD files generated for all processes in output directory.");
         Environment.ExitCode = 0;
       }
       catch (Exception ex)
@@ -45,9 +82,10 @@ namespace BPAnalyzer
     public static void PrintUsage()
     {
       Console.WriteLine("Usage:");
-      Console.WriteLine("  BP-Analyzer analyze [options]");
+      Console.WriteLine("  BP-Analyzer analyze [--code=<json-dir>] [--output=<sdd-dir>]");
       Console.WriteLine();
-      Console.WriteLine("(No options available yet)");
+      Console.WriteLine("--code:    Directory with classes.json, dependencies.json, exceptions.json (default: ./output)");
+      Console.WriteLine("--output:  Target directory for SDD files (default: ./sdd)");
     }
   }
 }

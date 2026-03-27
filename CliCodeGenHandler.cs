@@ -36,10 +36,10 @@ namespace BPAnalyzer
       }
       if (string.IsNullOrWhiteSpace(outputDirectory))
       {
-        Console.Write("Output directory (empty for ./output): ");
+        Console.Write("Output directory (empty for ./code): ");
         outputDirectory = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(outputDirectory))
-          outputDirectory = "output";
+          outputDirectory = "code";
       }
 
       // Check if XML directory exists

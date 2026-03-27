@@ -78,21 +78,35 @@ dotnet run --project BP-Analyzer.csproj -- codegen [--xml=<directory>] [--output
 ```
 
 - `--xml=<directory>`     Directory with BluePrism XML files (default: xml/)
-- `--output=<directory>`  Output directory (default: output/)
+- `--output=<directory>`  Output directory (default: code/)
 
 **Example:**
 ```
-dotnet run --project BP-Analyzer.csproj -- codegen --xml=xml --output=output
+dotnet run --project BP-Analyzer.csproj -- codegen --xml=xml --output=code
 ```
+
 
 ### Analyze Mode
-Analyzes Blue Prism processes (placeholder, feature in development).
+
+Generates SDD (Solution Design Document) files from the generated JSON files.
+
 
 ```
-dotnet run --project BP-Analyzer.csproj -- analyze
+dotnet run --project BP-Analyzer.csproj -- analyze [--code=<json-dir>] [--output=<sdd-dir>]
 ```
 
----
+
+- `--code=<json-dir>`   Directory with classes.json, dependencies.json, exceptions.json (default: output/)
+- `--output=<sdd-dir>`  Output directory for SDD files (default: sdd/)
+
+
+**Example:**
+```
+dotnet run --project BP-Analyzer.csproj -- analyze --code=output --output=sdd
+```
+
+
+
 
 ### Notes
 - Internal BluePrism objects (e.g., `Blueprism.Automate*`) are automatically skipped during export.
