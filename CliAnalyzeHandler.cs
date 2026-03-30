@@ -3,11 +3,10 @@ namespace BPAnalyzer
   public class CliAnalyzeHandler
   {
     /// <summary>
-    /// Handles the analyze mode (currently not implemented)
+    /// Handles the analyze mode
     /// </summary>
     public static void Run(string[] args)
     {
-
       string? codeDir = null;
       string? outputDir = null;
       string templatePath = "templates/SDD_Process_Template.md";
@@ -35,6 +34,7 @@ namespace BPAnalyzer
         if (string.IsNullOrWhiteSpace(codeDir))
           codeDir = "code";
       }
+
       // Interactive prompt if outputDir is missing
       if (string.IsNullOrWhiteSpace(outputDir))
       {
@@ -44,13 +44,18 @@ namespace BPAnalyzer
           outputDir = "sdd";
       }
 
+      // Ensure output directory exists (after outputDir is set)
+      if (!Directory.Exists(outputDir))
+      {
+        Directory.CreateDirectory(outputDir);
+      }
+
       // JSON files are read from codeDir
       string classesPath = Path.Combine(codeDir, "classes.json");
       string dependenciesPath = Path.Combine(codeDir, "dependencies.json");
       string exceptionsPath = Path.Combine(codeDir, "exceptions.json");
 
       // Load JSON files
-
       if (!File.Exists(classesPath) || !File.Exists(dependenciesPath) || !File.Exists(exceptionsPath))
       {
         Console.WriteLine("Required JSON files (classes.json, dependencies.json, exceptions.json) not found in code directory.");
@@ -66,7 +71,7 @@ namespace BPAnalyzer
           File.WriteAllText(sdd.OutputPath, sdd.Content);
           Console.WriteLine($"Generated: {sdd.OutputPath}");
         }
-        Console.WriteLine("Analyze completed. SDD files generated for all processes in output directory.");
+        Console.WriteLine("Analyze completed. SDD files generated for all processes in code directory.");
         Environment.ExitCode = 0;
       }
       catch (Exception ex)
@@ -84,7 +89,7 @@ namespace BPAnalyzer
       Console.WriteLine("Usage:");
       Console.WriteLine("  BP-Analyzer analyze [--code=<json-dir>] [--output=<sdd-dir>]");
       Console.WriteLine();
-      Console.WriteLine("--code:    Directory with classes.json, dependencies.json, exceptions.json (default: ./output)");
+      Console.WriteLine("--code:    Directory with classes.json, dependencies.json, exceptions.json (default: ./code)");
       Console.WriteLine("--output:  Target directory for SDD files (default: ./sdd)");
     }
   }
