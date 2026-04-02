@@ -50,6 +50,6 @@ public static class NameSanitizer
     /// </summary>
     public static string SanitizeId(string id)
     {
-        return Regex.Replace(id ?? "", @"[^a-zA-Z0-9_]", "_");
+        return Regex.Replace(id ?? "", @"[^a-zA-Z0-9_äöüÄÖÜßẞ]", "_");
     }
 }
