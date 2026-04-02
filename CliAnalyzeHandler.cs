@@ -10,6 +10,7 @@ namespace BPAnalyzer
       string? codeDir = null;
       string? outputDir = null;
       string templatePath = "templates/SDD_Process_Template.md";
+      List<string> excludeExceptionSources = new() { "ERGO_", "Utility_" };
 
       // Argument Parsing
       for (int i = 1; i < args.Length; i++)
@@ -19,6 +20,11 @@ namespace BPAnalyzer
           codeDir = arg.Substring("--code=".Length);
         else if (arg.StartsWith("--output=", StringComparison.OrdinalIgnoreCase))
           outputDir = arg.Substring("--output=".Length);
+        else if (arg.StartsWith("--exclude-exception-sources=", StringComparison.OrdinalIgnoreCase))
+        {
+          var val = arg.Substring("--exclude-exception-sources=".Length);
+          excludeExceptionSources = val.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
+        }
         else if (!arg.StartsWith("-"))
         {
           if (codeDir == null) codeDir = arg;
@@ -65,7 +71,7 @@ namespace BPAnalyzer
 
       try
       {
-        var results = BluePrismAnalyzer.GenerateSdds(codeDir, outputDir, templatePath);
+        var results = BluePrismAnalyzer.GenerateSdds(codeDir, outputDir, templatePath, excludeExceptionSources);
         foreach (var sdd in results)
         {
           File.WriteAllText(sdd.OutputPath, sdd.Content);
@@ -87,10 +93,11 @@ namespace BPAnalyzer
     public static void PrintUsage()
     {
       Console.WriteLine("Usage:");
-      Console.WriteLine("  BP-Analyzer analyze [--code=<json-dir>] [--output=<sdd-dir>]");
+      Console.WriteLine("  BP-Analyzer analyze [--code=<json-dir>] [--output=<sdd-dir>] [--exclude-exception-sources=<prefix1,prefix2,...>]");
       Console.WriteLine();
       Console.WriteLine("--code:    Directory with classes.json, dependencies.json, exceptions.json (default: ./code)");
       Console.WriteLine("--output:  Target directory for SDD files (default: ./sdd)");
+      Console.WriteLine("--exclude-exception-sources:  Kommagetrennte Liste von Prefixen, deren Exceptions ausgeschlossen werden (default: ERGO_,Utility_)");
     }
   }
 }

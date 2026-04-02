@@ -90,19 +90,22 @@ dotnet run --project BP-Analyzer.csproj -- codegen --xml=xml --output=code
 
 Generates SDD (Solution Design Document) files from the generated JSON files.
 
-
 ```
-dotnet run --project BP-Analyzer.csproj -- analyze [--code=<json-dir>] [--output=<sdd-dir>]
+dotnet run --project BP-Analyzer.csproj -- analyze [--code=<json-dir>] [--output=<sdd-dir>] [--exclude-exception-sources=<prefix1,prefix2,...>]
 ```
-
 
 - `--code=<json-dir>`   Directory with classes.json, dependencies.json, exceptions.json (default: output/)
 - `--output=<sdd-dir>`  Output directory for SDD files (default: sdd/)
+- `--exclude-exception-sources=<prefix1,prefix2,...>`  Comma-separated list of exception source prefixes to exclude from SDD exception listing (default: ERGO_,Utility_)
 
 
-**Example:**
+**Examples:**
 ```
+# Standard (default exclusions: ERGO_, Utility_)
 dotnet run --project BP-Analyzer.csproj -- analyze --code=output --output=sdd
+
+# Mit eigenen Prefixen (z.B. nur Utility und TEST ausschließen)
+dotnet run --project BP-Analyzer.csproj -- analyze --code=output --output=sdd --exclude-exception-sources=Utility_,TEST_
 ```
 
 

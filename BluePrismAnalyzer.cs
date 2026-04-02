@@ -17,13 +17,13 @@ namespace BPAnalyzer
     public static List<SddResult> GenerateSdds(
       string codeDir = "code",
       string outputDir = "sdd",
-      string templatePath = "templates/SDD_Process_Template.md")
+      string templatePath = "templates/SDD_Process_Template.md",
+      List<string>? excludeExceptionSources = null)
     {
       // Load and parse JSON data and template
       var (classes, dependencies, exceptions, template) = LoadData(codeDir, templatePath);
 
       var processDict = classes.GetProperty("process");
-      // var objectDict = classes.GetProperty("object");
       var exDict = exceptions.EnumerateObject().ToDictionary(x => x.Name, x => x.Value.EnumerateArray().ToList());
 
       var results = new List<SddResult>();
@@ -43,7 +43,6 @@ namespace BPAnalyzer
 
         // Collect all exceptions recursively for the process and its dependencies
         HashSet<(string ClassName, string Method, string Type, string Message)> allEx = [];
-        // CollectExceptions(internalName + ".Main", exDict, allEx);
         foreach (var method in processMethods)
         {
           CollectExceptions(method, exDict, allEx);
@@ -53,6 +52,11 @@ namespace BPAnalyzer
           CollectExceptions(dep, exDict, allEx);
         }
 
+        // remove exceptions from specific sources
+        if(excludeExceptionSources != null && excludeExceptionSources.Any())
+        {
+          allEx = allEx.Where(e => !excludeExceptionSources.Any(prefix => e.ClassName.StartsWith(prefix))).ToHashSet();
+        }
         // Render the SDD using the template
         string sdd = RenderTemplate(template, displayName, deps, allEx);
 
@@ -176,10 +180,12 @@ namespace BPAnalyzer
             string src = e.Source;
             string stage = e.Stage;
             if (src.EndsWith($".{stage}") || src == stage)
+            {
               src = src.Substring(0, src.Length - stage.Length - 1);
+            }
             return block.Replace("{{Stage}}", stage)
                         .Replace("{{Type}}", e.Type)
-                        .Replace("{{Message}}", e.Message)
+                        .Replace("{{Message}}", e.Message.Replace(Environment.NewLine, ""))
                         .Replace("{{Source}}", src).Trim();
           }));
         },
