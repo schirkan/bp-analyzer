@@ -9,4 +9,8 @@
     <RootNamespace>BPAnalyzer</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Handlebars.Net" Version="2.1.6" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using HandlebarsDotNet;
 
 namespace BPAnalyzer
 {
@@ -135,8 +136,6 @@ namespace BPAnalyzer
     /// </summary>
     private static string RenderTemplate(string template, string displayName, List<string> deps, HashSet<(string Source, string Stage, string Type, string Message)> allEx)
     {
-      string sdd = template.Replace("{{ProcessName}}", displayName);
-
       var groupedDeps = deps.Select(d =>
         {
           var separatorPosition = d.LastIndexOf('.');
@@ -147,6 +146,36 @@ namespace BPAnalyzer
         .GroupBy(x => x.className)
         .ToDictionary(x => x.Key, x => string.Join(", ", x.Select(d => d.methodName)))
         .OrderBy(x => x.Key);
+
+        allEx = allEx.Select(e => {
+          string src = e.Source;
+          string stage = e.Stage;
+          if (src.EndsWith($".{stage}") || src == stage)
+          {
+            e.Source = src.Substring(0, src.Length - stage.Length - 1);
+          }
+          e.Type = e.Type.Replace("System Exception", "SE").Replace("Business Exception", "BE");
+          e.Message = e.Message.Replace(Environment.NewLine, "");
+          return e;
+        }).ToHashSet();
+
+      var groupedExceptions = allEx.GroupBy(x => x.Source)
+        .ToDictionary(x => x.Key, x => x.Select(e => new {
+          e.Type, e.Message, e.Stage
+        }))
+        .OrderBy(x => x.Key);
+
+      var data = new {
+        ProcessName = displayName,
+        Dependencies = groupedDeps,
+        Exceptions = groupedExceptions
+      };
+
+      var render = Handlebars.Compile(template);
+      return render(data);
+
+/*
+      string sdd = template.Replace("{{ProcessName}}", displayName);
 
       // Replace Dependencies block
       sdd = Regex.Replace(
@@ -192,6 +221,7 @@ namespace BPAnalyzer
         RegexOptions.Multiline);
 
       return sdd;
+*/
     }
   }
 }

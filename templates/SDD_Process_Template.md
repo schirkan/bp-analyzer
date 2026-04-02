@@ -6,12 +6,16 @@ This document was generated automatically by BP-Analyzer.
 | Process / Object | Page |
 | ---------------- | ---- |
 {{#Dependencies}}
-|{{Source}}|{{Stage}}|
+|{{Key}}|{{Value}}|
 {{/Dependencies}}
 
 ## Exceptions
-| Type | Process / Object | Page | Text | Reason |
-| ---- | ---------------- | ---- | ---- | ------ |
 {{#Exceptions}}
-|{{Type}}|{{Source}}|{{Stage}}|{{Message}}||
+### {{Key}}
+
+{{#Value}}
+| Type | Page | Text | Reason |
+| ---- | ---- | ---- | ------ |
+|{{Type}}|{{Stage}}|{{Message}}||
+{{/Value}}
 {{/Exceptions}}
