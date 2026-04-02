@@ -13,6 +13,7 @@ namespace BPAnalyzer
       string? username = null;
       string? password = null;
       bool? overwrite = null;
+      var interactive = args.Length ==0;
 
       // Parse arguments
       for (int i = 1; i < args.Length; i++)
@@ -40,7 +41,7 @@ namespace BPAnalyzer
       }
 
       // Interactive prompt for missing parameters
-      if (string.IsNullOrWhiteSpace(processName))
+      if (interactive && string.IsNullOrWhiteSpace(processName))
       {
         Console.Write("Process name: ");
         processName = Console.ReadLine();
@@ -54,27 +55,33 @@ namespace BPAnalyzer
         return;
       }
 
-      if (string.IsNullOrWhiteSpace(outputPath))
+      if (interactive && string.IsNullOrWhiteSpace(outputPath))
       {
         Console.Write("Output directory (empty for ./xml): ");
         outputPath = Console.ReadLine();
-        if (string.IsNullOrWhiteSpace(outputPath))
-          outputPath = Path.Combine(Directory.GetCurrentDirectory(), "xml");
+      }
+      if (string.IsNullOrWhiteSpace(outputPath))
+      {
+        outputPath = Path.Combine(Directory.GetCurrentDirectory(), "xml");
       }
 
-      if (overwrite == null)
+      if (interactive && overwrite == null)
       {
         Console.Write("Overwrite existing files? (yes/no, empty for yes): ");
         var ow = Console.ReadLine();
         overwrite = string.IsNullOrWhiteSpace(ow) || ow.Trim().Equals("yes", StringComparison.OrdinalIgnoreCase);
       }
+      if (overwrite == null)
+      {
+        overwrite = true;
+      }
 
-      if (string.IsNullOrWhiteSpace(username))
+      if (interactive && string.IsNullOrWhiteSpace(username))
       {
         Console.Write("Username (empty for SSO): ");
         username = Console.ReadLine();
       }
-      if (string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(username))
+      if (interactive && string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(username))
       {
         Console.Write("Password: ");
         password = ReadPassword();

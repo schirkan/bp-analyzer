@@ -46,7 +46,7 @@ The CLI supports three main modes:
 
 - **export**   – Exports Blue Prism processes as XML
 - **codegen**  – Generates VB.NET code from Blue Prism XML
-- **analyze**  – Analyzes Blue Prism processes (in development)
+- **analyze**  – Analyzes Blue Prism processes
 
 If started without parameters, an interactive menu is shown. All required parameters for the selected mode will be prompted interactively.
 
