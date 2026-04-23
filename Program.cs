@@ -1,23 +1,22 @@
 // Blue Prism Process Export Tool
 // Exports Blue Prism processes using the AutomateC.exe CLI
 // Supports recursive export of dependent objects
-
-using BPAnalyzer;
-
-
 namespace BPAnalyzer
 {
     class Program
     {
         static void Main(string[] args)
         {
+            string mode;
             if (args.Length == 0)
             {
-                RunInteractive();
-                return;
+                mode = GetInteractiveMode();
+            }
+            else
+            {
+                mode = args[0].ToLowerInvariant();
             }
 
-            string mode = args[0].ToLowerInvariant();
             switch (mode)
             {
                 case "export":
@@ -35,14 +34,14 @@ namespace BPAnalyzer
                     PrintUsage();
                     break;
                 default:
-                    Console.WriteLine($"Unbekannter Modus: {mode}\n");
+                    Console.WriteLine($"Unknown mode: {mode}\n");
                     PrintUsage();
                     Environment.ExitCode = 1;
                     break;
             }
         }
 
-        static void RunInteractive()
+        static string GetInteractiveMode()
         {
             Console.WriteLine("Welcome to BP-Analyzer (interactive mode)");
             Console.WriteLine("Please select a mode:");
@@ -54,17 +53,14 @@ namespace BPAnalyzer
             switch (input)
             {
                 case "1":
-                    CliExportHandler.Run(new string[] { "export" });
-                    break;
+                    return "export";
                 case "2":
-                    CliCodeGenHandler.Run(new string[] { "codegen" });
-                    break;
+                    return "codegen";
                 case "3":
-                    CliAnalyzeHandler.Run(new string[] { "analyze" });
-                    break;
+                    return "analyze";
                 default:
                     Console.WriteLine("Invalid selection.");
-                    break;
+                    return "";
             }
         }
 

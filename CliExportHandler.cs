@@ -13,7 +13,7 @@ namespace BPAnalyzer
       string? username = null;
       string? password = null;
       bool? overwrite = null;
-      var interactive = args.Length ==0;
+      var interactive = args.Length == 0;
 
       // Parse arguments
       for (int i = 1; i < args.Length; i++)
