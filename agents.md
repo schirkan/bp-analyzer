@@ -30,12 +30,14 @@
 
 - **Projektordner:** `C:\Users\Admin\.openclaw\workspace\projects\bp-analyzer\`
   (identisch mit dem Repo-Root, kein Unterordner)
-- **Branch:** `main` - Upstream-Basis `35d89fa` plus zwei eigene Commits
-  (`fix(CliExportHandler)` und `docs`), beide nach `origin/main` gepusht
+- **Branch:** `main` - Upstream-Basis `35d89fa` plus eigene Commits, alle nach
+  `origin/main` gepusht
 - **Toolchain:** .NET SDK 10.0.402 installiert; das Projekt selbst targetet net8.0
 - **Build Analyzer:** grün - 0 Warnungen, 0 Fehler
 - **Build generiertes VB-Projekt:** grün - 13 Warnungen, 0 Fehler (BC42030/BC42019/BC42024
   in den generierten Dateien, erwartbar)
+- **Single-EXE-Publish:** verfügbar - Publish-Profil `BP-Analyzer-win-x64`, ca. 12,6 MB
+  (self-contained, single-file, trimmed, komprimiert). Details in Abschnitt 17.
 - **CodeGraph:** indexiert - 60 Dateien, 804 Knoten, 1.321 Kanten
 - **Working tree:** sauber
 ## 3) Git
@@ -317,6 +319,17 @@ mit Exit-Code 1 statt stillem Wechsel des Authentifizierungsverfahrens.
 `CliCodeGenHandler.PrintUsage()` meldete `output/`, tatsaechlich ist es `code/`. Auch das
 Beispiel in der Hilfeausgabe zeigte auf `output`.
 
+**Bug 4 - Prozessaufrufe wurden nur bei CWD = Repo-Root aufgeloest (behoben).**
+`ProcessResolver.FindProcessNameById()` suchte fest in `<CWD>\\xml` und ignorierte den
+per `--xml=` uebergebenen Ordner. Rief man `codegen` aus einem anderen Arbeitsverzeichnis
+auf, wurde der Prozess-Aufruf nicht aufgeloest und der Code enthielt stattdessen
+`' TODO: Implement process call (processid: ...)`. Zusaetzlich fehlte die
+Abhaengigkeit in `dependencies.json`, was sich in den SDD-Dateien zeigte.
+
+Fix: `ProcessResolver.SetXmlSearchDirectory(xmlDirectory)` wird von
+`BluePrismCodeGen.GenerateAll()` gesetzt; gesucht wird zuerst im uebergebenen XML-Ordner,
+danach weiterhin als Fallback in `<CWD>\\xml`.
+
 **Zur Passwort-Zeile im Code:** Das Argument wird in `CliExportHandler.cs` korrekt ueber
 `StartsWith("--password=")` erkannt. Ein frueherer Befund, das Literal im Code sei
 maskiert, war ein Artefakt der Log-Redaction und kein Code-Fehler - die Redaction ersetzt
@@ -380,3 +393,73 @@ Epic mit drei oder mehr abhängigen Sub-Schritten beginnt, wird ein Board mit ID
 `context/` ist noch nicht angelegt - es wird erst bei externen Referenzen (Hardware-Guides,
 API-Doku) gebraucht. Der `.codegraph/`-Index liegt im Repo-Root, ist lokal und nicht
 getrackt.
+
+## 17) Single-EXE-Publish
+
+### Befehl
+
+````powershell
+dotnet publish BP-Analyzer.csproj -p:PublishProfile=BP-Analyzer-win-x64 -o publish
+````
+
+Ergebnis: eine einzelne `BP-Analyzer.exe` (win-x64, ca. 12,6 MB). Keine .NET-Runtime
+auf dem Zielsystem noetig, keine weiteren Dateien noetig.
+
+### Publish-Profil
+
+`Properties/PublishProfiles/BP-Analyzer-win-x64.pubxml` setzt:
+
+| Property | Wert | Bedeutung |
+| --- | --- | --- |
+| `RuntimeIdentifier` | `win-x64` | Zielplattform |
+| `SelfContained` | `true` | .NET-Runtime wird mitgeliefert |
+| `PublishSingleFile` | `true` | alles in eine EXE |
+| `PublishTrimmed` | `true` | ungenutzter Code wird entfernt |
+| `TrimMode` | `partial` | nur sichere Kuerzungen |
+| `IncludeNativeLibrariesForSelfExtract` | `true` | Native Libs in die EXE |
+| `EnableCompressionInSingleFile` | `true` | komprimiert (17,3 MB -> 12,6 MB) |
+| `DebugType` | `embedded` | keine separate PDB-Datei |
+
+Groessenvergleich (Release, win-x64):
+
+| Variante | Groesse | Status |
+| --- | --- | --- |
+| `dotnet build` (framework-dependent) | ca. 0,2 MB + DLLs | braucht .NET-8-Runtime |
+| self-contained, single-file, ungetrimmt | 67,9 MB | funktioniert |
+| self-contained, single-file, getrimmt | 17,3 MB | funktioniert |
+| + komprimiert (Profil) | 12,6 MB | funktioniert |
+
+### Templates sind eingebettet
+
+Die drei Templates liegen jetzt als Embedded Resources in der Assembly
+(`LogicalName` = `BPAnalyzer.templates.<Dateiname>`). `CodeGen/TemplateProvider.cs` loest
+Templates so auf:
+
+1. Datei auf Platte (BaseDirectory/templates, CWD/templates, CWD) - bestehender
+   Entwickler-Workflow und lokale Overrides bleiben erhalten,
+2. eingebettete Ressource - macht die Single-EXE eigenstaendig.
+
+Ohne diesen Schritt fehlten in der Single-EXE `BP_Base.vb`, `BluePrism_Generated.vbproj`
+und das SDD-Template.
+
+### JSON-Serialisierung ist trim-sicher
+
+`CodeGen/CodeGenJsonContext.cs` ist ein `JsonSerializerContext` mit Source-Generator.
+`CodeGenRegistry` serialisiert damit ueber `CodeGenJsonContext.Default.<Typ>` statt ueber
+`JsonSerializer.Serialize(value, options)`. Grund: unter `PublishTrimmed=true` ist
+reflection-basierte Serialisierung deaktiviert, der Aufruf bricht sonst mit
+"Reflection-based serialization has been disabled for this application" ab.
+
+Verifiziert: die drei JSON-Dateien der getrimmten EXE sind semantisch identisch zu
+denen des Debug-Builds.
+
+### Smoke-Test
+
+````powershell
+# In einem leeren Verzeichnis, ohne templates- und ohne xml-Ordner:
+BP-Analyzer.exe codegen --xml=<pfad> --output=code
+BP-Analyzer.exe analyze --code=code --output=sdd
+````
+
+Beide Modi liefern byte-identische Ergebnisse zum Debug-Build (ausser der
+Timestamp-Zeile in den generierten .vb-Dateien).

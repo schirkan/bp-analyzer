@@ -17,27 +17,20 @@ public class TemplateManager
     /// </summary>
     public void CopyTemplateFile()
     {
-        var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "templates", "Template_BP_Base.vb");
         var outputPath = Path.Combine(_outputDirectory, "BP_Base.vb");
 
-        // Try different relative paths
-        if (!File.Exists(templatePath))
-        {
-            templatePath = Path.Combine(Directory.GetCurrentDirectory(), "templates", "Template_BP_Base.vb");
-        }
-        if (!File.Exists(templatePath))
-        {
-            templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Template_BP_Base.vb");
-        }
-        if (!File.Exists(templatePath))
-        {
-            templatePath = "Template_BP_Base.vb";
-        }
+        // TemplateProvider checks disk locations first, then the embedded resource
+        // (keeps the single-file build self-contained).
+        var templateContent = TemplateProvider.TryGetTemplateText("Template_BP_Base.vb");
 
-        if (File.Exists(templatePath))
+        if (templateContent != null)
         {
-            File.Copy(templatePath, outputPath, true);
+            File.WriteAllText(outputPath, templateContent);
             Console.WriteLine($"Generated: {outputPath}");
+        }
+        else
+        {
+            Console.WriteLine($"Warning: template 'Template_BP_Base.vb' not found - {outputPath} was not created.");
         }
     }
 
@@ -46,26 +39,14 @@ public class TemplateManager
     /// </summary>
     public void CopyProjectFile(HashSet<string>? references = null)
     {
-        var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "templates", "Template_BP_Project.vbproj");
         var outputPath = Path.Combine(_outputDirectory, "BluePrism_Generated.vbproj");
 
-        // Try different relative paths
-        if (!File.Exists(templatePath))
-        {
-            templatePath = Path.Combine(Directory.GetCurrentDirectory(), "templates", "Template_BP_Project.vbproj");
-        }
-        if (!File.Exists(templatePath))
-        {
-            templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Template_BP_Project.vbproj");
-        }
-        if (!File.Exists(templatePath))
-        {
-            templatePath = "Template_BP_Project.vbproj";
-        }
+        // TemplateProvider checks disk locations first, then the embedded resource
+        // (keeps the single-file build self-contained).
+        var templateContent = TemplateProvider.TryGetTemplateText("Template_BP_Project.vbproj");
 
-        if (File.Exists(templatePath))
+        if (templateContent != null)
         {
-            var templateContent = File.ReadAllText(templatePath);
 
             // Get all .vb files in output directory
             var vbFiles = Directory.GetFiles(_outputDirectory, "*.vb")

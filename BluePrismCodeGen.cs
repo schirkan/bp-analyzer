@@ -50,6 +50,11 @@ public class BluePrismCodeGen
         // Initialize template manager
         _templateManager = new TemplateManager(_outputDirectory);
 
+        // The process resolver must look into the XML directory passed via --xml=,
+        // not into "<cwd>/xml" - otherwise process calls are only resolved when
+        // the tool runs from the repository root.
+        ProcessResolver.SetXmlSearchDirectory(xmlDirectory);
+
         // Copy template files first
         _templateManager.CopyTemplateFile();
 

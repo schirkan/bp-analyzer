@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using BPAnalyzer.CodeGen;
 using HandlebarsDotNet;
 
 namespace BPAnalyzer
@@ -82,7 +83,10 @@ namespace BPAnalyzer
       var classesJson = File.ReadAllText(classesPath);
       var dependenciesJson = File.ReadAllText(dependenciesPath);
       var exceptionsJson = File.ReadAllText(exceptionsPath);
-      var template = File.ReadAllText(templatePath);
+      // TemplateProvider checks disk locations first, then the embedded resource
+      // (keeps the single-file build self-contained).
+      var template = TemplateProvider.TryGetTemplateTextFromPath(templatePath)
+        ?? throw new FileNotFoundException($"SDD template not found: {templatePath}");
 
       return (JsonDocument.Parse(classesJson).RootElement, JsonDocument.Parse(dependenciesJson).RootElement, JsonDocument.Parse(exceptionsJson).RootElement, template);
     }

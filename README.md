@@ -39,6 +39,19 @@ dotnet run --project BP-Analyzer.csproj
 dotnet run --project BP-Analyzer.csproj -- codegen && dotnet build code/BluePrism_Generated.vbproj 2>&1
 ```
 
+### Single-file executable
+
+A standalone Windows executable can be published. It needs no .NET runtime and no
+additional files - the templates are embedded in the binary.
+
+```powershell
+dotnet publish BP-Analyzer.csproj -p:PublishProfile=BP-Analyzer-win-x64 -o publish
+```
+
+This produces a single `publish/BP-Analyzer.exe` (win-x64, approx. 12.6 MB).
+The profile uses `SelfContained`, `PublishSingleFile`, `PublishTrimmed` and
+`EnableCompressionInSingleFile`.
+
 
 ## CLI Usage
 

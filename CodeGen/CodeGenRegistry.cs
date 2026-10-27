@@ -1,4 +1,5 @@
 using System.Text.Json;
+using BPAnalyzer.CodeGen;
 
 /// <summary>
 /// Registry zur Aufzeichnung von Abhängigkeiten zwischen Methoden/Klassen während der Codegenerierung.
@@ -51,8 +52,7 @@ public static class CodeGenRegistry
       exList.Add(entry);
     }
 
-    var options = new JsonSerializerOptions { WriteIndented = true };
-    File.WriteAllText(filePath, JsonSerializer.Serialize(exDict, options));
+    File.WriteAllText(filePath, JsonSerializer.Serialize(exDict, CodeGenJsonContext.Default.DictionaryStringListStringArray));
   }
 
   /// <summary>
@@ -116,8 +116,7 @@ public static class CodeGenRegistry
         depList.Add(target);
     }
 
-    var options = new JsonSerializerOptions { WriteIndented = true };
-    File.WriteAllText(filePath, JsonSerializer.Serialize(depDict, options));
+    File.WriteAllText(filePath, JsonSerializer.Serialize(depDict, CodeGenJsonContext.Default.DictionaryStringListString));
   }
 
   /// <summary>
@@ -139,8 +138,7 @@ public static class CodeGenRegistry
       classDict[cls.Class] = cls.DisplayName;
     }
 
-    var options = new JsonSerializerOptions { WriteIndented = true };
-    File.WriteAllText(filePath, JsonSerializer.Serialize(typeDict, options));
+    File.WriteAllText(filePath, JsonSerializer.Serialize(typeDict, CodeGenJsonContext.Default.DictionaryStringDictionaryStringString));
   }
 
 }

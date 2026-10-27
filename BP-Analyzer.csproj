@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -11,6 +11,22 @@
 
   <ItemGroup>
     <PackageReference Include="Handlebars.Net" Version="2.1.6" />
+  </ItemGroup>
+
+  <!--
+    Templates are embedded as resources so that the single-file publish is self-contained
+    (no "templates" folder needed next to the executable).
+    TemplateProvider still prefers a file on disk, so local overrides keep working.
+    LogicalName is set explicitly because the default resource name would otherwise be
+    derived from the include path.
+  -->
+  <ItemGroup>
+    <EmbeddedResource Include="templates/Template_BP_Base.vb"
+                      LogicalName="BPAnalyzer.templates.Template_BP_Base.vb" />
+    <EmbeddedResource Include="templates/Template_BP_Project.vbproj"
+                      LogicalName="BPAnalyzer.templates.Template_BP_Project.vbproj" />
+    <EmbeddedResource Include="templates/SDD_Process_Template.md"
+                      LogicalName="BPAnalyzer.templates.SDD_Process_Template.md" />
   </ItemGroup>
 
 </Project>
