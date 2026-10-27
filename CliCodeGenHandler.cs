@@ -81,10 +81,10 @@ namespace BPAnalyzer
       Console.WriteLine();
       Console.WriteLine("Options:");
       Console.WriteLine("  --xml=<directory>     Directory with BluePrism XML files (default: xml/)");
-      Console.WriteLine("  --output=<directory>  Output directory (default: output/)");
+      Console.WriteLine("  --output=<directory>  Output directory (default: code/)");
       Console.WriteLine();
       Console.WriteLine("Example:");
-      Console.WriteLine("  BP-Analyzer codegen --xml=xml --output=output");
+      Console.WriteLine("  BP-Analyzer codegen --xml=xml --output=code");
     }
   }
 }

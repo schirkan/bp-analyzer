@@ -13,7 +13,7 @@ namespace BPAnalyzer
       string? username = null;
       string? password = null;
       bool? overwrite = null;
-      var interactive = args.Length == 0;
+      var interactive = args.Length <= 1;
 
       // Parse arguments
       for (int i = 1; i < args.Length; i++)
@@ -85,6 +85,25 @@ namespace BPAnalyzer
       {
         Console.Write("Password: ");
         password = ReadPassword();
+      }
+
+      // Zugangsdaten muessen zusammenpassen. Sonst schaltet der Export still auf
+      // SSO um und der Aufrufer bekommt keine Fehlermeldung.
+      if (!string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
+      {
+        Console.WriteLine("Error: --password is required when --user is specified.");
+        Console.WriteLine();
+        PrintUsage();
+        Environment.ExitCode = 1;
+        return;
+      }
+      if (string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+      {
+        Console.WriteLine("Error: --user is required when --password is specified.");
+        Console.WriteLine();
+        PrintUsage();
+        Environment.ExitCode = 1;
+        return;
       }
 
       Console.WriteLine();
@@ -181,7 +200,7 @@ namespace BPAnalyzer
       Console.WriteLine("  --process=<name>     Name of the process to export (required)");
       Console.WriteLine("  --output=<path>      Output directory (default: xml/)");
       Console.WriteLine("  --user=<username>    Blue Prism username");
-      Console.WriteLine("  --password=<password> Blue Prism password");
+      Console.WriteLine("  --password=<password>  Blue Prism password (required with --user)");
       Console.WriteLine("  --overwrite=<yes|no> Overwrite existing files (default: yes)");
       Console.WriteLine();
       Console.WriteLine("Example:");
