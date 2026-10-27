@@ -52,8 +52,11 @@
 **Standard-Branch:** `main` (HEAD -> `origin/main`, Upstream: schirkan/bp-analyzer)
 
 **Eigene Commits auf `main`:** zwei Commits gegen die Upstream-Basis `35d89fa` - ein Code-Fix
-(Passwort-Handler, siehe Abschnitt 14) und ein Doku-Commit (`agents.md` + `README.md`,
+(Passwort-Handler, siehe Abschnitt 14) und ein Doku-Commit (`agents.md` + `README.md`),
 beide nach `origin/main` gepusht. Der Working tree ist damit sauber.
+
+**Commit-Identitaet:** `OpenClaw <openclaw@schirkan.de>` - feste Vorgabe, alle eigenen
+Commits laufen unter diesem Namen, unabhaengig von der Upstream-Historie.
 
 **Keine CI/CD:** Das Repo hat kein `.github/` (sogar in der `.gitignore`). Es gibt keine
 Workflow-Dateien, also auch keine CI-Sektion.
