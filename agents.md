@@ -1,184 +1,379 @@
-# AGENTS – Projektwissen für BP-Analyzer
+# AGENTS.md - Projektwissen für BP-Analyzer
 
-Diese Datei sammelt alle für den Assistenz-Agenten relevanten Informationen aus dem bisherigen Verlauf und den Projektdateien.
-Passe diese Datei selbstständig an, wenn sich relevante Änderungen ergeben.
+<!-- project: path:C:\Users\Admin\.openclaw\workspace -->
+
+> **Gemergte Datei.** Dieses Projekt hat zwei Ebenen, die in einer Datei leben: das
+> Projektwissen aus dem geklonten Repo `schirkan/bp-analyzer` (Abschnitte 1-15) und die
+> Workspace-Verwaltung der OpenClaw-Projektmappe (Abschnitt 16). Auf Windows ist die tracked
+> Datei `agents.md` und die von `PROJECT-RULES.md` verlangte `AGENTS.md` dieselbe Datei -
+> beide Anforderungen sind nur mit einer Datei erfüllbar.
+>
+> **Alle CLI-Angaben unten sind gegen den Code verifiziert (Stand 2026-10-26)**, nicht aus der
+> Upstream-Doku abgeschrieben. Die Abweichungen zur Upstream-Doku sind in Abschnitt 14
+> dokumentiert.
 
 ## 1) Projektüberblick
 
 - **Name:** BP-Analyzer
-- **Zweck:** Konvertiert BluePrism-XML-Exporte in VB.NET-Klassen mit GoTo-basiertem Prozessfluss.
-- **Technologie:** .NET CLI / C# (TargetFramework: `net9.0`)
+- **Zweck:** Konvertiert BluePrism-XML-Exporte in VB.NET-Klassen mit GoTo-basiertem
+  Prozessfluss. Zusätzlich erzeugt der Modus `analyze` Solution Design Documents (SDD) als
+  Markdown.
+- **Technologie:** .NET CLI / C#, `TargetFramework: net8.0` (nicht net9.0 - die
+  Upstream-Doku ist hier falsch), `ImplicitUsings`, `Nullable`
 - **Projektdatei:** `BP-Analyzer.csproj`
+- **Abhängigkeit:** Handlebars.Net 2.1.6
+- **RootNamespace:** `BPAnalyzer`, AssemblyName `BP-Analyzer`
+- **Generiertes Zielprojekt:** `templates/Template_BP_Project.vbproj` targetet **net48**
+  (.NET Framework 4.8), nicht net8.0.
 
-## 2) Build- und Start-Befehle
+## 2) Current Status
 
-### Projekt bauen
+- **Projektordner:** `C:\Users\Admin\.openclaw\workspace\projects\bp-analyzer\`
+  (identisch mit dem Repo-Root, kein Unterordner)
+- **Branch:** `main` - Upstream-Basis `35d89fa` plus zwei eigene Commits
+  (`fix(CliExportHandler)` und `docs`), beide nach `origin/main` gepusht
+- **Toolchain:** .NET SDK 10.0.402 installiert; das Projekt selbst targetet net8.0
+- **Build Analyzer:** grün - 0 Warnungen, 0 Fehler
+- **Build generiertes VB-Projekt:** grün - 13 Warnungen, 0 Fehler (BC42030/BC42019/BC42024
+  in den generierten Dateien, erwartbar)
+- **CodeGraph:** indexiert - 60 Dateien, 804 Knoten, 1.321 Kanten
+- **Working tree:** sauber
+## 3) Git
 
-```bash
-dotnet build BP-Analyzer.csproj
-```
+- **Repo-Typ:** geklont (GitHub)
+- **Pfad / URL:** `C:\Users\Admin\.openclaw\workspace\projects\bp-analyzer\`
+  - Remote-URL: https://github.com/schirkan/bp-analyzer.git
+- **Remote(s):** `origin` -> https://github.com/schirkan/bp-analyzer.git (fetch + push)
+- **Eingerichtet am:** 2026-10-26
+- **`.gitignore`-Status:** vorhanden (aus dem Fremd-Repo unverändert übernommen).
+  `.codegraph/` ist **lokal** in `.git/info/exclude` eingetragen, damit das getrackte
+  `.gitignore` unangetastet bleibt.
 
-### Projekt ausführen
+**Standard-Branch:** `main` (HEAD -> `origin/main`, Upstream: schirkan/bp-analyzer)
 
-```bash
-dotnet run --project BP-Analyzer.csproj
-```
+**Eigene Commits auf `main`:** zwei Commits gegen die Upstream-Basis `35d89fa` - ein Code-Fix
+(Passwort-Handler, siehe Abschnitt 14) und ein Doku-Commit (`agents.md` + `README.md`,
+beide nach `origin/main` gepusht. Der Working tree ist damit sauber.
 
-## 3) Relevante CLI-Befehle (Nutzung des Tools)
+**Keine CI/CD:** Das Repo hat kein `.github/` (sogar in der `.gitignore`). Es gibt keine
+Workflow-Dateien, also auch keine CI-Sektion.
 
-### Code-Generierung (XML -> VB.NET)
+## 4) Build- und Start-Befehle
 
-```bash
-# Standard: xml/ -> output/
-dotnet run --project BP-Analyzer.csproj -- --codegen
-
-# Mit expliziten Verzeichnissen
-dotnet run --project BP-Analyzer.csproj -- --codegen --xml=xml --output=output
-
-# Kurzformen
-dotnet run --project BP-Analyzer.csproj -- --codegen xml output
-dotnet run --project BP-Analyzer.csproj -- --codegen xml
-```
-
-### Prozess-Export (BluePrism Runtime Resource)
-
-**Standard-Ausgabeverzeichnis:** `xml/`
-**Standard-Überschreiben:** `yes` (Dateien werden automatisch überschrieben)
-
-```bash
-# Basis (exportiert nach xml/ und überschreibt vorhandene Dateien)
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess"
-
-# Mit Ausgabepfad
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --output="C:\Exporte"
-
-# Mit Credentials
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --user=admin --password=geheim
-
-# Überschreiben deaktivieren (falls benötigt)
-dotnet run --project BP-Analyzer.csproj -- --process="MeinProzess" --overwrite=no
-```
-
-## 4) Generierte Ausgabe kompilieren
-
-```bash
-cd output
-dotnet build BluePrism_Generated.vbproj
-```
-
-Alternative (Visual Studio MSBuild):
-
-```powershell
-msbuild BluePrism_Generated.vbproj
-msbuild BluePrism_Generated.vbproj /p:Configuration=Debug
-msbuild BluePrism_Generated.vbproj /p:Configuration=Release
-```
-
-Erwartetes Build-Artefakt:
-
-- `output/bin/Debug/BluePrism_Generated.dll`
-- oder `output/bin/Release/BluePrism_Generated.dll`
-
-## 5) Hilfreiche Befehle zur Fehleranalyse
-
-### Allgemeine Build-/Run-Diagnose
-
-```bash
-# Vollständiger Build mit Fehlerausgabe
+``powershell
+# Analyzer bauen
 dotnet build BP-Analyzer.csproj -v minimal
 
-# Ausführen inkl. CLI-Args (Beispiel) und direkte Fehlerausgabe
-dotnet run --project BP-Analyzer.csproj -- --codegen 2>&1
-```
+# Ausführen (interaktiv, wenn ohne Parameter)
+dotnet run --project BP-Analyzer.csproj
 
-### Sauberer Neuaufbau
+# CLI-Modus
+dotnet run --project BP-Analyzer.csproj -- codegen
+``
 
-```bash
+Artefakt: `bin\Debug\net8.0\BP-Analyzer.dll`
+
+Sauberer Neuaufbau:
+
+``powershell
 dotnet clean BP-Analyzer.csproj
 dotnet build BP-Analyzer.csproj
-```
+``
 
-### Ausgabeprojekt prüfen
+## 5) CLI (verifiziert)
 
-```bash
-dotnet build output/BluePrism_Generated.vbproj -v minimal
-```
+Der Modus ist das **erste** Argument, danach folgen die Optionen. `Program.cs` liest
+`args[0]` und schaltet auf `export` / `codegen` / `analyze` / `help`.
 
-### Git-basierte Analyse
+Ohne Parameter startet ein interaktives Menü (1) Export, 2) Codegen, 3) Analyze).
 
-```bash
+> **Wichtig für nicht-interaktive Aufrufe (CI, Skripte):** `codegen` und `analyze` fragen
+> bei fehlenden Verzeichnis-Parametern **immer** über `Console.ReadLine()` ab und blockieren,
+> wenn kein Redirect stattfindet. Immer beide Verzeichnisse explizit angeben. `export` fragt
+> nur ab, wenn gar keine Argumente übergeben wurden (`args.Length == 0`).
+
+### export - BluePrism-Prozess nach XML
+
+``powershell
+dotnet run --project BP-Analyzer.csproj -- export --process="MeinProzess" --output="C:\Exporte" --user=admin --overwrite=yes
+``
+
+- `--process=<name>`   Prozessname (Pflicht)
+- `--output=<path>`    Ausgabeverzeichnis (Default: `<cwd>\xml`)
+- `--user=<name>`      Blue-Prism-Benutzer (leer = SSO)
+- `--password=<pw>`    Passwort - **siehe bekannten Bug in Abschnitt 14**
+- `--overwrite=yes|no` Überschreiben (Default: `yes`)
+
+Positionale Argumente werden in dieser Reihenfolge ebenfalls akzeptiert: Prozessname,
+Ausgabepfad, Benutzer, Passwort.
+
+Exportiert wird über `AutomateC.exe`. Der Pfad ist in `BluePrismExporter.cs` fest auf
+`C:\Program Files\Blue Prism Limited\Blue Prism Automate\AutomateC.exe` verdrahtet; in
+`CliExportHandler.cs` ist die Zuweisung von `AutomateCPath` auskommentiert - der Pfad ist
+also aktuell nicht per CLI konfigurierbar.
+
+### codegen - XML nach VB.NET
+
+``powershell
+dotnet run --project BP-Analyzer.csproj -- codegen --xml=xml --output=code
+``
+
+- `--xml=<dir>`    Verzeichnis mit BluePrism-XML (Default: `xml`)
+- `--output=<dir>` Ausgabeverzeichnis (Default: `code`, **nicht** `output`)
+
+Positionale Argumente: XML-Verzeichnis, Ausgabeverzeichnis.
+
+### analyze - JSON nach SDD
+
+``powershell
+dotnet run --project BP-Analyzer.csproj -- analyze --code=code --output=sdd --exclude-exception-sources=ERGO_,Utility_
+``
+
+- `--code=<dir>`   Verzeichnis mit `classes.json`, `dependencies.json`,
+  `exceptions.json` (Default: `code`)
+- `--output=<dir>` Zielverzeichnis der SDD-Dateien (Default: `sdd`)
+- `--exclude-exception-sources=<p1,p2>` Präfixe, deren Exceptions aus der
+  SDD-Exception-Liste fallen (Default: `ERGO_,Utility_`)
+
+Positionale Argumente: Code-Verzeichnis, Ausgabeverzeichnis.
+
+Die SDD-Vorlage wird unter `templates/SDD_Process_Template.md` relativ zum aktuellen
+Arbeitsverzeichnis gesucht. Ergebnisdateien heißen `SDD Template <Prozessname>.md`.
+
+## 6) Verzeichnisstruktur (verifiziert)
+
+``
+bp-analyzer/                      <- Projektordner == Repo-Root
+|- .git/                          origin -> schirkan/bp-analyzer
+|- .codegraph/                    lokal, nicht getrackt
+|- bin/, obj/                     Build-Artefakte (gitignored)
+|- xml/                           8 BluePrism-XML-Exporte (Eingabe für codegen)
+|- code/                          generierte VB-Dateien + JSON + vbproj (getrackt)
+|- sdd/                           generierte SDD-Markdown-Dateien (getrackt)
+|- templates/                     3 Vorlagen
+|   |- Template_BP_Base.vb
+|   |- Template_BP_Project.vbproj
+|   '- SDD_Process_Template.md
+|- CodeGen/                       35 Dateien
+|   |- ClassGenerator.cs, CodeGenRegistry.cs, DataItemGenerator.cs,
+|   |  MethodGenerator.cs, TemplateManager.cs
+|   |- FlowControl/  FlowController.cs, StageNavigator.cs
+|   |- Stages/       22 Dateien (21 Stage-Generatoren + Interface + Base + Factory)
+|   '- Utilities/    AppModelResolver.cs, ExpressionParser.cs, NameSanitizer.cs,
+|                    ProcessResolver.cs, SubsheetResolver.cs, TypeMapper.cs
+|- Program.cs                     Einstiegspunkt, Moduswahl, Menü
+|- CliExportHandler.cs            export
+|- CliCodeGenHandler.cs           codegen
+|- CliAnalyzeHandler.cs           analyze
+|- BluePrismCodeGen.cs            Codegen-Orchestrierung
+|- BluePrismExporter.cs           Export via AutomateC.exe
+|- BluePrismAnalyzer.cs           SDD-Erzeugung aus JSON
+|- BP-Analyzer.csproj / .sln
+|- agents.md                      diese Datei (getrackt, Name klein)
+|- README.md, TODO.md, BP Expressions.md
+``
+
+## 7) Wichtige Projektdateien
+
+- `Program.cs` - Moduswahl, Help-Ausgabe, interaktives Menü
+- `CliExportHandler.cs` - Argumentparsing für `export`
+- `CliCodeGenHandler.cs` - Argumentparsing für `codegen`
+- `CliAnalyzeHandler.cs` - Argumentparsing für `analyze`
+- `BluePrismCodeGen.cs` - `GenerateAll()`: schreibt erst die `.vb`-Dateien, dann die
+  drei JSON-Dateien, zuletzt das `.vbproj`
+- `BluePrismExporter.cs` - `ExportWithDependencies()`, feste AutomateC.exe-Pfade
+- `BluePrismAnalyzer.cs` - `GenerateSdds()`, lädt JSON + Template und rendert die SDD
+- `CodeGen/CodeGenRegistry.cs` - `WriteDependenciesToJson()`, `WriteExceptionsToJson()`,
+  `WriteClassesToJson()`
+- `CodeGen/TemplateManager.cs` - kopiert `Template_BP_Base.vb` und
+  `Template_BP_Project.vbproj` nach `<output>`; sucht zuerst relativ zum
+  `AppDomain.BaseDirectory`, dann zum CWD
+- `CodeGen/Stages/StageGeneratorFactory.cs` - Registry der Stage-Generatoren
+- `CodeGen/FlowControl/FlowController.cs`, `StageNavigator.cs` - Ablaufsteuerung, Label-Logik
+- `CodeGen/Utilities/ExpressionParser.cs`, `NameSanitizer.cs` - Expression-Auswertung,
+  Bezeichner-Sanitizing (inkl. deutscher Umlaute)
+
+## 8) Pipeline codegen -> analyze
+
+`codegen` schreibt in ein Verzeichnis:
+
+1. eine `.vb`-Datei je XML-Eingabe (Dateiname aus `NameSanitizer.SanitizeClassName()`,
+   z. B. `MP - Subprocess A.xml` -> `MP_Subprocess_A.vb`)
+2. `BP_Base.vb` (aus der Vorlage)
+3. `classes.json`, `dependencies.json`, `exceptions.json`
+4. `BluePrism_Generated.vbproj` (aus der Vorlage, zuletzt - es listet alle erzeugten Dateien)
+
+`analyze` liest genau diese drei JSON-Dateien aus `--code` und rendert daraus die
+SDD-Dateien nach `--output`. `analyze` funktioniert nur, wenn vorher `codegen` gelaufen
+ist - die JSON-Dateien sind der Übergang zwischen beiden Stufen.
+
+## 9) Generiertes VB-Projekt bauen
+
+Das generierte Projekt targetet **net48** (.NET Framework 4.8), nicht net8.0.
+
+``powershell
+cd code
+dotnet build BluePrism_Generated.vbproj -v minimal
+# oder in Visual Studio / mit MSBuild:
+msbuild BluePrism_Generated.vbproj /p:Configuration=Release
+``
+
+Artefakt: `code\bin\Debug\net48\BluePrism_Generated.dll`
+(oder `code\bin\Release\net48\...`)
+
+Der erzeugte Code ist syntaktisch gültig und kompiliert, lässt sich aber nicht als echter
+Blue-Prism-Prozess ausführen. UI-Automation, Object-Calls und einige Stage-Typen sind
+Platzhalter bzw. Stubs.
+
+## 10) Unterstützte Stage-Typen
+
+Registry aus `CodeGen/Stages/StageGeneratorFactory.cs` (21 Einträge):
+
+| Stage-Typ | Generator | Anmerkung |
+| --- | --- | --- |
+| Start | StartStageGenerator | |
+| Action | ActionStageGenerator | inkl. Named Arguments |
+| Process | ProcessStageGenerator | Subprocess-Aufruf |
+| SubSheet | SubSheetStageGenerator | |
+| Alert | AlertStageGenerator | |
+| ChoiceStart | ChoiceStageGenerator | |
+| Decision | DecisionStageGenerator | |
+| Calculation | CalculationStageGenerator | |
+| MultipleCalculation | MultipleCalculationStageGenerator | |
+| Code | CodeStageGenerator | erzeugt VB-Code |
+| Note | NoteStageGenerator | |
+| Exception | ExceptionStageGenerator | inkl. Rethrow bei `usecurrent="yes"` |
+| Recover | RecoverStageGenerator | `StoreException()` |
+| Resume | ResumeStageGenerator | `ClearException()` |
+| WaitStart | WaitStageGenerator | |
+| Navigate | NavigateStageGenerator | Dummy-Implementierung |
+| Read | ReadStageGenerator | Dummy-Implementierung |
+| Write | WriteStageGenerator | Dummy-Implementierung |
+| LoopStart | LoopStartStageGenerator | in `LoopStageGenerator.cs` |
+| LoopEnd | LoopEndStageGenerator | in `LoopStageGenerator.cs` |
+
+Struktur-Stages **ohne** eigenen Generator - sie behandelt `FlowController.cs` und
+`StageNavigator.cs`: `Anchor`, `Block`, `End`, `Data`, `Collection`,
+`SubSheetInfo`, `ProcessInfo`, `ChoiceEnd`, `WaitEnd`.
+
+## 11) Fehleranalyse
+
+``powershell
+# Build mit Fehlerausgabe
+dotnet build BP-Analyzer.csproj -v minimal
+
+# CLI-Aufruf inkl. Argumenten
+dotnet run --project BP-Analyzer.csproj -- codegen --xml=xml --output=code 2>&1
+
+# generiertes Projekt prüfen
+dotnet build code\BluePrism_Generated.vbproj -v minimal
+
+# Git-Analyse
 git status
 git diff
 git log --oneline -n 20
-```
+``
 
-## 6) Wichtige Projektdateien
+Regressionsprüfung nach Änderungen an der Generatorlogik: `codegen` erneut laufen lassen und
+`git diff` auf `code/` prüfen. Da `code/` getrackt ist, zeigt der Diff genau die
+Auswirkungen der Änderung.
 
-- `Program.cs` – Einstiegspunkt / CLI-Verarbeitung
-- `BluePrismCodeGen.cs` – Kern der XML->VB.NET Codegenerierung
-- `BluePrismExporter.cs` – Exportlogik
-- `ExporterCLI.cs` – Prozess-Export über BluePrism CLI
-- `CodeGen/` – Code-Generator Module
-  - `ClassGenerator.cs` – Klassen-Generierung
-  - `MethodGenerator.cs` – Methoden-Generierung
-  - `FlowControl/` – Flusskontrolle
-  - `Stages/` – Stage-Generatoren (Action, Decision, Calculation, etc.)
-  - `Utilities/` – Hilfsklassen (ExpressionParser, NameSanitizer, etc.)
-- `templates/Template_BP_Base.vb` – Basisklassen-Template
-- `templates/Template_BP_Project.vbproj` – VB-Projekt-Template
-- `xml/` – Input-XML-Dateien
-- `output/` – generierte VB-Dateien + `BluePrism_Generated.vbproj`
+## 12) Offene Punkte (aus TODO.md, nicht abgehakt)
 
-## 9) Interne BluePrism-Objekte
+- `generate method to evaluate expressions`
+- `implement app model xml`
+- `implement internal "Blueprism" classes`
+- `fix issue with duplicate method names (internal + page name)`
 
-Bei Exports werden interne BluePrism-Objekte automatisch übersprungen:
-- Objekte mit Prefix `Blueprism.Automate*` werden nicht exportiert
-- Dies verhindert Fehler bei der Abhängigkeitsanalyse
+Umgesetzt laut TODO.md: Exception-Handling inkl. Recover/Resume/Rethrow, Methodensignaturen
+(Sichtbarkeit in Prozess vs. Objekt), Collections (lokal + global), Action-Calls inkl. Named
+Arguments, einheitliche Methodenkommentare, Input/Output-Initialisierung,
+WaitStart/WaitEnd + Choice-Expression-Logik.
 
-## 7) Funktionaler Stand (aus TODO.md)
+## 13) Interne BluePrism-Objekte
 
-Bereits umgesetzt (Auszug aus TODO):
+Beim Export werden interne BluePrism-Objekte übersprungen:
+- Objekte mit Präfix `Blueprism.Automate*` werden nicht exportiert
+- Das verhindert Fehler in der Abhängigkeitsanalyse
 
-- Exception-Handling inkl. Recover/Resume/Rethrow-Logik
-- Methodensignaturen (Sichtbarkeit in Prozess vs. Objekt)
-- Collections (lokal + global)
-- Action-Call-Implementierung inkl. Named Arguments
-- Einheitliche Methodenkommentare
-- Überarbeitete Input/Output-Initialisierung
-- WaitStart/WaitEnd + Choice-Expression-Logik
+## 14) Bekannte Bugs und Doku-Abweichungen
 
-## 8) Hinweise für zukünftige Agent-Arbeit
+**Bug 1 - der interaktive Modus war unerreichbar (behoben).**
+`CliExportHandler.cs` berechnete `interactive` als `args.Length == 0`. Der Modusname steht
+aber an `args[0]`, die Methode bekommt also immer mindestens ein Argument. `export` ohne
+Parameter brach deshalb mit "Error: Process name is required." ab, statt nach Prozessname,
+Ausgabeverzeichnis, Overwrite, Benutzer und Passwort zu fragen. Fix: `args.Length <= 1`.
 
-### WICHTIG: Dateien vor dem Ändern neu einlesen
+**Bug 2 - `--user` ohne `--password` fiel still auf SSO zurueck (behoben).**
+Der Exporter waehlt `/user "..." "..."` nur, wenn Benutzer *und* Passwort gesetzt sind,
+sonst `/sso`. Ein Aufruf mit `--user=admin` ohne Passwort hat damit ohne jede
+Fehlermeldung mit SSO exportiert und das Passwort verworfen. Fix: explizite Validierung
+mit Exit-Code 1 statt stillem Wechsel des Authentifizierungsverfahrens.
 
-Bevor du eine Datei bearbeitest, musst du sie immer mit `read_file` neu einlesen, um manuelle Änderungen nicht zu überschreiben.
+**Bug 3 - `codegen --help` nannte den falschen Default (behoben).**
+`CliCodeGenHandler.PrintUsage()` meldete `output/`, tatsaechlich ist es `code/`. Auch das
+Beispiel in der Hilfeausgabe zeigte auf `output`.
 
-### Suchen in Dateien
+**Zur Passwort-Zeile im Code:** Das Argument wird in `CliExportHandler.cs` korrekt ueber
+`StartsWith("--password=")` erkannt. Ein frueherer Befund, das Literal im Code sei
+maskiert, war ein Artefakt der Log-Redaction und kein Code-Fehler - die Redaction ersetzt
+`<password>` in Ausgaben durch Sternchen, auch in normalen Shell-Ergebnissen.
 
-**WICHTIG:** Bei der Verwendung von `search_files` muss der `path`-Parameter immer ein konkretes Verzeichnis oder eine konkrete Datei sein.
+**Doku-Abweichungen der Upstream-Dateien, die in `agents.md` und `README.md` korrigiert
+wurden:**
 
-Falsch (keine Ergebnisse):
-```bash
-search_files(path="output", regex="TODO")
-```
+| Upstream-Behauptung | Realitaet |
+| --- | --- |
+| `--codegen`, `--process=...` (Doppeldash) | Subcommand-Syntax: `codegen`, `export` |
+| `TargetFramework: net9.0` | `net8.0` |
+| `ExporterCLI.cs` | existiert nicht - `CliExportHandler.cs` |
+| Ausgabeverzeichnis `output/` | `code/` (Default) bzw. `sdd/` fuer SDD |
+| `cd output` zum Bauen | `cd code` |
+| `output/bin/Debug/BluePrism_Generated.dll` | `code/bin/Debug/net48/...` (net48) |
+| `--code=output` fuer analyze | `--code=code` |
+| `read_file` / `search_files` (Claude-Code-Toolnamen) | OpenClaw: `read` / `exec` / `codegraph explore` |
+| Abschnittsfolge 1-6, 9, 7, 8 | 1-16, fortlaufend |
+| Stage-Tabelle ohne Alert, Choice, MultipleCalculation, SubSheet | im Registry enthalten |
 
-Richtig (findet Ergebnisse):
-```bash
-search_files(path="output/Microsoft Store.vb", regex="TODO")
-```
+**Hinweis zu `code/`:** dort liegen getrackte SDD-Dateien ohne "Template"-Praefix (aelterer
+Stand, z. B. `SDD Test Process.md`). Neu erzeugte heissen `SDD Template <Name>.md`.
+Historisch, kein Fehler.
+## 15) Hinweise für Agent-Arbeit in diesem Projekt
 
-oder:
+- **Dateien vor dem Ändern neu einlesen.** Immer mit `read` neu laden, damit manuelle
+  Änderungen nicht überschrieben werden.
+- **CodeGraph zuerst.** Das Repo ist indexiert. Für Fragen zur Code-Struktur
+  `codegraph explore "<Symbol>"` nutzen, bevor du grep/Read über den Baum lässt.
+  `codegraph explore` liefert Symbol, Call-Paths und den aktuellen Dateiinhalt mit
+  Zeilennummern.
+- **Feste Pfade statt Rekursion.** Für gezielte Suchen immer einen konkreten Dateipfad oder
+  ein `file_pattern` angeben, nicht ein Verzeichnis - rekursive Suchen über Verzeichnisse
+  liefern unvorhersehbare Ergebnisse.
+- **Build als Beleg.** Bei Problemen zuerst `dotnet build BP-Analyzer.csproj`, dann
+  `dotnet build code\BluePrism_Generated.vbproj`.
+- **Kleine XML-Beispiele.** Für Codegen-Problemfälle mit `xml/bp demo.xml` arbeiten.
+- **Regressionscheck.** Generatorlogik-Änderungen gegen `git diff` auf `code/` prüfen.
+- **Getrackte Verzeichnisse.** `code/` und `sdd/` sind versioniert. Tests gehören nach
+  `C:\Users\Admin\.openclaw\workspace\temp\`, damit der Working tree des Fremd-Repos
+  sauber bleibt.
 
-```bash
-# Zuerst mit genauem Pfad suchen
-search_files(path="output", file_pattern="*.vb", regex="TODO")
-```
+## 16) Workspace-Verwaltung (OpenClaw)
 
-**Hintergrund:** Der `search_files`-Tool verhält sich bei rekursiven Suchen in Verzeichnissen unvorhersehbar. Bei spezifischen Suchen (z.B. nach "TODO" in generierten .vb-Dateien) sollte immer ein konkreter Dateipfad oder `file_pattern` verwendet werden.
+> Dieser Abschnitt wird vom OpenClaw-Workspace gepflegt, nicht vom Repo-Maintainer.
 
-### Weitere Tipps
+**Regeln für dieses Projekt:** Alle projektspezifischen Dateien liegen in
+`projects/bp-analyzer/`. Zugriff auf Dateien anderer Projekte ist untersagt. Spezifikationen
+liegen in `projects/bp-analyzer/specs/`, externe Referenzen in
+`projects/bp-analyzer/context/`, Entscheidungen mit Datum und Begründung in
+`projects/bp-analyzer/DECISIONS.md`.
 
-- Bei Problemen zuerst `dotnet build BP-Analyzer.csproj` ausführen.
-- Bei Codegen-Problemen mit kleinen XML-Beispielen arbeiten (z. B. `xml/bp demo.xml`).
-- Änderungen an Generatorlogik immer gegen Ausgabe in `output/*.vb` verifizieren.
-- Für Regressionscheck: Codegen erneut ausführen und `git diff` auf `output/` prüfen.
+**Kein Workboard:** Diese Aufgabe (Klon, Doku-Merge) ist ein Single-Shot ohne aufeinander
+aufbauende Direktiven - die Faustregel aus `PROJECT-RULES.md` greift nicht. Sobald eine
+Epic mit drei oder mehr abhängigen Sub-Schritten beginnt, wird ein Board mit ID
+`bp-analyzer` angelegt und hier mit Board-Stats gepflegt.
+
+### Project Files
+
+`context/` ist noch nicht angelegt - es wird erst bei externen Referenzen (Hardware-Guides,
+API-Doku) gebraucht. Der `.codegraph/`-Index liegt im Repo-Root, ist lokal und nicht
+getrackt.

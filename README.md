@@ -36,7 +36,7 @@ dotnet build BP-Analyzer.csproj
 dotnet run --project BP-Analyzer.csproj
 
 # run codegen and build output
-dotnet run --project BP-Analyzer.csproj -- codegen && dotnet build output/BluePrism_Generated.vbproj 2>&1
+dotnet run --project BP-Analyzer.csproj -- codegen && dotnet build code/BluePrism_Generated.vbproj 2>&1
 ```
 
 
@@ -62,7 +62,7 @@ dotnet run --project BP-Analyzer.csproj -- export --process=<name> [--output=<pa
 - `--process=<name>`        Name of the process to export (**required**)
 - `--output=<path>`         Output directory (default: xml/)
 - `--user=<username>`       Blue Prism username
-- `--password=<password>`   Blue Prism password
+- `--password=<password>`   Blue Prism password (required with `--user`; without `--user` SSO is used)
 - `--overwrite=<yes|no>`    Overwrite existing files (default: yes)
 
 **Example:**
@@ -94,7 +94,7 @@ Generates SDD (Solution Design Document) files from the generated JSON files.
 dotnet run --project BP-Analyzer.csproj -- analyze [--code=<json-dir>] [--output=<sdd-dir>] [--exclude-exception-sources=<prefix1,prefix2,...>]
 ```
 
-- `--code=<json-dir>`   Directory with classes.json, dependencies.json, exceptions.json (default: output/)
+- `--code=<json-dir>`   Directory with classes.json, dependencies.json, exceptions.json (default: code/)
 - `--output=<sdd-dir>`  Output directory for SDD files (default: sdd/)
 - `--exclude-exception-sources=<prefix1,prefix2,...>`  Comma-separated list of exception source prefixes to exclude from SDD exception listing (default: ERGO_,Utility_)
 
@@ -102,10 +102,10 @@ dotnet run --project BP-Analyzer.csproj -- analyze [--code=<json-dir>] [--output
 **Examples:**
 ```
 # Standard (default exclusions: ERGO_, Utility_)
-dotnet run --project BP-Analyzer.csproj -- analyze --code=output --output=sdd
+dotnet run --project BP-Analyzer.csproj -- analyze --code=code --output=sdd
 
 # Mit eigenen Prefixen (z.B. nur Utility und TEST ausschließen)
-dotnet run --project BP-Analyzer.csproj -- analyze --code=output --output=sdd --exclude-exception-sources=Utility_,TEST_
+dotnet run --project BP-Analyzer.csproj -- analyze --code=code --output=sdd --exclude-exception-sources=Utility_,TEST_
 ```
 
 
@@ -123,8 +123,8 @@ The generated VB.NET files can be compiled using MSBuild or dotnet.
 ### Using dotnet MSBuild
 
 ```bash
-# Change to output directory
-cd output
+# Change to the generated code directory
+cd code
 
 # Build project
 dotnet build BluePrism_Generated.vbproj
@@ -148,9 +148,9 @@ msbuild BluePrism_Generated.vbproj /p:Configuration=Release
 The compiled project creates a DLL file:
 
 ```
-output/bin/Debug/BluePrism_Generated.dll
+code/bin/Debug/net48/BluePrism_Generated.dll
 # or
-output/bin/Release/BluePrism_Generated.dll
+code/bin/Release/net48/BluePrism_Generated.dll
 ```
 
 > **Note:** The generated code is syntactically valid and can be compiled, but cannot be executed as a real Blue Prism process. Many functionalities (especially UI automation, object calls, and some stage types) are implemented as placeholders or stubs only.
@@ -244,16 +244,23 @@ bp-analyzer/
 │   ├── Test Process.xml
 │   ├── Microsoft Store.xml
 │   └── ...
-├── output/                        # Generated VB.NET files
+├── code/                          # Generated VB.NET files + JSON + vbproj
 │   ├── BP_Base.vb                # Base class template
-│   ├── Test Process.vb
-│   ├── Microsoft Store.vb
+│   ├── Test_Process.vb
+│   ├── Microsoft_Store.vb
+│   ├── classes.json
+│   ├── dependencies.json
+│   ├── exceptions.json
 │   └── BluePrism_Generated.vbproj
+├── sdd/                           # Generated SDD documents
+│   └── SDD Template Test Process.md
 ├── templates/                     # VB.NET templates
 │   ├── Template_BP_Base.vb        # Base class template
-│   └── Template_BP_Project.vbproj # VB project template
+│   ├── Template_BP_Project.vbproj # VB project template
+│   └── SDD_Process_Template.md    # SDD template
 ├── CodeGen/                       # Code generator modules
 │   ├── ClassGenerator.cs
+│   ├── CodeGenRegistry.cs
 │   ├── DataItemGenerator.cs
 │   ├── MethodGenerator.cs
 │   ├── TemplateManager.cs
@@ -275,7 +282,10 @@ bp-analyzer/
 │       └── ...
 ├── BluePrismCodeGen.cs           # Main code generator
 ├── BluePrismExporter.cs          # BluePrism export logic
-├── ExporterCLI.cs                # CLI export commands
+├── BluePrismAnalyzer.cs          # SDD generation from JSON
+├── CliExportHandler.cs           # export mode
+├── CliCodeGenHandler.cs          # codegen mode
+├── CliAnalyzeHandler.cs          # analyze mode
 ├── Program.cs                    # Entry point
 ├── BP-Analyzer.csproj            # Project file
 ├── BP-Analyzer.sln               # Solution file
@@ -301,8 +311,12 @@ bp-analyzer/
 | Navigate          | UI automation       | ✓         | Dummy implementation                |
 | Write             | UI automation       | ✓         | Dummy implementation                |
 | Read              | UI automation       | ✓         | Dummy implementation                |
-| WaitStart/WaitEnd | Wait stages         | ✓         | Dummy implementation                |
+| WaitStart          | Wait stage          | ✓         | Dummy implementation; WaitEnd is structural |
 | Process           | Subprocess call     | ✓         |                                     |
+| SubSheet          | Subsheet call       | ✓         |                                     |
+| Alert             | Alert stage         | ✓         |                                     |
+| ChoiceStart       | Choice branch       | ✓         |                                     |
+| MultipleCalculation | Multi assignment   | ✓         |                                     |
 | Anchor            | Jump marker         | ✓         | Will be skipped in output           |
 | Block             | Block container     | ✓         | Only used in exception handling     |
 | LoopStart/LoopEnd | Loops               | ✓         | Uses goto statement                 |
