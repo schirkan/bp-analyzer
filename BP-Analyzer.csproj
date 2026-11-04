@@ -7,6 +7,9 @@
     <Nullable>enable</Nullable>
     <AssemblyName>BP-Analyzer</AssemblyName>
     <RootNamespace>BPAnalyzer</RootNamespace>
+    <Version>1.0.0</Version>
+    <Product>BP-Analyzer</Product>
+    <Description>Converts BluePrism XML exports into VB.NET classes and generates Solution Design Documents (SDD).</Description>
   </PropertyGroup>
 
   <ItemGroup>
