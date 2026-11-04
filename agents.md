@@ -65,17 +65,33 @@ SHA256 `87924C098B1A849D7CC23C3A6728FE31C54A156990E32B9049F7F3AF24E73850`) und
 `checksums.txt` (91 Bytes, enthaelt dieselbe SHA256 in Kleinschreibung).
 Release-URL: https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.0
 
-**CI-Blocker:** `.github/` steht in der getrackten `.gitignore` (Zeile 50). Ein Workflow
-wuerde von git stillschweigend ignoriert - `git check-ignore -v .github/workflows/release.yml`
-bestaetigt das. Fuer einen Release-Workflow muss diese Zeile entfernt oder per Negation
-(`.github/` aufheben, `!.github/workflows/`) aufgehoben werden.
+**CI-Blocker (behoben):** `.github/` stand in der getrackten `.gitignore` (Zeile 50) - ein
+Workflow waere von git stillschweigend ignoriert worden. Ersetzt durch `.github/*` +
+`!.github/workflows/`.
 
 **Commit-Identitaet:** `OpenClaw <openclaw@schirkan.de>` - feste Vorgabe, alle eigenen
 Commits laufen unter diesem Namen, unabhaengig von der Upstream-Historie.
 
-**Keine CI/CD:** Das Repo hat kein `.github/` (sogar in der `.gitignore`). Es gibt keine
-Workflow-Dateien, also auch keine CI-Sektion. Das Release v1.0.0 wurde manuell via
-`gh release create` erstellt, nicht von einem Workflow.
+**CI/CD:** GitHub Actions, zwei Workflows:
+
+| Feld | Wert |
+| --- | --- |
+| **Plattform** | GitHub Actions |
+| **Workflow-Datei(en)** | `.github/workflows/ci.yml`, `.github/workflows/release.yml` |
+| **Trigger** | `ci.yml`: Push auf `main`, Pull Request gegen `main`, manuell. `release.yml`: Push eines Tags `v*`, manuell |
+| **Was wird gebaut** | `ci.yml`: Build + Single-File-Publish + Smoke-Test der EXE. `release.yml`: Single-File-EXE + `checksums.txt` als Release-Asset |
+| **Output / Artefakte** | `release.yml`: GitHub-Release zum Tag mit den Assets `BP-Analyzer-win-x64.exe` und `checksums.txt`; zusaetzlich Workflow-Artifact `BP-Analyzer-win-x64`. `ci.yml`: nur Workflow-Artifact, kein Release |
+| **Letzter bekannter Lauf** | noch keiner - die Workflows sind neu, der erste Lauf steht aus |
+
+**Wichtig - Restore braucht das Publish-Profil:** `dotnet restore` muss mit
+`-p:PublishProfile=BP-Analyzer-win-x64` laufen. Ohne das Profil holt der Restore die
+ILLink-Assets nicht, und der nachfolgende Publish mit `--no-restore` ueberspringt das
+Trimming **stillschweigend** - die EXE wiegt dann 35 MB statt 12,6 MB. Der Workflow
+prueft die Groesse und bricht ab, wenn sie ueber 20 MB liegt.
+
+**`.gitignore`:** Die Regel `.github/` wurde durch `.github/*` + `!.github/workflows/`
+ersetzt. Git kann keine Dateien unterhalb eines ausgeschlossenen Verzeichnisses wieder
+einbeziehen - der Ordner selbst muss selektiv ausgeschlossen werden.
 
 ## 4) Build- und Start-Befehle
 

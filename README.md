@@ -52,6 +52,21 @@ This produces a single `publish/BP-Analyzer.exe` (win-x64, approx. 12.6 MB).
 The profile uses `SelfContained`, `PublishSingleFile`, `PublishTrimmed` and
 `EnableCompressionInSingleFile`.
 
+### Release
+
+Releases are built automatically by GitHub Actions. Push a version tag and the
+workflow builds the executable and publishes it as a GitHub release with a
+`checksums.txt` asset:
+
+```bash
+git tag -a v1.1.0 -m "BP-Analyzer v1.1.0"
+git push origin v1.1.0
+```
+
+The release notes are kept in `RELEASE_NOTES.md` in the repository, so they
+always match the actual behavior of the tool. The `<sha256>` placeholder in
+that file is replaced with the checksum of the built binary.
+
 
 ## CLI Usage
 

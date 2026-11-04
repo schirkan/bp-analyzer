@@ -47,7 +47,11 @@ bld/
 .vs/
 
 # mcp
-.github/
+# .github/ is ignored, but the workflows directory must stay trackable for CI/CD.
+# Note: git cannot re-include files under an excluded directory, so the directory
+# itself has to be excluded selectively instead of as a whole.
+.github/*
+!.github/workflows/
 .mcp_data/
 
 # NuGet packages
