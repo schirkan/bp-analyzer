@@ -47,9 +47,18 @@
   - Remote-URL: https://github.com/schirkan/bp-analyzer.git
 - **Remote(s):** `origin` -> https://github.com/schirkan/bp-analyzer.git (fetch + push)
 - **Eingerichtet am:** 2026-10-26
-- **`.gitignore`-Status:** vorhanden (aus dem Fremd-Repo unverändert übernommen).
-  `.codegraph/` ist **lokal** in `.git/info/exclude` eingetragen, damit das getrackte
-  `.gitignore` unangetastet bleibt.
+- **`.gitignore`-Status:** vorhanden, vom Fremd-Repo übernommen und **für dieses Projekt ergänzt**:
+  - `.github/*` + `!.github/workflows/` - Git kann keine Dateien unterhalb eines
+    ausgeschlossenen Verzeichnisses wieder einbeziehen, deshalb ist `.github/` selektiv
+    statt als Ganzes ausgeschlossen (die Workflows müssen trackbar bleiben).
+  - `publish/` - Ausgabe von `dotnet publish -o publish` (vorher nur lokal in
+    `.git/info/exclude`, damit wäre es bei anderen als untracked aufgetaucht).
+  - `bp-analyzer.config.json` - lokale Konfiguration; **das** Beispiel
+    `bp-analyzer.config.example.json` bleibt trackbar.
+  - `ci-out/`, `package/` - CI-Ausgabeverzeichnisse.
+
+  `.codegraph/` ist weiterhin **lokal** in `.git/info/exclude` - der Index ist ein
+  Werkzeug-Artefakt dieser Arbeitsumgebung und kein Projektbestandteil.
 
 **Standard-Branch:** `main` (HEAD -> `origin/main`, Upstream: schirkan/bp-analyzer)
 
