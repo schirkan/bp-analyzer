@@ -108,8 +108,8 @@ bei Branch-Pushes oder Pull Requests.
 | **Plattform** | GitHub Actions |
 | **Workflow-Datei(en)** | `.github/workflows/release.yml` |
 | **Trigger** | Push eines Tags `v*`; manuell nur mit einem vorhandenen Versionstag sinnvoll, nicht mit `main` (Version wird aus dem Ref abgeleitet) |
-| **Was wird gebaut** | `release.yml`: Single-File-EXE + ZIP mit Beispiel-Config + `checksums.txt` |
-| **Output / Artefakte** | `release.yml`: GitHub-Release zum Tag mit den Assets `BP-Analyzer.exe`, `BP-Analyzer.zip` (EXE + Beispiel-Config) und `checksums.txt` (Hashes fuer EXE und ZIP); zusaetzlich Workflow-Artifact `BP-Analyzer` |
+| **Was wird gebaut** | Single-File-EXE und `BP-Analyzer.zip` mit Beispiel-Config |
+| **Output / Artefakte** | Ab `v1.0.4` genau ein Download-Asset: `BP-Analyzer.zip` mit `BP-Analyzer.exe` und `bp-analyzer.config.json`. SHA256 des ZIP im Release-Text; keine separate EXE, kein `checksums.txt`, kein Workflow-Artifact-Upload. Historische Releases bleiben unveraendert. |
 | **Letzter bekannter Lauf** | [Run 41887226813](https://github.com/schirkan/bp-analyzer/actions/runs/41887226813) am 04.11.2026, Tag `v1.0.3`, Commit `42245f8`, conclusion **success** |
 
 **Release-Pruefung `v1.0.3`:** EXE, ZIP und Checksummen von GitHub heruntergeladen.

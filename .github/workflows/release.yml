@@ -80,22 +80,12 @@ jobs:
           Remove-Item package -Recurse -Force
           Write-Host "zip size: $([math]::Round((Get-Item publish/BP-Analyzer.zip).Length / 1MB, 1)) MB"
 
-      - name: Compute checksum
-        shell: pwsh
-        run: |
-          $hash = (Get-FileHash publish/BP-Analyzer.exe -Algorithm SHA256).Hash.ToLower()
-          $lines = @("$hash  BP-Analyzer.exe")
-          $zipHash = (Get-FileHash publish/BP-Analyzer.zip -Algorithm SHA256).Hash.ToLower()
-          $lines += "$zipHash  BP-Analyzer.zip"
-          $lines | Out-File -FilePath publish/checksums.txt -Encoding utf8
-          $lines
-
       # The release body is kept in the repository so that it stays in sync
       # with the actual behavior of the tool.
       - name: Compose release notes
         shell: pwsh
         run: |
-          $hash = (Get-FileHash publish/BP-Analyzer.exe -Algorithm SHA256).Hash.ToLower()
+          $hash = (Get-FileHash publish/BP-Analyzer.zip -Algorithm SHA256).Hash.ToLower()
           $body = Get-Content RELEASE_NOTES.md -Raw
           $body = $body -replace '<sha256>', $hash
           $body | Out-File -FilePath release-notes.md -Encoding utf8
@@ -109,16 +99,4 @@ jobs:
             --repo ${{ github.repository }} `
             --title "BP-Analyzer ${{ github.ref_name }}" `
             --notes-file release-notes.md `
-            "publish/BP-Analyzer.exe#BP-Analyzer.exe" `
-            "publish/BP-Analyzer.zip#BP-Analyzer.zip (exe + example config)" `
-            "publish/checksums.txt#SHA256 checksums"
-
-      - name: Upload artifact to workflow run
-        uses: actions/upload-artifact@v5
-        with:
-          name: BP-Analyzer
-          path: |
-            publish/BP-Analyzer.exe
-            publish/BP-Analyzer.zip
-            publish/checksums.txt
-          if-no-files-found: error
+            "publish/BP-Analyzer.zip#BP-Analyzer.zip (exe + example config)"

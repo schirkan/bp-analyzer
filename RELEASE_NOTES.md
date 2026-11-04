@@ -3,11 +3,13 @@
 Converts BluePrism XML exports into VB.NET classes with GoTo-based process flow,
 and generates Solution Design Documents (SDD) as Markdown.
 
-## Changes in v1.0.3
+## Changes in v1.0.4
 
-- Keep the published executable name `BP-Analyzer.exe` and ship `BP-Analyzer.zip`.
-- Release builds run on version-tag pushes, not on branch pushes or pull requests.
-- Refresh the documentation for configuration, embedded templates and CLI limitations.
+- Publish only `BP-Analyzer.zip` as a release download; no separate EXE or checksum file.
+- Keep `BP-Analyzer.exe` and `bp-analyzer.config.json` inside the ZIP.
+- Include the ZIP's SHA256 checksum in the release text.
+- Remove the redundant workflow artifact upload.
+- Release builds still run on version-tag pushes, not on branch pushes or pull requests.
 
 ## Download
 
@@ -15,9 +17,9 @@ Target platform: **Windows x64**. Neutral filenames do not imply other platforms
 
 | Asset | Size | Notes |
 | --- | --- | --- |
-| `BP-Analyzer.exe` | ~12.6 MB | self-contained, single file, trimmed |
-| `checksums.txt` | a few hundred bytes | SHA256 of the binary and the ZIP |
-| `BP-Analyzer.zip` | ~7.6 MB | the exe plus the example config file |
+| `BP-Analyzer.zip` | ~7.6 MB | `BP-Analyzer.exe` (self-contained, single file, trimmed) plus the example config file |
+
+The ZIP is the only attached download. Extract it before running `BP-Analyzer.exe`.
 
 No .NET runtime required on the target machine. The templates are embedded in the
 binary, so `codegen` and `analyze` work without any further files.
@@ -48,10 +50,10 @@ The ZIP asset contains `BP-Analyzer.exe` plus a ready-to-edit `bp-analyzer.confi
 ### Verify the download
 
 ```
-Get-FileHash BP-Analyzer.exe -Algorithm SHA256
+Get-FileHash BP-Analyzer.zip -Algorithm SHA256
 ```
 
-Expected:
+Expected SHA256 of `BP-Analyzer.zip`:
 
 ```
 <sha256>

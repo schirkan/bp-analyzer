@@ -94,26 +94,27 @@ pushes of version tags matching `v*`, not on branch pushes or pull requests.
 A manual run is also available; select an existing version tag, not `main`,
 because the binary version is derived from that tag.
 
-Push a new version tag (for example `v1.0.3`) after committing and pushing the
+Push a new version tag (for example `v1.0.4`) after committing and pushing the
 intended changes. The workflow builds a self-contained Windows x64 executable,
-checks its size, packages the config, and creates a GitHub release with:
+checks its size, packages the config, and creates a GitHub release with exactly
+one download asset: `BP-Analyzer.zip`.
 
-- `BP-Analyzer.exe` — the original publish output, without renaming
-- `BP-Analyzer.zip` — `BP-Analyzer.exe` and `bp-analyzer.config.json`
-- `checksums.txt` — SHA256 hashes for both the EXE and ZIP
+The ZIP contains `BP-Analyzer.exe` (the original publish output, without renaming)
+and `bp-analyzer.config.json`. Neither the EXE nor a checksum file is uploaded
+separately. The ZIP's SHA256 is included in the release text. There is no redundant
+workflow artifact upload.
 
-The same files are also uploaded as workflow artifact `BP-Analyzer`.
-The target remains Windows x64 despite the neutral filenames. Releases up to
-`v1.0.2` retain their historical `-win-x64` filenames.
+The target remains Windows x64 despite the neutral filename. Releases up to
+`v1.0.3` retain their historical download assets.
 
 ```bash
-git tag -a v1.0.3 -m "BP-Analyzer v1.0.3"
-git push origin v1.0.3
+git tag -a v1.0.4 -m "BP-Analyzer v1.0.4"
+git push origin v1.0.4
 ```
 
 The release notes are kept in `RELEASE_NOTES.md` in the repository and should
 be reviewed before creating a tag. The `<sha256>` placeholder in
-that file is replaced with the checksum of the built binary.
+that file is replaced with the SHA256 checksum of `BP-Analyzer.zip`.
 
 
 ## CLI Usage
