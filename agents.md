@@ -60,9 +60,15 @@ Commit-Identitaets-Vermerk), der Single-EXE-Publish mit Trim-Fix (`fdf639a`) und
 Der Working tree ist damit sauber.
 
 **Tags:** `v1.0.0` (annotiert) zeigt auf `0c3d542` und ist auf GitHub. Zum Release
-gehoert genau ein Release mit dem Asset `BP-Analyzer-win-x64.exe` (12.625.429 Bytes,
-SHA256 `87924C098B1A849D7CC23C3A6728FE31C54A156990E32B9049F7F3AF24E73850`).
+gehoert genau ein Release mit zwei Assets: `BP-Analyzer-win-x64.exe` (12.625.429 Bytes,
+SHA256 `87924C098B1A849D7CC23C3A6728FE31C54A156990E32B9049F7F3AF24E73850`) und
+`checksums.txt` (91 Bytes, enthaelt dieselbe SHA256 in Kleinschreibung).
 Release-URL: https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.0
+
+**CI-Blocker:** `.github/` steht in der getrackten `.gitignore` (Zeile 50). Ein Workflow
+wuerde von git stillschweigend ignoriert - `git check-ignore -v .github/workflows/release.yml`
+bestaetigt das. Fuer einen Release-Workflow muss diese Zeile entfernt oder per Negation
+(`.github/` aufheben, `!.github/workflows/`) aufgehoben werden.
 
 **Commit-Identitaet:** `OpenClaw <openclaw@schirkan.de>` - feste Vorgabe, alle eigenen
 Commits laufen unter diesem Namen, unabhaengig von der Upstream-Historie.
