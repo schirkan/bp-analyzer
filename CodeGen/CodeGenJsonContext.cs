@@ -12,10 +12,14 @@ namespace BPAnalyzer.CodeGen;
 /// would fail with "Reflection-based serialization has been disabled for this application".
 /// The source generator emits the type metadata at compile time, which is trim-safe.
 /// </summary>
-[JsonSourceGenerationOptions(WriteIndented = true)]
+// PropertyNameCaseInsensitive: the config file uses camelCase (automateCPath),
+// the C# property is PascalCase (AutomateCPath). Without this the value would be
+// silently ignored.
+[JsonSourceGenerationOptions(WriteIndented = true, PropertyNameCaseInsensitive = true)]
 [JsonSerializable(typeof(Dictionary<string, List<string[]>>))]
 [JsonSerializable(typeof(Dictionary<string, List<string>>))]
 [JsonSerializable(typeof(Dictionary<string, Dictionary<string, string>>))]
+[JsonSerializable(typeof(BPAnalyzer.AnalyzerConfig))]
 public partial class CodeGenJsonContext : JsonSerializerContext
 {
 }

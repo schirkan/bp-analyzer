@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using BPAnalyzer;
 
 public class BluePrismExporter
 {
@@ -9,7 +10,7 @@ public class BluePrismExporter
 
   public BluePrismExporter()
   {
-    _automateCPath = "C:\\Program Files\\Blue Prism Limited\\Blue Prism Automate\\AutomateC.exe";
+    _automateCPath = AnalyzerConfig.DefaultAutomateCPath;
     _exportedObjects = new HashSet<string>();
   }
 

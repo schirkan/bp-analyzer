@@ -52,6 +52,29 @@ This produces a single `publish/BP-Analyzer.exe` (win-x64, approx. 12.6 MB).
 The profile uses `SelfContained`, `PublishSingleFile`, `PublishTrimmed` and
 `EnableCompressionInSingleFile`.
 
+### Configuration
+
+The `codegen` and `analyze` modes need no configuration - the templates are
+embedded in the executable. Only the `export` mode needs the path to Blue Prism's `AutomateC.exe`,
+which defaults to the standard installation path.
+
+Override it per call:
+
+```powershell
+BP-Analyzer.exe export --process="MyProcess" --automate-c="C:\Path\To\AutomateC.exe"
+```
+
+Or put a `bp-analyzer.config.json` next to the executable (a ready-to-edit example
+is shipped in `bp-analyzer.config.example.json` and included in the release ZIP):
+
+```json
+{
+  "automateCPath": "C:\\Path\\To\\AutomateC.exe"
+}
+```
+
+Precedence: `--automate-c` > `bp-analyzer.config.json` > built-in default.
+
 ### Release
 
 Releases are built automatically by GitHub Actions. Push a version tag and the

@@ -9,9 +9,31 @@ and generates Solution Design Documents (SDD) as Markdown.
 | --- | --- | --- |
 | `BP-Analyzer-win-x64.exe` | ~12.6 MB | self-contained, single file, trimmed |
 | `checksums.txt` | 91 B | SHA256 of the binary |
+| `BP-Analyzer-win-x64.zip` | ~13 MB | the exe plus the example config file |
 
-No .NET runtime required on the target machine. No additional files needed next to
-the executable - the templates are embedded in the binary.
+No .NET runtime required on the target machine. The templates are embedded in the
+binary, so `codegen` and `analyze` work without any further files.
+
+### Configuration (optional)
+
+Only the `export` mode needs a path to Blue Prism's `AutomateC.exe`. The default
+points at the standard installation path; override it if Blue Prism lives
+elsewhere:
+
+```
+BP-Analyzer.exe export --process="MyProcess" --automate-c="C:\Path\To\AutomateC.exe"
+```
+
+Or put `bp-analyzer.config.json` next to the executable:
+
+```json
+{
+  "automateCPath": "C:\\Path\\To\\AutomateC.exe"
+}
+```
+
+Precedence: `--automate-c` > `bp-analyzer.config.json` > built-in default.
+The ZIP asset contains the executable plus a ready-to-edit example config.
 
 ### Verify the download
 

@@ -434,7 +434,7 @@ Epic mit drei oder mehr abhängigen Sub-Schritten beginnt, wird ein Board mit ID
 API-Doku) gebraucht. Der `.codegraph/`-Index liegt im Repo-Root, ist lokal und nicht
 getrackt.
 
-## 17) Single-EXE-Publish
+## 17) Konfiguration und Single-EXE-Publish
 
 ### Befehl
 
@@ -492,6 +492,38 @@ reflection-basierte Serialisierung deaktiviert, der Aufruf bricht sonst mit
 
 Verifiziert: die drei JSON-Dateien der getrimmten EXE sind semantisch identisch zu
 denen des Debug-Builds.
+
+### Konfiguration (optional)
+
+**Nur der `export`-Modus braucht eine Konfiguration.** `codegen` und `analyze` laufen ohne
+jede Config-Datei - die Templates sind eingebettet.
+
+Der Pfad zu Blue Prisms `AutomateC.exe` ist jetzt konfigurierbar, vorher war er fest
+verdrahtet (die Zuweisung in `CliExportHandler.cs` war auskommentiert):
+
+| Quelle | Prioritaet | Beispiel |
+| --- | --- | --- |
+| CLI-Argument `--automate-c=<pfad>` | 1 (hoechste) | `BP-Analyzer.exe export --process="X" --automate-c="C:\\Pfad\\AutomateC.exe"` |
+| `bp-analyzer.config.json` neben der EXE, dann im CWD | 2 | `{ "automateCPath": "C:\\Pfad\\AutomateC.exe" }` |
+| Eingebauter Default | 3 | `C:\\Program Files\\Blue Prism Limited\\Blue Prism Automate\\AutomateC.exe` |
+
+Fehlt `AutomateC.exe`, bricht der Export mit klarer Meldung und Exit-Code 1 ab, statt
+still zu scheitern.
+
+**Zwei Fallen, die beim Testen aufgefallen sind:**
+
+1. **JSON-Property-Matching ist per Default case-sensitiv.** Die Datei nutzt camelCase
+   (`automateCPath`), die C#-Property heisst `AutomateCPath`. Ohne
+   `PropertyNameCaseInsensitive = true` im `JsonSourceGenerationOptions` wurde der Wert
+   **stillschweigend ignoriert** und der Default benutzt. Der Test sah nur aus wie
+   "Config funktioniert nicht".
+2. **Die Redaction maskiert Passwort-Muster auch in eigenen Dateien.** Ein `edit` mit
+   `--password=***` im oldText schlug fehl, weil die Datei `...` enthaelt. Fuer
+   Edits in solchen Dateien PowerShell (`[System.IO.File]::ReadAllText` + `.Replace()`)
+   statt des `edit`-Tools verwenden.
+
+Beispiel-Config: `bp-analyzer.config.example.json` im Repo. Sie wird im Release-ZIP als
+`bp-analyzer.config.json` mitgeliefert.
 
 ### Smoke-Test
 

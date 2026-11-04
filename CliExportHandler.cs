@@ -12,6 +12,7 @@ namespace BPAnalyzer
       string? outputPath = null;
       string? username = null;
       string? password = null;
+      string? automateCPath = null;
       bool? overwrite = null;
       var interactive = args.Length <= 1;
 
@@ -28,6 +29,8 @@ namespace BPAnalyzer
           username = arg.Substring("--user=".Length);
         else if (arg.StartsWith("--password=", StringComparison.OrdinalIgnoreCase))
           password = arg.Substring("--password=".Length);
+        else if (arg.StartsWith("--automate-c=", StringComparison.OrdinalIgnoreCase))
+          automateCPath = arg.Substring("--automate-c=".Length);
         else if (arg.StartsWith("--overwrite=", StringComparison.OrdinalIgnoreCase))
           overwrite = arg.Substring("--overwrite=".Length).Equals("yes", StringComparison.OrdinalIgnoreCase);
         // Positional arguments
@@ -117,8 +120,30 @@ namespace BPAnalyzer
       try
       {
         var exporter = new BluePrismExporter();
-        // Optional: set AutomateCPath if needed
-        // exporter.AutomateCPath = ...;
+
+        // Path to AutomateC.exe: CLI argument wins over the config file,
+        // the config file wins over the built-in default.
+        var config = AnalyzerConfig.Load();
+        if (!string.IsNullOrWhiteSpace(automateCPath))
+        {
+          exporter.AutomateCPath = automateCPath;
+        }
+        else if (!string.IsNullOrWhiteSpace(config?.AutomateCPath))
+        {
+          exporter.AutomateCPath = config.AutomateCPath;
+        }
+
+        if (!File.Exists(exporter.AutomateCPath))
+        {
+          Console.WriteLine($"Error: AutomateC.exe not found at '{exporter.AutomateCPath}'.");
+          Console.WriteLine("Set the path via --automate-c=<path> or in " + AnalyzerConfig.FileName + ".");
+          Console.WriteLine();
+          PrintUsage();
+          Environment.ExitCode = 1;
+          return;
+        }
+
+        Console.WriteLine($"AutomateC.exe: {exporter.AutomateCPath}");
 
         // Ensure output directory exists
         if (!Directory.Exists(outputPath))
@@ -202,6 +227,9 @@ namespace BPAnalyzer
       Console.WriteLine("  --user=<username>    Blue Prism username");
       Console.WriteLine("  --password=<password>  Blue Prism password (required with --user)");
       Console.WriteLine("  --overwrite=<yes|no> Overwrite existing files (default: yes)");
+      Console.WriteLine("  --automate-c=<path>  Path to Blue Prism's AutomateC.exe");
+      Console.WriteLine("                        (default: standard installation path; override with");
+      Console.WriteLine("                         this option or with bp-analyzer.config.json)");
       Console.WriteLine();
       Console.WriteLine("Example:");
       Console.WriteLine("  BP-Analyzer export --process \"MyProcess\" --output \"C:\\Exports\"");

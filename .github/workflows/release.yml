@@ -72,12 +72,26 @@ jobs:
           Write-Host "binary size: $mb MB"
           if ($size -gt 20MB) { throw "binary is $mb MB - trimming was probably skipped (expected ~12.6 MB)" }
 
+      # ZIP for the people who want the exe plus a ready-to-edit config file.
+      - name: Build ZIP with config
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path package | Out-Null
+          Copy-Item publish/BP-Analyzer-win-x64.exe package/
+          Copy-Item bp-analyzer.config.example.json package/bp-analyzer.config.json
+          Compress-Archive -Path package/* -DestinationPath publish/BP-Analyzer-win-x64.zip -CompressionLevel Optimal
+          Remove-Item package -Recurse -Force
+          Write-Host "zip size: $([math]::Round((Get-Item publish/BP-Analyzer-win-x64.zip).Length / 1MB, 1)) MB"
+
       - name: Compute checksum
         shell: pwsh
         run: |
           $hash = (Get-FileHash publish/BP-Analyzer-win-x64.exe -Algorithm SHA256).Hash.ToLower()
-          "$hash  BP-Analyzer-win-x64.exe" | Out-File -FilePath publish/checksums.txt -Encoding utf8
-          $hash
+          $lines = @("$hash  BP-Analyzer-win-x64.exe")
+          $zipHash = (Get-FileHash publish/BP-Analyzer-win-x64.zip -Algorithm SHA256).Hash.ToLower()
+          $lines += "$zipHash  BP-Analyzer-win-x64.zip"
+          $lines | Out-File -FilePath publish/checksums.txt -Encoding utf8
+          $lines
 
       # The release body is kept in the repository so that it stays in sync
       # with the actual behavior of the tool.
@@ -99,11 +113,15 @@ jobs:
             --title "BP-Analyzer ${{ github.ref_name }}" `
             --notes-file release-notes.md `
             "publish/BP-Analyzer-win-x64.exe#BP-Analyzer-win-x64.exe" `
-            "publish/checksums.txt#SHA256 checksum"
+            "publish/BP-Analyzer-win-x64.zip#BP-Analyzer-win-x64.zip (exe + example config)" `
+            "publish/checksums.txt#SHA256 checksums"
 
       - name: Upload artifact to workflow run
         uses: actions/upload-artifact@v5
         with:
           name: BP-Analyzer-win-x64
-          path: publish/BP-Analyzer-win-x64.exe
+          path: |
+            publish/BP-Analyzer-win-x64.exe
+            publish/BP-Analyzer-win-x64.zip
+            publish/checksums.txt
           if-no-files-found: error
