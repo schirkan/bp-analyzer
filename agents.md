@@ -38,6 +38,8 @@
   in den generierten Dateien, erwartbar)
 - **Single-EXE-Publish:** verfügbar - Publish-Profil `BP-Analyzer-win-x64`, ca. 12,6 MB
   (self-contained, single-file, trimmed, komprimiert). Details in Abschnitt 17.
+- **Aktuelles Release:** [v1.0.3](https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.3)
+  (Commit `42245f8`), automatisch veroeffentlicht; Downloads und EXE aus dem ZIP getestet.
 - **CodeGraph:** vorhanden; Index kann hinter dem Dateistand liegen. Bei Drift-Warnungen
   die betroffenen Dateien direkt lesen, keine alten Index-Metriken als aktuellen Stand verwenden.
 - **Working tree:** sauber
@@ -76,8 +78,9 @@ Die aktuelle Commit-Liste mit `git log --oneline` pruefen, nicht aus einer feste
 | `v1.0.0` | `0c3d542` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.0 | `BP-Analyzer-win-x64.exe` (12.625.429 B), `checksums.txt` | manuell via `gh release create` |
 | `v1.0.1` | `d5fd2db` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.1 | `BP-Analyzer-win-x64.exe` (12.625.782 B), `checksums.txt` | **automatisch** via `release.yml` |
 | `v1.0.2` | `72a1ab5` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.2 | `BP-Analyzer-win-x64.exe` (12.652.651 B), `BP-Analyzer-win-x64.zip` (7.623.865 B), `checksums.txt` (182 B) | **automatisch** via `release.yml` |
+| `v1.0.3` | `42245f8` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.3 | `BP-Analyzer.exe` (12.652.665 B), `BP-Analyzer.zip` (7.623.881 B), `checksums.txt` (166 B) | **automatisch** via `release.yml` |
 
-**Namensstand ab Commit `d9a09e4`:** kuenftige Releases benennen die Dateien wieder neutral als
+**Namensstand ab Commit `d9a09e4` / Release `v1.0.3`:** Releases benennen die Dateien neutral als
 `BP-Analyzer.exe` und `BP-Analyzer.zip`; das fruehere `-win-x64` im Dateinamen wurde auf
 Wunsch entfernt. Die historischen Releases `v1.0.0` bis `v1.0.2` behalten ihre bereits
 veroeffentlichten Dateinamen.
@@ -107,7 +110,16 @@ bei Branch-Pushes oder Pull Requests.
 | **Trigger** | Push eines Tags `v*`; manuell nur mit einem vorhandenen Versionstag sinnvoll, nicht mit `main` (Version wird aus dem Ref abgeleitet) |
 | **Was wird gebaut** | `release.yml`: Single-File-EXE + ZIP mit Beispiel-Config + `checksums.txt` |
 | **Output / Artefakte** | `release.yml`: GitHub-Release zum Tag mit den Assets `BP-Analyzer.exe`, `BP-Analyzer.zip` (EXE + Beispiel-Config) und `checksums.txt` (Hashes fuer EXE und ZIP); zusaetzlich Workflow-Artifact `BP-Analyzer` |
-| **Letzter bekannter Lauf** | `release.yml`: Run 41871915033 am 04.11.2026, Tag `v1.0.2`, Commit `72a1ab5`, conclusion **success** (historische Asset-Namen; Binary-Version = 1.0.2) |
+| **Letzter bekannter Lauf** | [Run 41887226813](https://github.com/schirkan/bp-analyzer/actions/runs/41887226813) am 04.11.2026, Tag `v1.0.3`, Commit `42245f8`, conclusion **success** |
+
+**Release-Pruefung `v1.0.3`:** EXE, ZIP und Checksummen von GitHub heruntergeladen.
+SHA256 beider Assets stimmt; ZIP enthaelt exakt `BP-Analyzer.exe` und
+`bp-analyzer.config.json`. EXE im ZIP ist identisch zum Einzel-Asset, ProductVersion
+`1.0.3+42245f8678238db6d718a2301d54f7c839797f5e`. Aus leerem CWD ohne lokale Templates
+liefern `help`, `codegen` und `analyze` Exit-Code 0. Config-JSON ist gueltig;
+ein echter Blue-Prism-Export wurde dabei nicht ausgefuehrt.
+Der Lauf meldet eine Node-20-Deprecation fuer `actions/upload-artifact@v5`;
+das ist eine Wartungswarnung, kein fehlgeschlagener Release-Schritt.
 
 **Version folgt dem Tag:** `release.yml` leitet die Version aus `GITHUB_REF_NAME` ab
 (ohne fuehrendes `v`) und setzt sie per `-p:Version=`. Ohne das meldet das Binary
