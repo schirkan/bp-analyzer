@@ -53,15 +53,23 @@
 
 **Standard-Branch:** `main` (HEAD -> `origin/main`, Upstream: schirkan/bp-analyzer)
 
-**Eigene Commits auf `main`:** zwei Commits gegen die Upstream-Basis `35d89fa` - ein Code-Fix
-(Passwort-Handler, siehe Abschnitt 14) und ein Doku-Commit (`agents.md` + `README.md`),
-beide nach `origin/main` gepusht. Der Working tree ist damit sauber.
+**Eigene Commits auf `main`:** vier Commits gegen die Upstream-Basis `35d89fa` - ein Code-Fix
+(Passwort-Handler, siehe Abschnitt 14), zwei Doku-Commits (`agents.md` + `README.md`,
+Commit-Identitaets-Vermerk), der Single-EXE-Publish mit Trim-Fix (`fdf639a`) und
+`0c3d542` (Version 1.0.0 + Produkt-Metadaten). Alle nach `origin/main` gepusht.
+Der Working tree ist damit sauber.
+
+**Tags:** `v1.0.0` (annotiert) zeigt auf `0c3d542` und ist auf GitHub. Zum Release
+gehoert genau ein Release mit dem Asset `BP-Analyzer-win-x64.exe` (12.625.429 Bytes,
+SHA256 `87924C098B1A849D7CC23C3A6728FE31C54A156990E32B9049F7F3AF24E73850`).
+Release-URL: https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.0
 
 **Commit-Identitaet:** `OpenClaw <openclaw@schirkan.de>` - feste Vorgabe, alle eigenen
 Commits laufen unter diesem Namen, unabhaengig von der Upstream-Historie.
 
 **Keine CI/CD:** Das Repo hat kein `.github/` (sogar in der `.gitignore`). Es gibt keine
-Workflow-Dateien, also auch keine CI-Sektion.
+Workflow-Dateien, also auch keine CI-Sektion. Das Release v1.0.0 wurde manuell via
+`gh release create` erstellt, nicht von einem Workflow.
 
 ## 4) Build- und Start-Befehle
 
