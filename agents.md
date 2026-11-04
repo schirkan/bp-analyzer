@@ -59,11 +59,15 @@ Commit-Identitaets-Vermerk), der Single-EXE-Publish mit Trim-Fix (`fdf639a`) und
 `0c3d542` (Version 1.0.0 + Produkt-Metadaten). Alle nach `origin/main` gepusht.
 Der Working tree ist damit sauber.
 
-**Tags:** `v1.0.0` (annotiert) zeigt auf `0c3d542` und ist auf GitHub. Zum Release
-gehoert genau ein Release mit zwei Assets: `BP-Analyzer-win-x64.exe` (12.625.429 Bytes,
-SHA256 `87924C098B1A849D7CC23C3A6728FE31C54A156990E32B9049F7F3AF24E73850`) und
-`checksums.txt` (91 Bytes, enthaelt dieselbe SHA256 in Kleinschreibung).
-Release-URL: https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.0
+**Tags und Releases:**
+
+| Tag | Commit | Release | Assets | Erzeugt |
+| --- | --- | --- | --- | --- |
+| `v1.0.0` | `0c3d542` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.0 | `BP-Analyzer-win-x64.exe` (12.625.429 B), `checksums.txt` | manuell via `gh release create` |
+| `v1.0.1` | `f10e6c3` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.1 | `BP-Analyzer-win-x64.exe` (12.625.772 B), `checksums.txt` | **automatisch** via `release.yml` |
+
+`v1.0.1` ist der erste vollstaendig ueber CI erzeugte Release und dient zugleich als
+Test des Release-Workflows. `v1.0.0` bleibt das manuell erstellte Referenz-Release.
 
 **CI-Blocker (behoben):** `.github/` stand in der getrackten `.gitignore` (Zeile 50) - ein
 Workflow waere von git stillschweigend ignoriert worden. Ersetzt durch `.github/*` +
@@ -81,7 +85,11 @@ Commits laufen unter diesem Namen, unabhaengig von der Upstream-Historie.
 | **Trigger** | `ci.yml`: Push auf `main`, Pull Request gegen `main`, manuell. `release.yml`: Push eines Tags `v*`, manuell |
 | **Was wird gebaut** | `ci.yml`: Build + Single-File-Publish + Smoke-Test der EXE. `release.yml`: Single-File-EXE + `checksums.txt` als Release-Asset |
 | **Output / Artefakte** | `release.yml`: GitHub-Release zum Tag mit den Assets `BP-Analyzer-win-x64.exe` und `checksums.txt`; zusaetzlich Workflow-Artifact `BP-Analyzer-win-x64`. `ci.yml`: Workflow-Artifact `BP-Analyzer-win-x64`, kein Release |
-| **Letzter bekannter Lauf** | `ci.yml`: Run 41867825748 am 2026-11-04, Commit `ccf646d`, conclusion **success** (Log: "generated files: 16", Trimming lief - "Optimizing assemblies for size"). `release.yml`: noch keiner - der Workflow ist neu, der erste Lauf steht aus |
+| **Letzter bekannter Lauf** | `ci.yml`: Run 41869069272 am 2026-11-04, Commit `f10e6c3`, conclusion **success** (12 Schritte gruen, "generated files: 16", Artifact `BP-Analyzer-win-x64` hochgeladen). `release.yml`: Run 41869389469 am 2026-11-04, Tag `v1.0.1`, conclusion **success** (14 Schritte gruen, Release mit beiden Assets automatisch erstellt) |
+
+**Version folgt dem Tag:** `release.yml` leitet die Version aus `GITHUB_REF_NAME` ab
+(ohne fuehrendes `v`) und setzt sie per `-p:Version=`. Ohne das meldet das Binary
+immer die fest im csproj hinterlegte Version statt der Tag-Version.
 
 **Wichtig - Restore braucht das Publish-Profil:** `dotnet restore` muss mit
 `-p:PublishProfile=BP-Analyzer-win-x64` laufen. Ohne das Profil holt der Restore die

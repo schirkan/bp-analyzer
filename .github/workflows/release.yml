@@ -39,6 +39,16 @@ jobs:
       - name: Build
         run: dotnet build BP-Analyzer.csproj -c Release -r win-x64 --no-restore
 
+      # The version in the binary must follow the tag, otherwise the assembly
+      # metadata always reports the hard-coded version from the csproj.
+      - name: Derive version from tag
+        shell: pwsh
+        run: |
+          $version = $env:GITHUB_REF_NAME -replace '^v', ''
+          if ($version -notmatch '^\d+\.\d+\.\d+') { throw "cannot derive a version from tag $env:GITHUB_REF_NAME" }
+          "VERSION=$version" >> $env:GITHUB_ENV
+          Write-Host "version: $version"
+
       - name: Publish single-file exe
         run: >
           dotnet publish BP-Analyzer.csproj
@@ -46,6 +56,7 @@ jobs:
           -r win-x64
           --no-restore
           -p:PublishProfile=BP-Analyzer-win-x64
+          -p:Version=${{ env.VERSION }}
           -o publish
 
       - name: Rename asset
