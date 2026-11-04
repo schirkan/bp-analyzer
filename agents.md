@@ -80,8 +80,8 @@ Commits laufen unter diesem Namen, unabhaengig von der Upstream-Historie.
 | **Workflow-Datei(en)** | `.github/workflows/ci.yml`, `.github/workflows/release.yml` |
 | **Trigger** | `ci.yml`: Push auf `main`, Pull Request gegen `main`, manuell. `release.yml`: Push eines Tags `v*`, manuell |
 | **Was wird gebaut** | `ci.yml`: Build + Single-File-Publish + Smoke-Test der EXE. `release.yml`: Single-File-EXE + `checksums.txt` als Release-Asset |
-| **Output / Artefakte** | `release.yml`: GitHub-Release zum Tag mit den Assets `BP-Analyzer-win-x64.exe` und `checksums.txt`; zusaetzlich Workflow-Artifact `BP-Analyzer-win-x64`. `ci.yml`: nur Workflow-Artifact, kein Release |
-| **Letzter bekannter Lauf** | noch keiner - die Workflows sind neu, der erste Lauf steht aus |
+| **Output / Artefakte** | `release.yml`: GitHub-Release zum Tag mit den Assets `BP-Analyzer-win-x64.exe` und `checksums.txt`; zusaetzlich Workflow-Artifact `BP-Analyzer-win-x64`. `ci.yml`: Workflow-Artifact `BP-Analyzer-win-x64`, kein Release |
+| **Letzter bekannter Lauf** | `ci.yml`: Run 41867825748 am 2026-11-04, Commit `ccf646d`, conclusion **success** (Log: "generated files: 16", Trimming lief - "Optimizing assemblies for size"). `release.yml`: noch keiner - der Workflow ist neu, der erste Lauf steht aus |
 
 **Wichtig - Restore braucht das Publish-Profil:** `dotnet restore` muss mit
 `-p:PublishProfile=BP-Analyzer-win-x64` laufen. Ohne das Profil holt der Restore die

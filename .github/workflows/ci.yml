@@ -45,6 +45,9 @@ jobs:
           -p:PublishProfile=BP-Analyzer-win-x64
           -o publish
 
+      - name: Rename asset
+        run: Rename-Item publish/BP-Analyzer.exe BP-Analyzer-win-x64.exe
+
       # Proves that the executable works without the templates folder next to it.
       - name: Smoke test the single-file exe
         shell: pwsh
@@ -60,3 +63,11 @@ jobs:
           $files = (Get-ChildItem ci-out -Recurse -File).Count
           Write-Host "generated files: $files"
           if ($files -lt 10) { throw "unexpectedly few output files: $files" }
+
+      # Makes the built binary downloadable from the workflow run.
+      - name: Upload artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: BP-Analyzer-win-x64
+          path: publish/BP-Analyzer-win-x64.exe
+          if-no-files-found: error
