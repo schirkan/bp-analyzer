@@ -9,6 +9,9 @@ This tool converts BluePrism XML export files into VB.NET classes with GoTo-base
 - [BP-Analyzer](#bp-analyzer)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
+    - [Single-file executable](#single-file-executable)
+    - [Configuration](#configuration)
+    - [Release](#release)
   - [CLI Usage](#cli-usage)
     - [Export Mode](#export-mode)
     - [Codegen Mode](#codegen-mode)
@@ -28,6 +31,10 @@ This tool converts BluePrism XML export files into VB.NET classes with GoTo-base
 
 ## Installation
 
+Building the analyzer requires the .NET 8 SDK or a compatible newer SDK. The
+analyzer targets `net8.0`; generated VB.NET projects target .NET Framework 4.8
+and need the corresponding reference assemblies/developer pack to build.
+
 ```bash
 # Build project
 dotnet build BP-Analyzer.csproj
@@ -36,7 +43,8 @@ dotnet build BP-Analyzer.csproj
 dotnet run --project BP-Analyzer.csproj
 
 # run codegen and build output
-dotnet run --project BP-Analyzer.csproj -- codegen && dotnet build code/BluePrism_Generated.vbproj 2>&1
+dotnet run --project BP-Analyzer.csproj -- codegen --xml=xml --output=code
+dotnet build code/BluePrism_Generated.vbproj
 ```
 
 ### Single-file executable
@@ -74,20 +82,37 @@ is shipped in `bp-analyzer.config.example.json` and included in the release ZIP)
 ```
 
 Precedence: `--automate-c` > `bp-analyzer.config.json` > built-in default.
+The config is optional, including for `export` if Blue Prism is installed at the
+default path. The executable directory is searched first, then the current
+working directory. An unreadable/invalid config prints a warning and falls back
+to the CLI override or built-in default.
 
 ### Release
 
-Releases are built automatically by GitHub Actions. Push a version tag and the
-workflow builds the executable and publishes it as a GitHub release with a
-`checksums.txt` asset:
+The only workflow is `.github/workflows/release.yml`. It runs automatically on
+pushes of version tags matching `v*`, not on branch pushes or pull requests.
+A manual run is also available; select an existing version tag, not `main`,
+because the binary version is derived from that tag.
+
+Push a new version tag (for example `v1.0.3`) after committing and pushing the
+intended changes. The workflow builds a self-contained Windows x64 executable,
+checks its size, packages the config, and creates a GitHub release with:
+
+- `BP-Analyzer.exe` — the original publish output, without renaming
+- `BP-Analyzer.zip` — `BP-Analyzer.exe` and `bp-analyzer.config.json`
+- `checksums.txt` — SHA256 hashes for both the EXE and ZIP
+
+The same files are also uploaded as workflow artifact `BP-Analyzer`.
+The target remains Windows x64 despite the neutral filenames. Releases up to
+`v1.0.2` retain their historical `-win-x64` filenames.
 
 ```bash
-git tag -a v1.1.0 -m "BP-Analyzer v1.1.0"
-git push origin v1.1.0
+git tag -a v1.0.3 -m "BP-Analyzer v1.0.3"
+git push origin v1.0.3
 ```
 
-The release notes are kept in `RELEASE_NOTES.md` in the repository, so they
-always match the actual behavior of the tool. The `<sha256>` placeholder in
+The release notes are kept in `RELEASE_NOTES.md` in the repository and should
+be reviewed before creating a tag. The `<sha256>` placeholder in
 that file is replaced with the checksum of the built binary.
 
 
@@ -99,7 +124,11 @@ The CLI supports three main modes:
 - **codegen**  – Generates VB.NET code from Blue Prism XML
 - **analyze**  – Analyzes Blue Prism processes
 
-If started without parameters, an interactive menu is shown. All required parameters for the selected mode will be prompted interactively.
+If started without parameters, an interactive menu is shown. Missing parameters
+for the selected mode are prompted interactively. `export` without options also
+prompts; `codegen` and `analyze` prompt for each missing directory. In scripts,
+always supply both input and output directories to avoid waiting for input.
+Named options use `--name=value`; positional arguments are also accepted.
 
 ---
 
@@ -115,10 +144,11 @@ dotnet run --project BP-Analyzer.csproj -- export --process=<name> [--output=<pa
 - `--user=<username>`       Blue Prism username
 - `--password=<password>`   Blue Prism password (required with `--user`; without `--user` SSO is used)
 - `--overwrite=<yes|no>`    Overwrite existing files (default: yes)
+- `--automate-c=<path>`     Override the path to Blue Prism's `AutomateC.exe`
 
 **Example:**
 ```
-dotnet run --project BP-Analyzer.csproj -- export --process "MyProcess" --output "C:\Exports"
+dotnet run --project BP-Analyzer.csproj -- export --process="MyProcess" --output="C:\Exports"
 ```
 
 ### Codegen Mode
@@ -165,7 +195,10 @@ dotnet run --project BP-Analyzer.csproj -- analyze --code=code --output=sdd --ex
 ### Notes
 - Internal BluePrism objects (e.g., `Blueprism.Automate*`) are automatically skipped during export.
 - There are no short forms or backwards compatibility with old calls.
-- For help on a mode: `BP-Analyzer <mode> --help`
+- General help: `BP-Analyzer.exe help` (also `--help` or `-h`).
+- Known limitation: mode-specific `--help` is not handled consistently. `export --help`
+  reports the missing process with usage and exit code 1; `codegen --help` and
+  `analyze --help` can prompt and execute instead. Use the option reference above.
 
 ## Compiling Output
 
@@ -231,7 +264,7 @@ End Class
 
 **Usage:**
 ```vb
-Utility_Environment.Instance.Start_Process(Application:=FilePath)
+Utility___Environment.Instance.Start_Process(Application:=FilePath)
 ```
 
 ### Exception Handling
@@ -315,6 +348,8 @@ bp-analyzer/
 │   ├── DataItemGenerator.cs
 │   ├── MethodGenerator.cs
 │   ├── TemplateManager.cs
+│   ├── TemplateProvider.cs        # Disk override / embedded template lookup
+│   ├── CodeGenJsonContext.cs      # Trim-safe JSON serialization
 │   ├── FlowControl/
 │   │   ├── FlowController.cs
 │   │   └── StageNavigator.cs
@@ -338,6 +373,10 @@ bp-analyzer/
 ├── CliCodeGenHandler.cs          # codegen mode
 ├── CliAnalyzeHandler.cs          # analyze mode
 ├── Program.cs                    # Entry point
+├── AnalyzerConfig.cs             # Optional export configuration
+├── bp-analyzer.config.example.json # Config included in release ZIP
+├── .github/workflows/release.yml  # Tag-triggered releases
+├── Properties/PublishProfiles/   # Windows x64 single-file profile
 ├── BP-Analyzer.csproj            # Project file
 ├── BP-Analyzer.sln               # Solution file
 └── README.md                     # This file

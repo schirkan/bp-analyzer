@@ -3,12 +3,12 @@
 <!-- project: path:C:\Users\Admin\.openclaw\workspace -->
 
 > **Gemergte Datei.** Dieses Projekt hat zwei Ebenen, die in einer Datei leben: das
-> Projektwissen aus dem geklonten Repo `schirkan/bp-analyzer` (Abschnitte 1-15) und die
+> Projektwissen aus dem geklonten Repo `schirkan/bp-analyzer` (Abschnitte 1-15 und 17) und die
 > Workspace-Verwaltung der OpenClaw-Projektmappe (Abschnitt 16). Auf Windows ist die tracked
 > Datei `agents.md` und die von `PROJECT-RULES.md` verlangte `AGENTS.md` dieselbe Datei -
 > beide Anforderungen sind nur mit einer Datei erfüllbar.
 >
-> **Alle CLI-Angaben unten sind gegen den Code verifiziert (Stand 2026-10-26)**, nicht aus der
+> **CLI, Konfiguration, Publish und CI/CD sind gegen den Code verifiziert (Stand 04.11.2026)**, nicht aus der
 > Upstream-Doku abgeschrieben. Die Abweichungen zur Upstream-Doku sind in Abschnitt 14
 > dokumentiert.
 
@@ -38,7 +38,8 @@
   in den generierten Dateien, erwartbar)
 - **Single-EXE-Publish:** verfügbar - Publish-Profil `BP-Analyzer-win-x64`, ca. 12,6 MB
   (self-contained, single-file, trimmed, komprimiert). Details in Abschnitt 17.
-- **CodeGraph:** indexiert - 60 Dateien, 804 Knoten, 1.321 Kanten
+- **CodeGraph:** vorhanden; Index kann hinter dem Dateistand liegen. Bei Drift-Warnungen
+  die betroffenen Dateien direkt lesen, keine alten Index-Metriken als aktuellen Stand verwenden.
 - **Working tree:** sauber
 ## 3) Git
 
@@ -62,11 +63,11 @@
 
 **Standard-Branch:** `main` (HEAD -> `origin/main`, Upstream: schirkan/bp-analyzer)
 
-**Eigene Commits auf `main`:** vier Commits gegen die Upstream-Basis `35d89fa` - ein Code-Fix
-(Passwort-Handler, siehe Abschnitt 14), zwei Doku-Commits (`agents.md` + `README.md`,
-Commit-Identitaets-Vermerk), der Single-EXE-Publish mit Trim-Fix (`fdf639a`) und
-`0c3d542` (Version 1.0.0 + Produkt-Metadaten). Alle nach `origin/main` gepusht.
-Der Working tree ist damit sauber.
+**Eigene Aenderungen auf `main`:** CLI-Fixes, korrigierte Dokumentation,
+Single-EXE-Publish mit Trim-Fix, konfigurierbarer Export und Tag-Releases.
+`7f52b20` entfernt den Branch/PR-CI-Workflow; `d9a09e4` behaelt die neutrale
+EXE-Bezeichnung bei und benennt das Release-ZIP `BP-Analyzer.zip`.
+Die aktuelle Commit-Liste mit `git log --oneline` pruefen, nicht aus einer festen Anzahl ableiten.
 
 **Tags und Releases:**
 
@@ -76,7 +77,7 @@ Der Working tree ist damit sauber.
 | `v1.0.1` | `d5fd2db` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.1 | `BP-Analyzer-win-x64.exe` (12.625.782 B), `checksums.txt` | **automatisch** via `release.yml` |
 | `v1.0.2` | `72a1ab5` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.2 | `BP-Analyzer-win-x64.exe` (12.652.651 B), `BP-Analyzer-win-x64.zip` (7.623.865 B), `checksums.txt` (182 B) | **automatisch** via `release.yml` |
 
-**Namensstand ab Commit `HEAD`:** kuenftige Releases benennen die Dateien wieder neutral als
+**Namensstand ab Commit `d9a09e4`:** kuenftige Releases benennen die Dateien wieder neutral als
 `BP-Analyzer.exe` und `BP-Analyzer.zip`; das fruehere `-win-x64` im Dateinamen wurde auf
 Wunsch entfernt. Die historischen Releases `v1.0.0` bis `v1.0.2` behalten ihre bereits
 veroeffentlichten Dateinamen.
@@ -94,16 +95,19 @@ Workflow waere von git stillschweigend ignoriert worden. Ersetzt durch `.github/
 **Commit-Identitaet:** `OpenClaw <openclaw@schirkan.de>` - feste Vorgabe, alle eigenen
 Commits laufen unter diesem Namen, unabhaengig von der Upstream-Historie.
 
-**CI/CD:** GitHub Actions, zwei Workflows:
+## CI/CD
+
+GitHub Actions, ein Workflow. `ci.yml` wurde entfernt; kein automatischer Build
+bei Branch-Pushes oder Pull Requests.
 
 | Feld | Wert |
 | --- | --- |
 | **Plattform** | GitHub Actions |
 | **Workflow-Datei(en)** | `.github/workflows/release.yml` |
-| **Trigger** | `release.yml`: Push eines Tags `v*`, manuell |
+| **Trigger** | Push eines Tags `v*`; manuell nur mit einem vorhandenen Versionstag sinnvoll, nicht mit `main` (Version wird aus dem Ref abgeleitet) |
 | **Was wird gebaut** | `release.yml`: Single-File-EXE + ZIP mit Beispiel-Config + `checksums.txt` |
 | **Output / Artefakte** | `release.yml`: GitHub-Release zum Tag mit den Assets `BP-Analyzer.exe`, `BP-Analyzer.zip` (EXE + Beispiel-Config) und `checksums.txt` (Hashes fuer EXE und ZIP); zusaetzlich Workflow-Artifact `BP-Analyzer` |
-| **Letzter bekannter Lauf** | `release.yml`: Run 41871915033 am 2026-11-04, Tag `v1.0.2`, conclusion **success** (Release mit EXE, ZIP und Checksummen automatisch erstellt; Binary-Version = 1.0.2) |
+| **Letzter bekannter Lauf** | `release.yml`: Run 41871915033 am 04.11.2026, Tag `v1.0.2`, Commit `72a1ab5`, conclusion **success** (historische Asset-Namen; Binary-Version = 1.0.2) |
 
 **Version folgt dem Tag:** `release.yml` leitet die Version aus `GITHUB_REF_NAME` ab
 (ohne fuehrendes `v`) und setzt sie per `-p:Version=`. Ohne das meldet das Binary
@@ -121,25 +125,25 @@ einbeziehen - der Ordner selbst muss selektiv ausgeschlossen werden.
 
 ## 4) Build- und Start-Befehle
 
-``powershell
+```powershell
 # Analyzer bauen
 dotnet build BP-Analyzer.csproj -v minimal
 
 # Ausführen (interaktiv, wenn ohne Parameter)
 dotnet run --project BP-Analyzer.csproj
 
-# CLI-Modus
-dotnet run --project BP-Analyzer.csproj -- codegen
-``
+# CLI-Modus ohne Verzeichnis-Rueckfragen
+dotnet run --project BP-Analyzer.csproj -- codegen --xml=xml --output=code
+```
 
 Artefakt: `bin\Debug\net8.0\BP-Analyzer.dll`
 
 Sauberer Neuaufbau:
 
-``powershell
+```powershell
 dotnet clean BP-Analyzer.csproj
 dotnet build BP-Analyzer.csproj
-``
+```
 
 ## 5) CLI (verifiziert)
 
@@ -151,33 +155,35 @@ Ohne Parameter startet ein interaktives Menü (1) Export, 2) Codegen, 3) Analyze
 > **Wichtig für nicht-interaktive Aufrufe (CI, Skripte):** `codegen` und `analyze` fragen
 > bei fehlenden Verzeichnis-Parametern **immer** über `Console.ReadLine()` ab und blockieren,
 > wenn kein Redirect stattfindet. Immer beide Verzeichnisse explizit angeben. `export` fragt
-> nur ab, wenn gar keine Argumente übergeben wurden (`args.Length == 0`).
+> bei leerem Argumentarray oder nur dem Modusnamen ab (`args.Length <= 1`).
 
 ### export - BluePrism-Prozess nach XML
 
-``powershell
-dotnet run --project BP-Analyzer.csproj -- export --process="MeinProzess" --output="C:\Exporte" --user=admin --overwrite=yes
-``
+```powershell
+dotnet run --project BP-Analyzer.csproj -- export --process="MeinProzess" --output="C:\Exporte" --overwrite=yes
+```
 
 - `--process=<name>`   Prozessname (Pflicht)
 - `--output=<path>`    Ausgabeverzeichnis (Default: `<cwd>\xml`)
 - `--user=<name>`      Blue-Prism-Benutzer (leer = SSO)
-- `--password=<pw>`    Passwort - **siehe bekannten Bug in Abschnitt 14**
+- `--password=<pw>`    Passwort - mit `--user` erforderlich; Validierung siehe Abschnitt 14
 - `--overwrite=yes|no` Überschreiben (Default: `yes`)
+- `--automate-c=<path>` Pfad zu Blue Prisms `AutomateC.exe` (ueberschreibt Config/Default)
 
 Positionale Argumente werden in dieser Reihenfolge ebenfalls akzeptiert: Prozessname,
 Ausgabepfad, Benutzer, Passwort.
 
-Exportiert wird über `AutomateC.exe`. Der Pfad ist in `BluePrismExporter.cs` fest auf
-`C:\Program Files\Blue Prism Limited\Blue Prism Automate\AutomateC.exe` verdrahtet; in
-`CliExportHandler.cs` ist die Zuweisung von `AutomateCPath` auskommentiert - der Pfad ist
-also aktuell nicht per CLI konfigurierbar.
+Exportiert wird ueber `AutomateC.exe`. Der eingebaute Default ist
+`C:\Program Files\Blue Prism Limited\Blue Prism Automate\AutomateC.exe`.
+Prioritaet: `--automate-c=<path>` > optionale `bp-analyzer.config.json`
+(neben EXE, danach CWD) > Default. Details in Abschnitt 17.
+Benutzer und Passwort muessen zusammen angegeben werden; fehlen beide, wird SSO genutzt.
 
 ### codegen - XML nach VB.NET
 
-``powershell
+```powershell
 dotnet run --project BP-Analyzer.csproj -- codegen --xml=xml --output=code
-``
+```
 
 - `--xml=<dir>`    Verzeichnis mit BluePrism-XML (Default: `xml`)
 - `--output=<dir>` Ausgabeverzeichnis (Default: `code`, **nicht** `output`)
@@ -186,9 +192,9 @@ Positionale Argumente: XML-Verzeichnis, Ausgabeverzeichnis.
 
 ### analyze - JSON nach SDD
 
-``powershell
+```powershell
 dotnet run --project BP-Analyzer.csproj -- analyze --code=code --output=sdd --exclude-exception-sources=ERGO_,Utility_
-``
+```
 
 - `--code=<dir>`   Verzeichnis mit `classes.json`, `dependencies.json`,
   `exceptions.json` (Default: `code`)
@@ -198,12 +204,14 @@ dotnet run --project BP-Analyzer.csproj -- analyze --code=code --output=sdd --ex
 
 Positionale Argumente: Code-Verzeichnis, Ausgabeverzeichnis.
 
-Die SDD-Vorlage wird unter `templates/SDD_Process_Template.md` relativ zum aktuellen
-Arbeitsverzeichnis gesucht. Ergebnisdateien heißen `SDD Template <Prozessname>.md`.
+Die SDD-Vorlage wird zuerst ueber den relativen Pfad
+`templates/SDD_Process_Template.md`, dann ueber `TemplateProvider` auf Platte bzw.
+als eingebettete Ressource geladen. Ein externer templates-Ordner ist nicht erforderlich.
+Ergebnisdateien heissen `SDD Template <Prozessname>.md`.
 
 ## 6) Verzeichnisstruktur (verifiziert)
 
-``
+```
 bp-analyzer/                      <- Projektordner == Repo-Root
 |- .git/                          origin -> schirkan/bp-analyzer
 |- .codegraph/                    lokal, nicht getrackt
@@ -215,7 +223,12 @@ bp-analyzer/                      <- Projektordner == Repo-Root
 |   |- Template_BP_Base.vb
 |   |- Template_BP_Project.vbproj
 |   '- SDD_Process_Template.md
-|- CodeGen/                       35 Dateien
+|- .github/workflows/release.yml   Tag-Release-Workflow
+|- Properties/PublishProfiles/    Single-File-Publish-Profil fuer win-x64
+|- AnalyzerConfig.cs              optionale Export-Konfiguration
+|- bp-analyzer.config.example.json Vorlage fuer die ZIP-Config
+|- RELEASE_NOTES.md               versionierter Release-Body
+|- CodeGen/                       Generatoren, TemplateProvider und JSON-Kontext
 |   |- ClassGenerator.cs, CodeGenRegistry.cs, DataItemGenerator.cs,
 |   |  MethodGenerator.cs, TemplateManager.cs
 |   |- FlowControl/  FlowController.cs, StageNavigator.cs
@@ -232,7 +245,7 @@ bp-analyzer/                      <- Projektordner == Repo-Root
 |- BP-Analyzer.csproj / .sln
 |- agents.md                      diese Datei (getrackt, Name klein)
 |- README.md, TODO.md, BP Expressions.md
-``
+```
 
 ## 7) Wichtige Projektdateien
 
@@ -242,13 +255,16 @@ bp-analyzer/                      <- Projektordner == Repo-Root
 - `CliAnalyzeHandler.cs` - Argumentparsing für `analyze`
 - `BluePrismCodeGen.cs` - `GenerateAll()`: schreibt erst die `.vb`-Dateien, dann die
   drei JSON-Dateien, zuletzt das `.vbproj`
-- `BluePrismExporter.cs` - `ExportWithDependencies()`, feste AutomateC.exe-Pfade
+- `BluePrismExporter.cs` - `ExportWithDependencies()`, konfigurierbarer AutomateC.exe-Pfad
+- `AnalyzerConfig.cs` - optionale Config neben der EXE oder im CWD
 - `BluePrismAnalyzer.cs` - `GenerateSdds()`, lädt JSON + Template und rendert die SDD
 - `CodeGen/CodeGenRegistry.cs` - `WriteDependenciesToJson()`, `WriteExceptionsToJson()`,
   `WriteClassesToJson()`
 - `CodeGen/TemplateManager.cs` - kopiert `Template_BP_Base.vb` und
   `Template_BP_Project.vbproj` nach `<output>`; sucht zuerst relativ zum
-  `AppDomain.BaseDirectory`, dann zum CWD
+  `AppDomain.BaseDirectory`, dann zum CWD, danach eingebettete Ressourcen ueber
+  `CodeGen/TemplateProvider.cs`
+- `CodeGen/CodeGenJsonContext.cs` - trim-sichere JSON-Serialisierung und Config-Deserialisierung
 - `CodeGen/Stages/StageGeneratorFactory.cs` - Registry der Stage-Generatoren
 - `CodeGen/FlowControl/FlowController.cs`, `StageNavigator.cs` - Ablaufsteuerung, Label-Logik
 - `CodeGen/Utilities/ExpressionParser.cs`, `NameSanitizer.cs` - Expression-Auswertung,
@@ -272,12 +288,12 @@ ist - die JSON-Dateien sind der Übergang zwischen beiden Stufen.
 
 Das generierte Projekt targetet **net48** (.NET Framework 4.8), nicht net8.0.
 
-``powershell
+```powershell
 cd code
 dotnet build BluePrism_Generated.vbproj -v minimal
 # oder in Visual Studio / mit MSBuild:
 msbuild BluePrism_Generated.vbproj /p:Configuration=Release
-``
+```
 
 Artefakt: `code\bin\Debug\net48\BluePrism_Generated.dll`
 (oder `code\bin\Release\net48\...`)
@@ -288,7 +304,7 @@ Platzhalter bzw. Stubs.
 
 ## 10) Unterstützte Stage-Typen
 
-Registry aus `CodeGen/Stages/StageGeneratorFactory.cs` (21 Einträge):
+Registry aus `CodeGen/Stages/StageGeneratorFactory.cs` (20 Eintraege):
 
 | Stage-Typ | Generator | Anmerkung |
 | --- | --- | --- |
@@ -319,7 +335,7 @@ Struktur-Stages **ohne** eigenen Generator - sie behandelt `FlowController.cs` u
 
 ## 11) Fehleranalyse
 
-``powershell
+```powershell
 # Build mit Fehlerausgabe
 dotnet build BP-Analyzer.csproj -v minimal
 
@@ -333,7 +349,7 @@ dotnet build code\BluePrism_Generated.vbproj -v minimal
 git status
 git diff
 git log --oneline -n 20
-``
+```
 
 Regressionsprüfung nach Änderungen an der Generatorlogik: `codegen` erneut laufen lassen und
 `git diff` auf `code/` prüfen. Da `code/` getrackt ist, zeigt der Diff genau die
@@ -358,6 +374,12 @@ Beim Export werden interne BluePrism-Objekte übersprungen:
 - Das verhindert Fehler in der Abhängigkeitsanalyse
 
 ## 14) Bekannte Bugs und Doku-Abweichungen
+
+**Offen - modusspezifisches `--help` ist nicht implementiert.** Allgemeine Hilfe mit
+`BP-Analyzer.exe help`, `--help` oder `-h`. Bei `export --help` wird wegen des
+fehlenden Prozessnamens die Usage mit Exit-Code 1 ausgegeben. `codegen --help` und
+`analyze --help` koennen dagegen nach Verzeichnissen fragen und anschliessend ausfuehren.
+Die `PrintUsage()`-Methoden existieren, sind aber nicht fuer diese Argumente verdrahtet.
 
 **Bug 1 - der interaktive Modus war unerreichbar (behoben).**
 `CliExportHandler.cs` berechnete `interactive` als `args.Length == 0`. Der Modusname steht
@@ -396,7 +418,7 @@ wurden:**
 
 | Upstream-Behauptung | Realitaet |
 | --- | --- |
-| `--codegen`, `--process=...` (Doppeldash) | Subcommand-Syntax: `codegen`, `export` |
+| `--codegen` bzw. `--process=...` ohne Modus | Erst Subcommand `codegen` bzw. `export`, danach Optionen mit `=` |
 | `TargetFramework: net9.0` | `net8.0` |
 | `ExporterCLI.cs` | existiert nicht - `CliExportHandler.cs` |
 | Ausgabeverzeichnis `output/` | `code/` (Default) bzw. `sdd/` fuer SDD |
@@ -404,7 +426,7 @@ wurden:**
 | `output/bin/Debug/BluePrism_Generated.dll` | `code/bin/Debug/net48/...` (net48) |
 | `--code=output` fuer analyze | `--code=code` |
 | `read_file` / `search_files` (Claude-Code-Toolnamen) | OpenClaw: `read` / `exec` / `codegraph explore` |
-| Abschnittsfolge 1-6, 9, 7, 8 | 1-16, fortlaufend |
+| Abschnittsfolge 1-6, 9, 7, 8 | nummerierte Abschnitte 1-17 plus CI/CD-Sektion |
 | Stage-Tabelle ohne Alert, Choice, MultipleCalculation, SubSheet | im Registry enthalten |
 
 **Hinweis zu `code/`:** dort liegen getrackte SDD-Dateien ohne "Template"-Praefix (aelterer
@@ -511,8 +533,9 @@ denen des Debug-Builds.
 
 ### Konfiguration (optional)
 
-**Nur der `export`-Modus braucht eine Konfiguration.** `codegen` und `analyze` laufen ohne
-jede Config-Datei - die Templates sind eingebettet.
+**Die Config-Datei ist auch fuer `export` optional.** Nur dieser Modus nutzt
+`automateCPath`; bei einer Standardinstallation reicht der eingebaute Default.
+`codegen` und `analyze` nutzen keine Config-Datei - die Templates sind eingebettet.
 
 Der Pfad zu Blue Prisms `AutomateC.exe` ist jetzt konfigurierbar, vorher war er fest
 verdrahtet (die Zuweisung in `CliExportHandler.cs` war auskommentiert):
@@ -525,6 +548,10 @@ verdrahtet (die Zuweisung in `CliExportHandler.cs` war auskommentiert):
 
 Fehlt `AutomateC.exe`, bricht der Export mit klarer Meldung und Exit-Code 1 ab, statt
 still zu scheitern.
+
+Eine unlesbare/ungueltige Config erzeugt eine Warnung. Danach gelten der
+CLI-Override oder der Default; ein anderer Config-Kandidat wird nach einem Lesefehler
+nicht weiter ausprobiert.
 
 **Zwei Fallen, die beim Testen aufgefallen sind:**
 
