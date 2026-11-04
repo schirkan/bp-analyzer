@@ -47,9 +47,9 @@ bld/
 .vs/
 
 # mcp
-# .github/ is ignored, but the workflows directory must stay trackable for CI/CD.
-# Note: git cannot re-include files under an excluded directory, so the directory
-# itself has to be excluded selectively instead of as a whole.
+# .github/ is ignored (it only held MCP data), but the workflows directory must
+# stay trackable for CI/CD. Git cannot re-include files under an excluded
+# directory, so .github/ is excluded selectively instead of as a whole.
 .github/*
 !.github/workflows/
 .mcp_data/
@@ -205,3 +205,15 @@ Package Control.system-ca-bundle
 # Xpresso
 *.launch
 *.launch-settings
+
+# BP-Analyzer: publish output (dotnet publish -o publish)
+publish/
+
+# BP-Analyzer: local configuration
+# The example file (bp-analyzer.config.example.json) is tracked, the local
+# configuration next to a built executable is not.
+bp-analyzer.config.json
+
+# BP-Analyzer: CI output directories
+ci-out/
+package/
