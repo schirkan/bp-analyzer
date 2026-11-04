@@ -52,7 +52,7 @@ jobs:
       - name: Smoke test the single-file exe
         shell: pwsh
         run: |
-          $exe = (Resolve-Path publish/BP-Analyzer.exe).Path
+          $exe = (Resolve-Path publish/BP-Analyzer-win-x64.exe).Path
           & $exe help
           if ($LASTEXITCODE -ne 0) { throw "help failed with exit code $LASTEXITCODE" }
           New-Item -ItemType Directory -Force -Path ci-out | Out-Null
