@@ -64,10 +64,12 @@ Der Working tree ist damit sauber.
 | Tag | Commit | Release | Assets | Erzeugt |
 | --- | --- | --- | --- | --- |
 | `v1.0.0` | `0c3d542` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.0 | `BP-Analyzer-win-x64.exe` (12.625.429 B), `checksums.txt` | manuell via `gh release create` |
-| `v1.0.1` | `f10e6c3` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.1 | `BP-Analyzer-win-x64.exe` (12.625.772 B), `checksums.txt` | **automatisch** via `release.yml` |
+| `v1.0.1` | `d5fd2db` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.1 | `BP-Analyzer-win-x64.exe` (12.625.782 B), `checksums.txt` | **automatisch** via `release.yml` |
 
 `v1.0.1` ist der erste vollstaendig ueber CI erzeugte Release und dient zugleich als
-Test des Release-Workflows. `v1.0.0` bleibt das manuell erstellte Referenz-Release.
+Test des Release-Workflows. Verifiziert: Asset heruntergeladen, SHA256 stimmt mit
+`checksums.txt` ueberein, `ProductVersion` = `1.0.1+d5fd2db`, `codegen` + `analyze` Exit 0
+(16 Dateien). `v1.0.0` bleibt das manuell erstellte Referenz-Release.
 
 **CI-Blocker (behoben):** `.github/` stand in der getrackten `.gitignore` (Zeile 50) - ein
 Workflow waere von git stillschweigend ignoriert worden. Ersetzt durch `.github/*` +
@@ -85,7 +87,7 @@ Commits laufen unter diesem Namen, unabhaengig von der Upstream-Historie.
 | **Trigger** | `ci.yml`: Push auf `main`, Pull Request gegen `main`, manuell. `release.yml`: Push eines Tags `v*`, manuell |
 | **Was wird gebaut** | `ci.yml`: Build + Single-File-Publish + Smoke-Test der EXE. `release.yml`: Single-File-EXE + `checksums.txt` als Release-Asset |
 | **Output / Artefakte** | `release.yml`: GitHub-Release zum Tag mit den Assets `BP-Analyzer-win-x64.exe` und `checksums.txt`; zusaetzlich Workflow-Artifact `BP-Analyzer-win-x64`. `ci.yml`: Workflow-Artifact `BP-Analyzer-win-x64`, kein Release |
-| **Letzter bekannter Lauf** | `ci.yml`: Run 41869069272 am 2026-11-04, Commit `f10e6c3`, conclusion **success** (12 Schritte gruen, "generated files: 16", Artifact `BP-Analyzer-win-x64` hochgeladen). `release.yml`: Run 41869389469 am 2026-11-04, Tag `v1.0.1`, conclusion **success** (14 Schritte gruen, Release mit beiden Assets automatisch erstellt) |
+| **Letzter bekannter Lauf** | `ci.yml`: Run 41869069272 am 2026-11-04, Commit `f10e6c3`, conclusion **success** (12 Schritte gruen, "generated files: 16", Artifact `BP-Analyzer-win-x64` hochgeladen). `release.yml`: Run 41870133779 am 2026-11-04, Tag `v1.0.1`, conclusion **success** (Release mit beiden Assets automatisch erstellt, Version im Binary = 1.0.1) |
 
 **Version folgt dem Tag:** `release.yml` leitet die Version aus `GITHUB_REF_NAME` ab
 (ohne fuehrendes `v`) und setzt sie per `-p:Version=`. Ohne das meldet das Binary
