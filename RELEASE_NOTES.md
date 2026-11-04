@@ -7,9 +7,9 @@ and generates Solution Design Documents (SDD) as Markdown.
 
 | Asset | Size | Notes |
 | --- | --- | --- |
-| `BP-Analyzer-win-x64.exe` | ~12.6 MB | self-contained, single file, trimmed |
-| `checksums.txt` | 91 B | SHA256 of the binary |
-| `BP-Analyzer-win-x64.zip` | ~13 MB | the exe plus the example config file |
+| `BP-Analyzer.exe` | ~12.6 MB | self-contained, single file, trimmed |
+| `checksums.txt` | a few hundred bytes | SHA256 of the binary and the ZIP |
+| `BP-Analyzer.zip` | ~13 MB | the exe plus the example config file |
 
 No .NET runtime required on the target machine. The templates are embedded in the
 binary, so `codegen` and `analyze` work without any further files.
@@ -38,7 +38,7 @@ The ZIP asset contains the executable plus a ready-to-edit example config.
 ### Verify the download
 
 ```
-Get-FileHash BP-Analyzer-win-x64.exe -Algorithm SHA256
+Get-FileHash BP-Analyzer.exe -Algorithm SHA256
 ```
 
 Expected:
@@ -75,5 +75,6 @@ compressed, embedded debug symbols.
 - The generated code is syntactically valid and compiles, but cannot be executed as a
   real BluePrism process. UI automation, object calls and some stage types are
   placeholders or stubs.
-- `export` requires Blue Prism's `AutomateC.exe`. The path is hard-coded to
-  `C:\Program Files\Blue Prism Limited\Blue Prism Automate\AutomateC.exe`.
+- `export` requires Blue Prism's `AutomateC.exe`. The default path is
+  `C:\Program Files\Blue Prism Limited\Blue Prism Automate\AutomateC.exe`,
+  but it can be overridden via `--automate-c` or `bp-analyzer.config.json`.

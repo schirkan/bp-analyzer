@@ -76,6 +76,11 @@ Der Working tree ist damit sauber.
 | `v1.0.1` | `d5fd2db` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.1 | `BP-Analyzer-win-x64.exe` (12.625.782 B), `checksums.txt` | **automatisch** via `release.yml` |
 | `v1.0.2` | `72a1ab5` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.2 | `BP-Analyzer-win-x64.exe` (12.652.651 B), `BP-Analyzer-win-x64.zip` (7.623.865 B), `checksums.txt` (182 B) | **automatisch** via `release.yml` |
 
+**Namensstand ab Commit `HEAD`:** kuenftige Releases benennen die Dateien wieder neutral als
+`BP-Analyzer.exe` und `BP-Analyzer.zip`; das fruehere `-win-x64` im Dateinamen wurde auf
+Wunsch entfernt. Die historischen Releases `v1.0.0` bis `v1.0.2` behalten ihre bereits
+veroeffentlichten Dateinamen.
+
 `v1.0.1` und `v1.0.2` sind vollstaendig ueber CI erzeugt. `v1.0.2` ist das Release mit
 der Konfigurationsmoeglichkeit und dem ZIP. Verifiziert: alle drei Assets heruntergeladen,
 SHA256 stimmen mit `checksums.txt` ueberein, ZIP entpackt -> `codegen` + `analyze` Exit 0,
@@ -94,11 +99,11 @@ Commits laufen unter diesem Namen, unabhaengig von der Upstream-Historie.
 | Feld | Wert |
 | --- | --- |
 | **Plattform** | GitHub Actions |
-| **Workflow-Datei(en)** | `.github/workflows/ci.yml`, `.github/workflows/release.yml` |
-| **Trigger** | `ci.yml`: Push auf `main`, Pull Request gegen `main`, manuell. `release.yml`: Push eines Tags `v*`, manuell |
-| **Was wird gebaut** | `ci.yml`: Build + Single-File-Publish + Smoke-Test der EXE. `release.yml`: Single-File-EXE + `checksums.txt` als Release-Asset |
-| **Output / Artefakte** | `release.yml`: GitHub-Release zum Tag mit den Assets `BP-Analyzer-win-x64.exe`, `BP-Analyzer-win-x64.zip` (EXE + Beispiel-Config) und `checksums.txt` (Hashes fuer EXE und ZIP); zusaetzlich Workflow-Artifact `BP-Analyzer-win-x64`. `ci.yml`: Workflow-Artifact `BP-Analyzer-win-x64`, kein Release |
-| **Letzter bekannter Lauf** | `ci.yml`: Run 41869069272 am 2026-11-04, Commit `f10e6c3`, conclusion **success** (12 Schritte gruen, "generated files: 16", Artifact `BP-Analyzer-win-x64` hochgeladen). `release.yml`: Run 41870133779 am 2026-11-04, Tag `v1.0.1`, conclusion **success** (Release mit beiden Assets automatisch erstellt, Version im Binary = 1.0.1) |
+| **Workflow-Datei(en)** | `.github/workflows/release.yml` |
+| **Trigger** | `release.yml`: Push eines Tags `v*`, manuell |
+| **Was wird gebaut** | `release.yml`: Single-File-EXE + ZIP mit Beispiel-Config + `checksums.txt` |
+| **Output / Artefakte** | `release.yml`: GitHub-Release zum Tag mit den Assets `BP-Analyzer.exe`, `BP-Analyzer.zip` (EXE + Beispiel-Config) und `checksums.txt` (Hashes fuer EXE und ZIP); zusaetzlich Workflow-Artifact `BP-Analyzer` |
+| **Letzter bekannter Lauf** | `release.yml`: Run 41871915033 am 2026-11-04, Tag `v1.0.2`, conclusion **success** (Release mit EXE, ZIP und Checksummen automatisch erstellt; Binary-Version = 1.0.2) |
 
 **Version folgt dem Tag:** `release.yml` leitet die Version aus `GITHUB_REF_NAME` ab
 (ohne fuehrendes `v`) und setzt sie per `-p:Version=`. Ohne das meldet das Binary
