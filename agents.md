@@ -38,8 +38,8 @@
   in den generierten Dateien, erwartbar)
 - **Single-EXE-Publish:** verfügbar - Publish-Profil `BP-Analyzer-win-x64`, ca. 12,6 MB
   (self-contained, single-file, trimmed, komprimiert). Details in Abschnitt 17.
-- **Aktuelles Release:** [v1.0.3](https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.3)
-  (Commit `42245f8`), automatisch veroeffentlicht; Downloads und EXE aus dem ZIP getestet.
+- **Aktuelles Release:** [v1.0.4](https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.4)
+  (Commit `eff56b5`), automatisch veroeffentlicht; nur ZIP als Asset, SHA256 und entpackte EXE getestet.
 - **CodeGraph:** vorhanden; Index kann hinter dem Dateistand liegen. Bei Drift-Warnungen
   die betroffenen Dateien direkt lesen, keine alten Index-Metriken als aktuellen Stand verwenden.
 - **Working tree:** sauber
@@ -79,6 +79,7 @@ Die aktuelle Commit-Liste mit `git log --oneline` pruefen, nicht aus einer feste
 | `v1.0.1` | `d5fd2db` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.1 | `BP-Analyzer-win-x64.exe` (12.625.782 B), `checksums.txt` | **automatisch** via `release.yml` |
 | `v1.0.2` | `72a1ab5` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.2 | `BP-Analyzer-win-x64.exe` (12.652.651 B), `BP-Analyzer-win-x64.zip` (7.623.865 B), `checksums.txt` (182 B) | **automatisch** via `release.yml` |
 | `v1.0.3` | `42245f8` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.3 | `BP-Analyzer.exe` (12.652.665 B), `BP-Analyzer.zip` (7.623.881 B), `checksums.txt` (166 B) | **automatisch** via `release.yml` |
+| `v1.0.4` | `eff56b5` | https://github.com/schirkan/bp-analyzer/releases/tag/v1.0.4 | nur `BP-Analyzer.zip` (7.623.855 B); SHA256 im Release-Text | **automatisch** via `release.yml` |
 
 **Namensstand ab Commit `d9a09e4` / Release `v1.0.3`:** Releases benennen die Dateien neutral als
 `BP-Analyzer.exe` und `BP-Analyzer.zip`; das fruehere `-win-x64` im Dateinamen wurde auf
@@ -110,7 +111,15 @@ bei Branch-Pushes oder Pull Requests.
 | **Trigger** | Push eines Tags `v*`; manuell nur mit einem vorhandenen Versionstag sinnvoll, nicht mit `main` (Version wird aus dem Ref abgeleitet) |
 | **Was wird gebaut** | Single-File-EXE und `BP-Analyzer.zip` mit Beispiel-Config |
 | **Output / Artefakte** | Ab `v1.0.4` genau ein Download-Asset: `BP-Analyzer.zip` mit `BP-Analyzer.exe` und `bp-analyzer.config.json`. SHA256 des ZIP im Release-Text; keine separate EXE, kein `checksums.txt`, kein Workflow-Artifact-Upload. Historische Releases bleiben unveraendert. |
-| **Letzter bekannter Lauf** | [Run 41887226813](https://github.com/schirkan/bp-analyzer/actions/runs/41887226813) am 04.11.2026, Tag `v1.0.3`, Commit `42245f8`, conclusion **success** |
+| **Letzter bekannter Lauf** | [Run 41892119016](https://github.com/schirkan/bp-analyzer/actions/runs/41892119016) am 04.11.2026, Tag `v1.0.4`, Commit `eff56b5`, conclusion **success** |
+
+**Release-Pruefung `v1.0.4`:** genau ein GitHub-Asset `BP-Analyzer.zip`.
+Download-SHA256 stimmt mit dem Release-Text ueberein:
+`855a2eddbbcc109ace72d0b600e17868add46575f89df2e195c08f0b59db9b1a`.
+ZIP enthaelt exakt `BP-Analyzer.exe` und `bp-analyzer.config.json`; Config-JSON gueltig.
+ProductVersion `1.0.4+eff56b59a0862463b11eedd4c9a28eb7c05d571c`.
+`help`, `codegen` und `analyze` aus leerem CWD ohne lokale Templates: Exit-Code 0.
+Kein echter Blue-Prism-Export im Smoke-Test.
 
 **Release-Pruefung `v1.0.3`:** EXE, ZIP und Checksummen von GitHub heruntergeladen.
 SHA256 beider Assets stimmt; ZIP enthaelt exakt `BP-Analyzer.exe` und
